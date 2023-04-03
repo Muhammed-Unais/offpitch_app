@@ -16,21 +16,29 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: AppMargin.extraLarge*1.5,),
-                const LoginViewTopimage(),
+                 // Top Image=================
+                Row(
+                  children: const [
+                    Spacer(),
+                    LoginViewTopimage(),
+                    Spacer()
+                  ],
+                ),
                 const SizedBox(
                   height: AppMargin.extraLarge,
                 ),
+                // Welcome Text===============
                 Text("Hi Welcome back",style: Theme.of(context).textTheme.headlineLarge),
                 const SizedBox(
                   height: AppMargin.extraLarge,
                 ),
+                // Form fields=================
                 Row(
                   children: const [
                     Spacer(),

@@ -60,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
             validator: (value) => LoginValidation.emailValidator(value),
           ),
           const SizedBox(
-            height: AppMargin.extraLarge,
+            height: AppMargin.large,
           ),
           // password field================
           ValueListenableBuilder(

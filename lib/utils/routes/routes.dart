@@ -3,7 +3,7 @@ import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/home_view.dart';
 import 'package:offpitch_app/view/login_view/login_view.dart';
 import 'package:offpitch_app/view/otp_verify_view.dart';
-import 'package:offpitch_app/view/signup_view.dart';
+import 'package:offpitch_app/view/signup_view/signup_view.dart';
 import 'package:offpitch_app/view/splash_view.dart';
 
 class Routes {

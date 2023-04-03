@@ -32,38 +32,50 @@ class SignupValidation {
   }
 
   static nameValidaton(value) {
-    if (value == null || value.isEmpty) {
+    const pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])';
+    RegExp regExp = RegExp(pattern);
+
+    log("1");
+    log(value);
+    log(regExp.hasMatch(value).toString());
+    if (!regExp.hasMatch(value)) {
+      return "Enter valid name";
+    }
+    String? values;
+    if (value != null) {
+      values = value.toString().trim();
+    }
+
+    if (values == null || values.isEmpty) {
       return "Name can not be empty";
     }
     return null;
   }
 
-  static signupErrorDisplay(BuildContext context,error){
-      if (error.toString().contains("No Internet connection")) {
-          Utils.showFlushbarErrorMessage(
-              message: "No Internet connection", context: context);
-        }
+  static signupErrorDisplay(BuildContext context, error) {
+    if (error.toString().contains("No Internet connection")) {
+      Utils.showFlushbarErrorMessage(
+          message: "No Internet connection", context: context);
+    }
 
-        // default somthing went wrong
-        else if (error
-            .toString()
-            .contains("error occured while communicating with server")) {
-          Utils.showFlushbarErrorMessage(
-              message: "Something went wrong", context: context);
-        }
+    // default somthing went wrong
+    else if (error
+        .toString()
+        .contains("error occured while communicating with server")) {
+      Utils.showFlushbarErrorMessage(
+          message: "Something went wrong", context: context);
+    }
 
-        // exception message from server
-        else {
-          String invalidError = error.toString();
-          RegExp regExp = RegExp(r'({.*})');
-          RegExpMatch? match = regExp.firstMatch(invalidError);
-          String? jsonString = match!.group(0);
-          final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
-          log(errorJson.toString());
-          Utils.showFlushbarErrorMessage(
-              message: errorJson['message'], context: context);
-        }
+    // exception message from server
+    else {
+      String invalidError = error.toString();
+      RegExp regExp = RegExp(r'({.*})');
+      RegExpMatch? match = regExp.firstMatch(invalidError);
+      String? jsonString = match!.group(0);
+      final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
+      log(errorJson.toString());
+      Utils.showFlushbarErrorMessage(
+          message: errorJson['message'], context: context);
+    }
   }
-
-  
 }
