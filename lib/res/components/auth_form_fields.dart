@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/utils/utils.dart';
+
+class AuthFormField extends StatelessWidget {
+  const AuthFormField(
+      {super.key,
+      required this.currentFocusNode,
+      required this.controller,
+      required this.nextFocusNode,
+      required this.hintText,
+      required this.labalText,
+      this.formkey,
+      required this.validator,
+      this.obsecureText = false,
+      required this.textInputType,
+      this.obsecureValue = "",
+      this.suffix,
+      this.prefix});
+
+  final FocusNode currentFocusNode;
+  final FocusNode nextFocusNode;
+  final TextEditingController controller;
+  final String hintText;
+  final String labalText;
+  final GlobalKey<FormFieldState>? formkey;
+  final String? Function(String?) validator;
+  final bool obsecureText;
+  final TextInputType textInputType;
+  final String obsecureValue;
+  final Widget? suffix;
+  final Widget? prefix;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xFFF1F1F1),
+          borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: AppPadding.small, horizontal: AppPadding.medium),
+        child: TextFormField(
+          obscureText: obsecureText,
+          focusNode: currentFocusNode,
+          keyboardType: textInputType,
+          controller: controller,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            // enabledBorder: const OutlineInputBorder(
+            //   borderRadius: BorderRadius.all(
+            //     Radius.circular(
+            //       8,
+            //     ),
+            //   ),
+            //   borderSide: BorderSide(
+            //     color: AppColors.primary,
+            //   ),
+            // ),
+            // focusedBorder: const OutlineInputBorder(
+            //   borderRadius: BorderRadius.all(
+            //     Radius.circular(
+            //       8,
+            //     ),
+            //   ),
+            //   borderSide: BorderSide(
+            //     color: AppColors.primary,
+            //   ),
+            // ),
+            hintText: hintText,
+            // prefixIcon: prefix,
+            labelText: labalText,
+            suffixIcon: suffix,
+          ),
+          onFieldSubmitted: (value) => Utils.fieldFocusChange(
+            context: context,
+            current: currentFocusNode,
+            nextFocus: nextFocusNode,
+          ),
+          // validation
+          validator: validator,
+          key: formkey,
+        ),
+      ),
+    );
+  }
+}

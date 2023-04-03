@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view_model/auth_view_model.dart';
@@ -25,9 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Offpitch',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: AppTheme.lightTheme,
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.genericRoute,
       ),

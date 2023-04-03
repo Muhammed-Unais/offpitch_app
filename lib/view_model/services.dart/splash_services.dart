@@ -13,11 +13,11 @@ class SplashServices {
       if (value.data!.accessToken == "" || value.data!.accessToken == null) {
         await Future.delayed(const Duration(seconds: 3));
         // ignore: use_build_context_synchronously
-        Navigator.pushNamed(context, RoutesName.login);
+        Navigator.pushReplacementNamed(context, RoutesName.login,);
       } else {
         await Future.delayed(const Duration(seconds: 3));
         // ignore: use_build_context_synchronously
-        Navigator.pushNamed(context, RoutesName.home);
+        Navigator.pushReplacementNamed(context, RoutesName.home);
       }
     }).onError((error, stackTrace) {
       log(error.toString());

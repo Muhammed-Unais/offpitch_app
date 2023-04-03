@@ -1,8 +1,8 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view_model/auth_view_model.dart';
+import 'package:offpitch_app/view_model/services.dart/signup_validation.dart';
 import 'package:provider/provider.dart';
 
 class SignupView extends StatefulWidget {
@@ -70,12 +70,7 @@ class _SignupViewState extends State<SignupView> {
                   nextFocus: _emailFoucsNode,
                 ),
                 // validation
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Name can not be empty";
-                  }
-                  return null;
-                },
+                validator: (value) =>SignupValidation.nameValidaton(value),
               ),
               // Email Field
               TextFormField(
@@ -95,16 +90,7 @@ class _SignupViewState extends State<SignupView> {
                   nextFocus: _passwordFoucsNode,
                 ),
                 // validation
-                validator: (value) {
-                  final email = _emailTextEditController.text;
-                  final isValid = EmailValidator.validate(email);
-                  if (value == null || value.isEmpty) {
-                    return "Enter Your Email";
-                  } else if (!isValid) {
-                    return "Enter Valid Email";
-                  }
-                  return null;
-                },
+                validator: (value) =>SignupValidation.emailValidation(value) 
               ),
               // password field
               ValueListenableBuilder(
@@ -134,20 +120,14 @@ class _SignupViewState extends State<SignupView> {
                       labelText: "Password",
                     ),
                     // validation
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Password can not be empty";
-                      } else if (value.length < 8) {
-                        return "Password Too short";
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        SignupValidation.passwordValidatiion(value),
                   );
                 },
               ),
               // submitt button
               SubmitButton(
-                isLoading: authViewModel.isloading,
+                isLoading: authViewModel.signUpLoading,
                 actionFunction: () {
                   if (formkey.currentState!.validate()) {
                     final email = _emailTextEditController.text;

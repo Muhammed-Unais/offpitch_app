@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/colors.dart';
+import 'package:offpitch_app/res/app_theme.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton(
@@ -14,23 +14,21 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: actionFunction,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.offpitchOrange,
-        foregroundColor: AppColors.offpitchwhite,
-        textStyle: TextStyle(
-          color: AppColors.offpitchwhite,
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
+      child: ElevatedButton(
+        onPressed: actionFunction,
+        style: ElevatedButton.styleFrom(),
+        child: isLoading
+            ? const CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.primary,
+              )
+            : Text(
+                buttonChildtext,
+              ),
       ),
-      child: isLoading
-          ? CircularProgressIndicator(
-              strokeWidth: 2,
-              color: AppColors.offpitchwhite,
-            )
-          : Text(
-              buttonChildtext,
-            ),
     );
   }
 }

@@ -1,5 +1,4 @@
 class RoutesName {
-
   // home screen routes name
   static const String home = "home_screen";
 
@@ -9,5 +8,7 @@ class RoutesName {
 
   // splash scrren routes name
   static const String splash = "splash_screen";
- 
+
+  // otp view routes name
+  static const String otp = "otp_view";
 }

@@ -1,21 +1,32 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/repository/auth_repository.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
+import 'package:offpitch_app/view_model/services.dart/login_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/signup_validation.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final _myrepo = AuthRepository();
 
+  String? confirmationToken;
+
   bool _isloading = false;
   bool get isloading => _isloading;
 
   bool _signUpLoading = false;
   bool get signUpLoading => _signUpLoading;
+
+  bool _forgotPasResetLoading = false;
+  bool get forgotPasResetLoading => _forgotPasResetLoading;
+
+  setForgotPasResetLoading(bool value) {
+    _forgotPasResetLoading = value;
+    notifyListeners();
+  }
 
   setLoading(bool value) {
     _isloading = value;
@@ -30,52 +41,74 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> loginApi(data, BuildContext context) async {
     setLoading(true);
 
-    _myrepo.loginApi(data).then((value) {
-      setLoading(false);
+    _myrepo.loginApi(data).then(
+      (value) {
+        setLoading(false);
 
-      final userPrefrence = Provider.of<UserViewModel>(context, listen: false);
-      // saveToken to Sharedpreference
-      userPrefrence.saveToken(
-          UserModel(data: Data(accessToken: value['data']['accessToken'])));
-      Navigator.pushNamed(context, RoutesName.home);
+        // saveToken to Sharedpreference
+        final userPrefrence =
+            Provider.of<UserViewModel>(context, listen: false);
+        userPrefrence.saveToken(
+          UserModel(
+            data: Data(
+              accessToken: value['data']['accessToken'],
+            ),
+          ),
+        );
 
-    }).onError((error, stackTrace) async {
-      setLoading(false);
+        Navigator.pushNamed(context, RoutesName.home);
+      },
+    ).onError(
+      (error, stackTrace) async {
+        setLoading(false);
+        // display errors
+        LoginValidation.loginErrorDisplay(context, error);
+        log(error.toString());
+      },
+    );
+  }
 
-      // socket exception
-      if (error.toString().contains("No Internet connection")) {
-        Utils.showFlushbarErrorMessage(
-            message: "No Internet connection", context: context);
-      }
-
-      // default somthing went wrong
-      else if(error.toString().contains("error occured while communicating with server")){
-         Utils.showFlushbarErrorMessage(
-            message: "Something went wrong", context: context);
-      }
-
-      // exception message from server 
-       else {
-        String invalidError = error.toString();
-        RegExp regExp = RegExp(r'({.*})');
-        RegExpMatch? match = regExp.firstMatch(invalidError);
-        String? jsonString = match!.group(0);
-        final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
-        log(errorJson.toString());
-        Utils.showFlushbarErrorMessage(
-            message: errorJson['message'], context: context);
-      }
+  Future<void> forgotPassword(BuildContext context, data) async {
+    setForgotPasResetLoading(true);
+    _myrepo.forgotPasswordApi(data).then((value) {
+      setForgotPasResetLoading(false);
+      log(value.toString());
+      final message = value["message"];
+      Utils.showFlushbarErrorMessage(message: message, context: context);
+    }).onError((error, stackTrace) {
+      setForgotPasResetLoading(false);
+      log(error.toString());
     });
   }
 
   Future<void> signUpApi(data, BuildContext context) async {
     setSingupLoading(true);
-    _myrepo.signupApi(data).then((value) {
-      setSingupLoading(false);
-      Navigator.pushNamed(context, RoutesName.home);
+    _myrepo.signupApi(data).then(
+      (value) {
+        confirmationToken = value['data']['confirmToken'];
+        setSingupLoading(false);
+        log(value.toString());
+        Navigator.pushNamed(context, RoutesName.otp);
+      },
+    ).onError(
+      (error, stackTrace) {
+        setSingupLoading(false);
+        log(error.toString());
+        // display error
+        SignupValidation.signupErrorDisplay(context, error);
+      },
+    );
+  }
+
+  Future<void> otpVerifyApi(otp, BuildContext context) async {
+    Map data = {
+      "otp": otp,
+      "token": confirmationToken,
+    };
+    _myrepo.otpVerifyApi(data).then((value) {
       log(value.toString());
+      Navigator.pushNamed(context, RoutesName.home);
     }).onError((error, stackTrace) {
-      setSingupLoading(false);
       log(error.toString());
     });
   }
