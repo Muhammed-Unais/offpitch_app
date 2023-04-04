@@ -23,7 +23,7 @@ class SubmitButton extends StatelessWidget {
         child: isLoading
             ? const CircularProgressIndicator(
                 strokeWidth: 2,
-                color: AppColors.primary,
+                color: AppColors.white,
               )
             : Text(
                 buttonChildtext,

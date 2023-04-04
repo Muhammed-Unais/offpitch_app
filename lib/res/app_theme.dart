@@ -38,13 +38,15 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.white,
-    appBarTheme:const AppBarTheme(
-      backgroundColor:  AppColors.white,
-      elevation: 0,
+    appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: AppColors.black)),
+    iconTheme: const IconThemeData(
+      color: AppColors.primary,
     ),
-     iconTheme: const IconThemeData(
-          color: AppColors.primary,
-        ),
+    iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(backgroundColor: AppColors.black)),
     textTheme: TextTheme(
       headlineLarge: _headingStyle.copyWith(fontSize: 32.0),
       headlineMedium: _headingStyle.copyWith(fontSize: 28.0),
@@ -59,7 +61,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: _bodyTextStyle.copyWith(fontSize: 12),
+        textStyle: _bodyTextStyle.copyWith(fontSize: 18),
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
@@ -69,6 +71,8 @@ class AppTheme {
     ),
     colorScheme: ColorScheme.fromSwatch()
         .copyWith(secondary: AppColors.primary)
-        .copyWith(background: AppColors.white)
+        .copyWith(
+          background: AppColors.white,
+        ),
   );
 }

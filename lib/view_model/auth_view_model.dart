@@ -23,6 +23,14 @@ class AuthViewModel extends ChangeNotifier {
   bool _forgotPasResetLoading = false;
   bool get forgotPasResetLoading => _forgotPasResetLoading;
 
+  bool _otpVerifyIsLoading = false;
+  bool get otpVerifyIsLoading => _otpVerifyIsLoading;
+
+  setOtpVerifyLoading(bool value) {
+    _otpVerifyIsLoading = value;
+    notifyListeners();
+  }
+
   setForgotPasResetLoading(bool value) {
     _forgotPasResetLoading = value;
     notifyListeners();
@@ -101,14 +109,17 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future<void> otpVerifyApi(otp, BuildContext context) async {
+    setOtpVerifyLoading(true);
     Map data = {
       "otp": otp,
       "token": confirmationToken,
     };
     _myrepo.otpVerifyApi(data).then((value) {
+      setOtpVerifyLoading(false);
       log(value.toString());
       Navigator.pushNamed(context, RoutesName.home);
     }).onError((error, stackTrace) {
+      setOtpVerifyLoading(false);
       log(error.toString());
     });
   }

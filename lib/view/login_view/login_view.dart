@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view/login_view/widgets/login_form.dart';
-import 'package:offpitch_app/view/login_view/widgets/login_view_topimage.dart';
+import 'package:offpitch_app/view/login_view/components/login_form.dart';
+import 'package:offpitch_app/view/login_view/components/login_view_topimage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

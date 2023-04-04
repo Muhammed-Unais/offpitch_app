@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view/signup_view/widgets/signup_top_image.dart';
-import 'package:offpitch_app/view/signup_view/widgets/sigup_form.dart';
+import 'package:offpitch_app/view/signup_view/components/signup_top_image.dart';
+import 'package:offpitch_app/view/signup_view/components/sigup_form.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});

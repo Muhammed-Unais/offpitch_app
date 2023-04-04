@@ -1,9 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:offpitch_app/res/app_theme.dart';
 
 class Utils {
-
   // Textfield auto focus change
   static fieldFocusChange(
       {required BuildContext context,
@@ -25,18 +25,51 @@ class Utils {
   }
 
   static showFlushbarErrorMessage(
-      {required String message, String title = "", context}) {
+      {required String message, String title = " ", context}) {
+    // Flushbar(
+
+    //   backgroundColor: AppColors.white,
+    //   title: title,
+    //   message: message,
+    //   duration: const Duration(
+    //     seconds: 3,
+    //   ),
+    //   forwardAnimationCurve: Curves.decelerate,
+    //   reverseAnimationCurve: Curves.easeInOut,
+    //   icon: const Icon(Icons.error),
+    //   positionOffset: 20,
+    //   flushbarPosition: FlushbarPosition.BOTTOM,
+    // ).show(context);
+
     Flushbar(
-      title: title,
       message: message,
-      duration: const Duration(
-        seconds: 3,
+      messageColor: AppColors.grey,
+      messageSize: 18,
+      titleColor: AppColors.grey,
+      titleSize: 18,
+      flushbarPosition: FlushbarPosition.TOP,
+      title: title,
+      duration: const Duration(seconds: 3),
+      backgroundColor: Colors.white,
+      icon: const Icon(
+        Icons.error_outline,
+        color: Colors.red,
       ),
       forwardAnimationCurve: Curves.decelerate,
       reverseAnimationCurve: Curves.easeInOut,
-      icon: const Icon(Icons.error),
-      positionOffset: 20,
-      flushbarPosition: FlushbarPosition.BOTTOM,
+      
+      progressIndicatorBackgroundColor: Colors.red,
+      progressIndicatorValueColor:
+          const AlwaysStoppedAnimation<Color>(Colors.red),
+      mainButton: IconButton(
+        onPressed: () {
+          // Flushbar.hide(context);
+        },
+        icon: const Text(
+          'OK',
+          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+        ),
+      ),
     ).show(context);
   }
 
