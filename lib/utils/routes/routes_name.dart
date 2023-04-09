@@ -11,4 +11,7 @@ class RoutesName {
 
   // otp view routes name
   static const String otp = "otp_view";
+  
+  // navigation view route name
+  static const String navigation = "navigation_view";
 }

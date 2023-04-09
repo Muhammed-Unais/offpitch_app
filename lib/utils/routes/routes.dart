@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view/home_view.dart';
+import 'package:offpitch_app/view/home_view/home_view.dart';
 import 'package:offpitch_app/view/login_view/login_view.dart';
+import 'package:offpitch_app/view/bottom_bar_view/navigation_bar_view.dart';
 import 'package:offpitch_app/view/otp_verify_view/otp_verify_view.dart';
 import 'package:offpitch_app/view/signup_view/signup_view.dart';
 import 'package:offpitch_app/view/splash_view.dart';
@@ -19,7 +20,7 @@ class Routes {
         );
       case RoutesName.home:
         return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => const HomeView(),
         );
       case RoutesName.splash:
         return MaterialPageRoute(
@@ -28,6 +29,10 @@ class Routes {
       case RoutesName.otp:
         return MaterialPageRoute(
           builder: (context) => const OtpVerifyView(),
+        );
+      case RoutesName.navigation:
+        return MaterialPageRoute(
+          builder: (context) => const BottomBarView(),
         );
       default:
         return MaterialPageRoute(

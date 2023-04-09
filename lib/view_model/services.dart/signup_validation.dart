@@ -32,7 +32,7 @@ class SignupValidation {
   }
 
   static nameValidaton(value) {
-    const pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])';
+    const pattern = r'^(?=.*?[a-z])';
     RegExp regExp = RegExp(pattern);
 
     log("1");
@@ -55,7 +55,7 @@ class SignupValidation {
   static signupErrorDisplay(BuildContext context, error) {
     if (error.toString().contains("No Internet connection")) {
       Utils.showFlushbarErrorMessage(
-          message: "No Internet connection", context: context);
+          message: "No Internet connection", context: context,isError: true);
     }
 
     // default somthing went wrong
@@ -63,7 +63,7 @@ class SignupValidation {
         .toString()
         .contains("error occured while communicating with server")) {
       Utils.showFlushbarErrorMessage(
-          message: "Something went wrong", context: context);
+          message: "Something went wrong", context: context,isError: true);
     }
 
     // exception message from server
@@ -75,7 +75,7 @@ class SignupValidation {
       final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
       log(errorJson.toString());
       Utils.showFlushbarErrorMessage(
-          message: errorJson['message'], context: context);
+          message: errorJson['message'], context: context,isError: true);
     }
   }
 }

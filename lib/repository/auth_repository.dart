@@ -18,14 +18,13 @@ class AuthRepository {
 
   Future<dynamic> forgotPasswordApi(dynamic data) async {
     try {
-      final response =
-          await _apiService.getPostApiResponse(AppUrl.forgotPasswordEndPonint, data);
+      final response = await _apiService.getPostApiResponse(
+          AppUrl.forgotPasswordEndPonint, data);
       return response;
     } catch (e) {
       rethrow;
     }
   }
-
 
   Future<dynamic> signupApi(dynamic data) async {
     try {
@@ -38,7 +37,7 @@ class AuthRepository {
     }
   }
 
-   Future<dynamic> otpVerifyApi(dynamic data) async {
+  Future<dynamic> otpVerifyApi(dynamic data) async {
     try {
       final response =
           _apiService.getPostApiResponse(AppUrl.otpVerifyEndPoint, data);
@@ -48,6 +47,5 @@ class AuthRepository {
       rethrow;
     }
   }
-
 
 }

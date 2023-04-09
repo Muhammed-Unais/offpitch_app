@@ -1,3 +1,4 @@
+
 import 'package:offpitch_app/data/response/status.dart';
 
 class ApiResponse<T> {
@@ -7,9 +8,9 @@ class ApiResponse<T> {
 
   ApiResponse(this.data, this.message, this.status);
 
-  ApiResponse.error() : status = Status.ERROR;
+  ApiResponse.error(this.message) : status = Status.ERROR;
 
-  ApiResponse.conpleted() : status = Status.COMPLETED;
+  ApiResponse.completed(this.data) : status = Status.COMPLETED;
 
   ApiResponse.loading() : status = Status.LOADING;
 
@@ -17,4 +18,5 @@ class ApiResponse<T> {
   String toString() {
     return "Status : $status \n Message : $message \n Data: $data";
   }
+
 }

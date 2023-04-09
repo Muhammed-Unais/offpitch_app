@@ -10,7 +10,9 @@ class AppUrl {
 
   // otp verify post uri
   static var otpVerifyEndPoint = "$baseUrl/auth/verify-email";
-  
+
   // forgotPasswordEndPoint
   static var forgotPasswordEndPonint = "$baseUrl/auth/forgot-password";
+
+  static var allTournaments = "$baseUrl/tournaments";
 }

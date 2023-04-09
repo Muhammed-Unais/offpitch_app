@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:offpitch_app/data/app_exception.dart';
 import 'package:offpitch_app/data/network/base_api_service.dart';
 import 'package:http/http.dart' as http;
+
 
 class NetworkApiServices extends BaseApiService {
   @override
@@ -24,12 +26,11 @@ class NetworkApiServices extends BaseApiService {
     dynamic responseJson;
     try {
       Response response = await http.post(
-        Uri.parse(
-          url,
-        ),
-        body: data,
-        headers: {}
-      ).timeout(const Duration(seconds: 10));
+          Uri.parse(
+            url,
+          ),
+          body: data,
+          headers: {}).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -37,10 +38,12 @@ class NetworkApiServices extends BaseApiService {
     return responseJson;
   }
 
-  dynamic returnResponse(http.Response response) {
+  dynamic returnResponse(Response response) {
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.body);
+        final responseJson = jsonDecode(response.body);
+        log(response.body);
+        log(responseJson.toString());
         return responseJson;
       case 400:
         throw BadRequestException(response.body);
@@ -52,4 +55,27 @@ class NetworkApiServices extends BaseApiService {
         );
     }
   }
+
+  // static getClub() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   final token = preferences.getString('authToken');
+  //   // Dio dio = Dio();
+  //   try {
+  //     log(token.toString());
+  //     // dio.options.headers['Authorization'] = token;
+  //     // final response = await dio.get("https://offpitch.live/api/auth/refresh");
+  //     final headers = {'authToken': '$token'};
+  //     final Response response = await http.get(
+  //         Uri.parse("https://offpitch.live/api/auth/refresh"),
+          
+  //         headers: {});
+  //     log(response.body.toString());
+  //     // preferences.remove('accessToken');
+  //   } catch (e) {
+  //     log(e.toString());
+  //     // preferences.remove('accessToken');
+
+  //     // if (e.toString() == 403) {}
+  //   }
+  // }
 }

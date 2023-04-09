@@ -67,6 +67,7 @@ class _LoginFormState extends State<LoginForm> {
             valueListenable: _obsecurePassword,
             builder: (context, obsecureValue, child) {
               return AuthFormField(
+                  isoutFocusnode: true,
                   textInputType: TextInputType.visiblePassword,
                   currentFocusNode: _passwordFoucsNode,
                   controller: _passwordTextEditController,

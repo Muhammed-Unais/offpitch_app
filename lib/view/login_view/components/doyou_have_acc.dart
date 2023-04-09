@@ -19,7 +19,7 @@ class DoyouhaveAcc extends StatelessWidget {
           ),
           Text(
             "Sign up",
-            style: Theme.of(context).textTheme.labelLarge,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
         ],
       ),

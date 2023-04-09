@@ -81,6 +81,7 @@ class _SignupFormState extends State<SignupForm> {
             valueListenable: _obsecurePassword,
             builder: (context, obsecureValue, child) {
               return AuthFormField(
+                isoutFocusnode: true,
                 currentFocusNode: _passwordFoucsNode,
                 controller: _passwordTextEditController,
                 nextFocusNode: _passwordFoucsNode,

@@ -3,7 +3,7 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
 
 class AuthFormField extends StatelessWidget {
-  const AuthFormField(
+   const AuthFormField(
       {super.key,
       required this.currentFocusNode,
       required this.controller,
@@ -16,7 +16,7 @@ class AuthFormField extends StatelessWidget {
       required this.textInputType,
       this.obsecureValue = "",
       this.suffix,
-      this.prefix});
+      this.prefix, this.isoutFocusnode=false});
 
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
@@ -30,6 +30,7 @@ class AuthFormField extends StatelessWidget {
   final String obsecureValue;
   final Widget? suffix;
   final Widget? prefix;
+  final bool isoutFocusnode;
 
   @override
   Widget build(BuildContext context) {
@@ -47,32 +48,13 @@ class AuthFormField extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             border: InputBorder.none,
-            // enabledBorder: const OutlineInputBorder(
-            //   borderRadius: BorderRadius.all(
-            //     Radius.circular(
-            //       8,
-            //     ),
-            //   ),
-            //   borderSide: BorderSide(
-            //     color: AppColors.primary,
-            //   ),
-            // ),
-            // focusedBorder: const OutlineInputBorder(
-            //   borderRadius: BorderRadius.all(
-            //     Radius.circular(
-            //       8,
-            //     ),
-            //   ),
-            //   borderSide: BorderSide(
-            //     color: AppColors.primary,
-            //   ),
-            // ),
             hintText: hintText,
             // prefixIcon: prefix,
             labelText: labalText,
             suffixIcon: suffix,
           ),
           onFieldSubmitted: (value) => Utils.fieldFocusChange(
+            isOutfocusNode: isoutFocusnode,
             context: context,
             current: currentFocusNode,
             nextFocus: nextFocusNode,

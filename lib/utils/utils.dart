@@ -7,9 +7,11 @@ class Utils {
   // Textfield auto focus change
   static fieldFocusChange(
       {required BuildContext context,
+      required bool isOutfocusNode,
       required FocusNode current,
-      required FocusNode nextFocus}) {
-    current.unfocus();
+      required FocusNode nextFocus}) {    
+    isOutfocusNode ? 
+    current.unfocus():
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
@@ -25,7 +27,7 @@ class Utils {
   }
 
   static showFlushbarErrorMessage(
-      {required String message, String title = " ", context}) {
+      {required String message, String title = " ", context,required bool isError}) {
     // Flushbar(
 
     //   backgroundColor: AppColors.white,

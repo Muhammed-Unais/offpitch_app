@@ -19,7 +19,7 @@ class AlreadyHaveAcc extends StatelessWidget {
           ),
           Text(
             "Login",
-            style: Theme.of(context).textTheme.labelLarge,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
         ],
       ),
