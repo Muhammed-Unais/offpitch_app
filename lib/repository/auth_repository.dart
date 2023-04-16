@@ -10,6 +10,7 @@ class AuthRepository {
     try {
       final response =
           await _apiService.getPostApiResponse(AppUrl.loginEndPoint, data);
+          
       return response;
     } catch (e) {
       rethrow;
@@ -41,7 +42,7 @@ class AuthRepository {
     try {
       final response =
           _apiService.getPostApiResponse(AppUrl.otpVerifyEndPoint, data);
-
+     
       return response;
     } catch (error) {
       rethrow;

@@ -14,5 +14,15 @@ class AppUrl {
   // forgotPasswordEndPoint
   static var forgotPasswordEndPonint = "$baseUrl/auth/forgot-password";
 
+  //All tournamentsEndpoint
   static var allTournaments = "$baseUrl/tournaments";
+
+  //
+  static var club = "$baseUrl/user/club";
+
+  //
+  static var refreshToken = "$baseUrl/auth/refresh";
+
+  // single tornament apiendpoint
+  static var singleTournament = "$baseUrl/tournament/";
 }

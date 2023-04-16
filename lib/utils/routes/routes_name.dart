@@ -14,4 +14,10 @@ class RoutesName {
   
   // navigation view route name
   static const String navigation = "navigation_view";
+
+  // explore view routes name
+  static const String explore = "explore";
+
+  // tournament details view routes name
+  static const String tournamentDetails = "tournamentdetails";
 }

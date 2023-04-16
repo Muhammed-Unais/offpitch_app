@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/app_theme.dart';
@@ -58,7 +58,7 @@ class _BottomBarViewState extends State<BottomBarView> {
           BottomNavigationBarItem(
             label: "add",
             icon: Icon(
-              IconlyBold.arrowUpCircle,
+              Icons.add_circle,
               color: AppColors.primary,
               size: 36,
             ),

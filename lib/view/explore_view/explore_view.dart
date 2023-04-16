@@ -1,79 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/view/explore_view/components/explore_search.dart';
+import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';
+import 'package:offpitch_app/view/explore_view/components/tab1_today_matches.dart';
+import 'package:offpitch_app/view/explore_view/components/tab2_upcoming_matches.dart';
 
-class ExploreView extends StatelessWidget {
+class ExploreView extends StatefulWidget {
   const ExploreView({super.key});
 
   @override
+  State<ExploreView> createState() => _ExploreViewState();
+}
+
+class _ExploreViewState extends State<ExploreView>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text(
-                "Touranaments",
-                style: Theme.of(context).textTheme.bodyLarge,
+      body: NestedScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar.medium(floating: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text(
+                  "Touranaments",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              // backgroundColor: AppColors.white,
+            ),
+          ];
+        },
+        body: Column(
+          children: [
+            const ExploreSearch(),
+            ExploreTabBar(
+              tabController: tabController,
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [Tab1TodayMatches(), Tab2UpcomingMatches()],
               ),
             ),
-            expandedHeight: 94,
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              height: size.height * 0.06,
-              width: double.infinity,
-              color: Colors.grey.shade100,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: AppMargin.large,
-                    ),
-                    padding: const EdgeInsets.all(AppPadding.extraSmall),
-                    width: size.width * 0.75,
-                    height: size.height * 0.05,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(
-                            0.5,
-                          ),
-                          blurRadius: 7,
-                          offset: const Offset(
-                            0,
-                            3,
-                          ),
-                        ),
-                      ],
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(
-                        AppRadius.borderRadiusS,
-                      ),
-                    ),
-                    child: TextField(
-                      // controller: textEditingController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Search",
-                        filled: false,
-                        prefixIcon: Icon(
-                          IconlyBroken.search,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Icon(IconlyBold.filter,),
-                ],
-              ),
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

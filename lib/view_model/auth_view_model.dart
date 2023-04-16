@@ -4,7 +4,6 @@ import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/repository/auth_repository.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/view_model/services.dart/login_validation.dart';
 import 'package:offpitch_app/view_model/services.dart/otp_validation.dart';
 import 'package:offpitch_app/view_model/services.dart/signup_validation.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
@@ -71,7 +70,7 @@ class AuthViewModel extends ChangeNotifier {
       (error, stackTrace) async {
         setLoading(false);
         // display errors
-        LoginValidation.loginErrorDisplay(context, error);
+        // LoginValidation.loginErrorDisplay(context, error);
         log(error.toString());
       },
     );
@@ -124,7 +123,6 @@ class AuthViewModel extends ChangeNotifier {
       // saveToken to Sharedpreference
 
       final userPrefrence = Provider.of<UserViewModel>(context, listen: false);
-      userPrefrence.remove();
       userPrefrence.saveToken(
         UserModel(
           data: Data(
@@ -139,5 +137,5 @@ class AuthViewModel extends ChangeNotifier {
       setOtpVerifyLoading(false);
       log(error.toString());
     });
-  }
+  }  
 }

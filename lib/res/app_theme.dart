@@ -9,66 +9,67 @@ class AppColors {
 
 class AppTheme {
   static const TextStyle _headingStyle = TextStyle(
-    fontWeight: FontWeight.bold,
-    color: AppColors.black,
-    fontFamily: 'Montserrat',
-    overflow: TextOverflow.ellipsis
-  );
+      fontWeight: FontWeight.bold,
+      color: AppColors.black,
+      fontFamily: 'Montserrat',
+      overflow: TextOverflow.ellipsis);
 
   static const TextStyle _subheadingStyle = TextStyle(
-    fontWeight: FontWeight.bold,
-    color: AppColors.black,
-    fontFamily: 'Montserrat',
-    overflow: TextOverflow.ellipsis
-  );
+      fontWeight: FontWeight.bold,
+      color: AppColors.black,
+      fontFamily: 'Montserrat',
+      overflow: TextOverflow.ellipsis);
 
   static const TextStyle _bodyTextStyle = TextStyle(
-    color: AppColors.black,
-    fontFamily: 'OpenSans',
-    overflow: TextOverflow.ellipsis
-  );
+      color: AppColors.black,
+      fontFamily: 'OpenSans',
+      overflow: TextOverflow.ellipsis);
 
   static const TextStyle _subBodyTextStyle = TextStyle(
-    color: AppColors.grey,
-    fontFamily: 'OpenSans',
-    overflow: TextOverflow.ellipsis
-  );
+      color: AppColors.grey,
+      fontFamily: 'OpenSans',
+      overflow: TextOverflow.ellipsis);
 
   static const TextStyle _labeltextStyle = TextStyle(
-    color: AppColors.primary,
-    fontFamily: 'OpenSans',
-    overflow: TextOverflow.ellipsis
-  );
+      color: AppColors.primary,
+      fontFamily: 'OpenSans',
+      overflow: TextOverflow.ellipsis);
 
   static final ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.white,
-        centerTitle: true,
-        iconTheme: IconThemeData(color: AppColors.black)),
+      backgroundColor: AppColors.white,
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: AppColors.black,
+      ),
+    ),
     iconTheme: const IconThemeData(
       color: AppColors.primary,
       size: 24,
     ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
-        iconSize: 30,
-        backgroundColor: AppColors.white,
+        iconSize: 24,
       ),
     ),
     textTheme: TextTheme(
       headlineLarge: _headingStyle.copyWith(fontSize: 32.0),
       headlineMedium: _headingStyle.copyWith(fontSize: 28.0),
       headlineSmall: _headingStyle.copyWith(fontSize: 24.0),
-      titleLarge: _headingStyle.copyWith(fontSize: 22.0,fontWeight: FontWeight.bold),
+      titleLarge:
+          _headingStyle.copyWith(fontSize: 22.0, fontWeight: FontWeight.bold),
       titleMedium: _subheadingStyle.copyWith(fontSize: 16.0),
       titleSmall: _subheadingStyle.copyWith(fontSize: 14.0),
       bodyLarge:
           _bodyTextStyle.copyWith(fontSize: 16.0, fontWeight: FontWeight.bold),
-      labelLarge: _subheadingStyle.copyWith(fontSize: 18,fontWeight: FontWeight.bold),    
-      labelMedium: _labeltextStyle.copyWith(fontSize: 16),
-      bodyMedium: _subBodyTextStyle.copyWith(fontSize: 14.0),
+      labelLarge:
+          _subheadingStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+      labelMedium: _labeltextStyle.copyWith(fontSize: 16).copyWith(),
+      labelSmall: _labeltextStyle.copyWith(fontSize: 14),
+      bodyMedium: _bodyTextStyle.copyWith(fontSize: 14.0),
       bodySmall: _subBodyTextStyle.copyWith(fontSize: 12.0),
     ),
     cardTheme: CardTheme(
@@ -92,7 +93,9 @@ class AppTheme {
       ),
     ),
     colorScheme: ColorScheme.fromSwatch()
-        .copyWith(secondary: AppColors.primary)
+        .copyWith(
+          secondary: AppColors.primary,
+        )
         .copyWith(
           background: AppColors.white,
         ),

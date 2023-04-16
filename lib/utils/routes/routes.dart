@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view/explore_view/explore_view.dart';
 import 'package:offpitch_app/view/home_view/home_view.dart';
 import 'package:offpitch_app/view/login_view/login_view.dart';
 import 'package:offpitch_app/view/bottom_bar_view/navigation_bar_view.dart';
 import 'package:offpitch_app/view/otp_verify_view/otp_verify_view.dart';
 import 'package:offpitch_app/view/signup_view/signup_view.dart';
 import 'package:offpitch_app/view/splash_view.dart';
+import 'package:offpitch_app/view/tournament_details_view/torunament_details_view.dart';
 
 class Routes {
   static Route<dynamic> genericRoute(RouteSettings settings) {
@@ -34,6 +36,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => const BottomBarView(),
         );
+      case RoutesName.explore:
+        return  MaterialPageRoute(
+          builder: (context) => const ExploreView(),
+        );
+       case RoutesName.tournamentDetails:
+        return  MaterialPageRoute(
+          builder: (context) => const TouranmentDetailsView(),
+        );     
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

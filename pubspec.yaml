@@ -42,10 +42,12 @@ dependencies:
   email_validator: ^2.1.17
   flutter_svg: ^2.0.4
   shared_preferences: ^2.0.20
-  dio: ^5.1.1
   flutter_iconly: ^1.0.2
   card_swiper: ^2.0.4
   dependencies:
+  intl: ^0.18.0
+  dio: ^4.0.6
+  readmore: ^2.2.0
 
 dev_dependencies:
   flutter_test:
