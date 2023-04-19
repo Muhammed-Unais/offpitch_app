@@ -40,6 +40,7 @@ class AppTheme {
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: const AppBarTheme(
+      surfaceTintColor: AppColors.white,
       backgroundColor: AppColors.white,
       centerTitle: true,
       iconTheme: IconThemeData(
@@ -69,7 +70,7 @@ class AppTheme {
           _subheadingStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
       labelMedium: _labeltextStyle.copyWith(fontSize: 16).copyWith(),
       labelSmall: _labeltextStyle.copyWith(fontSize: 14),
-      bodyMedium: _bodyTextStyle.copyWith(fontSize: 14.0),
+      bodyMedium: _subBodyTextStyle.copyWith(fontSize: 14.0),
       bodySmall: _subBodyTextStyle.copyWith(fontSize: 12.0),
     ),
     cardTheme: CardTheme(

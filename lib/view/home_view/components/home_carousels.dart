@@ -6,7 +6,8 @@ class HomeCarousels extends StatelessWidget {
       {super.key,
       required this.image,
       required this.isTouranment,
-      required this.tournamentName, required this.dateAndTime});
+      required this.tournamentName,
+      required this.dateAndTime});
 
   final String image;
   final bool isTouranment;
@@ -50,7 +51,7 @@ class HomeCarousels extends StatelessWidget {
           ),
         ),
         isTouranment
-            ?  Positioned(
+            ? Positioned(
                 left: 20,
                 bottom: 94,
                 child: Text(
@@ -69,7 +70,11 @@ class HomeCarousels extends StatelessWidget {
                 bottom: 10,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,"myclubdeatils"
+                    );
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.large),
                     child: Text(

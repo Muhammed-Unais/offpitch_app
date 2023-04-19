@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -78,9 +77,8 @@ class _Tab1TodayMatchesState extends State<Tab1TodayMatches> {
                   return InkWell(
                     onTap: () async {
                       Provider.of<DetailsTouramentViewModel>(context,
-                              listen: false).setDetilsTournament(
-                        ApiResponse.completed(tournaments),
-                      );
+                              listen: false)
+                          .getSingleTournament(tournaments.id);
                       await Navigator.pushNamed(context, "tournamentdetails");
                     },
                     child: TournamentCard(

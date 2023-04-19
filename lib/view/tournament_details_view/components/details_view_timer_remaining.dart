@@ -23,7 +23,7 @@ class DetailsViewTimerRemain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppPadding.large, vertical: AppPadding.large),
+          horizontal: AppPadding.large, vertical: AppPadding.medium),
       margin: const EdgeInsets.symmetric(
         horizontal: AppMargin.large,
       ),
@@ -44,28 +44,35 @@ class DetailsViewTimerRemain extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            '$days \n Days',
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            '$hours \n Hours',
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            "$minuts \n Minutes",
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            "$seconds \n Seconds",
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
+          Text("Registration closes in",style: Theme.of(context).textTheme.bodyMedium,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$days \n Days',
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                '$hours \n Hours',
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "$minuts \n Minutes",
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "$seconds \n Seconds",
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ],
       ),

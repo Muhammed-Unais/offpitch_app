@@ -25,4 +25,8 @@ class AppUrl {
 
   // single tornament apiendpoint
   static var singleTournament = "$baseUrl/tournament/";
+
+  // 
+  static var clubCreation = "$baseUrl/user/club";
+
 }

@@ -8,7 +8,9 @@ class HomeUpcomingtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppPadding.large, vertical: AppPadding.extraSmall),
+        horizontal: AppPadding.large,
+        vertical: AppPadding.extraSmall,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

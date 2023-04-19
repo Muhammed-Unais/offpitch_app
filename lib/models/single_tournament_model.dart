@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-SingleTournamentModel singleTournamentModelFromJson(String str) => SingleTournamentModel.fromJson(json.decode(str));
+SingleTournamentModel singleTournamentModelFromJson(Map<String,dynamic> data) => SingleTournamentModel.fromJson(data);
 
 String singleTournamentModelToJson(SingleTournamentModel data) => json.encode(data.toJson());
 

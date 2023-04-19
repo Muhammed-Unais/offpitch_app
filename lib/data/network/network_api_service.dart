@@ -8,19 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkApiServices extends BaseApiService {
   @override
-  Future getGetApiResponse(String url,id) async {
-     log(url);
+  Future getGetApiResponse(String url, id) async {
+    log(url);
     final dio = Dio();
     log("-----------------");
     dynamic responseJson;
     try {
-      final response = await dio.get(url+id).timeout(
+      final response = await dio.get(url + id).timeout(
             const Duration(
               seconds: 10,
             ),
           );
 
-     
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -44,7 +43,7 @@ class NetworkApiServices extends BaseApiService {
           final authToken = cookies[0].split('=')[1].split(';')[0];
           log(authToken.toString());
           final sp = await SharedPreferences.getInstance();
-          
+
           sp.setString('authToken', authToken);
         }
       }
@@ -54,23 +53,6 @@ class NetworkApiServices extends BaseApiService {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
-  }
-
-  returnResponse(Response response) {
-    switch (response.statusCode) {
-      case 200:
-        final responseJson = response.data;
-        log(responseJson.toString());
-        return responseJson;
-      case 400:
-        throw BadRequestException(response.data);
-      case 403:
-        throw UnauthorisedException(response.data);
-      default:
-        throw FetchDataException(
-          'error occured while communicating with server${response.statusCode}',
-        );
-    }
   }
 
   @override
@@ -96,7 +78,39 @@ class NetworkApiServices extends BaseApiService {
   }
 
   @override
-  Future getPostApiWithAccessToken(String url, data) async{
-    throw UnimplementedError();
+  Future getPostApiWithAccessToken(String url, data) async {
+    final dio = Dio();
+    final appinterceptor = AppInterceptor();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    dio.interceptors.addAll(appinterceptor.dio.interceptors);
+    try {
+      final accessToken = preferences.getString("accessToken");
+      dio.options.headers['Authorization'] = 'Bearer $accessToken';
+      final response =
+          await dio.put(url, data: data).timeout(const Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        log(response.data);
+        return response.data;
+      }
+    } on DioError catch (e) {
+      log(e.message.toString());
+    }
+  }
+
+  returnResponse(Response response) {
+    switch (response.statusCode) {
+      case 200:
+        final responseJson = response.data;
+        log(responseJson.toString());
+        return responseJson;
+      case 400:
+        throw BadRequestException(response.data);
+      case 403:
+        throw UnauthorisedException(response.data);
+      default:
+        throw FetchDataException(
+          'error occured while communicating with server${response.statusCode}',
+        );
+    }
   }
 }

@@ -1,11 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
-import 'package:offpitch_app/repository/club_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier {
-  final _myrepo = ClubRepository();
   Future<bool> saveToken(UserModel userModel) async {
     final sp = await SharedPreferences.getInstance();
     sp.remove('accessToken');
@@ -17,7 +15,7 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
-  Future getUser() async {
+  Future<String?> getUser() async {
     final sp = await SharedPreferences.getInstance();
     final String? authToken = sp.getString("authToken");
     log(authToken.toString());
@@ -29,13 +27,5 @@ class UserViewModel with ChangeNotifier {
     final sp = await SharedPreferences.getInstance();
     await sp.remove('authToken');
     return true;
-  }
-
-  Future club() async {
-    _myrepo.getAllClubWithAccessTokem().then((value) {
-      log(value.toString());
-    }).onError((error, stackTrace) {
-      log(error.toString());
-    });
   }
 }

@@ -56,8 +56,9 @@ class HomeAndExpViewModel extends ChangeNotifier {
       for (AllTournament element in alltournament) {
         String input = element.startDate;
         DateTime dateTime = inputFormat.parse(input);
+        log(dateTime.toString());
         String outputDate = outputFormat.format(dateTime);
-        log(outputDate);
+        log(outputDate.toString());
         if (dateStr.trim() != outputDate.trim()) {
           upcomingTournamentslist.add(element);
         } else {

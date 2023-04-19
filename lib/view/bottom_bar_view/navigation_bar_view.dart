@@ -32,7 +32,7 @@ class _BottomBarViewState extends State<BottomBarView> {
       body: views[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: bottomBarVieModel.onTap,
+        onTap: (value) => bottomBarVieModel.onTap(value, context),
         currentIndex: bottomBarVieModel.currentIndex,
         iconSize: 24,
         showSelectedLabels: false,

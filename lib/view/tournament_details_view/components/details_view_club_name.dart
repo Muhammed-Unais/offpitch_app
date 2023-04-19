@@ -18,6 +18,7 @@ class DetailsViewClubName extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleImages(
+            radius: AppRadius.borderRadiusL,
             image: clubImage,
             hight: 54,
             width: 54,

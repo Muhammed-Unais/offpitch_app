@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view/create_tournament_view/create_tournament_view.dart';
 import 'package:offpitch_app/view_model/auth_view_model.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view_model/create_new_club_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_detils_view_model.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +33,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DetailsTouramentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MyClubViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateNewClubViewModel(),
         ),
       ],
       child: MaterialApp(

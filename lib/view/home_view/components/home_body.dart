@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
+import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/home_view/components/home_top_card.dart';
@@ -62,6 +62,7 @@ class _HomeBodyState extends State<HomeBody> {
                       Expanded(
                         child: SingleChildScrollView(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const SizedBox(
                                 height: AppMargin.small,
@@ -76,46 +77,19 @@ class _HomeBodyState extends State<HomeBody> {
                                           child: CircularProgressIndicator(),
                                         );
                                       case Status.ERROR:
-                                        return Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: AppMargin.small),
-                                              height: 150,
-                                              width: 150,
-                                              child: SvgPicture.asset(
-                                                "assets/images/no-data.svg",
-                                              ),
-                                            ),
-                                            Text(value
-                                                .allTournamentModel.message!),
-                                          ],
+                                        return ErrorComponent(
+                                          errorMessage:
+                                              value.allTournamentModel.message!,
                                         );
                                       case Status.COMPLETED:
                                         if (value.allTournamentModel.data!.data
                                             .allTournaments.isEmpty) {
-                                          return Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    bottom: AppMargin.small),
-                                                height: 150,
-                                                width: 150,
-                                                child: SvgPicture.asset(
-                                                  "assets/images/add-data.svg",
-                                                ),
-                                              ),
-                                              Text(
-                                                "Host Tournaments",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                            ],
+                                          return const EmptyComponts(
+                                            addText: "",
+                                            height: 200,
+                                            width: 200,
+                                            showMessage: "No Tournaments",
+                                            image: "assets/images/no-data.svg",
                                           );
                                         }
                                         return ListView.builder(
@@ -154,7 +128,8 @@ class _HomeBodyState extends State<HomeBody> {
                                           },
                                         );
                                       default:
-                                        return const CircularProgressIndicator();
+                                        return const Center(
+                                            child: CircularProgressIndicator());
                                     }
                                   },
                                 ),

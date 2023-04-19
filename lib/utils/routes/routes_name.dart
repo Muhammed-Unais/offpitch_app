@@ -20,4 +20,12 @@ class RoutesName {
 
   // tournament details view routes name
   static const String tournamentDetails = "tournamentdetails";
+
+  // 
+  static const String myClub  = "myclubdeatils";
+
+  // 
+  static const String clubCreation  = "clubcreation";
+
+
 }

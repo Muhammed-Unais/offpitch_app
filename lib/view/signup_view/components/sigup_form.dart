@@ -36,8 +36,10 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   void dispose() {
+    _userNameTextEditController.dispose();
     _emailTextEditController.dispose();
     _passwordTextEditController.dispose();
+    _nameFoucusNode.dispose();
     _emailFoucsNode.dispose();
     _passwordFoucsNode.dispose();
     super.dispose();
@@ -119,12 +121,12 @@ class _SignupFormState extends State<SignupForm> {
             },
             buttonChildtext: "Submit",
           ),
-           const SizedBox(
+          const SizedBox(
             height: AppMargin.extraLarge,
           ),
           // Already have an accoount======
           const AlreadyHaveAcc(),
-           const SizedBox(
+          const SizedBox(
             height: AppMargin.extraLarge,
           ),
         ],
