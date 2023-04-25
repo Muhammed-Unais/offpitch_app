@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final singleTournamentModel = singleTournamentModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -8,140 +5,173 @@ SingleTournamentModel singleTournamentModelFromJson(Map<String,dynamic> data) =>
 
 String singleTournamentModelToJson(SingleTournamentModel data) => json.encode(data.toJson());
 
+
 class SingleTournamentModel {
     SingleTournamentModel({
-        required this.success,
-        required this.message,
-        required this.data,
+        this.success,
+        this.message,
+        this.data,
     });
 
-    bool success;
-    String message;
-    Data data;
+    bool? success;
+    String? message;
+    Data? data;
 
     factory SingleTournamentModel.fromJson(Map<String, dynamic> json) => SingleTournamentModel(
         success: json["success"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": data.toJson(),
+        "data": data?.toJson(),
     };
 }
 
 class Data {
     Data({
-        required this.id,
-        required this.host,
-        required this.v,
-        required this.cover,
-        required this.createdAt,
-        required this.description,
-        required this.groups,
-        required this.instruction,
-        required this.location,
-        required this.maxNoPlayers,
-        required this.minNoPlayers,
-        required this.noTeams,
-        required this.registration,
-        required this.shortDescription,
-        required this.startDate,
-        required this.status,
-        required this.teams,
-        required this.ticket,
-        required this.title,
-        required this.tournamentType,
-        required this.updatedAt,
+        this.id,
+        this.host,
+        this.v,
+        this.cover,
+        this.createdAt,
+        this.description,
+        this.groups,
+        this.instruction,
+        this.location,
+        this.maxNoPlayers,
+        this.minNoPlayers,
+        this.noTeams,
+        this.registration,
+        this.shortDescription,
+        this.startDate,
+        this.status,
+        this.teams,
+        this.ticket,
+        this.title,
+        this.tournamentType,
+        this.updatedAt,
+        this.matches,
     });
 
-    String id;
-    Host host;
-    int v;
-    String cover;
-    DateTime createdAt;
-    String description;
-    List<dynamic> groups;
-    String instruction;
-    String location;
-    int maxNoPlayers;
-    int minNoPlayers;
-    int noTeams;
-    Registration registration;
-    String shortDescription;
-    String startDate;
-    String status;
-    List<dynamic> teams;
-    Ticket ticket;
-    String title;
-    String tournamentType;
-    DateTime updatedAt;
+    String? id;
+    Host? host;
+    int? v;
+    String? cover;
+    DateTime? createdAt;
+    String? description;
+    List<Group>? groups;
+    String? instruction;
+    String? location;
+    int? maxNoPlayers;
+    int? minNoPlayers;
+    int? noTeams;
+    Registration? registration;
+    String? shortDescription;
+    String? startDate;
+    String? status;
+    List<dynamic>? teams;
+    Ticket? ticket;
+    String? title;
+    String? tournamentType;
+    DateTime? updatedAt;
+    Matches? matches;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["_id"],
-        host: Host.fromJson(json["host"]),
+        host: json["host"] == null ? null : Host.fromJson(json["host"]),
         v: json["__v"],
         cover: json["cover"],
-        createdAt: DateTime.parse(json["createdAt"]),
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         description: json["description"],
-        groups: List<dynamic>.from(json["groups"].map((x) => x)),
+        groups: json["groups"] == null ? [] : List<Group>.from(json["groups"]!.map((x) => Group.fromJson(x))),
         instruction: json["instruction"],
         location: json["location"],
         maxNoPlayers: json["max_no_players"],
         minNoPlayers: json["min_no_players"],
         noTeams: json["no_teams"],
-        registration: Registration.fromJson(json["registration"]),
+        registration: json["registration"] == null ? null : Registration.fromJson(json["registration"]),
         shortDescription: json["short_description"],
         startDate: json["start_date"],
         status: json["status"],
-        teams: List<dynamic>.from(json["teams"].map((x) => x)),
-        ticket: Ticket.fromJson(json["ticket"]),
+        teams: json["teams"] == null ? [] : List<dynamic>.from(json["teams"]!.map((x) => x)),
+        ticket: json["ticket"] == null ? null : Ticket.fromJson(json["ticket"]),
         title: json["title"],
         tournamentType: json["tournament_type"],
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        matches: json["matches"] == null ? null : Matches.fromJson(json["matches"]),
     );
 
     Map<String, dynamic> toJson() => {
         "_id": id,
-        "host": host.toJson(),
+        "host": host?.toJson(),
         "__v": v,
         "cover": cover,
-        "createdAt": createdAt.toIso8601String(),
+        "createdAt": createdAt?.toIso8601String(),
         "description": description,
-        "groups": List<dynamic>.from(groups.map((x) => x)),
+        "groups": groups == null ? [] : List<dynamic>.from(groups!.map((x) => x.toJson())),
         "instruction": instruction,
         "location": location,
         "max_no_players": maxNoPlayers,
         "min_no_players": minNoPlayers,
         "no_teams": noTeams,
-        "registration": registration.toJson(),
+        "registration": registration?.toJson(),
         "short_description": shortDescription,
         "start_date": startDate,
         "status": status,
-        "teams": List<dynamic>.from(teams.map((x) => x)),
-        "ticket": ticket.toJson(),
+        "teams": teams == null ? [] : List<dynamic>.from(teams!.map((x) => x)),
+        "ticket": ticket?.toJson(),
         "title": title,
         "tournament_type": tournamentType,
-        "updatedAt": updatedAt.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "matches": matches?.toJson(),
+    };
+}
+
+class Group {
+    Group({
+        this.name,
+        this.noTeams,
+        this.teams,
+        this.id,
+    });
+
+    String? name;
+    int? noTeams;
+    List<dynamic>? teams;
+    String? id;
+
+    factory Group.fromJson(Map<String, dynamic> json) => Group(
+        name: json["name"],
+        noTeams: json["no_teams"],
+        teams: json["teams"] == null ? [] : List<dynamic>.from(json["teams"]!.map((x) => x)),
+        id: json["_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "no_teams": noTeams,
+        "teams": teams == null ? [] : List<dynamic>.from(teams!.map((x) => x)),
+        "_id": id,
     };
 }
 
 class Host {
     Host({
-        required this.id,
-        required this.email,
-        required this.name,
-        required this.phone,
-        required this.profile,
+        this.id,
+        this.email,
+        this.name,
+        this.phone,
+        this.profile,
     });
 
-    String id;
-    String email;
-    String name;
-    int phone;
-    String profile;
+    String? id;
+    String? email;
+    String? name;
+    int? phone;
+    String? profile;
 
     factory Host.fromJson(Map<String, dynamic> json) => Host(
         id: json["_id"],
@@ -160,25 +190,65 @@ class Host {
     };
 }
 
-class Registration {
-    Registration({
-        required this.fee,
-        required this.lastDate,
-        required this.status,
+class Matches {
+    Matches({
+        this.id,
+        this.host,
+        this.cMatch,
+        this.rounds,
+        this.createdAt,
+        this.updatedAt,
+        this.v,
     });
 
-    Fee fee;
-    String lastDate;
-    String status;
+    String? id;
+    String? host;
+    List<int>? cMatch;
+    List<dynamic>? rounds;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    int? v;
+
+    factory Matches.fromJson(Map<String, dynamic> json) => Matches(
+        id: json["_id"],
+        host: json["host"],
+        cMatch: json["c_match"] == null ? [] : List<int>.from(json["c_match"]!.map((x) => x)),
+        rounds: json["rounds"] == null ? [] : List<dynamic>.from(json["rounds"]!.map((x) => x)),
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "host": host,
+        "c_match": cMatch == null ? [] : List<dynamic>.from(cMatch!.map((x) => x)),
+        "rounds": rounds == null ? [] : List<dynamic>.from(rounds!.map((x) => x)),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+    };
+}
+
+class Registration {
+    Registration({
+        this.fee,
+        this.lastDate,
+        this.status,
+    });
+
+    Fee? fee;
+    String? lastDate;
+    String? status;
 
     factory Registration.fromJson(Map<String, dynamic> json) => Registration(
-        fee: Fee.fromJson(json["fee"]),
+        fee: json["fee"] == null ? null : Fee.fromJson(json["fee"]),
         lastDate: json["last_date"],
         status: json["status"],
     );
 
     Map<String, dynamic> toJson() => {
-        "fee": fee.toJson(),
+        "fee": fee?.toJson(),
         "last_date": lastDate,
         "status": status,
     };
@@ -186,30 +256,44 @@ class Registration {
 
 class Fee {
     Fee({
-        required this.feeIs,
-        required this.amount,
+        this.amount,
+        this.feeIs,
     });
 
-    bool feeIs;
-    int amount;
+    int? amount;
+    bool? feeIs;
 
     factory Fee.fromJson(Map<String, dynamic> json) => Fee(
-        feeIs: json["is"],
         amount: json["amount"],
+        feeIs: json["is"],
     );
 
     Map<String, dynamic> toJson() => {
-        "is": feeIs,
         "amount": amount,
+        "is": feeIs,
     };
 }
 
 class Ticket {
-    Ticket();
+    Ticket({
+        this.amount,
+        this.ticketIs,
+        this.total,
+    });
+
+    int? amount;
+    bool? ticketIs;
+    int? total;
 
     factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
+        amount: json["amount"],
+        ticketIs: json["is"],
+        total: json["total"],
     );
 
     Map<String, dynamic> toJson() => {
+        "amount": amount,
+        "is": ticketIs,
+        "total": total,
     };
 }

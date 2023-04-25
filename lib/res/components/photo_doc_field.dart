@@ -19,7 +19,7 @@ class PhotoDocfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Row( 
       children: [
         Expanded(
           flex: 2,
@@ -40,7 +40,7 @@ class PhotoDocfield extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ), 
         Expanded(
           flex: 3,
           child: InkWell(

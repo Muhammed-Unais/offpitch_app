@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'dart:developer';
 
+import 'dart:developer';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/utils.dart';
@@ -27,7 +26,8 @@ class LoginValidation {
   }
 
   static loginErrorDisplay(BuildContext context, error) {
-      log("1");
+    log("${error}ffffff");
+    log("9");
 
     // socket exception
     if (error.toString().contains("No Internet connection")) {
@@ -47,15 +47,9 @@ class LoginValidation {
 
     // exception message from server
     else {
-      String invalidError = error.toString();
-      RegExp regExp = RegExp(r'({.*})');
-      RegExpMatch? match = regExp.firstMatch(invalidError);
-      String? jsonString = match!.group(0);
-      final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
-      log(errorJson.toString());
-      log("2");
       Utils.showFlushbarErrorMessage(
-          message: errorJson['message'], context: context, isError: true);
+          message: error.toString(), context: context, isError: true);
+      log(error.toString());
     }
   }
 }

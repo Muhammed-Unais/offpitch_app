@@ -12,9 +12,10 @@ class TextFormFieldsComponent extends StatelessWidget {
       this.validator,
       this.isOutfoucsNode = false,
       required this.currentFocusNode,
-      required this.nextFocusNode});
+      required this.nextFocusNode, this.onTap, this.enabled});
 
   final String hintText;
+  final Function()? onTap;
   final int? maxLines;
   final TextEditingController controller;
   final TextInputType? type;
@@ -22,10 +23,13 @@ class TextFormFieldsComponent extends StatelessWidget {
   final bool isOutfoucsNode;
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
+      onTap:onTap,
       onFieldSubmitted: (value) => Utils.fieldFocusChange(
           context: context,
           isOutfocusNode: isOutfoucsNode,

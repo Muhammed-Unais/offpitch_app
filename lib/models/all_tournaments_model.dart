@@ -37,7 +37,7 @@ class Data {
     });
 
     List<AllTournament> allTournaments;
-    int total;
+    int? total;
     int page;
     int limit;
 

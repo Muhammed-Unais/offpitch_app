@@ -29,4 +29,7 @@ class AppUrl {
   // 
   static var clubCreation = "$baseUrl/user/club";
 
+  // 
+  static var createTournament = "$baseUrl/user/tournament";
+
 }

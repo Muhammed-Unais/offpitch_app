@@ -25,12 +25,12 @@ class DetailsViewRegister extends StatelessWidget {
           DateTime dateTime = DateTime.now();
           log(dateTime.toString());
           DateTime tournamentStartingDate =
-              DateFormat("MM/dd/yyyy").parse(data.data.registration.lastDate);
+              DateFormat("MM/dd/yyyy").parse(data.data!.registration!.lastDate!);
           log(tournamentStartingDate.toString());
           remainingTime = tournamentStartingDate.difference(DateTime.now());
           log(remainingTime.toString());
           if (remainingTime.isNegative ||
-              data.data.registration.status.contains('closed')) {
+              data.data!.registration!.status!.contains('closed')) {
             return const Text("Registration closed");
           }
 
@@ -68,13 +68,13 @@ class DetailsViewRegister extends StatelessWidget {
                             children: [
                               const Icon(Icons.lock_clock),
                               Text(
-                                "Last date \n ${data.data.registration.lastDate}",
+                                "Last date \n ${data.data!.registration!.lastDate}",
                                 style: Theme.of(context).textTheme.titleSmall,
                               )
                             ],
                           ),
                         ),
-                        data.data.registration.fee.feeIs
+                        data.data!.registration!.fee!.feeIs!
                             ? SizedBox(
                                 child: Column(
                                   children: [
@@ -90,7 +90,7 @@ class DetailsViewRegister extends StatelessWidget {
                                       ],
                                     ),
                                     Text(
-                                      '₹${data.data.registration.fee.amount}'
+                                      '₹${data.data!.registration!.fee!.amount}'
                                           .toString(),
                                       style: Theme.of(context)
                                           .textTheme

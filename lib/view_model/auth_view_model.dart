@@ -4,8 +4,9 @@ import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/repository/auth_repository.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/view_model/services.dart/otp_validation.dart';
-import 'package:offpitch_app/view_model/services.dart/signup_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/auth_validation/login_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/auth_validation/otp_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/auth_validation/signup_validation.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -69,9 +70,11 @@ class AuthViewModel extends ChangeNotifier {
     ).onError(
       (error, stackTrace) async {
         setLoading(false);
+         log(error.toString());
         // display errors
-        // LoginValidation.loginErrorDisplay(context, error);
-        log(error.toString());
+        
+        LoginValidation.loginErrorDisplay(context, error);
+       
       },
     );
   }
@@ -131,7 +134,7 @@ class AuthViewModel extends ChangeNotifier {
         ),
       );
       log(value.toString());
-      Navigator.pushReplacementNamed(context, RoutesName.home);
+      Navigator.pushReplacementNamed(context, RoutesName.navigation);
     }).onError((error, stackTrace) {
       OtpValidation.otpErrorDisplay(context, error);
       setOtpVerifyLoading(false);

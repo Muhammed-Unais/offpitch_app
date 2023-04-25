@@ -25,12 +25,16 @@ class TabViewOneClubDescription extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ReadMoreText(
-            description,
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.start,
-            trimMode: TrimMode.Line,
-            trimLines: 5,
+          Expanded(
+            child: SingleChildScrollView(
+              child: ReadMoreText(
+                description,
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.start,
+                trimMode: TrimMode.Line,
+                trimLines: 5,
+              ),
+            ),
           ),
           SizedBox(
             child: Column(

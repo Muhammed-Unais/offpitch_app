@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/view/otp_verify_view/components/small_otp_form.dart';
 import 'package:offpitch_app/view_model/auth_view_model.dart';
-import 'package:offpitch_app/view_model/services.dart/otp_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/auth_validation/otp_validation.dart';
 import 'package:provider/provider.dart';
 
 class OtpForms extends StatefulWidget {

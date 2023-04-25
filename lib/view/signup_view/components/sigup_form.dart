@@ -4,7 +4,7 @@ import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/signup_view/components/already_have_acc.dart';
 import 'package:offpitch_app/view_model/auth_view_model.dart';
-import 'package:offpitch_app/view_model/services.dart/signup_validation.dart';
+import 'package:offpitch_app/view_model/services.dart/auth_validation/signup_validation.dart';
 import 'package:provider/provider.dart';
 
 class SignupForm extends StatefulWidget {

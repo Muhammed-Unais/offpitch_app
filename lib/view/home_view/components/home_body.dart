@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/app_theme.dart';
@@ -72,14 +74,19 @@ class _HomeBodyState extends State<HomeBody> {
                                 child: Consumer<HomeAndExpViewModel>(
                                   builder: (context, value, _) {
                                     switch (value.allTournamentModel.status) {
+
                                       case Status.LOADING:
+                                        log("dddssrrrrsaaaa");
                                         return const Center(
                                           child: CircularProgressIndicator(),
                                         );
                                       case Status.ERROR:
-                                        return ErrorComponent(
-                                          errorMessage:
-                                              value.allTournamentModel.message!,
+                                        log(value.allTournamentModel.message.toString());
+                                        return Center(
+                                          child: ErrorComponent(
+                                            errorMessage:
+                                                value.allTournamentModel.message!,
+                                          ),
                                         );
                                       case Status.COMPLETED:
                                         if (value.allTournamentModel.data!.data

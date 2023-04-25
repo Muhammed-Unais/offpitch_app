@@ -9,13 +9,14 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
       {super.key,
       this.nameValidator,
       this.emailValidator,
-      this.phomeValidator,
+      this.phomeValidator,  
       this.descValidator});
 
   final String? Function(String?)? nameValidator,
       emailValidator,
       phomeValidator,
       descValidator;
+      
 
   @override
   Widget build(BuildContext context) {

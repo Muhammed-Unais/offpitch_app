@@ -29,7 +29,7 @@ class HommeTopBar extends StatelessWidget {
               IconButton(
                 color: AppColors.white,
                 onPressed: () {
-                  // userAuthModel.remove();
+                  userAuthModel.remove();
                   // userAuthModel.club();
                 },
                 icon: const Icon(

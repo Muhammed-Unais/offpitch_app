@@ -12,21 +12,21 @@ class AppExceptions implements Exception {
 
 class FetchDataException extends AppExceptions {  
   FetchDataException([String? messages])
-      : super(messages, 'Error during Communication');
+      : super(messages, '');
 }
 
 class BadRequestException extends AppExceptions {
   BadRequestException([String? messages])
-      : super(messages, 'Invalid request');
+      : super(messages, '');
 }
 
 class UnauthorisedException extends AppExceptions {
   UnauthorisedException([String? messages])
-      : super(messages, 'Unauthorised request');
+      : super(messages, '');
 }
 
 class InavalidInputException extends AppExceptions {
   InavalidInputException([String? messages])
-      : super(messages, 'Invalid Input');
+      : super(messages, '');
 }
 

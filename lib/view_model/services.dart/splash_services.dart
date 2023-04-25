@@ -20,7 +20,8 @@ class SplashServices {
       } else {
         await Future.delayed(const Duration(seconds: 3));
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, RoutesName.navigation);
+        Navigator.pushReplacementNamed(context, RoutesName.navigation
+        );
       }
     }).onError((error, stackTrace) {
       log(error.toString());

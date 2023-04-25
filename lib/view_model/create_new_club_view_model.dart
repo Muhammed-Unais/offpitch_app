@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:offpitch_app/models/create_new_club_model.dart';
 import 'package:offpitch_app/repository/create_club_repository.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloudinary/cloudinary.dart';
@@ -70,11 +71,10 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
     if (doc != null) {
       PlatformFile file = doc.files.first;
-      File docs = File(file.path!);
 
       CloudinaryResponse response = await cloudinary.upload(
-        file: docs.path,
-        fileBytes: docs.readAsBytesSync(),
+        file: file.path,
+        fileBytes: file.bytes,
         resourceType: CloudinaryResourceType.auto,
         progressCallback: (count, total) {
           log('$count/$total');
@@ -88,7 +88,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
   final _myrepo = CreateClubRepository();
 
-  postClubCreate() async {
+  postClubCreate(context) async {
     if (imageUrl != null && docUrl != null) {
       log("success");
       final value = CreateClubModel(
@@ -101,6 +101,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
       _myrepo.postClubapi(value).then((value) {
         log(value.toString());
+        Navigator.pushNamed(context, RoutesName.myClub);
       }).onError((error, stackTrace) {
         error.toString();
       });
@@ -108,16 +109,16 @@ class CreateNewClubViewModel extends ChangeNotifier {
   }
 
   saveButtonFunc(context) async {
-    final userViewModel = Provider.of<UserViewModel>(context,listen: false);
+    final userViewModel = Provider.of<UserViewModel>(context, listen: false);
     final authToken = await userViewModel.getUser();
     if (authToken == null || authToken == "") {
-      navigateTologin(context);
+      await navigateTologin(context);
       return;
     }
-    postClubCreate();
+    postClubCreate(context);
   }
 
-  navigateTologin(context) {
-    Navigator.pushNamed(context, "login_screen");
+  Future navigateTologin(context) async {
+    await Navigator.pushNamed(context, "login_screen");
   }
 }

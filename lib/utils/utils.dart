@@ -28,21 +28,6 @@ class Utils {
 
   static showFlushbarErrorMessage(
       {required String message, String title = " ", context,required bool isError}) {
-    // Flushbar(
-
-    //   backgroundColor: AppColors.white,
-    //   title: title,
-    //   message: message,
-    //   duration: const Duration(
-    //     seconds: 3,
-    //   ),
-    //   forwardAnimationCurve: Curves.decelerate,
-    //   reverseAnimationCurve: Curves.easeInOut,
-    //   icon: const Icon(Icons.error),
-    //   positionOffset: 20,
-    //   flushbarPosition: FlushbarPosition.BOTTOM,
-    // ).show(context);
-
     Flushbar(
       message: message,
       messageColor: AppColors.grey,

@@ -20,6 +20,9 @@ class ExploreTabBar extends StatelessWidget {
         // indicatorWeight: 5,
         indicatorColor: AppColors.primary,
         controller: tabController,
+        onTap: (value) {
+          
+        },
         tabs: [
           Tab(
             child: Text(
@@ -29,7 +32,7 @@ class ExploreTabBar extends StatelessWidget {
           ),
           Tab(
             child: Text(
-              "Upcoming",
+              "Tournaments",
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),

@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:developer';
 
 import 'package:email_validator/email_validator.dart';
@@ -68,14 +68,9 @@ class SignupValidation {
 
     // exception message from server
     else {
-      String invalidError = error.toString();
-      RegExp regExp = RegExp(r'({.*})');
-      RegExpMatch? match = regExp.firstMatch(invalidError);
-      String? jsonString = match!.group(0);
-      final Map<String, dynamic> errorJson = jsonDecode(jsonString!);
-      log(errorJson.toString());
+     
       Utils.showFlushbarErrorMessage(
-          message: errorJson['message'], context: context,isError: true);
+          message: error.toString(), context: context,isError: true);
     }
   }
 }
