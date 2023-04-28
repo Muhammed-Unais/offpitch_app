@@ -32,4 +32,6 @@ class AppUrl {
   // 
   static var createTournament = "$baseUrl/user/tournament";
 
+  static var playersClub = "$baseUrl/user/players";
+
 }

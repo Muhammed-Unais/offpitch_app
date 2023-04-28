@@ -168,7 +168,7 @@ class TournamentCard extends StatelessWidget {
 
   String tournamentStand(startDate) {
     DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
+    DateTime date = DateTime(now.year, now.month, now.day -1);
     DateTime tournamentStartingDate =
         DateFormat("dd MMM yyyy").parse(startDate);
     int difference = date.compareTo(tournamentStartingDate);

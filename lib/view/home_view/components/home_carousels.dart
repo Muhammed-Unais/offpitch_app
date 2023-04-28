@@ -23,15 +23,21 @@ class HomeCarousels extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               AppRadius.borderRadiusM,
             ),
-            image: DecorationImage(
-              colorFilter: isTouranment
-                  ? const ColorFilter.mode(Colors.black45, BlendMode.darken)
-                  : null,
-              fit: BoxFit.cover,
-              image: AssetImage(
-                image,
-              ),
-            ),
+            image: !isTouranment
+                ? const DecorationImage(
+                    image: AssetImage("assets/images/hero-img.jpg"),
+                    fit: BoxFit.cover,
+                  )
+                : DecorationImage(
+                    colorFilter:  const ColorFilter.mode(
+                      Color.fromARGB(221, 18, 15, 15),
+                      BlendMode.darken,
+                    ),
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      image,
+                    ),
+                  ),
           ),
         ),
         Positioned(
@@ -71,9 +77,7 @@ class HomeCarousels extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,"myclubdeatils"
-                    );
+                    Navigator.pushNamed(context, "myclubdeatils");
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.large),

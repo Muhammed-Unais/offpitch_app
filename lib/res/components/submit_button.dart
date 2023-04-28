@@ -9,7 +9,7 @@ class SubmitButton extends StatelessWidget {
       this.isLoading = false});
 
   final String buttonChildtext;
-  final VoidCallback actionFunction;
+  final VoidCallback? actionFunction;
   final bool isLoading;
 
   @override
@@ -18,6 +18,7 @@ class SubmitButton extends StatelessWidget {
       width: double.infinity,
       height: 60,
       child: ElevatedButton(
+               
         onPressed: actionFunction,
         style: ElevatedButton.styleFrom(),
         child: isLoading

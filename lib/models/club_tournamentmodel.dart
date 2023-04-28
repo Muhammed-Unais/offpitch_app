@@ -48,20 +48,20 @@ class Data {
         required this.updatedAt,
     });
 
-    String id;
-    String author;
+    String? id;
+    String? author;
     int v;
-    String comment;
+    String? comment;
     DateTime createdAt;
-    String description;
-    String doc;
-    String email;
+    String? description;
+    String? doc;
+    String? email;
     int followers;
-    String name;
+    String? name;
     int phone;
     List<dynamic> players;
-    String profile;
-    String status;
+    String? profile;
+    String? status;
     DateTime updatedAt;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(

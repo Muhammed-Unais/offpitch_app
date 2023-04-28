@@ -4,8 +4,10 @@ import 'package:offpitch_app/res/constats.dart';
 
 class DetailsTournamentScheduledViewTabbar extends StatelessWidget {
   const DetailsTournamentScheduledViewTabbar({
-    super.key,
+    super.key, required this.tabController,
   });
+
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class DetailsTournamentScheduledViewTabbar extends StatelessWidget {
           AppRadius.borderRadiusL,
         ),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
       child: TabBar(
+        controller: tabController,
         labelStyle: Theme.of(context).textTheme.titleMedium,
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
         labelColor: AppColors.white,

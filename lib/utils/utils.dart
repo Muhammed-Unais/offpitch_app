@@ -1,18 +1,18 @@
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:offpitch_app/res/app_theme.dart';
-
 class Utils {
   // Textfield auto focus change
   static fieldFocusChange(
       {required BuildContext context,
       required bool isOutfocusNode,
       required FocusNode current,
-      required FocusNode nextFocus}) {    
-    isOutfocusNode ? 
-    current.unfocus():
-    FocusScope.of(context).requestFocus(nextFocus);
+      required FocusNode nextFocus}) {
+    isOutfocusNode
+        ? current.unfocus()
+        : FocusScope.of(context).requestFocus(nextFocus);
   }
 
   static showToastMessage(String message) {
@@ -27,7 +27,10 @@ class Utils {
   }
 
   static showFlushbarErrorMessage(
-      {required String message, String title = " ", context,required bool isError}) {
+      {required String message,
+      String title = " ",
+      context,
+      required bool isError}) {
     Flushbar(
       message: message,
       messageColor: AppColors.grey,
@@ -44,7 +47,6 @@ class Utils {
       ),
       forwardAnimationCurve: Curves.decelerate,
       reverseAnimationCurve: Curves.easeInOut,
-      
       progressIndicatorBackgroundColor: Colors.red,
       progressIndicatorValueColor:
           const AlwaysStoppedAnimation<Color>(Colors.red),
@@ -65,4 +67,6 @@ class Utils {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+
 }

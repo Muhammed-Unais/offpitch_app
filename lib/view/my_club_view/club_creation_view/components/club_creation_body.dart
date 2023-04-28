@@ -45,10 +45,14 @@ class ClubCreationBody extends StatelessWidget {
                   height: 50,
                 ),
                 ClubCreationSaveButton(
+                  buttonText:
+                      !clubcreatNewViewModel.isCreate ? "Update" : "Save",
                   width: size.width * 0.4,
                   btnFunction: () async {
                     if (formkey.currentState!.validate()) {
-                      clubcreatNewViewModel.saveButtonFunc(context);
+                      clubcreatNewViewModel.isCreate
+                          ? clubcreatNewViewModel.saveButtonFunc(context)
+                          : clubcreatNewViewModel.updateFunc(context);
                     }
                   },
                 ),

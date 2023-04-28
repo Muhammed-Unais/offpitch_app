@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:offpitch_app/models/create_new_club_model.dart';
 import 'package:offpitch_app/repository/create_club_repository.dart';
-import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view_model/my_club_view_model.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloudinary/cloudinary.dart';
@@ -15,6 +15,9 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
   String? imageUrl;
   String? docUrl;
+  String? clubImage;
+
+  bool isCreate = true;
 
 //  nameTexteditincontroller
   final TextEditingController nameController = TextEditingController();
@@ -39,6 +42,11 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
 // descriptionFocusNode
   final FocusNode descriptionFoucusNode = FocusNode();
+
+  setOptions(bool isCreates) {
+    isCreate = isCreates;
+    notifyListeners();
+  }
 
   final cloudinary = Cloudinary.signedConfig(
       apiKey: "946723352357176",
@@ -88,24 +96,31 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
   final _myrepo = CreateClubRepository();
 
-  postClubCreate(context) async {
-    if (imageUrl != null && docUrl != null) {
+  Future<bool> postClubCreate(context) async {
+    bool just = false;
+    if (imageUrl != null || docUrl != null) {
       log("success");
       final value = CreateClubModel(
-          doc: docUrl!,
+          doc: isCreate ? docUrl! : null,
           profile: imageUrl!,
           name: nameController.text.trim(),
           email: emailController.text.trim(),
           description: descriptionController.text.trim(),
           phone: phoneController.text.trim());
 
-      _myrepo.postClubapi(value).then((value) {
+      await _myrepo.postClubapi(value).then((value) async{
+        log("kkkkk");
+        just = true;
         log(value.toString());
-        Navigator.pushNamed(context, RoutesName.myClub);
+        await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
+        isCreate ? Navigator.pop(context) : null;
       }).onError((error, stackTrace) {
+        log("fhhhh");
+        just = false;
         error.toString();
       });
     }
+    return just;
   }
 
   saveButtonFunc(context) async {
@@ -120,5 +135,27 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
   Future navigateTologin(context) async {
     await Navigator.pushNamed(context, "login_screen");
+  }
+
+  editValueAssaignFunc(context) async {
+    final userViewModel = Provider.of<MyClubViewModel>(context, listen: false);
+    clubImage = userViewModel.apiResponse.data!.data!.profile;
+    nameController.text = userViewModel.apiResponse.data!.data!.name!;
+    emailController.text = userViewModel.apiResponse.data!.data!.email!;
+    phoneController.text =
+        userViewModel.apiResponse.data!.data!.phone.toString();
+    descriptionController.text =
+        userViewModel.apiResponse.data!.data!.description!;
+    notifyListeners();
+  }
+
+  updateFunc(context) async {
+    log("hhhhh");
+    final isSuccess = await postClubCreate(context);
+    log(isSuccess.toString());
+    if (isSuccess) {
+      await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
+      Navigator.pop(context);
+    }
   }
 }

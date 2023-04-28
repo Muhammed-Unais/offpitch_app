@@ -3,10 +3,12 @@ import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/res/constats.dart';
 
 class ClubCreationSaveButton extends StatelessWidget {
-  const ClubCreationSaveButton({super.key, required this.width, required this.btnFunction});
+  const ClubCreationSaveButton(
+      {super.key, required this.width, required this.btnFunction,this.buttonText='Save'});
 
   final double width;
   final void Function() btnFunction;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ClubCreationSaveButton extends StatelessWidget {
           horizontal: AppMargin.large,
         ),
         child: SubmitButton(
-          buttonChildtext: "Save",
+          buttonChildtext: buttonText,
           actionFunction: btnFunction,
         ),
       ),

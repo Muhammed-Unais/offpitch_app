@@ -205,14 +205,12 @@ class CreateTournamentViewModel extends ChangeNotifier {
   final _myRepo = CreateTournamentRepository();
 
   submitButtonTourCreate(context) async {
-    if (aboutController.text.isEmpty) {
-      amountController.text = 0.toString();
-    }
+    
     final value = CreateTournament(
       cover: imageUrl,
       startDate: dateController.text.trim(),
       location: locationController.text.trim(),
-      title: titleTorurnamentController.text.trim(),
+      title: titleTorurnamentController.text.trim(),  
       shortDescription: descriptionController.text.trim(),
       description: aboutController.text.trim(),
       instruction: instructionController.text.trim(),
@@ -222,7 +220,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
       ticket: Ticket(ticketIs: false, amount: 0, total: 0),
       registration: Registration(
         fee: Fee(
-            feeIs: ischeck, amount: int.parse(amountController.text.trim())),
+            feeIs: ischeck, amount:ischeck!? int.parse(amountController.text.trim()):0),
         lastDate: lastDateTorurnamentController.text.trim(),
       ),
       tournamentType: tournmentType(),

@@ -14,20 +14,8 @@ import 'package:offpitch_app/view_model/home_and_exp_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeBody extends StatefulWidget {
+class HomeBody extends StatelessWidget {
   const HomeBody({super.key});
-
-  @override
-  State<HomeBody> createState() => _HomeBodyState();
-}
-
-class _HomeBodyState extends State<HomeBody> {
-  HomeAndExpViewModel homeViewModel = HomeAndExpViewModel();
-  @override
-  void initState() {
-    homeViewModel.getAllTournaments();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,77 +57,74 @@ class _HomeBodyState extends State<HomeBody> {
                               const SizedBox(
                                 height: AppMargin.small,
                               ),
-                              ChangeNotifierProvider<HomeAndExpViewModel>(
-                                create: (context) => homeViewModel,
-                                child: Consumer<HomeAndExpViewModel>(
-                                  builder: (context, value, _) {
-                                    switch (value.allTournamentModel.status) {
+                              Consumer<HomeAndExpViewModel>(
+                                builder: (context, value, _) {
+                                  switch (value.allTournamentModel.status) {
 
-                                      case Status.LOADING:
-                                        log("dddssrrrrsaaaa");
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
+                                    case Status.LOADING:
+                                      log("dddssrrrrsaaaa");
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    case Status.ERROR:
+                                      log(value.allTournamentModel.message.toString());
+                                      return Center(
+                                        child: ErrorComponent(
+                                          errorMessage:
+                                              value.allTournamentModel.message!,
+                                        ),
+                                      );
+                                    case Status.COMPLETED:
+                                      if (value.allTournamentModel.data!.data
+                                          .allTournaments.isEmpty) {
+                                        return const EmptyComponts(
+                                          addText: "",
+                                          height: 200,
+                                          width: 200,
+                                          showMessage: "No Tournaments",
+                                          image: "assets/images/no-data.svg",
                                         );
-                                      case Status.ERROR:
-                                        log(value.allTournamentModel.message.toString());
-                                        return Center(
-                                          child: ErrorComponent(
-                                            errorMessage:
-                                                value.allTournamentModel.message!,
-                                          ),
-                                        );
-                                      case Status.COMPLETED:
-                                        if (value.allTournamentModel.data!.data
-                                            .allTournaments.isEmpty) {
-                                          return const EmptyComponts(
-                                            addText: "",
-                                            height: 200,
-                                            width: 200,
-                                            showMessage: "No Tournaments",
-                                            image: "assets/images/no-data.svg",
+                                      }
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: 3,
+                                        itemBuilder: (context, index) {
+                                          final values = value
+                                              .allTournamentModel
+                                              .data!
+                                              .data
+                                              .allTournaments.reversed.toList()[index];
+                                          return InkWell(
+                                            onTap: () async {
+                                              final provider = Provider.of<
+                                                      DetailsTouramentViewModel>(
+                                                  context,
+                                                  listen: false);
+                                              provider.getSingleTournament(
+                                                  values.id);
+                                              await Navigator.pushNamed(
+                                                  context,
+                                                  "tournamentdetails");
+                                            },
+                                            child: TournamentCard(
+                                              shortDescription:
+                                                  values.shortDescription,
+                                              tornamentDate: values.startDate,
+                                              tornamentName: values.title,
+                                              tornamentPlace: values.location,
+                                              touranmentCoverImage:
+                                                  values.cover,
+                                            ),
                                           );
-                                        }
-                                        return ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: 3,
-                                          itemBuilder: (context, index) {
-                                            final values = value
-                                                .allTournamentModel
-                                                .data!
-                                                .data
-                                                .allTournaments[index];
-                                            return InkWell(
-                                              onTap: () async {
-                                                final provider = Provider.of<
-                                                        DetailsTouramentViewModel>(
-                                                    context,
-                                                    listen: false);
-                                                provider.getSingleTournament(
-                                                    values.id);
-                                                await Navigator.pushNamed(
-                                                    context,
-                                                    "tournamentdetails");
-                                              },
-                                              child: TournamentCard(
-                                                shortDescription:
-                                                    values.shortDescription,
-                                                tornamentDate: values.startDate,
-                                                tornamentName: values.title,
-                                                tornamentPlace: values.location,
-                                                touranmentCoverImage:
-                                                    values.cover,
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      default:
-                                        return const Center(
-                                            child: CircularProgressIndicator());
-                                    }
-                                  },
-                                ),
+                                        },
+                                      );
+                                    default:
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                  }
+                                },
                               ),
                             ],
                           ),

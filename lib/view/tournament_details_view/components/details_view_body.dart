@@ -7,7 +7,7 @@ import 'package:offpitch_app/view/tournament_details_view/components/details_vie
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_club_name.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_data_place.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_register.dart';
-import 'package:offpitch_app/view/tournament_details_view/components/details_view_scheduled_view.dart';
+import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/details_view_scheduled_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_short_description.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_image.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_name.dart';
@@ -30,7 +30,15 @@ class DetailsViewBody extends StatelessWidget {
               );
             case Status.COMPLETED:
               final data = value.detailsTournament.data!;
-              if (data.data!.registration!.status == "open") {
+              if (data.data!.registration!.status == "scheduled") {
+                return Column(
+                  children: [
+                    DetailsViewScheduledView(
+                      singleTournamentModel: data,
+                    ),
+                  ],
+                );
+              } else {
                 return Column(
                   children: [
                     DetailsViewClubName(
@@ -88,12 +96,12 @@ class DetailsViewBody extends StatelessWidget {
                     )
                   ],
                 );
-              } else {
-                return const DetailsViewScheduledView();
               }
+
             case Status.ERROR:
               return ErrorComponent(
-                  errorMessage: value.detailsTournament.message!);
+                errorMessage: value.detailsTournament.message!,
+              );
             default:
               return const Center(
                 child: CircularProgressIndicator(),
@@ -104,3 +112,4 @@ class DetailsViewBody extends StatelessWidget {
     );
   }
 }
+

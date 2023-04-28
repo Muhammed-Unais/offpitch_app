@@ -23,8 +23,7 @@ class CreateTournamentfirstFields extends StatelessWidget {
     final tournamentcreatNewViewModel =
         Provider.of<CreateTournamentViewModel>(context);
     return Container(
-      
-      height: size.height * 0.6,
+      height: size.height * 0.7,
       width: size.width,
       margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
       child: Column(
@@ -78,7 +77,6 @@ class CreateTournamentfirstFields extends StatelessWidget {
               maxLines: 2,
             ),
           ),
-          const SizedBox(height: 20,),
           Expanded(
             flex: 3,
             child: TextFormFieldsComponent(

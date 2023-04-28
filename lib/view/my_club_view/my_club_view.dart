@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/my_club_view/components/my_club_appbar_tabar.dart';
+import 'package:offpitch_app/view/my_club_view/components/my_club_players.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_description.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_profile.dart';
 import 'package:offpitch_app/view_model/my_club_view_model.dart';
@@ -49,19 +50,31 @@ class MyClubView extends StatelessWidget {
                       );
                     } else {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TabViewOneClubProfile(
-                            clubName: data.data!.name,
-                            image: data.data!.profile,
+                            clubName: data.data!.name!,
+                            image: data.data!.profile!,
                             playerCount: data.data!.players.length,
                           ),
                           TabViewOneClubDescription(
-                            description: data.data!.description,
-                            email: data.data!.email,
+                            description: data.data!.description!,
+                            email: data.data!.email!,
                             phone: data.data!.phone,
                             hight: size.height * 0.22,
                             width: size.width,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppMargin.large,
+                              vertical: AppMargin.large
+                            ),
+                            child: Text(
+                              "Players",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          const MyClubPlayers()
                         ],
                       );
                     }

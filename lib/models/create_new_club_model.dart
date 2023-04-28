@@ -12,7 +12,7 @@ class CreateClubModel {
         required this.phone,
         required this.description,
         required this.profile,
-        required this.doc,
+        this.doc,
     });
 
     String name;
@@ -20,7 +20,7 @@ class CreateClubModel {
     String phone;
     String description;
     String profile;
-    String doc;
+    String? doc;
 
     factory CreateClubModel.fromJson(Map<String, dynamic> json) => CreateClubModel(
         name: json["name"],

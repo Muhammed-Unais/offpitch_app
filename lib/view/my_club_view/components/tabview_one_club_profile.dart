@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/app_theme.dart';
 import 'package:offpitch_app/res/components/circle_images.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view_model/create_new_club_view_model.dart';
+import 'package:provider/provider.dart';
 
 class TabViewOneClubProfile extends StatelessWidget {
-  const TabViewOneClubProfile({super.key, required this.image, required this.clubName, required this.playerCount,});
+  const TabViewOneClubProfile({
+    super.key,
+    required this.image,
+    required this.clubName,
+    required this.playerCount,
+  });
 
   final String image;
   final String clubName;
   final int playerCount;
-  
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final clubcreatNewViewModel =
+        Provider.of<CreateNewClubViewModel>(context, listen: false);
     return Container(
       height: size.height * 0.1,
       margin: const EdgeInsetsDirectional.symmetric(
@@ -52,11 +61,18 @@ class TabViewOneClubProfile extends StatelessWidget {
           const Spacer(
             flex: 8,
           ),
-          const Flexible(
+          Flexible(
             flex: 1,
-            child: Icon(
-              Icons.edit_square,
-              color: AppColors.black,
+            child: InkWell(
+              onTap: () {
+                clubcreatNewViewModel.setOptions(false);
+                clubcreatNewViewModel.editValueAssaignFunc(context);
+                Navigator.pushNamed(context, RoutesName.clubCreation);
+              },
+              child: const Icon(
+                Icons.edit_square,
+                color: AppColors.black,
+              ),
             ),
           )
         ],

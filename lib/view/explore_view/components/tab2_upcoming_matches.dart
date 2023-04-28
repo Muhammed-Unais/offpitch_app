@@ -39,7 +39,7 @@ class Tab2UpcomingMatches extends StatelessWidget {
             );
           case Status.COMPLETED:
             final allTournamentdata =
-                value.allTournaments.data!.data.allTournaments;
+                value.allTournaments.data!.data.allTournaments.reversed.toList();
             if (allTournamentdata.isEmpty) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
