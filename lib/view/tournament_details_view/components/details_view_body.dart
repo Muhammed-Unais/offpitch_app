@@ -20,40 +20,39 @@ class DetailsViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Consumer<DetailsTouramentViewModel>(
-        builder: (context, value, _) {
-          switch (value.detailsTournament.status) {
-            case Status.LOADING:
-              return const Center(
-                child: CircularProgressIndicator(),
+    return Consumer<DetailsTouramentViewModel>(
+      builder: (context, value, _) {
+        switch (value.detailsTournament.status) {
+          case Status.LOADING:
+            return const Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator());
+          case Status.COMPLETED:
+            final data = value.detailsTournament.data!;
+
+            //============== Scheduled to screen results======================
+            if (data.data!.registration!.status == "scheduled") {
+              return DetailsViewScheduledView(
+                singleTournamentModel: data,
               );
-            case Status.COMPLETED:
-              final data = value.detailsTournament.data!;
-              if (data.data!.registration!.status == "scheduled") {
-                return Column(
-                  children: [
-                    DetailsViewScheduledView(
-                      singleTournamentModel: data,
-                    ),
-                  ],
-                );
-              } else {
-                return Column(
+            // Details Screen Tournament closed without shedule  =============
+            } else {
+              return SingleChildScrollView(
+                child: Column(
                   children: [
                     DetailsViewClubName(
                       clubImage: data.data!.host!.profile!,
                       clubName: data.data!.host!.name!,
                     ),
-                    DetailsViewTournamentName(
-                        tournamentName: data.data!.title!),
+                    DetailsViewTournamentName(tournamentName: data.data!.title!),
                     DetailsViewTournamentImage(
                       image: data.data!.cover!,
                       hight: size.height * 0.25,
                       width: size.width,
                     ),
                     DetailsViewShortDescription(
-                        shortDescription: data.data!.shortDescription!),
+                      shortDescription: data.data!.shortDescription!,
+                    ),
                     DetailsViewDateTime(
                       place: data.data!.location!,
                       date: data.data!.startDate!,
@@ -72,6 +71,7 @@ class DetailsViewBody extends StatelessWidget {
                         color: AppColors.grey,
                       ),
                     ),
+                  // Registration area=====================================
                     DetailsViewRegister(
                       data: data,
                     ),
@@ -95,21 +95,20 @@ class DetailsViewBody extends StatelessWidget {
                       ),
                     )
                   ],
-                );
-              }
+                ),
+              );
+            }
 
-            case Status.ERROR:
-              return ErrorComponent(
-                errorMessage: value.detailsTournament.message!,
-              );
-            default:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-          }
-        },
-      ),
+          case Status.ERROR:
+            return ErrorComponent(
+              errorMessage: value.detailsTournament.message!,
+            );
+          default:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+        }
+      },
     );
   }
 }
-

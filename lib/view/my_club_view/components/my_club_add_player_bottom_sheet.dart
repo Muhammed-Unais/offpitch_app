@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/photo_doc_field.dart';
 import 'package:offpitch_app/res/components/textformfied_components.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/my_club_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AddPlayerBottomSheet {
@@ -16,10 +16,9 @@ class AddPlayerBottomSheet {
       isScrollControlled: true,
       builder: (context) {
         return SingleChildScrollView(
-
           child: Container(
             // height: size.height * 0.75,
-            padding:  EdgeInsets.only(
+            padding: EdgeInsets.only(
               left: AppPadding.large,
               right: AppPadding.large,
               top: AppPadding.large,
@@ -77,8 +76,8 @@ class AddPlayerBottomSheet {
                   child: SizedBox(
                     width: size.width * 0.4,
                     child: ElevatedButton(
-                      onPressed: () {
-                        
+                      onPressed: () async{
+                      await  myClubprovider.postPlayers(context);
                       },
                       child: const Text(
                         "Save & Continue",
@@ -86,7 +85,7 @@ class AddPlayerBottomSheet {
                     ),
                   ),
                 ),
-                 const SizedBox(height: AppMargin.large),
+                const SizedBox(height: AppMargin.large),
               ],
             ),
           ),

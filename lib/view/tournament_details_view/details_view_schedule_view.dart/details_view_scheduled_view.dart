@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/detailes_view_scheduled_view_t2.dart';
+import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/details_view_schedule_tabbar_two.dart';
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/details_view_scheduled_view_tabbar.dart';
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/details_view_scheduled_view_tabbar1.dart';
 
@@ -27,9 +29,7 @@ class _DetailsViewScheduledViewState extends State<DetailsViewScheduledView>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          vertical: AppMargin.large, horizontal: AppMargin.large),
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -44,10 +44,17 @@ class _DetailsViewScheduledViewState extends State<DetailsViewScheduledView>
             child: TabBarView(
               controller: tabController,
               children: [
-                DetailsViewScheduledViewTabbar(
+                // Tornamet Checking and P change the Screeen ===========
+                widget.singleTournamentModel.data!.tournamentType == "t2"
+                    ? DetailsViewscheduledviewT2(
+                        singleTournamentModel: widget.singleTournamentModel,
+                      )
+                    : DetailsViewScheduledViewTabbarT1(
+                        singleTournamentModel: widget.singleTournamentModel,
+                      ),
+                DetaildViewScheduledTabbarTwo(
                   singleTournamentModel: widget.singleTournamentModel,
                 ),
-                const Text("")
               ],
             ),
           )

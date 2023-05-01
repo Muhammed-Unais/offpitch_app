@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/app_exception.dart';
@@ -102,6 +101,32 @@ class NetworkApiServices extends BaseApiService {
     }
   }
 
+// Post Api method with AccessToken=====================
+  @override
+  Future getPostApiWithAccessToken(String url, data) async {
+    dynamic successResponseData;
+
+    final dio = Dio();
+    final appinterceptor = AppInterceptor();
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    dio.interceptors.addAll(appinterceptor.dio.interceptors);
+
+    try {
+      final accessToken = preferences.getString("accessToken");
+
+      dio.options.headers['Authorization'] = 'Bearer $accessToken';
+      final response =
+          await dio.post(url, data: data).timeout(const Duration(seconds: 10));
+
+      successResponseData = returnResponse(response);
+      return successResponseData;
+    } on DioError catch (e) {
+      log(e.response!.statusCode.toString());
+      return returnResponse(e.response);
+    }
+  }
+
 //  return Response based on api response states code
   returnResponse(Response<dynamic>? response) {
     if (response != null) {
@@ -115,7 +140,7 @@ class NetworkApiServices extends BaseApiService {
         case 401:
           throw UnauthorisedException(response.data['message']);
         case 500:
-          throw FetchDataException('Server error');  
+          throw FetchDataException('Server error');
         default:
           throw FetchDataException(
             response.data['message'],

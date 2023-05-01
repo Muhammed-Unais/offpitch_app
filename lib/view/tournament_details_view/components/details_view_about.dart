@@ -13,7 +13,9 @@ class DetailsViewAbout extends StatelessWidget {
     return Container(
       width: size.width,
       margin: const EdgeInsets.symmetric(
-          horizontal: AppMargin.large, vertical: AppMargin.large),
+        horizontal: AppMargin.large,
+        vertical: AppMargin.large,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

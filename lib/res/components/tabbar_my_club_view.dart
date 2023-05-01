@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
-class DetailsTournamentScheduledViewTabbar extends StatelessWidget {
-  const DetailsTournamentScheduledViewTabbar({
-    super.key,
-    required this.tabController,
-  });
+class TabbarMyClubView extends StatelessWidget {
+  const TabbarMyClubView(
+      {super.key,
+      required this.tabController,
+      required this.tabbar1,
+      required this.tabbar2,
+      required this.tabbar3});
 
   final TabController tabController;
+  final String tabbar1;
+  final String tabbar2;
+  final String tabbar3;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
       height: 34,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.2),
@@ -21,7 +25,14 @@ class DetailsTournamentScheduledViewTabbar extends StatelessWidget {
           AppRadius.borderRadiusL,
         ),
       ),
+      margin: const EdgeInsets.only(
+        left: AppMargin.large,
+        right: AppMargin.large,
+        top: AppMargin.large,
+        bottom: AppPadding.extraSmall
+      ),
       child: TabBar(
+        onTap: (value) {},
         controller: tabController,
         labelStyle: Theme.of(context).textTheme.titleMedium,
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
@@ -30,16 +41,18 @@ class DetailsTournamentScheduledViewTabbar extends StatelessWidget {
             const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
-          color: AppColors.primary,
-        ),
-        tabs: const [
+            borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+            color: AppColors.primary),
+        tabs: [
           Tab(
-            text: "Matches",
+            text: tabbar1,
           ),
           Tab(
-            text: "About",
+            text: tabbar2,
           ),
+          Tab(
+            text: tabbar3,
+          )
         ],
       ),
     );

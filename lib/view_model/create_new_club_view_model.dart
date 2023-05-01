@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:offpitch_app/models/create_new_club_model.dart';
 import 'package:offpitch_app/repository/create_club_repository.dart';
-import 'package:offpitch_app/view_model/my_club_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloudinary/cloudinary.dart';

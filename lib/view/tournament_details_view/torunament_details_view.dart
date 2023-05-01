@@ -7,7 +7,7 @@ class TouranmentDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  const Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
           60.00,
