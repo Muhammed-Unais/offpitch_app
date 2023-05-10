@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class SmallOtpForm extends StatelessWidget {
   const SmallOtpForm(

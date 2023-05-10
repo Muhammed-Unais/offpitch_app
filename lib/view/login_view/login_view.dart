@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:offpitch_app/view/login_view/components/login_form.dart';
 import 'package:offpitch_app/view/login_view/components/login_view_topimage.dart';
 

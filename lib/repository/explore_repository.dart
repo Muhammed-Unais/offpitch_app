@@ -10,7 +10,7 @@ class ExploreRepository {
       {required String query}) async {
     try {
       dynamic response = await _apiService.getGetApiResponse(
-          AppUrl.allTournaments, "?$query");
+          AppUrl.allTournaments, "?$query&limit=49");
       return response = allTournamentsModelFromJson(response);
     } catch (e) {
       rethrow;

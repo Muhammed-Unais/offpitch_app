@@ -1,17 +1,17 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/components/shimer_effects.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:offpitch_app/view/home_view/components/home_top_card.dart';
 import 'package:offpitch_app/view/home_view/components/home_topbar.dart';
 import 'package:offpitch_app/view/home_view/components/home_upconing_tites.dart';
-import 'package:offpitch_app/view_model/home_and_exp_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeBody extends StatelessWidget {
@@ -60,23 +60,36 @@ class HomeBody extends StatelessWidget {
                               Consumer<HomeAndExpViewModel>(
                                 builder: (context, value, _) {
                                   switch (value.allTournamentModel.status) {
-
                                     case Status.LOADING:
-                                      log("dddssrrrrsaaaa");
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: AppMargin.large,
+                                        ),
+                                        itemCount: 3,
+                                        itemBuilder: (context, index) {
+                                          return ShimerWidget.rectangular(
+                                            borderRadius:
+                                                AppRadius.borderRadiusM,
+                                            verticalMargin: AppMargin.small,
+                                            hight: size.height * 0.2,
+                                          );
+                                        },
                                       );
                                     case Status.ERROR:
-                                      log(value.allTournamentModel.message.toString());
+                                      log(value.allTournamentModel.message
+                                          .toString());
                                       return Center(
                                         child: ErrorComponent(
-                                          errorMessage:
-                                              value.allTournamentModel.message!,
+                                          errorMessage: value
+                                                  .allTournamentModel.message ??
+                                              "",
                                         ),
                                       );
                                     case Status.COMPLETED:
-                                      if (value.allTournamentModel.data!.data
-                                          .allTournaments.isEmpty) {
+                                      final data = value.allTournamentModel.data
+                                          ?.data.allTournaments;
+                                      if (data ==null ||data.isEmpty) {
                                         return const EmptyComponts(
                                           addText: "",
                                           height: 200,
@@ -91,11 +104,9 @@ class HomeBody extends StatelessWidget {
                                             const NeverScrollableScrollPhysics(),
                                         itemCount: 3,
                                         itemBuilder: (context, index) {
-                                          final values = value
-                                              .allTournamentModel
-                                              .data!
-                                              .data
-                                              .allTournaments.reversed.toList()[index];
+                                          final values =data
+                                              .reversed
+                                              .toList()[index];
                                           return InkWell(
                                             onTap: () async {
                                               final provider = Provider.of<
@@ -105,8 +116,7 @@ class HomeBody extends StatelessWidget {
                                               provider.getSingleTournament(
                                                   values.id);
                                               await Navigator.pushNamed(
-                                                  context,
-                                                  "tournamentdetails");
+                                                  context, "tournamentdetails");
                                             },
                                             child: TournamentCard(
                                               shortDescription:
@@ -122,7 +132,8 @@ class HomeBody extends StatelessWidget {
                                       );
                                     default:
                                       return const Center(
-                                          child: CircularProgressIndicator());
+                                        child: CircularProgressIndicator(),
+                                      );
                                   }
                                 },
                               ),

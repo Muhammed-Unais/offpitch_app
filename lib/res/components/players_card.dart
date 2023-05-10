@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class PlayersCard extends StatelessWidget {
   const PlayersCard(
       {super.key,
       required this.image,
-       this.isAddplayer =false,
+      this.isAddplayer = false,
       required this.playerName,
       this.buttonAction,
       required this.dob});
@@ -20,8 +20,8 @@ class PlayersCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 5, bottom: 5),
-      width: 160,
+      margin: const EdgeInsets.only(right: 7, bottom: 5),
+      width: 150,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.2),
         borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
@@ -43,12 +43,16 @@ class PlayersCard extends StatelessWidget {
           isAddplayer
               ? Align(
                   alignment: Alignment.center,
-                  child: IconButton(
-                    onPressed: buttonAction,
-                    icon: const Icon(
-                      color: AppColors.primary,
-                      size: 60,
-                      Icons.add_circle,
+                  child: InkWell(
+                    onTap: buttonAction,
+                    child: const CircleAvatar(
+                      backgroundColor: AppColors.primary,
+                      radius: 26,
+                      child: Icon(
+                        Icons.add,
+                        color: AppColors.white,
+                        size: 26,
+                      ),
                     ),
                   ),
                 )
@@ -64,7 +68,7 @@ class PlayersCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                   )
                 : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
                         child: Text(

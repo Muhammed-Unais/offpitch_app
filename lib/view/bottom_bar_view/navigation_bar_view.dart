@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/view/create_tournament_view/create_tournament_view.dart';
 import 'package:offpitch_app/view/explore_view/explore_view.dart';
 import 'package:offpitch_app/view/home_view/home_view.dart';
 import 'package:offpitch_app/view/my_club_view/my_club_view.dart';
-import 'package:offpitch_app/view/user_details_view/user_deails_view.dart';
+import 'package:offpitch_app/view/user_profile_view/user_profile_view.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +17,21 @@ class BottomBarView extends StatefulWidget {
 }
 
 class _BottomBarViewState extends State<BottomBarView> {
-  List views = [
+  List<Widget> views = [
     const HomeView(),
     const ExploreView(),
     const CreateTournamentView(),
     const MyClubView(),
     const UserDetailsView(),
   ];
+
+  late PageController pageController;
+  @override
+  void initState() {
+    pageController = PageController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottomBarVieModel = Provider.of<BottomBarViewModel>(context);
@@ -32,7 +39,7 @@ class _BottomBarViewState extends State<BottomBarView> {
       body: views[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) => bottomBarVieModel.onTap(value, context),
+        onTap: (value) => bottomBarVieModel.onTap(value, context,controller: pageController),
         currentIndex: bottomBarVieModel.currentIndex,
         iconSize: 24,
         showSelectedLabels: false,
@@ -47,7 +54,7 @@ class _BottomBarViewState extends State<BottomBarView> {
             label: "Home",
             icon: Icon(
               IconlyBold.home,
-            ),  
+            ),
           ),
           BottomNavigationBarItem(
             label: "Explore",
@@ -71,9 +78,7 @@ class _BottomBarViewState extends State<BottomBarView> {
           ),
           BottomNavigationBarItem(
             label: "Person",
-            icon: Icon(
-              IconlyBold.profile
-            ),
+            icon: Icon(IconlyBold.profile),
           ),
         ],
       ),

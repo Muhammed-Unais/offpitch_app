@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class HomeCarousels extends StatelessWidget {
   const HomeCarousels(
@@ -29,7 +31,7 @@ class HomeCarousels extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : DecorationImage(
-                    colorFilter:  const ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Color.fromARGB(221, 18, 15, 15),
                       BlendMode.darken,
                     ),
@@ -77,7 +79,7 @@ class HomeCarousels extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    Navigator.pushNamed(context, "myclubdeatils");
+                    Provider.of<BottomBarViewModel>(context,listen: false).onTap(3, context);
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.large),

@@ -15,11 +15,11 @@ class CreateClubModel {
         this.doc,
     });
 
-    String name;
-    String email;
-    String phone;
-    String description;
-    String profile;
+    String? name;
+    String? email;
+    String? phone;
+    String? description;
+    String? profile;
     String? doc;
 
     factory CreateClubModel.fromJson(Map<String, dynamic> json) => CreateClubModel(

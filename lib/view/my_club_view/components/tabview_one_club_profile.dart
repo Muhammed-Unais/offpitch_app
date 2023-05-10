@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/circle_images.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/create_new_club_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
 
 class TabViewOneClubProfile extends StatelessWidget {
@@ -31,18 +31,16 @@ class TabViewOneClubProfile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Flexible(
-            flex: 5,
+          Expanded(
+            flex: 2,
             child: CircleImages(
-              hight: 80,
-              width: 80,
               image: image,
-              radius: AppRadius.borderRadiusXL,
+              radius: 60,
             ),
           ),
-          const Spacer(),
-          Flexible(
-            flex: 7,
+          const SizedBox(width: AppMargin.medium,),
+          Expanded(
+            flex: 6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,10 +56,8 @@ class TabViewOneClubProfile extends StatelessWidget {
               ],
             ),
           ),
-          const Spacer(
-            flex: 8,
-          ),
-          Flexible(
+          
+          Expanded(
             flex: 1,
             child: InkWell(
               onTap: () {

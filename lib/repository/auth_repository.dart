@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:offpitch_app/data/network/base_api_service.dart';
 import 'package:offpitch_app/data/network/network_api_service.dart';
@@ -13,7 +14,7 @@ class AuthRepository {
 
       return response;
     } catch (e) {
-      // log(e.toString());
+      log(e.toString());
       rethrow;
     }
   }
@@ -46,6 +47,17 @@ class AuthRepository {
 
       return response;
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> userLogout() async {
+    try {
+      final response = _apiService.getGetApiResponse(AppUrl.userlogout, "");
+      log(response.toString());
+      return response;
+    } catch (error) {
+      log(error.toString());
       rethrow;
     }
   }

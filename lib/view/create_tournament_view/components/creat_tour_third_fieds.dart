@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/checkboxs.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateTournamentThirdFields extends StatelessWidget {

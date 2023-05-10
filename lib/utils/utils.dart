@@ -1,8 +1,8 @@
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+
 class Utils {
   // Textfield auto focus change
   static fieldFocusChange(
@@ -26,37 +26,58 @@ class Utils {
     );
   }
 
-  static showFlushbarErrorMessage(
-      {required String message,
-      String title = " ",
-      context,
-      required bool isError}) {
+  static showCustomFlushbar(BuildContext context, String message,{bool isError =true}) {
     Flushbar(
       message: message,
-      messageColor: AppColors.grey,
-      messageSize: 18,
-      titleColor: AppColors.grey,
-      titleSize: 18,
-      flushbarPosition: FlushbarPosition.TOP,
-      title: title,
+      messageColor:isError? Colors.red :AppColors.primary,
       duration: const Duration(seconds: 3),
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.FLOATING,
+      reverseAnimationCurve: Curves.decelerate,
+      forwardAnimationCurve: Curves.easeInBack,
       backgroundColor: Colors.white,
-      icon: const Icon(
-        Icons.error_outline,
-        color: Colors.red,
+      borderRadius: BorderRadius.circular(10),
+      margin: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.3),
+          spreadRadius: 2.0,
+          blurRadius: 10.0,
+          offset: const Offset(0, 3),
+        ),
+      ],
+      mainButton: TextButton(
+        onPressed: () {
+          // Add your button action here
+        },
+        child: IconButton(
+          color:isError? Colors.red :Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.close,
+          ),
+        ),
       ),
-      forwardAnimationCurve: Curves.decelerate,
-      reverseAnimationCurve: Curves.easeInOut,
-      progressIndicatorBackgroundColor: Colors.red,
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      icon:  Icon(
+        Icons.info_outline,
+        size: 28.0,
+        color: isError ? Colors.red :AppColors.primary,
+      ),
+      shouldIconPulse: false,
+      showProgressIndicator: true,
+      progressIndicatorBackgroundColor:isError ? Colors.red :AppColors.primary,
       progressIndicatorValueColor:
           const AlwaysStoppedAnimation<Color>(Colors.red),
-      mainButton: IconButton(
-        onPressed: () {
-          // Flushbar.hide(context);
-        },
-        icon: const Text(
-          'OK',
-          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+      titleText:  Text(
+        isError ?'Error':'Message',
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          color:isError ? Colors.red :AppColors.primary,
         ),
       ),
     ).show(context);
@@ -68,5 +89,12 @@ class Utils {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
+  static showDialogue(context, {required Widget child}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return child;
+      },
+    );
+  }
 }

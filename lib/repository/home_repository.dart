@@ -9,7 +9,7 @@ class HomeRepository {
   Future<AllTournamentsModel> allTournamentApi() async {
     try {
       dynamic response =
-          await _apiService.getGetApiResponse(AppUrl.allTournaments,"");
+          await _apiService.getGetApiResponse("${AppUrl.allTournaments}?limit=40","");
       return response = allTournamentsModelFromJson(response);
     } catch (e) {
       rethrow;

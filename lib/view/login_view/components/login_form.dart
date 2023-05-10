@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/auth_form_fields.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:offpitch_app/view/login_view/components/doyou_have_acc.dart';
 import 'package:offpitch_app/view/login_view/components/forgot_password.dart';
-import 'package:offpitch_app/view_model/auth_view_model.dart';
+import 'package:offpitch_app/view_model/auth_view_model/auth_view_model.dart';
 import 'package:offpitch_app/view_model/services.dart/auth_validation/login_validation.dart';
 import 'package:provider/provider.dart';
 

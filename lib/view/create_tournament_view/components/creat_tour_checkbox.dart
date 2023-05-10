@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/textformfied_components.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateTournamentCheckbox extends StatelessWidget {
@@ -16,7 +16,6 @@ class CreateTournamentCheckbox extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(
-          bottom: AppMargin.large,
           left: AppMargin.large,
           right: AppMargin.large),
       child: Column(

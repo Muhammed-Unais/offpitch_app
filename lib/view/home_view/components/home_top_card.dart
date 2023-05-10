@@ -1,10 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/view/home_view/components/home_carousels.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/home_and_exp_view_model.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeTopCard extends StatelessWidget {
@@ -50,9 +50,11 @@ class HomeTopCard extends StatelessWidget {
               switch (value.allTournamentModel.status) {
                 case Status.LOADING:
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
                   );
-
                 case Status.COMPLETED:
                   final data = value
                       .allTournamentModel.data!.data.allTournaments.reversed
@@ -64,9 +66,19 @@ class HomeTopCard extends StatelessWidget {
                     image: data.cover,
                   );
                 case Status.ERROR:
-                  return const CircularProgressIndicator();
+                  return  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
+                  );
                 default:
-                  return const CircularProgressIndicator();
+                  return  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
+                  );
               }
             },
           );

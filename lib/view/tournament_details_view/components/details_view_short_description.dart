@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:readmore/readmore.dart';
 
 class DetailsViewShortDescription extends StatelessWidget {
   const DetailsViewShortDescription({super.key, required this.shortDescription});
 
-  final String shortDescription;
+  final String? shortDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class DetailsViewShortDescription extends StatelessWidget {
         vertical: AppMargin.medium,
       ),
       child: ReadMoreText(
-        shortDescription,
+        shortDescription ?? "",
         trimLines: 6,
         colorClickableText: AppColors.primary,
         trimMode: TrimMode.Line,

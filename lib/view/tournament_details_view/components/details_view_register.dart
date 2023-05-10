@@ -1,25 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view/tournament_details_view/components/details_view_regis_bottom_.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_timer_remaining.dart';
-import 'package:offpitch_app/view_model/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
-class DetailsViewRegister extends StatelessWidget {
+class DetailsViewRegister extends StatefulWidget {
   const DetailsViewRegister({super.key, required this.data});
 
   final SingleTournamentModel data;
+
+  @override
+  State<DetailsViewRegister> createState() => _DetailsViewRegisterState();
+}
+
+class _DetailsViewRegisterState extends State<DetailsViewRegister> {
+  @override
+  void initState() {
+    
+    Provider.of<RegistorationViewModel>(context,listen: false).intiateRazorPay();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Consumer<DetailsTouramentViewModel>(
       builder: (context, value, child) {
+        final tournamenStatus = widget.data.data?.registration?.status;
+
+        // Tournament Scheduling Checking=========================
+        if (value.userSheduleChecking(widget.data) &&
+            tournamenStatus!.contains('closed')) {
+          return Column(
+            children: [
+              const Text(
+                "Schedule tournament",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red,
+                  fontSize: 24,
+                ),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ScheduleTournametViewModel(),
+                child: Consumer<ScheduleTournametViewModel>(
+                  builder: (context, value, _) {
+                    return Container(
+                      margin: const EdgeInsets.only(
+                        left: AppMargin.large,
+                        right: AppMargin.large,
+                        top: AppMargin.medium,
+                      ),
+                      width: size.width,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          value.getGetScheduleTournamet(
+                              widget.data.data?.id, context);
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          side: const BorderSide(color: Colors.red, width: 0.5),
+                        ),
+                        child: value.isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.red,
+                                strokeWidth: 2,
+                              )
+                            : const Text(
+                                'Schedule',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        }
+
+        //  tournament time closed checking=======================
         if (value.remainingTime!.isNegative ||
-            data.data!.registration!.status!.contains('closed')) {
+            tournamenStatus!.contains('closed')) {
           return Column(
             children: [
               SvgPicture.asset(
@@ -43,11 +117,15 @@ class DetailsViewRegister extends StatelessWidget {
             ],
           );
         }
-
-        if (value.registeredOrNotChecking(data)) {
+        //  User already registered or not checking====================
+        if (value.registeredOrNotChecking(widget.data)) {
           return Column(
             children: [
-              SvgPicture.asset("assets/images/registered.svg",height: 120,width: 120,),
+              SvgPicture.asset(
+                "assets/images/registered.svg",
+                height: 120,
+                width: 120,
+              ),
               const SizedBox(
                 height: AppMargin.extraSmall,
               ),
@@ -64,7 +142,7 @@ class DetailsViewRegister extends StatelessWidget {
           );
         }
         value.calculateRemainingTime(
-          data.data!.registration!.lastDate!,
+          widget.data.data?.registration?.lastDate ?? "",
         );
         return Column(
           children: [
@@ -99,7 +177,7 @@ class DetailsViewRegister extends StatelessWidget {
                           children: [
                             const Icon(Icons.lock_clock),
                             Text(
-                              "Last date \n ${data.data!.registration!.lastDate}",
+                              "Last date \n ${widget.data.data?.registration?.lastDate}",
                               style: Theme.of(context).textTheme.titleMedium,
                             )
                           ],
@@ -119,7 +197,7 @@ class DetailsViewRegister extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              '₹${data.data!.registration!.fee!.amount}'
+                              '₹${widget.data.data?.registration?.fee?.amount}'
                                   .toString(),
                               style: Theme.of(context).textTheme.titleLarge,
                             )
@@ -128,11 +206,17 @@ class DetailsViewRegister extends StatelessWidget {
                       )
                     ],
                   ),
+                  // Ṛegistration flutter===========================
                   SizedBox(
                     height: 50,
                     child: SubmitButton(
                       buttonChildtext: "Register",
-                      actionFunction: () {},
+                      actionFunction: () async {
+                        DetailsViewRegistrationBottomSheet.showModelBottomsheet(
+                          model: widget.data,
+                          context,
+                        );
+                      },
                     ),
                   ),
                 ],

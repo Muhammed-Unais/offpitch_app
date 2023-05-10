@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:email_validator/email_validator.dart';
@@ -35,8 +34,6 @@ class SignupValidation {
     const pattern = r'^(?=.*?[a-z])';
     RegExp regExp = RegExp(pattern);
 
-    log("1");
-    log(value);
     log(regExp.hasMatch(value).toString());
     if (!regExp.hasMatch(value)) {
       return "Enter valid name";
@@ -54,23 +51,28 @@ class SignupValidation {
 
   static signupErrorDisplay(BuildContext context, error) {
     if (error.toString().contains("No Internet connection")) {
-      Utils.showFlushbarErrorMessage(
-          message: "No Internet connection", context: context,isError: true);
+      Utils.showCustomFlushbar(
+        context,
+        "No Internet connection",
+      );
     }
 
     // default somthing went wrong
     else if (error
         .toString()
         .contains("error occured while communicating with server")) {
-      Utils.showFlushbarErrorMessage(
-          message: "Something went wrong", context: context,isError: true);
+      Utils.showCustomFlushbar(
+        context,
+        "Something went wrong",
+      );
     }
 
     // exception message from server
     else {
-     
-      Utils.showFlushbarErrorMessage(
-          message: error.toString(), context: context,isError: true);
+      Utils.showCustomFlushbar(
+        context,
+        error.toString(),
+      );
     }
   }
 }

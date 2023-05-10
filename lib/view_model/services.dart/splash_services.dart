@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/user_view_model.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 
 class SplashServices {
   Future getUserData() => UserViewModel().getUser();

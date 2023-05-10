@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 import 'package:offpitch_app/view/otp_verify_view/components/otp_forms.dart';
 import 'package:offpitch_app/view/otp_verify_view/components/otp_timer.dart';
 

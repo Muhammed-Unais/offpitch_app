@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/my_club_view/components/my_club_players.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_description.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_profile.dart';
-import 'package:offpitch_app/view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/components/tav_view_one_email_phone.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubTabOne extends StatelessWidget {
@@ -28,7 +31,7 @@ class MyClubTabOne extends StatelessWidget {
                 .contains("You don't have a club")) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, "clubcreation");
+                  Navigator.pushNamed(context, RoutesName.clubCreation);
                 },
                 child: EmptyComponts(
                   image: "assets/images/no-club.svg",
@@ -39,31 +42,53 @@ class MyClubTabOne extends StatelessWidget {
                 ),
               );
             } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TabViewOneClubProfile(
-                    clubName: data.data!.name!,
-                    image: data.data!.profile!,
-                    playerCount: data.data!.players.length,
+              return SingleChildScrollView(
+                child: SizedBox(
+                  // height: size.height,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TabViewOneClubProfile(
+                        clubName: data.data!.name!,
+                        image: data.data!.profile!,
+                        playerCount: data.data!.players.length,
+                      ),
+                      TabViewOneClubDescription(
+                        hight: size.height * 0.2,
+                        description: data.data!.description!,
+                      ),
+                      const SizedBox(
+                        height: AppPadding.small,
+                      ),
+                      TabbarViewOneEmailPhone(
+                        hight: size.height * 0.08,
+                        email: data.data!.email!,
+                        phone: data.data!.phone,
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: AppPadding.large),
+                        child: Divider(
+                          thickness: 0.5,
+                          color: AppColors.grey,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppMargin.large,
+                            vertical: AppMargin.medium),
+                        child: Text(
+                          "Players",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      MyClubPlayers(hight: size.height * 0.23),
+                      const SizedBox(
+                        height: AppPadding.medium,
+                      ),
+                    ],
                   ),
-                  TabViewOneClubDescription(
-                    description: data.data!.description!,
-                    email: data.data!.email!,
-                    phone: data.data!.phone,
-                    hight: size.height * 0.22,
-                    width: size.width,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppMargin.large, vertical: AppMargin.large),
-                    child: Text(
-                      "Players",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                  const MyClubPlayers()
-                ],
+                ),
               );
             }
           case Status.ERROR:

@@ -132,21 +132,26 @@ class NetworkApiServices extends BaseApiService {
     if (response != null) {
       switch (response.statusCode) {
         case 200:
+          log("1");
           final responseJson = response.data;
           log(responseJson.toString());
           return responseJson;
         case 400:
+          log("2");
           throw BadRequestException(response.data['message']);
         case 401:
+          log("3");
           throw UnauthorisedException(response.data['message']);
         case 500:
-          throw FetchDataException('Server error');
+          log("4");
+          throw FetchDataException('Something went wrong');
         default:
           throw FetchDataException(
             response.data['message'],
           );
       }
     } else {
+      log("6");
       throw FetchDataException('No internet connection');
     }
   }

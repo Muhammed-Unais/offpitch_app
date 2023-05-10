@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/user_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HommeTopBar extends StatelessWidget {
@@ -31,6 +32,7 @@ class HommeTopBar extends StatelessWidget {
                 onPressed: () {
                   userAuthModel.remove();
                   // userAuthModel.club();
+                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.login,(route) => false,);
                 },
                 icon: const Icon(
                   Icons.notifications,

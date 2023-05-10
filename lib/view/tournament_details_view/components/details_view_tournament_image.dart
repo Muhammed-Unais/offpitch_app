@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class DetailsViewTournamentImage extends StatelessWidget {
   const DetailsViewTournamentImage({super.key, required this.hight, required this.width, required this.image});

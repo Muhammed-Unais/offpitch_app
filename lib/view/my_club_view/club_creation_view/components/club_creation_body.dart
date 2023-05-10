@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/view/my_club_view/club_creation_view/components/club_creation_name_email_phone.dart';
 import 'package:offpitch_app/view/my_club_view/club_creation_view/components/club_creation_photo_doc.dart';
 import 'package:offpitch_app/view/my_club_view/club_creation_view/components/club_creation_save_button.dart';
-import 'package:offpitch_app/view_model/create_new_club_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/view_model/services.dart/club_creation_valdation.dart/club_creation_validation.dart';
 import 'package:provider/provider.dart';
 
@@ -45,6 +45,7 @@ class ClubCreationBody extends StatelessWidget {
                   height: 50,
                 ),
                 ClubCreationSaveButton(
+                  processLoading: clubcreatNewViewModel.updateIsLoading,
                   buttonText:
                       !clubcreatNewViewModel.isCreate ? "Update" : "Save",
                   width: size.width * 0.4,

@@ -26,5 +26,9 @@ class RoutesName {
 
   // 
   static const String clubCreation  = "clubcreation";
-  
+
+  static const String userWatchlist  = "userWatchlist";
+
+  static const String paymentSuccespage  = "payment sucess page";
+
 }

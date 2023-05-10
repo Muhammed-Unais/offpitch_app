@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/date_and_place_box.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class DetailsViewDateTime extends StatelessWidget {
   const DetailsViewDateTime(

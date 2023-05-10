@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 
 class TextFormFieldsComponent extends StatelessWidget {
@@ -28,6 +28,7 @@ class TextFormFieldsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      scrollPadding:const EdgeInsets.all(0),
       enabled: enabled,
       onTap:onTap,
       onFieldSubmitted: (value) => Utils.fieldFocusChange(

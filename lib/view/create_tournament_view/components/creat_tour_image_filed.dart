@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateTournamentImagefield extends StatelessWidget {
@@ -19,7 +19,7 @@ class CreateTournamentImagefield extends StatelessWidget {
       height: size.height * 0.14,
       width: size.width,
       margin: const EdgeInsets.symmetric(
-          vertical: AppMargin.large, horizontal: AppMargin.large),
+          vertical: AppMargin.medium, horizontal: AppMargin.large),
       child: InkWell(
         onTap: () async {
           await createTorunamentViewModel.getImageFromGallery();

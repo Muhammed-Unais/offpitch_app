@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class HomeUpcomingtitle extends StatelessWidget {
   const HomeUpcomingtitle({super.key});
@@ -20,7 +22,7 @@ class HomeUpcomingtitle extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, "explore");
+              Provider.of<BottomBarViewModel>(context,listen: false).onTap(1, context);
             },
             child: Text(
               "See All",

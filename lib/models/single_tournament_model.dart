@@ -35,7 +35,7 @@ class Data {
     String? cover;
     DateTime? createdAt;
     String? description;
-    List<dynamic>? groups;
+    List<Group>? groups;
     String? instruction;
     String? location;
     int? maxNoPlayers;
@@ -45,7 +45,7 @@ class Data {
     String? shortDescription;
     String? startDate;
     String? status;
-    List<TeamElement>? teams;
+    List<DataTeam>? teams;
     Ticket? ticket;
     String? title;
     String? tournamentType;
@@ -84,7 +84,7 @@ class Data {
         cover: json["cover"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         description: json["description"],
-        groups: json["groups"] == null ? [] : List<dynamic>.from(json["groups"]!.map((x) => x)),
+        groups: json["groups"] == null ? [] : List<Group>.from(json["groups"]!.map((x) => Group.fromJson(x))),
         instruction: json["instruction"],
         location: json["location"],
         maxNoPlayers: json["max_no_players"],
@@ -94,7 +94,7 @@ class Data {
         shortDescription: json["short_description"],
         startDate: json["start_date"],
         status: json["status"],
-        teams: json["teams"] == null ? [] : List<TeamElement>.from(json["teams"]!.map((x) => TeamElement.fromJson(x))),
+        teams: json["teams"] == null ? [] : List<DataTeam>.from(json["teams"]!.map((x) => DataTeam.fromJson(x))),
         ticket: json["ticket"] == null ? null : Ticket.fromJson(json["ticket"]),
         title: json["title"],
         tournamentType: json["tournament_type"],
@@ -109,7 +109,7 @@ class Data {
         "cover": cover,
         "createdAt": createdAt?.toIso8601String(),
         "description": description,
-        "groups": groups == null ? [] : List<dynamic>.from(groups!.map((x) => x)),
+        "groups": groups == null ? [] : List<dynamic>.from(groups!.map((x) => x.toJson())),
         "instruction": instruction,
         "location": location,
         "max_no_players": maxNoPlayers,
@@ -125,6 +125,98 @@ class Data {
         "tournament_type": tournamentType,
         "updatedAt": updatedAt?.toIso8601String(),
         "matches": matches?.toJson(),
+    };
+}
+
+class Group {
+    String? name;
+    int? noTeams;
+    List<GroupTeam>? teams;
+    String? id;
+
+    Group({
+        this.name,
+        this.noTeams,
+        this.teams,
+        this.id,
+    });
+
+    factory Group.fromJson(Map<String, dynamic> json) => Group(
+        name: json["name"],
+        noTeams: json["no_teams"],
+        teams: json["teams"] == null ? [] : List<GroupTeam>.from(json["teams"]!.map((x) => GroupTeam.fromJson(x))),
+        id: json["_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "no_teams": noTeams,
+        "teams": teams == null ? [] : List<dynamic>.from(teams!.map((x) => x.toJson())),
+        "_id": id,
+    };
+}
+
+class GroupTeam {
+    String? club;
+    String? name;
+    String? profile;
+    int? cPosition;
+    int? mp;
+    int? w;
+    int? d;
+    int? l;
+    int? gf;
+    int? ga;
+    int? gd;
+    int? pts;
+    String? id;
+
+    GroupTeam({
+        this.club,
+        this.name,
+        this.profile,
+        this.cPosition,
+        this.mp,
+        this.w,
+        this.d,
+        this.l,
+        this.gf,
+        this.ga,
+        this.gd,
+        this.pts,
+        this.id,
+    });
+
+    factory GroupTeam.fromJson(Map<String, dynamic> json) => GroupTeam(
+        club: json["club"],
+        name: json["name"],
+        profile: json["profile"],
+        cPosition: json["c_position"],
+        mp: json["mp"],
+        w: json["w"],
+        d: json["d"],
+        l: json["l"],
+        gf: json["gf"],
+        ga: json["ga"],
+        gd: json["gd"],
+        pts: json["pts"],
+        id: json["_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "club": club,
+        "name": name,
+        "profile": profile,
+        "c_position": cPosition,
+        "mp": mp,
+        "w": w,
+        "d": d,
+        "l": l,
+        "gf": gf,
+        "ga": ga,
+        "gd": gd,
+        "pts": pts,
+        "_id": id,
     };
 }
 
@@ -336,7 +428,7 @@ class Fee {
     };
 }
 
-class TeamElement {
+class DataTeam {
     String? club;
     String? name;
     String? profile;
@@ -344,7 +436,7 @@ class TeamElement {
     String? status;
     String? id;
 
-    TeamElement({
+    DataTeam({
         this.club,
         this.name,
         this.profile,
@@ -353,7 +445,7 @@ class TeamElement {
         this.id,
     });
 
-    factory TeamElement.fromJson(Map<String, dynamic> json) => TeamElement(
+    factory DataTeam.fromJson(Map<String, dynamic> json) => DataTeam(
         club: json["club"],
         name: json["name"],
         profile: json["profile"],
@@ -373,25 +465,11 @@ class TeamElement {
 }
 
 class Ticket {
-    bool? ticketIs;
-    int? amount;
-    int? total;
-
-    Ticket({
-        this.ticketIs,
-        this.amount,
-        this.total,
-    });
+    Ticket();
 
     factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
-        ticketIs: json["is"],
-        amount: json["amount"],
-        total: json["total"],
     );
 
     Map<String, dynamic> toJson() => {
-        "is": ticketIs,
-        "amount": amount,
-        "total": total,
     };
 }

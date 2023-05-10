@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
-
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class PhotoDocfield extends StatelessWidget {
   const PhotoDocfield(
@@ -14,14 +12,17 @@ class PhotoDocfield extends StatelessWidget {
       required this.docfunction,
       this.image,
       this.docName,
-      this.border,this.isCreate =true});
+      this.border,
+      this.isCreate = true,
+      this.docBorder});
 
   final String textOfPdf;
   final void Function()? imagefunction;
   final void Function()? docfunction;
-  final File? image;
+  final String? image;
   final String? docName;
   final BoxBorder? border;
+  final BoxBorder? docBorder;
   final bool isCreate;
 
   @override
@@ -42,9 +43,7 @@ class PhotoDocfield extends StatelessWidget {
                 image: image != null
                     ? DecorationImage(
                         fit: BoxFit.cover,
-                        image: FileImage(
-                          image!,
-                        ),
+                        image: NetworkImage(image!)
                       )
                     : null,
                 color: Colors.black.withOpacity(0.2),
@@ -67,6 +66,7 @@ class PhotoDocfield extends StatelessWidget {
                     constraints:
                         const BoxConstraints.expand(height: double.infinity),
                     decoration: BoxDecoration(
+                      border: docBorder,
                       color: Colors.black.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -80,7 +80,10 @@ class PhotoDocfield extends StatelessWidget {
                   ),
                 ),
               )
-            : const SizedBox(),
+            : const Expanded(
+                flex: 2,
+                child: SizedBox(),
+              ),
       ],
     );
   }

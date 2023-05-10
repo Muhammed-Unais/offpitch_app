@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class CheckBoxs extends StatelessWidget {
   const CheckBoxs({super.key, required this.isCheck, required this.function});

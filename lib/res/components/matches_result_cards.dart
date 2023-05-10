@@ -1,74 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class MatchesResultCards extends StatelessWidget {
-  const MatchesResultCards({super.key});
+  const MatchesResultCards(
+      {super.key,
+      this.matchNo,
+      this.team1Cover,
+      this.team2Cover,
+      this.team1Name,
+      this.team2Name,
+      this.team1Goal,
+      this.team2Goal});
+
+  final int? matchNo;
+  final String? team1Cover;
+  final String? team2Cover;
+  final String? team1Name;
+  final String? team2Name;
+  final int? team1Goal;
+  final int? team2Goal;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
+    final size = MediaQuery.of(context).size;
+    return Card(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-         color: AppColors.white,
-         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(
-              0.5,
-            ),
-            blurRadius: 7,
-            offset: const Offset(
-              0,
-              3,
-            ),
-          ),
-        ],
+        side: const BorderSide(color: AppColors.black,width: 0.1)
       ),
-      margin: const EdgeInsets.only(
-          top: AppMargin.large,left: AppMargin.large,right: AppMargin.large),
+      elevation: 1,
+      surfaceTintColor: AppColors.white,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                Text("Match 1", style: Theme.of(context).textTheme.titleMedium),
-          ),
+          Text("Match $matchNo",
+              style: Theme.of(context).textTheme.titleMedium),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                flex: 3,
-                child: Column(
-                  children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage(
-                          "assets/images/pexels-francesco-paggiaro-705794.jpg"),
-                      radius: 30,
-                    ),
-                    const SizedBox(height: 8),
-                    Text("firstTeamName",
-                        style: Theme.of(context).textTheme.titleMedium),
-                  ],
+              SizedBox(
+                width: size.width * 0.32,
+                child: CircleAvatar(
+                  backgroundColor: AppColors.grey,
+                  backgroundImage: NetworkImage(
+                    team1Cover == null || team1Cover!.isEmpty
+                        ? 'https://www.gstatic.com/onebox/sports/logos/crest_48dp.png'
+                        : team1Cover!,
+                  ),
+                  radius: 24,
                 ),
               ),
-              Flexible(child: Text('2 - 4', style: Theme.of(context).textTheme.titleLarge)),
-              Flexible(
-                flex: 3,
+              Container(
+                alignment: Alignment.center,
+                width: size.width * 0.22,
+                child: Text(
+                  '${team1Goal == -1 || team1Goal == null ? "" : team1Goal} - ${team2Goal == -1 || team2Goal == null ? "" : team2Goal}',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              SizedBox(
+                width: size.width * 0.32,
                 child: Column(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage(
-                          "assets/images/pexels-francesco-paggiaro-705794.jpg"),
-                      radius: 30,
+                    CircleAvatar(
+                      backgroundColor: AppColors.grey,
+                      backgroundImage: NetworkImage(
+                        team2Cover == null || team2Cover!.isEmpty
+                            ? "https://www.gstatic.com/onebox/sports/logos/crest_48dp.png"
+                            : team2Cover!,
+                      ),
+                      radius: 24,
                     ),
-                    const SizedBox(height: 8),
-                    Text("secondTeamName",
-                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
             ],
           ),
+          const SizedBox(
+            height: AppMargin.extraSmall,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: size.width * 0.32,
+                child: Text(
+                  team1Name ?? "Team A",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: size.width * 0.32,
+                child: Text(
+                  team2Name ?? "Team B",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

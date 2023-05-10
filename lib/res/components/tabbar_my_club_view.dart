@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class TabbarMyClubView extends StatelessWidget {
   const TabbarMyClubView(

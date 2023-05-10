@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
 
 class TournamentCard extends StatelessWidget {
   const TournamentCard(
@@ -27,9 +27,11 @@ class TournamentCard extends StatelessWidget {
         Container(
           height: size.height / 4.95,
           width: size.width,
-          margin: const EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: AppMargin.large,
+          margin: const EdgeInsets.only(
+            left: AppMargin.large,
+            right: AppMargin.large,
+            top: AppMargin.small,
+            bottom: AppMargin.small
           ),
           decoration: BoxDecoration(
             border: Border.all(width: .5, color: AppColors.grey),
@@ -168,7 +170,7 @@ class TournamentCard extends StatelessWidget {
 
   String tournamentStand(startDate) {
     DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day -1);
+    DateTime date = DateTime(now.year, now.month, now.day );
     DateTime tournamentStartingDate =
         DateFormat("dd MMM yyyy").parse(startDate);
     int difference = date.compareTo(tournamentStartingDate);

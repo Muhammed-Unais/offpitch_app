@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/photo_doc_field.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_new_club_view_model.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ClubCreationPhotoDoc extends StatelessWidget {
@@ -14,7 +14,7 @@ class ClubCreationPhotoDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clubCreateProvider =Provider.of<CreateNewClubViewModel>(context);
+    final clubCreateProvider =context.watch<CreateNewClubViewModel>();
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
@@ -24,6 +24,8 @@ class ClubCreationPhotoDoc extends StatelessWidget {
         vertical: AppMargin.large,
       ),
       child: PhotoDocfield(
+        docName: clubCreateProvider.docname,
+        image: clubCreateProvider.imageUrl,
         isCreate: clubCreateProvider.isCreate,
         docfunction:imagefunction,
         imagefunction:docfunction,

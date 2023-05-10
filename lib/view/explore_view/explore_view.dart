@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_search.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';
 import 'package:offpitch_app/view/explore_view/components/tab1_today_matches.dart';
 import 'package:offpitch_app/view/explore_view/components/tab2_upcoming_matches.dart';
-import 'package:offpitch_app/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ExploreView extends StatefulWidget {
@@ -20,6 +21,10 @@ class _ExploreViewState extends State<ExploreView>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      Provider.of<ExploreViewViewModel>(context, listen: false)
+          .setSearchTabbarIndex(tabController.index);
+    });
     super.initState();
   }
 
@@ -39,41 +44,30 @@ class _ExploreViewState extends State<ExploreView>
           currentFocus.unfocus();
         }
       },
-      child: ChangeNotifierProvider(
-        create: (context) => ExploreViewViewModel(),
-        child: Scaffold(
-          body: NestedScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar.medium(
-                  floating: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    title: Text(
-                      "Touranaments",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  // backgroundColor: AppColors.white,
-                ),
-              ];
-            },
-            body: Column(
-              children: [
-                const ExploreSearch(),
-                ExploreTabBar(
-                  tabController: tabController,
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: tabController,
-                    children: const [Tab1TodayMatches(), Tab2UpcomingMatches()],
-                  ),
-                ),
-              ],
+      child: Scaffold(
+        appBar: AppBar(
+          bottomOpacity: 1,
+          title: const Text('Tournaments'),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(
+              80,
             ),
+            child: ExploreSearch(controller: tabController),
           ),
+        ),
+        body: Column(
+          children: [
+            ExploreTabBar(tabController: tabController),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [
+                  Tab1TodayMatches(),
+                  Tab2UpcomingMatches(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

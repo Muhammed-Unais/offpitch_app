@@ -2,15 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:provider/provider.dart';
 
 enum PoupMenuButtons { all, upcoming }
 
 class ExploreSearch extends StatelessWidget {
-  const ExploreSearch({super.key});
+  const ExploreSearch({super.key, required this.controller});
+
+  final TabController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -50,60 +52,88 @@ class ExploreSearch extends StatelessWidget {
                 AppRadius.borderRadiusS,
               ),
             ),
-            child: TextField(
-              // controller: textEditingController,
-              onChanged: (value) {
-                log(value);
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=all&search=$value");
-                if(sampleItem == PoupMenuButtons.upcoming){
-                     exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=upcoming&search=$value");
-                }
-              },
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Search",
-                filled: false,
-                prefixIcon: Icon(
-                  IconlyBroken.search,
-                  color: Theme.of(context).colorScheme.secondary,
+            child:
+                Consumer<ExploreViewViewModel>(builder: (context, values, _) {
+              return TextField(
+                // controller: textEditingController,
+                onChanged: (value) {
+                  log("ccccc");
+                  if (values.searchTabbarCount == 0) {
+                    exploreViewModel.getExpAndSrchTournmts(
+                        query: "filter=all&search=$value", sortingQuery: "all");
+                  }
+
+                  if (sampleItem == PoupMenuButtons.all) {
+                    exploreViewModel.getExpAndSrchTournmts(
+                        query: "filter=all&search=$value", sortingQuery: "all");
+                  }
+                  if (sampleItem == PoupMenuButtons.upcoming) {
+                    exploreViewModel.getExpAndSrchTournmts(
+                        query: "filter=all&search=$value",
+                        sortingQuery: "upComing");
+                  }
+                  if (sampleItem == null) {
+                    exploreViewModel.getExpAndSrchTournmts(
+                        query: "filter=all&search=$value", sortingQuery: "all");
+                  }
+                },
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Search",
+                  filled: false,
+                  prefixIcon: Icon(
+                    IconlyBroken.search,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           ),
-          PopupMenuButton(
-            initialValue: sampleItem,
-            icon: const Icon(IconlyBold.filter),
-            onSelected: (value) {
-              sampleItem = value;
+          Consumer<ExploreViewViewModel>(
+            builder: (context, value, _) {
+              return value.searchTabbarCount == 0
+                  ? const Text(
+                      "Live",
+                      style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : PopupMenuButton(
+                      initialValue: sampleItem,
+                      icon: const Icon(IconlyBold.filter),
+                      onSelected: (value) {
+                        sampleItem = value;
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: PoupMenuButtons.all,
+                          child: Row(
+                            children: const [
+                              Text("All"),
+                            ],
+                          ),
+                          onTap: () {
+                            exploreViewModel.getExpAndSrchTournmts(
+                                query: 'filter=all', sortingQuery: "all");
+                          },
+                        ),
+                        PopupMenuItem(
+                          value: PoupMenuButtons.upcoming,
+                          child: Row(
+                            children: const [
+                              Text("Upcoming"),
+                            ],
+                          ),
+                          onTap: () async {
+                            exploreViewModel.getExpAndSrchTournmts(
+                                query: 'filter=all', sortingQuery: "upComing");
+                          },
+                        ),
+                      ],
+                    );
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: PoupMenuButtons.all,
-                child: Row(
-                  children: const [
-                    Text("All"),
-                  ],
-                ),
-                onTap: () {
-                  exploreViewModel.getExpAndSrchTournmts(query: 'filter=all');
-                },
-              ),
-              PopupMenuItem(
-                value: PoupMenuButtons.upcoming,
-                child: Row(
-                  children: const [
-                    Text("Upcoming"),
-                  ],
-                ),
-                onTap: () async {
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: 'filter=upcoming');
-                },
-              ),
-            ],
-          ),
+          )
         ],
       ),
     );

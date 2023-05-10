@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/app_theme.dart';
-import 'package:offpitch_app/view_model/auth_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/view_model/auth_view_model/auth_view_model.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword(
