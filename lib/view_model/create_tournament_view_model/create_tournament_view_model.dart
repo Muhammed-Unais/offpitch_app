@@ -20,7 +20,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
   bool? isCheckTourType1 = false;
   bool? isCheckTourType2 = false;
   bool? isCheckTourType3 = false;
-  bool? isVisible = true;
+  bool isVisible = true;
   int testValue = 0;
   bool? isLoading = false;
 

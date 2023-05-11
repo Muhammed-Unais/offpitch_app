@@ -4,8 +4,10 @@ import 'package:offpitch_app/utils/routes/routes.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view_model/auth_view_model/auth_view_model.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
@@ -29,6 +31,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthViewModel(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => MyClubViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => UserViewModel(),
@@ -56,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
          ChangeNotifierProvider(
           create: (context) => MyClubPlayerAddViewModel(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => CreateTournamentViewModel(),
         ),
       ],
       child: MaterialApp(

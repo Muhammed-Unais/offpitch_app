@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_one.dart';
@@ -25,8 +26,7 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
   void initState() {
     tabController = TabController(initialIndex: 0, length: 3, vsync: this);
     controller.addListener(() {
-      final provider =
-          Provider.of<CreateTournamentViewModel>(context, listen: false);
+      final provider = Provider.of<CreateTournamentViewModel>(context,listen: false);
       if (controller.position.userScrollDirection == ScrollDirection.reverse) {
         if (provider.isVisible != false) {
           provider.setScrollFabVisibility(false);
@@ -48,55 +48,53 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CreateTournamentViewModel(),
-      child: Consumer<CreateTournamentViewModel>(
-        builder: (context, value, _) {
-          return DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "Host Tournament",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(
-                    60,
-                  ),
-                  child: CreateTournamentViewTabbar(
-                    tabController: tabController,
-                    value: value,
-                  ),
-                ),
+    return Consumer<CreateTournamentViewModel>(
+      builder: (context, value, _) {
+        log(value.isVisible.toString());
+        return DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Host Tournament",
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              body: TabBarView(
-                controller: tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  // Tab one=====
-                  CreateTournamentTabOne(
-                    controller: controller,
-                    tabController: tabController,
-                    formKey: formKey,
-                    value: value,
-                  ),
-                  // Tab two====
-                  CreatTournamentTabTwo(
-                    value: value,
-                    formKey1: formKey1,
-                    tabController: tabController,
-                  ),
-                  // Tab three====
-                  CreatTournamentTabThree(
-                    value: value,
-                  )
-                ],
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(
+                  60,
+                ),
+                child: CreateTournamentViewTabbar(
+                  tabController: tabController,
+                  value: value,
+                ),
               ),
             ),
-          );
-        },
-      ),
+            body: TabBarView(
+              controller: tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                // Tab one=====
+                CreateTournamentTabOne(
+                  controller: controller,
+                  tabController: tabController,
+                  formKey: formKey,
+                  value: value,
+                ),
+                // Tab two====
+                CreatTournamentTabTwo(
+                  value: value,
+                  formKey1: formKey1,
+                  tabController: tabController,
+                ),
+                // Tab three====
+                CreatTournamentTabThree(
+                  value: value,
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -176,7 +176,6 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
         setSaveButtonLoading(false);
         log(value.toString());
         clearAllData();
-        Provider.of<MyClubViewModel>(context,listen: false).getAllPlayers();
         Navigator.pop(context);
       }).onError((error, stackTrace) {
         setSaveButtonLoading(false);

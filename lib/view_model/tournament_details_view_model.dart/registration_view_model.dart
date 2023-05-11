@@ -36,14 +36,16 @@ class RegistorationViewModel with ChangeNotifier {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    log("..........");
     paymentId = response.paymentId;
     orderId = response.orderId;
     signature = response.signature;
-    final data = RegistrationSaveFeeModel(
-        razorpayPaymentId: paymentId,
-        razorpayOrderId: orderId,
-        razorpaySignature: signature);
-    postPaymentSave(data);
+
+    postPaymentSave(
+      razorpayPaymentId: paymentId,
+      razorpayOrderId: orderId,
+      razorpaySignature: signature,
+    );
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -69,16 +71,17 @@ class RegistorationViewModel with ChangeNotifier {
     };
     try {
       _razorpay.open(options);
+      intiateRazorPay();
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
   // details Page registration =================
-  String dobToAge(DateTime? dobs) {
+  String dobToAge(DateTime dobs) {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
-    DateTime dob = DateTime(dobs!.year, dobs.month, dobs.day);
+    DateTime dob = DateTime(dobs.year, dobs.month, dobs.day);
     Duration difference = date.difference(dob);
     int ageInDays = difference.inDays;
     int ageInYears = (ageInDays / 365).floor();
@@ -104,7 +107,8 @@ class RegistorationViewModel with ChangeNotifier {
       if (value.data!.amount! > 0) {
         openSession(amount: value.data!.amount!, orderId: value.data!.orderId!);
       }
-      Provider.of<DetailsTouramentViewModel>(context,listen: false).getSingleTournament(id);
+      Provider.of<DetailsTouramentViewModel>(context, listen: false)
+          .getSingleTournament(id);
       Navigator.pop(context);
       Utils.showCustomFlushbar(context, value.message!);
     }).onError((error, stackTrace) {
@@ -113,9 +117,16 @@ class RegistorationViewModel with ChangeNotifier {
     });
   }
 
-  postPaymentSave(RegistrationSaveFeeModel data) async {
+  postPaymentSave(
+      {required String? razorpayPaymentId,
+      razorpayOrderId,
+      razorpaySignature}) async {
+    final data = RegistrationSaveFeeModel(
+        razorpayPaymentId: paymentId,
+        razorpayOrderId: orderId,
+        razorpaySignature: signature);
     log("success post save payment");
-    _myrepo.postPaymentSave(tournamentIdforSavePay, data).then((value) {
+    await _myrepo.postPaymentSave(tournamentIdforSavePay, data).then((value) {
       log(value.toString());
       navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage);
     }).onError((error, stackTrace) {

@@ -101,8 +101,10 @@ class DetailsViewBody extends StatelessWidget {
               );
             }
           case Status.ERROR:
-            return ErrorComponent(
-              errorMessage: value.detailsTournament.message!,
+            return Center(
+              child: ErrorComponent(
+                errorMessage: value.detailsTournament.message!,
+              ),
             );
           default:
             return const Center(

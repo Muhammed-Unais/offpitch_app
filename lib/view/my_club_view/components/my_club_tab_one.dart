@@ -23,7 +23,10 @@ class MyClubTabOne extends StatelessWidget {
         switch (value.apiResponse.status) {
           case Status.LOADING:
             return const Center(
-              child: Center(child: CircularProgressIndicator()),
+              child:  CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.primary,
+              ),
             );
           case Status.COMPLETED:
             final data = value.apiResponse.data!;

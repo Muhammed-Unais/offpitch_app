@@ -77,11 +77,14 @@ class DetailsTouramentViewModel with ChangeNotifier {
   }
 
 
-  bool registeredCheckingandStatusCheking(SingleTournamentModel? data) {
+
+  bool registeredPendingStatusCheking(SingleTournamentModel? data) {
     bool conatain = false;
     for (var element in data!.data!.teams!) {
       if (element.club?.trim() == _myClubId?.trim()) {
-        conatain = true;
+        if(element.status == "pending"){
+            conatain = true;
+        }
       } else {
         conatain = false;
       }

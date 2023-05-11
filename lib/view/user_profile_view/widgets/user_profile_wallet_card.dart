@@ -3,8 +3,9 @@ import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/styles/constats.dart';
 
 class UserProfileWalletCard extends StatelessWidget {
-  const UserProfileWalletCard({super.key});
+  const UserProfileWalletCard({super.key, this.walletAmount});
 
+  final int? walletAmount;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -42,8 +43,8 @@ class UserProfileWalletCard extends StatelessWidget {
           ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
+            children:  [
+              const Text(
                 "Balance",
                 style: TextStyle(
                   color: AppColors.white,
@@ -52,8 +53,8 @@ class UserProfileWalletCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "₹00.00",
-                style: TextStyle(
+                "₹$walletAmount",
+                style: const TextStyle(
                   color: AppColors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

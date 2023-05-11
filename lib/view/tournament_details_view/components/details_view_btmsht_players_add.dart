@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -17,7 +18,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
         builder: (context, myclubView, _) {
           return ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: myclubView.getPlayerapiResponse.data?.data?.length,
+            itemCount: myclubView.getPlayerapiResponse.data?.data?.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
               final data = myclubView.getPlayerapiResponse.data?.data;
               return Container(
@@ -27,12 +28,17 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black54,
+                      BlendMode.darken,
+                    ),
                     image: NetworkImage(data?[index].profile ?? ""),
                     fit: BoxFit.cover,
                   ),
                 ),
                 child: Consumer<RegistorationViewModel>(
                     builder: (context, registrViewModel, _) {
+                  log(registrViewModel.toString());
                   return Stack(
                     children: [
                       Positioned(
@@ -42,27 +48,41 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data?[index].name ?? "",
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge),
+                              Text(
+                                data?[index].name ?? "",
+                                style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
                               const SizedBox(height: 5.0),
                               Text(
-                                'Age: ${registrViewModel.dobToAge(data?[index].dateOfBirth)}',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                'Age: ${registrViewModel.dobToAge(data?[index].dateOfBirth ?? DateTime.now())}',
+                                style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
                       Checkbox(
+                        fillColor: MaterialStatePropertyAll(
+                            Colors.white.withOpacity(0.5)),
                         activeColor: AppColors.white,
                         checkColor: AppColors.primary,
                         value: myclubView.selectedPlayers[index],
                         onChanged: (bool? valu) {
-                          registrViewModel.playersAddingcheckbox(valu!, index,context);
+                          registrViewModel.playersAddingcheckbox(
+                              valu!, index, context);
                           if (valu &&
-                              !registrViewModel.playersIds.contains(data?[index].id)) {
-                            registrViewModel.playersIds.add(data?[index].id ?? "");
+                              !registrViewModel.playersIds
+                                  .contains(data?[index].id)) {
+                            registrViewModel.playersIds
+                                .add(data?[index].id ?? "");
                           } else if (!valu) {
                             registrViewModel.playersIds.removeWhere(
                               (element) => element == data?[index].id,

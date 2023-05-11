@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/styles/constats.dart';
@@ -12,7 +13,8 @@ class CreateTournamentTabOne extends StatelessWidget {
       required this.controller,
       required this.value,
       required this.tabController,
-      required this.formKey});
+      required this.formKey,
+      });
 
   final ScrollController controller;
   final CreateTournamentViewModel value;
@@ -49,7 +51,7 @@ class CreateTournamentTabOne extends StatelessWidget {
           bottom: AppMargin.large,
           right: AppMargin.large,
           child: Visibility(
-            visible: value.isVisible!,
+            visible: value.isVisible,
             child: FloatingActionButton(
               backgroundColor: AppColors.primary,
               shape: RoundedRectangleBorder(

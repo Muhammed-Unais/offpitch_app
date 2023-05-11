@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
+import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PaymentStatusScreen extends StatelessWidget {
   const PaymentStatusScreen({super.key, this.isSuccess = true});
@@ -8,7 +11,8 @@ class PaymentStatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String statusText = isSuccess ? 'Payment Successful!' : 'Payment Failed';
     Color statusColor = isSuccess ? Colors.green : Colors.red;
-
+    final tournamentId =
+        Provider.of<RegistorationViewModel>(context).tournamentIdforSavePay;
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Center(
@@ -37,7 +41,9 @@ class PaymentStatusScreen extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-               
+                Provider.of<DetailsTouramentViewModel>(context, listen: false)
+                    .getSingleTournament(tournamentId);
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,

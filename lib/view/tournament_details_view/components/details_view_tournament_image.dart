@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/constats.dart';
 
 class DetailsViewTournamentImage extends StatelessWidget {
-  const DetailsViewTournamentImage({super.key, required this.hight, required this.width, required this.image});
+  const DetailsViewTournamentImage(
+      {super.key,
+      required this.hight,
+      required this.width,
+      required this.image});
 
   final double hight;
   final double width;
@@ -16,7 +20,7 @@ class DetailsViewTournamentImage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(
         horizontal: AppMargin.large,
       ),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppRadius.borderRadiusS,
@@ -24,9 +28,7 @@ class DetailsViewTournamentImage extends StatelessWidget {
         ),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(
-            image
-          ),
+          image: NetworkImage(image),
         ),
       ),
     );

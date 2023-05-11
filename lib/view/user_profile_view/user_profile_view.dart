@@ -38,49 +38,53 @@ class UserDetailsView extends StatelessWidget {
                   );
                   case Status.COMPLETED:
                     final data = value.userProfileResponse.data?.data;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Hi,${data?.name}",
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            CircleAvatar(
-                              radius: 16,
-                              backgroundImage:
-                                  NetworkImage(data?.profile ?? ""),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: AppMargin.large,
-                        ),
-                        Text(
-                          "Your Club",
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        UserProfileClubCard(
-                          clubCover: data?.club?.profile,
-                          clubName: data?.club?.name,
-                          clubStatus: data?.club?.status,
-                          playersCount: data?.club?.players,
-                        ),
-                        const UserProfileWalletCard(),
-                        const Divider(
-                          height: 0.5,
-                          color: AppColors.black,
-                        ),
-                        const UserProfileWatchListExpansion(),
-                        const UserProfileSettingsExpansion(),
-                        const UserProfileAboutUsExpansion(),
-                      ],
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Hi,${data?.name}",
+                                style: Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              CircleAvatar(
+                                radius: 16,
+                                backgroundImage:
+                                    NetworkImage(data?.profile ?? ""),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: AppMargin.large,
+                          ),
+                          Text(
+                            "Your Club",
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          UserProfileClubCard(
+                            clubCover: data?.club?.profile,
+                            clubName: data?.club?.name,
+                            clubStatus: data?.club?.status,
+                            playersCount: data?.club?.players,
+                          ),
+                           UserProfileWalletCard(walletAmount: data?.wallet),
+                          const Divider(
+                            height: 0.5,
+                            color: AppColors.black,
+                          ),
+                          const UserProfileWatchListExpansion(),
+                          const UserProfileSettingsExpansion(),
+                          const UserProfileAboutUsExpansion(),
+                        ],
+                      ),
                     );
                   case Status.ERROR:
-                    return ErrorComponent(
-                      errorMessage: value.userProfileResponse.message ?? "",
+                    return Center(
+                      child: ErrorComponent(
+                        errorMessage: value.userProfileResponse.message ?? "",
+                      ),
                     );
                   default:
                     return const SizedBox();

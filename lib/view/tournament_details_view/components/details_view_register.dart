@@ -11,32 +11,20 @@ import 'package:offpitch_app/view_model/tournament_details_view_model.dart/sched
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
-class DetailsViewRegister extends StatefulWidget {
+class DetailsViewRegister extends StatelessWidget {
   const DetailsViewRegister({super.key, required this.data});
 
   final SingleTournamentModel data;
-
-  @override
-  State<DetailsViewRegister> createState() => _DetailsViewRegisterState();
-}
-
-class _DetailsViewRegisterState extends State<DetailsViewRegister> {
-  @override
-  void initState() {
-    
-    Provider.of<RegistorationViewModel>(context,listen: false).intiateRazorPay();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Consumer<DetailsTouramentViewModel>(
       builder: (context, value, child) {
-        final tournamenStatus = widget.data.data?.registration?.status;
+        final tournamenStatus = data.data?.registration?.status;
 
         // Tournament Scheduling Checking=========================
-        if (value.userSheduleChecking(widget.data) &&
+        if (value.userSheduleChecking(data) &&
             tournamenStatus!.contains('closed')) {
           return Column(
             children: [
@@ -62,7 +50,7 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
                       child: OutlinedButton(
                         onPressed: () {
                           value.getGetScheduleTournamet(
-                              widget.data.data?.id, context);
+                              data.data?.id, context);
                         },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.red,
@@ -118,7 +106,7 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
           );
         }
         //  User already registered or not checking====================
-        if (value.registeredOrNotChecking(widget.data)) {
+        if (value.registeredOrNotChecking(data)) {
           return Column(
             children: [
               SvgPicture.asset(
@@ -142,7 +130,7 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
           );
         }
         value.calculateRemainingTime(
-          widget.data.data?.registration?.lastDate ?? "",
+          data.data?.registration?.lastDate ?? "",
         );
         return Column(
           children: [
@@ -177,7 +165,7 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
                           children: [
                             const Icon(Icons.lock_clock),
                             Text(
-                              "Last date \n ${widget.data.data?.registration?.lastDate}",
+                              "Last date \n ${data.data?.registration?.lastDate}",
                               style: Theme.of(context).textTheme.titleMedium,
                             )
                           ],
@@ -197,7 +185,7 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
                               ],
                             ),
                             Text(
-                              '₹${widget.data.data?.registration?.fee?.amount}'
+                              '₹${data.data?.registration?.fee?.amount}'
                                   .toString(),
                               style: Theme.of(context).textTheme.titleLarge,
                             )
@@ -212,8 +200,14 @@ class _DetailsViewRegisterState extends State<DetailsViewRegister> {
                     child: SubmitButton(
                       buttonChildtext: "Register",
                       actionFunction: () async {
-                        DetailsViewRegistrationBottomSheet.showModelBottomsheet(
-                          model: widget.data,
+                        final value = Provider.of<RegistorationViewModel>(
+                            context,
+                            listen: false);
+                        value.playersIds.clear();
+                        value.isPermission = false;
+                        await DetailsViewRegistrationBottomSheet
+                            .showModelBottomsheet(
+                          model: data,
                           context,
                         );
                       },
