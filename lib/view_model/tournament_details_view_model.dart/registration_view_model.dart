@@ -108,7 +108,7 @@ class RegistorationViewModel with ChangeNotifier {
         openSession(amount: value.data!.amount!, orderId: value.data!.orderId!);
       }
       Provider.of<DetailsTouramentViewModel>(context, listen: false)
-          .getSingleTournament(id);
+          .getSingleTournament(id,);
       Navigator.pop(context);
       Utils.showCustomFlushbar(context, value.message!);
     }).onError((error, stackTrace) {

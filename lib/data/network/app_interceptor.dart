@@ -29,8 +29,8 @@ class AppInterceptor {
           final accessToken = preferences.getString('accessToken');
 
           //
-          if (err.response?.statusCode == 401|| err.response?.statusCode ==403) {
-
+          if (err.response?.statusCode == 401 ||
+              err.response?.statusCode == 403) {
             // ignore: deprecated_member_use
             dio.interceptors.requestLock.lock();
             // ignore: deprecated_member_use
@@ -50,12 +50,14 @@ class AppInterceptor {
                 dio.interceptors.responseLock.unlock();
                 RequestOptions options = err.requestOptions;
                 try {
-                  var resp = await dio.request(err.requestOptions.path,
-                      data: options.data,
-                      cancelToken: options.cancelToken,
-                      onReceiveProgress: options.onReceiveProgress,
-                      onSendProgress: options.onSendProgress,
-                      queryParameters: options.queryParameters);
+                  var resp = await dio.request(
+                    err.requestOptions.path,
+                    data: options.data,
+                    cancelToken: options.cancelToken,
+                    onReceiveProgress: options.onReceiveProgress,
+                    onSendProgress: options.onSendProgress,
+                    queryParameters: options.queryParameters,
+                  );
                   handler.resolve(resp);
                 } on DioError catch (error) {
                   handler.reject(error);

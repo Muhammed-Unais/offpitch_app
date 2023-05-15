@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/services.dart/splash_services.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     splashServices.checkAuthentication(context);
+    Provider.of<UserViewModel>(context, listen: false).getUserClubId();
     super.initState();
   }
 
@@ -31,7 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-          const Spacer(flex: 2,)
+          const Spacer(
+            flex: 2,
+          )
         ],
       ),
     );

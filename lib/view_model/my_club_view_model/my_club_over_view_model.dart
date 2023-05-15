@@ -4,13 +4,12 @@ import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/club_tournamentmodel.dart';
 import 'package:offpitch_app/models/players_model.dart';
 import 'package:offpitch_app/repository/club_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MyClubViewModel extends ChangeNotifier {
   final _myRepo = ClubRepository();
   int count = 0;
-
-  bool isUserhasClub = false;
 
   // for registration view ============
   List<bool> selectedPlayers = [];
@@ -26,14 +25,6 @@ class MyClubViewModel extends ChangeNotifier {
   Future getMyClub() async {
     setMyClubdetails(ApiResponse.loading());
     _myRepo.getAllClubWithAccessTokem().then((value) async {
-      isUserhasClub = value.success;
-      // stored my club id in local storage===============
-      isUserhasClub = value.success;
-      final sp = await SharedPreferences.getInstance();
-      if (value.data?.id != null) {
-        final String myClubId = value.data!.id!;
-        sp.setString('myClubId', myClubId);
-      }
       setMyClubdetails(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setMyClubdetails(ApiResponse.error(error.toString()));
@@ -73,8 +64,12 @@ class MyClubViewModel extends ChangeNotifier {
     getPlayerapiResponse.data = null;
   }
 
-  MyClubViewModel() {
-    getMyClub();
-    getAllPlayers();
+  MyClubViewModel(context) {
+    final userClubId =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
+    if (userClubId != null && userClubId.isNotEmpty) {
+      getMyClub();
+      getAllPlayers();
+    }
   }
 }

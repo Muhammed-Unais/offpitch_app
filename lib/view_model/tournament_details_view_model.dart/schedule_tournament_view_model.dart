@@ -23,7 +23,7 @@ class ScheduleTournametViewModel with ChangeNotifier {
       setIsloading(false);
       log(value.toString());
       Provider.of<DetailsTouramentViewModel>(context, listen: false)
-          .getSingleTournament(id);
+          .getSingleTournament(id,);
       Utils.showCustomFlushbar(context, value['message'], isError: false);
     }).onError((error, stackTrace) {
       Utils.showCustomFlushbar(
@@ -73,7 +73,7 @@ class ScheduleTournametViewModel with ChangeNotifier {
     await _myRepo1.getPostAddResult(id, data).then(
       (value) {
         Provider.of<DetailsTouramentViewModel>(context!, listen: false)
-            .getSingleTournament(id);
+            .getSingleTournament(id,);
         Navigator.pop(context);
         Map<String, dynamic> values = value;
         Utils.showCustomFlushbar(context, values["message"],isError: false);

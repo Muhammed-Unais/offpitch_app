@@ -6,7 +6,7 @@ import 'package:offpitch_app/res/components/tabbar_my_club_view.dart';
 import 'package:offpitch_app/res/components/users_tournament_card.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +30,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
 
   @override
   Widget build(BuildContext context) {
-    final myClubOverViewModel =
-        Provider.of<MyClubViewModel>(context).isUserhasClub;
+    final userClubId = Provider.of<UserViewModel>(context,listen: false).userClubId;
     return Column(
       children: [
         TabbarMyClubView(
@@ -41,7 +40,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
           tabbar3: "Ended",
         ),
         Expanded(
-          child: myClubOverViewModel
+          child: userClubId !=null && userClubId.isNotEmpty
               ? TabBarView(
                   controller: tabController,
                   children: [

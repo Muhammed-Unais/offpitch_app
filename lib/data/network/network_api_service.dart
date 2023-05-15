@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/app_exception.dart';
 import 'package:offpitch_app/data/network/base_api_service.dart';
-import 'package:offpitch_app/data/network/dio_interceptor.dart';
+import 'package:offpitch_app/data/network/app_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkApiServices extends BaseApiService {

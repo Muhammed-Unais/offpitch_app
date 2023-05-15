@@ -7,14 +7,12 @@ import 'package:offpitch_app/models/registered_teams.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
 import 'package:offpitch_app/repository/registered_teams_repository.dart';
 import 'package:offpitch_app/repository/tournament_details_repository.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class DetailsTouramentViewModel with ChangeNotifier {
   final _myRepo = TournamentDetailsRepository();
 
-  String? _myClubId;
-  String? get myClubId => _myClubId;
   ApiResponse<SingleTournamentModel> detailsTournament = ApiResponse.loading();
   setDetilsTournament(ApiResponse<SingleTournamentModel> allTournamest) {
     detailsTournament = allTournamest;
@@ -22,12 +20,11 @@ class DetailsTouramentViewModel with ChangeNotifier {
   }
 
 //  touranemt deatils api call==========
-  Future getSingleTournament(id) async {
+  Future getSingleTournament(id,) async {
     setDetilsTournament(ApiResponse.loading());
     _myRepo.sigleTournamentDetails(id).then((value) {
       setDetilsTournament(ApiResponse.completed(value));
       log(value.toString());
-      getMyClubId();
     }).onError((error, stackTrace) {
       setDetilsTournament(ApiResponse.error(error.toString()));
       log(error.toString());
@@ -62,18 +59,12 @@ class DetailsTouramentViewModel with ChangeNotifier {
 
   Duration? get remainingTime => _remainingTime!;
 
-  Future getMyClubId() async {
-    final sp = await SharedPreferences.getInstance();
-    final myClubId = sp.getString('myClubId');
-    AppUserIdAndTokens.userClubId = myClubId;
-    log("j${AppUserIdAndTokens.userClubId.toString()}");
-    _myClubId = myClubId;
-  }
-
-  bool registeredOrNotChecking(SingleTournamentModel? data) {
+  bool registeredOrNotChecking(SingleTournamentModel? data, context) {
+    String? myClubid =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     bool conatain = false;
     for (var element in data!.data!.teams!) {
-      if (element.club?.trim() == _myClubId?.trim()) {
+      if (element.club?.trim() == myClubid?.trim()) {
         conatain = true;
       } else {
         conatain = false;
@@ -82,10 +73,12 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool registeredPendingStatusCheking(SingleTournamentModel? data) {
+  bool registeredPendingStatusCheking(SingleTournamentModel? data,context) {
+     String? myClubid =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     bool conatain = false;
     for (var element in data!.data!.teams!) {
-      if (element.club?.trim() == _myClubId?.trim()) {
+      if (element.club?.trim() == myClubid?.trim()) {
         if (element.status == "pending") {
           conatain = true;
         }
@@ -96,9 +89,11 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool userSheduleChecking(SingleTournamentModel? data) {
+  bool userSheduleChecking(SingleTournamentModel? data,context) {
+     String? myClubid =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     bool conatain = false;
-    if (data?.data?.host?.id == _myClubId) {
+    if (data?.data?.host?.id == myClubid) {
       conatain = true;
     }
     return conatain;
@@ -126,13 +121,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
     });
   }
 
-  DetailsTouramentViewModel() {
-    getMyClubId();
-  }
-
   clearAlldataLogout() {
     registeredTeams.data = null;
     detailsTournament.data = null;
-    _myClubId = null;
   }
 }

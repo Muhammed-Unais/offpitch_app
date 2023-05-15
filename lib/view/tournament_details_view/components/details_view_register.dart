@@ -24,7 +24,7 @@ class DetailsViewRegister extends StatelessWidget {
         final tournamenStatus = data.data?.registration?.status;
 
         // Tournament Scheduling Checking and button ============
-        if (value.userSheduleChecking(data) &&
+        if (value.userSheduleChecking(data,context) &&
             tournamenStatus!.contains('closed')) {
           return DetailsViewRegisteredScheduleBotton(
             id: data.data?.id,
@@ -36,7 +36,7 @@ class DetailsViewRegister extends StatelessWidget {
           return const DetailsViewRegistedClosed();
         }
         //  User already registered or not checking==============
-        if (value.registeredOrNotChecking(data)) {
+        if (value.registeredOrNotChecking(data,context)) {
           return const DeilsViewRegisterdAlreadyRegisterd();
         }
         value.calculateRemainingTime(

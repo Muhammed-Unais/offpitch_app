@@ -153,6 +153,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
   }
 
   clearAllData() {
+    pdfborder = null;
     _imageUrl = null;
     _docName = null;
     controllerName.clear();

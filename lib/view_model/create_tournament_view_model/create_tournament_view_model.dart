@@ -245,7 +245,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
     _myRepo.putTournamentapi(value).then((value) {
       setLoadingCreation(false);
-      log(value.toString());
+      clearAllData();
       Map<String, dynamic> values = value;
       Utils.showCustomFlushbar(context, values['message']);
       Provider.of<ExploreViewViewModel>(context, listen: false)
@@ -257,6 +257,23 @@ class CreateTournamentViewModel extends ChangeNotifier {
       Utils.showCustomFlushbar(context, error.toString());
       log(error.toString());
     });
+  }
+
+  clearAllData() {
+    border = null;
+    _images = null;
+    imageUrl = null;
+    amountController.clear();
+    maxOfPlayersController.clear();
+    minOfPlayersController.clear();
+    lastDateTorurnamentController.clear();
+    noOfRegistrationController.clear();
+    instructionController.clear();
+    aboutController.clear();
+    descriptionController.clear();
+    titleTorurnamentController.clear();
+    locationController.clear();
+    dateController.clear();
   }
 
   clearAllDataLogout() {

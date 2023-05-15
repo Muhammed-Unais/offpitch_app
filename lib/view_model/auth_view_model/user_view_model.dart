@@ -6,7 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier {
-  Future<bool> saveToken(UserModel userModel) async {
+  String? _userClubId;
+  String? get userClubId => _userClubId;
+
+//  Save user accessToken in login api inside then call back method
+  Future<bool> saveAcesssToken(UserModel userModel) async {
     final sp = await SharedPreferences.getInstance();
     sp.remove('accessToken');
     sp.setString(
@@ -17,6 +21,27 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
+//  Save user club id in login api inside then call back method
+  Future saveUserClubId(UserModel model) async {
+    final sp = await SharedPreferences.getInstance();
+    if (model.data?.club != null &&
+        model.data?.clubStatus != null &&
+        model.data!.club!.isNotEmpty &&
+        model.data!.clubStatus!.isNotEmpty) {
+      log("account has club");
+      sp.remove("userClub_id");
+      sp.setString("userClub_id", model.data!.club!);
+    }
+    getUserClubId();
+  }
+
+  // get User Club id==================
+  getUserClubId() async {
+    final sp = await SharedPreferences.getInstance();
+    _userClubId = sp.getString("userClub_id");
+  }
+
+  // Get user authToken Setted in NetWorkapi Service ==============
   Future<String?> getUser() async {
     final sp = await SharedPreferences.getInstance();
     final String? authToken = sp.getString("authToken");
@@ -25,12 +50,13 @@ class UserViewModel with ChangeNotifier {
     return authToken;
   }
 
+  // logout remeve all data==========
   Future<bool> logoutRemoveAllData(BuildContext context) async {
     Provider.of<LogoutViewModel>(context, listen: false)
         .clearAllDatasLogout(context);
     final sp = await SharedPreferences.getInstance();
     await sp.remove('authToken');
-    await sp.remove("myClubId");
+    await sp.remove("userClub_id");
     await sp.remove("accessToken");
     return true;
   }

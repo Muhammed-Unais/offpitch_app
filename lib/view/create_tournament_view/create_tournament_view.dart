@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_one.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_three.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_two.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tabbar.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +29,8 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
   void initState() {
     tabController = TabController(initialIndex: 0, length: 3, vsync: this);
     controller.addListener(() {
-      final provider = Provider.of<CreateTournamentViewModel>(context,listen: false);
+      final provider =
+          Provider.of<CreateTournamentViewModel>(context, listen: false);
       if (controller.position.userScrollDirection == ScrollDirection.reverse) {
         if (provider.isVisible != false) {
           provider.setScrollFabVisibility(false);
@@ -48,6 +52,8 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
 
   @override
   Widget build(BuildContext context) {
+    final userClubId =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     return Consumer<CreateTournamentViewModel>(
       builder: (context, value, _) {
         log(value.isVisible.toString());
@@ -69,29 +75,42 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                 ),
               ),
             ),
-            body: TabBarView(
-              controller: tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                // Tab one=====
-                CreateTournamentTabOne(
-                  controller: controller,
-                  tabController: tabController,
-                  formKey: formKey,
-                  value: value,
-                ),
-                // Tab two====
-                CreatTournamentTabTwo(
-                  value: value,
-                  formKey1: formKey1,
-                  tabController: tabController,
-                ),
-                // Tab three====
-                CreatTournamentTabThree(
-                  value: value,
-                )
-              ],
-            ),
+            body: userClubId != null && userClubId.isNotEmpty
+                ? TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      // Tab one=====
+                      CreateTournamentTabOne(
+                        controller: controller,
+                        tabController: tabController,
+                        formKey: formKey,
+                        value: value,
+                      ),
+                      // Tab two====
+                      CreatTournamentTabTwo(
+                        value: value,
+                        formKey1: formKey1,
+                        tabController: tabController,
+                      ),
+                      // Tab three====
+                      CreatTournamentTabThree(
+                        value: value,
+                      )
+                    ],
+                  )
+                : InkWell(
+                    onTap: () {
+                      
+                    },
+                    child: const EmptyComponts(
+                      image: "assets/images/no-club.svg",
+                      showMessage: "You didn't create a club",
+                      height: 200,
+                      width: 200,
+                      addText: "Create new",
+                    ),
+                  ),
           ),
         );
       },

@@ -5,8 +5,8 @@ import 'package:offpitch_app/res/components/matches_result_cards.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/scheduled_view_alert_dialge.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ScheduledviewT2 extends StatelessWidget {
@@ -112,10 +112,10 @@ class ScheduledviewT2 extends StatelessWidget {
 
                                   // match Score updating show dialog=======
                                   final myClubId =
-                                      Provider.of<DetailsTouramentViewModel>(
+                                      Provider.of<UserViewModel>(
                                               context,
                                               listen: false)
-                                          .myClubId;
+                                          .userClubId;
                                   if (myClubId ==
                                       singleTournamentModel.data?.host?.id) {
                                     Utils.showDialogue(

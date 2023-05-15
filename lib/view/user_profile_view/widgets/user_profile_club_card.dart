@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ class UserProfileClubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userClubId =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     return Card(
       margin: const EdgeInsets.only(
           bottom: AppMargin.medium, top: AppPadding.small),
@@ -30,46 +33,64 @@ class UserProfileClubCard extends StatelessWidget {
       surfaceTintColor: AppColors.white,
       color: Theme.of(context).cardColor,
       elevation: 4,
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.white,
-          radius: 24,
-          backgroundImage: NetworkImage(
-            clubCover ?? AppProfilesCover.clubCover,
-          ),
-        ),
-        title: Text(
-          clubName ?? "",
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
-        subtitle: Row(
-          children: [
-            Text(
-              "$playersCount Players",
-              style: Theme.of(context).textTheme.bodyLarge,
+      child: userClubId != null && userClubId.isNotEmpty
+          ? ListTile(
+              leading: CircleAvatar(
+                backgroundColor: AppColors.white,
+                radius: 24,
+                backgroundImage: NetworkImage(
+                  clubCover ?? AppProfilesCover.clubCover,
+                ),
+              ),
+              title: Text(
+                clubName ?? "",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    "$playersCount Players",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(
+                    width: AppMargin.small,
+                  ),
+                  Text(
+                    clubStatus ?? "",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+              trailing: InkWell(
+                onTap: () {
+                  Provider.of<BottomBarViewModel>(context, listen: false).onTap(
+                    3,
+                    context,
+                  );
+                },
+                child: Text(
+                  "View",
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
+            )
+          : ListTile(
+              onTap: () {
+                Provider.of<BottomBarViewModel>(context, listen: false).onTap(
+                  3,
+                  context,
+                );
+              },
+              title: Text(
+                "You didn't create a club,Create Now",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              trailing: const Icon(
+                Icons.arrow_right_alt,
+                color: AppColors.primary,
+                size: 20,
+              ),
             ),
-            const SizedBox(
-              width: AppMargin.small,
-            ),
-            Text(
-              clubStatus ?? "",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        ),
-        trailing: InkWell(
-          onTap: () {
-            Provider.of<BottomBarViewModel>(context,listen: false).onTap(
-              3,
-              context,
-            );
-          },
-          child: Text(
-            "View",
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-      ),
     );
   }
 }

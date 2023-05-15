@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
@@ -11,6 +12,8 @@ class BottomBarViewModel extends ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   onTap(int index, context, {PageController? controller}) {
+    final userClubId =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
     _currentIndex = index;
     notifyListeners();
     if (index == 1) {
@@ -20,17 +23,22 @@ class BottomBarViewModel extends ChangeNotifier {
     }
     if (index == 3) {
       final value = Provider.of<MyClubViewModel>(context, listen: false);
+      if (userClubId != null && userClubId.isNotEmpty) {
+        value.apiResponse.data ?? value.getMyClub();
+        value.getPlayerapiResponse.data ?? value.getAllPlayers();
+      }
 
-      value.apiResponse.data ?? value.getMyClub();
-      value.getPlayerapiResponse.data ?? value.getAllPlayers();
+      if (userClubId != null && userClubId.isNotEmpty) {
+        final value1 =
+            Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
+        value1.apiResponse.data ?? value1.getAllUserHostedTournaments();
+      }
 
-      final value1 =
-          Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
-      value1.apiResponse.data ?? value1.getAllUserHostedTournaments();
-
-      final value2 =
-          Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
-      value2.apiResponsetwo.data ?? value2.getAllUserRegisteredTournaments();
+      if (userClubId != null && userClubId.isNotEmpty) {
+        final value2 =
+            Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
+        value2.apiResponsetwo.data ?? value2.getAllUserRegisteredTournaments();
+      }
     }
     if (index == 4) {
       final value = Provider.of<UserProfileViewModel>(context, listen: false);

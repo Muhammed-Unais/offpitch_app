@@ -52,20 +52,18 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> loginApi(data, BuildContext context) async {
     setLoading(true);
 
-    _myrepo.loginApi(data).then(
-      (value) async {
+    _myrepo.loginApi(data).then((value) async {
         setLoading(false);
         log(value.toString());
         // saveToken to Sharedpreference
         final userPrefrence =
             Provider.of<UserViewModel>(context, listen: false);
-        userPrefrence.saveToken(
-          UserModel(
-            data: Data(
-              accessToken: value['data']['accessToken'],
-            ),
-          ),
-        );
+            // AccessToken====================
+        userPrefrence.saveAcesssToken(value);
+
+            // UserClubId====================
+        userPrefrence.saveUserClubId(value);
+
         Navigator.pushReplacementNamed(context, RoutesName.navigation);
         Provider.of<BottomBarViewModel>(context, listen: false)
             .onTap(0, context);
@@ -75,7 +73,6 @@ class AuthViewModel extends ChangeNotifier {
         setLoading(false);
         log(error.toString());
         // display errors
-
         LoginValidation.loginErrorDisplay(context, error);
       },
     );
@@ -127,7 +124,7 @@ class AuthViewModel extends ChangeNotifier {
       // saveToken to Sharedpreference
 
       final userPrefrence = Provider.of<UserViewModel>(context, listen: false);
-      userPrefrence.saveToken(
+      userPrefrence.saveAcesssToken(
         UserModel(
           data: Data(
             accessToken: value['data']['accessToken'],

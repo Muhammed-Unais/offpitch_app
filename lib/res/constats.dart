@@ -28,9 +28,6 @@ class AppSpace {
   static const double appExtraLSpace = 60;
 }
 
-class AppUserIdAndTokens {
-  static String? userClubId;
-}
 
 class AppProfilesCover {
   static const String userProfile =
@@ -39,7 +36,3 @@ class AppProfilesCover {
       "https://www.gstatic.com/onebox/sports/logos/crest_48dp.png";
 }
 
-class AppUserIdsAndTokes {
-  static String? userClubId;
-  static String? userAuthTokes;
-}

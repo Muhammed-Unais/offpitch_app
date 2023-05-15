@@ -19,7 +19,6 @@ import 'package:provider/provider.dart';
 import 'view_model/my_club_view_model/my_club_player_add_view_model.dart';
 import 'view_model/tournament_details_view_model.dart/registration_view_model.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
 
 void main() {
@@ -36,10 +35,10 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthViewModel(),
         ),
          ChangeNotifierProvider(
-          create: (context) => MyClubViewModel(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => UserViewModel(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => MyClubViewModel(context),
         ),
         ChangeNotifierProvider(
           create: (context) => BottomBarViewModel(),
@@ -51,7 +50,7 @@ class MyApp extends StatelessWidget {
           create: (context) => CreateNewClubViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => UserHostRegTournamentViewModel(),
+          create: (context) => UserHostRegTournamentViewModel(context),
         ),
          ChangeNotifierProvider(
           create: (context) => ExploreViewViewModel(),

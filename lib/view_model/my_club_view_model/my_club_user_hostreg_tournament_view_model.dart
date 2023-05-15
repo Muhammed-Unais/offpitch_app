@@ -5,6 +5,8 @@ import 'package:offpitch_app/models/user_host_tournament_model.dart';
 import 'package:offpitch_app/models/user_registered_model.dart';
 import 'package:offpitch_app/repository/user_host_tournament_repository.dart';
 import 'package:offpitch_app/repository/user_registerd_tournaments_repository.dart';
+import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class UserHostRegTournamentViewModel extends ChangeNotifier {
   final _myRepo = UserHostTournamentRepository();
@@ -61,9 +63,13 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
     });
   }
 
-  UserHostRegTournamentViewModel() {
-    getAllUserHostedTournaments();
-    getAllUserRegisteredTournaments();
+  UserHostRegTournamentViewModel(context) {
+    final userClubId =
+        Provider.of<UserViewModel>(context, listen: false).userClubId;
+    if (userClubId != null && userClubId.isNotEmpty) {
+      getAllUserHostedTournaments();
+      getAllUserRegisteredTournaments();
+    }
   }
 
   clearAllDataLogout() {
