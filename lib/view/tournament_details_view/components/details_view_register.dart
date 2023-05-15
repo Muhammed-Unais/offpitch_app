@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
-import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_regis_bottom_.dart';
+import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_already_registerd.dart';
+import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_closed.dart';
+import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_schedule_button.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_timer_remaining.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -23,111 +23,21 @@ class DetailsViewRegister extends StatelessWidget {
       builder: (context, value, child) {
         final tournamenStatus = data.data?.registration?.status;
 
-        // Tournament Scheduling Checking=========================
+        // Tournament Scheduling Checking and button ============
         if (value.userSheduleChecking(data) &&
             tournamenStatus!.contains('closed')) {
-          return Column(
-            children: [
-              const Text(
-                "Schedule tournament",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red,
-                  fontSize: 24,
-                ),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => ScheduleTournametViewModel(),
-                child: Consumer<ScheduleTournametViewModel>(
-                  builder: (context, value, _) {
-                    return Container(
-                      margin: const EdgeInsets.only(
-                        left: AppMargin.large,
-                        right: AppMargin.large,
-                        top: AppMargin.medium,
-                      ),
-                      width: size.width,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          value.getGetScheduleTournamet(
-                              data.data?.id, context);
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          side: const BorderSide(color: Colors.red, width: 0.5),
-                        ),
-                        child: value.isLoading
-                            ? const CircularProgressIndicator(
-                                color: Colors.red,
-                                strokeWidth: 2,
-                              )
-                            : const Text(
-                                'Schedule',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+          return DetailsViewRegisteredScheduleBotton(
+            id: data.data?.id,
           );
         }
-
-        //  tournament time closed checking=======================
+        //  tournament time closed checking======================
         if (value.remainingTime!.isNegative ||
             tournamenStatus!.contains('closed')) {
-          return Column(
-            children: [
-              SvgPicture.asset(
-                theme: const SvgTheme(currentColor: Colors.grey),
-                "assets/images/access-denied.svg",
-                height: 120,
-                width: 120,
-              ),
-              const SizedBox(
-                height: AppMargin.small,
-              ),
-              const Text(
-                textAlign: TextAlign.center,
-                "Registration Closed",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.grey,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            ],
-          );
+          return const DetailsViewRegistedClosed();
         }
-        //  User already registered or not checking====================
+        //  User already registered or not checking==============
         if (value.registeredOrNotChecking(data)) {
-          return Column(
-            children: [
-              SvgPicture.asset(
-                "assets/images/registered.svg",
-                height: 120,
-                width: 120,
-              ),
-              const SizedBox(
-                height: AppMargin.extraSmall,
-              ),
-              const Text(
-                textAlign: TextAlign.center,
-                "Already Registered",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            ],
-          );
+          return const DeilsViewRegisterdAlreadyRegisterd();
         }
         value.calculateRemainingTime(
           data.data?.registration?.lastDate ?? "",
@@ -194,7 +104,7 @@ class DetailsViewRegister extends StatelessWidget {
                       )
                     ],
                   ),
-                  // Ṛegistration flutter===========================
+                  // Ṛegistration Torunament =======================
                   SizedBox(
                     height: 50,
                     child: SubmitButton(

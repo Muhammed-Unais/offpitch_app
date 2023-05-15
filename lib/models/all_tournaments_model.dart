@@ -10,12 +10,12 @@ String allTournamentsModelToJson(AllTournamentsModel data) => json.encode(data.t
 
 class AllTournamentsModel {
     AllTournamentsModel({
-        required this.success,
-        required this.data,
+         this.success,
+         this.data,
     });
 
-    bool success;
-    Data data;
+    bool? success;
+    Data? data;
 
     factory AllTournamentsModel.fromJson(Map<String, dynamic> json) => AllTournamentsModel(
         success: json["success"],
@@ -24,22 +24,22 @@ class AllTournamentsModel {
 
     Map<String, dynamic> toJson() => {
         "success": success,
-        "data": data.toJson(),
+        "data": data?.toJson(),
     };
 }
 
 class Data {
     Data({
-        required this.allTournaments,
-        required this.total,
-        required this.page,
-        required this.limit,
+         this.allTournaments,
+         this.total,
+         this.page,
+         this.limit,
     });
 
-    List<AllTournament> allTournaments;
+    List<AllTournament>? allTournaments;
     int? total;
-    int page;
-    int limit;
+    int? page;
+    int? limit;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         allTournaments: List<AllTournament>.from(json["allTournaments"].map((x) => AllTournament.fromJson(x))),
@@ -49,7 +49,7 @@ class Data {
     );
 
     Map<String, dynamic> toJson() => {
-        "allTournaments": List<dynamic>.from(allTournaments.map((x) => x.toJson())),
+        "allTournaments": List<dynamic>.from(allTournaments!.map((x) => x.toJson())),
         "total": total,
         "page": page,
         "limit": limit,
@@ -58,30 +58,30 @@ class Data {
 
 class AllTournament {
     AllTournament({
-        required this.id,
-        required this.host,
-        required this.cover,
-        required this.location,
-        required this.shortDescription,
-        required this.startDate,
-        required this.status,
-        required this.title,
-        required this.teamsCount,
-        required this.teams,
-        required this.isSaved,
+         this.id,
+         this.host,
+         this.cover,
+         this.location,
+         this.shortDescription,
+         this.startDate,
+         this.status,
+         this.title,
+         this.teamsCount,
+         this.teams,
+         this.isSaved,
     });
 
-    String id;
-    Host host;
-    String cover;
-    String location;
-    String shortDescription;
-    String startDate;
-    String status;
-    String title;
-    int teamsCount;
-    List<dynamic> teams;
-    bool isSaved;
+    String? id;
+    Host? host;
+    String? cover;
+    String? location;
+    String? shortDescription;
+    String? startDate;
+    String? status;
+    String? title;
+    int? teamsCount;
+    List<dynamic>? teams;
+    bool? isSaved;
 
     factory AllTournament.fromJson(Map<String, dynamic> json) => AllTournament(
         id: json["_id"],
@@ -99,7 +99,7 @@ class AllTournament {
 
     Map<String, dynamic> toJson() => {
         "_id": id,
-        "host": host.toJson(),
+        "host": host?.toJson(),
         "cover": cover,
         "location": location,
         "short_description": shortDescription,
@@ -107,23 +107,23 @@ class AllTournament {
         "status": status,
         "title": title,
         "teams_count": teamsCount,
-        "teams": List<dynamic>.from(teams.map((x) => x)),
+        "teams": List<dynamic>.from(teams!.map((x) => x)),
         "isSaved": isSaved,
     };
 }
 
 class Host {
     Host({
-        required this.id,
-        required this.email,
-        required this.name,
-        required this.phone,
+         this.id,
+         this.email,
+         this.name,
+         this.phone,
     });
 
-    String id;
-    String email;
-    String name;
-    int phone;
+    String? id;
+    String? email;
+    String? name;
+    int? phone;
 
     factory Host.fromJson(Map<String, dynamic> json) => Host(
         id: json["_id"],

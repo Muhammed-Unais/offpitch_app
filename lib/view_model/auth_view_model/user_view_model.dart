@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
+import 'package:offpitch_app/view_model/logout_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier {
@@ -23,9 +25,13 @@ class UserViewModel with ChangeNotifier {
     return authToken;
   }
 
-  Future<bool> remove() async {
+  Future<bool> logoutRemoveAllData(BuildContext context) async {
+    Provider.of<LogoutViewModel>(context, listen: false)
+        .clearAllDatasLogout(context);
     final sp = await SharedPreferences.getInstance();
     await sp.remove('authToken');
+    await sp.remove("myClubId");
+    await sp.remove("accessToken");
     return true;
   }
 }

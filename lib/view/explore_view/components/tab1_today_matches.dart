@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
@@ -86,11 +86,11 @@ class Tab1TodayMatches extends StatelessWidget {
                     await Navigator.pushNamed(context, "tournamentdetails");
                   },
                   child: TournamentCard(
-                    touranmentCoverImage: tournaments.cover,
-                    tornamentName: tournaments.title,
-                    tornamentPlace: tournaments.location,
-                    tornamentDate: tournaments.startDate,
-                    shortDescription: tournaments.shortDescription,
+                    touranmentCoverImage: tournaments.cover ??AppProfilesCover.clubCover,
+                    tornamentName: tournaments.title ??"No title",
+                    tornamentPlace: tournaments.location??"",
+                    tornamentDate: tournaments.startDate??"",
+                    shortDescription: tournaments.shortDescription??"",
                   ),
                 );
               },

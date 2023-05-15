@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_search.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';

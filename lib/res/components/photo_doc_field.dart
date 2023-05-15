@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 
 class PhotoDocfield extends StatelessWidget {
   const PhotoDocfield(

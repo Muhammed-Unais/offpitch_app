@@ -4,6 +4,7 @@ import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/repository/auth_repository.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
+import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/services.dart/auth_validation/login_validation.dart';
 import 'package:offpitch_app/view_model/services.dart/auth_validation/otp_validation.dart';
 import 'package:offpitch_app/view_model/services.dart/auth_validation/signup_validation.dart';
@@ -66,6 +67,8 @@ class AuthViewModel extends ChangeNotifier {
           ),
         );
         Navigator.pushReplacementNamed(context, RoutesName.navigation);
+        Provider.of<BottomBarViewModel>(context, listen: false)
+            .onTap(0, context);
       },
     ).onError(
       (error, stackTrace) async {

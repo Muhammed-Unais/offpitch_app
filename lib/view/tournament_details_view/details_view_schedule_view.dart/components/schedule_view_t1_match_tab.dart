@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
 import 'package:offpitch_app/res/components/matches_result_cards.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/scheduled_view_alert_dialge.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';

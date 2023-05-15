@@ -7,8 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/models/add_players_model.dart';
 import 'package:offpitch_app/repository/add_players_repository.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:offpitch_app/utils/utils.dart';
 
 class MyClubPlayerAddViewModel with ChangeNotifier {
   // posted To backend======
@@ -174,13 +173,25 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
       // Post Players================================
       _myaddPlayerRepo.postPlayers(modelData).then((value) async {
         setSaveButtonLoading(false);
-        log(value.toString());
         clearAllData();
+
+        Map<String, dynamic> sucssesMessage = value;
         Navigator.pop(context);
+        Utils.showCustomFlushbar(context, sucssesMessage['message'],
+            isError: false);
       }).onError((error, stackTrace) {
+        Utils.showCustomFlushbar(context, error.toString());
         setSaveButtonLoading(false);
         log(error.toString());
       });
     }
+  }
+
+  clearAllDataLogout() {
+    pdfborder = null;
+    _docName = null;
+    docUrl = null;
+    border = null;
+    _imageUrl = null;
   }
 }

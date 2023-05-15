@@ -50,8 +50,8 @@ class ExploreViewViewModel extends ChangeNotifier {
       List<AllTournament> allTournament = [];
       allTournament.clear();
 
-      for (AllTournament element in value.data.allTournaments) {
-        String input = element.startDate;
+      for (AllTournament element in value.data!.allTournaments!) {
+        String input = element.startDate!;
         DateTime startDate = inputFormat.parse(input);
         String outputDate = outputFormat.format(startDate);
         DateTime forUpcomingDate = DateFormat('dd MMM yyyy').parse(input);
@@ -70,10 +70,6 @@ class ExploreViewViewModel extends ChangeNotifier {
         if (sortingQuery == "all") {
           allTournament.add(element);
         }
-
-        log("live $dateStr");
-        log("live $outputDate");
-        log("==============");
       }
 
       // setLive tournaments
@@ -89,8 +85,12 @@ class ExploreViewViewModel extends ChangeNotifier {
     });
   }
 
+  clearAllDataLogout() {
+    liveTournaments.data =null;
+    allTournaments.data =null;
+  }
+
   ExploreViewViewModel() {
-    log("kkk");
     getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
   }
 }

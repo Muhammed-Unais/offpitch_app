@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_about.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_data_place.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_short_description.dart';

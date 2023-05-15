@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
+import 'package:offpitch_app/models/registered_teams.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
+import 'package:offpitch_app/repository/registered_teams_repository.dart';
 import 'package:offpitch_app/repository/tournament_details_repository.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsTouramentViewModel with ChangeNotifier {
@@ -18,6 +21,7 @@ class DetailsTouramentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+//  touranemt deatils api call==========
   Future getSingleTournament(id) async {
     setDetilsTournament(ApiResponse.loading());
     _myRepo.sigleTournamentDetails(id).then((value) {
@@ -61,6 +65,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
   Future getMyClubId() async {
     final sp = await SharedPreferences.getInstance();
     final myClubId = sp.getString('myClubId');
+    AppUserIdAndTokens.userClubId = myClubId;
+    log("j${AppUserIdAndTokens.userClubId.toString()}");
     _myClubId = myClubId;
   }
 
@@ -76,14 +82,12 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-
-
   bool registeredPendingStatusCheking(SingleTournamentModel? data) {
     bool conatain = false;
     for (var element in data!.data!.teams!) {
       if (element.club?.trim() == _myClubId?.trim()) {
-        if(element.status == "pending"){
-            conatain = true;
+        if (element.status == "pending") {
+          conatain = true;
         }
       } else {
         conatain = false;
@@ -98,5 +102,37 @@ class DetailsTouramentViewModel with ChangeNotifier {
       conatain = true;
     }
     return conatain;
+  }
+
+  // registered Api call==================
+
+  final _myReop2 = RegisteredTeamsRepository();
+
+  ApiResponse<RegisterdTeamsModel> registeredTeams = ApiResponse.loading();
+
+  setRegisterdTeams(ApiResponse<RegisterdTeamsModel> model) {
+    registeredTeams = model;
+    notifyListeners();
+  }
+
+  getRegisterdClubdetails(String? tId, cId) {
+    setRegisterdTeams(ApiResponse.loading());
+    _myReop2.getAllRegisteredClubs(tId, cId).then((value) {
+      log(value.toString());
+      setRegisterdTeams(ApiResponse.completed(value));
+    }).onError((error, stackTrace) {
+      log(error.toString());
+      setRegisterdTeams(ApiResponse.error(error.toString()));
+    });
+  }
+
+  DetailsTouramentViewModel() {
+    getMyClubId();
+  }
+
+  clearAlldataLogout() {
+    registeredTeams.data = null;
+    detailsTournament.data = null;
+    _myClubId = null;
   }
 }

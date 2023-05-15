@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_about.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_club_name.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_data_place.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_register.dart';
+import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_teams.dart';
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/scheduled_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_short_description.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_image.dart';
@@ -73,10 +74,13 @@ class DetailsViewBody extends StatelessWidget {
                         color: AppColors.grey,
                       ),
                     ),
-                    // Registration area=====================================
+                    // Registration components=======================
                     DetailsViewRegister(
                       data: value.detailsTournament.data!,
                     ),
+                    // Registered Teams components====================
+                     RegisteredTeams(singleTourdata: value.detailsTournament.data,),
+                    // about components ========================
                     DetailsViewAbout(data: value.detailsTournament.data!),
                     Container(
                       margin: const EdgeInsets.symmetric(

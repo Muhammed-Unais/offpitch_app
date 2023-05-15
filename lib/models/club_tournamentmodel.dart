@@ -50,19 +50,19 @@ class Data {
 
     String? id;
     String? author;
-    int v;
+    int? v;
     String? comment;
-    DateTime createdAt;
+    DateTime? createdAt;
     String? description;
     String? doc;
     String? email;
     int followers;
     String? name;
-    int phone;
+    int? phone;
     List<dynamic> players;
     String? profile;
     String? status;
-    DateTime updatedAt;
+    DateTime? updatedAt;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["_id"],
@@ -87,7 +87,7 @@ class Data {
         "author": author,
         "__v": v,
         "comment": comment,
-        "createdAt": createdAt.toIso8601String(),
+        "createdAt": createdAt?.toIso8601String(),
         "description": description,
         "doc": doc,
         "email": email,
@@ -97,6 +97,6 @@ class Data {
         "players": List<dynamic>.from(players.map((x) => x)),
         "profile": profile,
         "status": status,
-        "updatedAt": updatedAt.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
     };
 }

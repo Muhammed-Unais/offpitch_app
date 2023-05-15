@@ -57,6 +57,7 @@ class AuthRepository {
       log(response.toString());
       return response;
     } catch (error) {
+      
       log(error.toString());
       rethrow;
     }

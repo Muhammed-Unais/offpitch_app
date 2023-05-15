@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/photo_doc_field.dart';
 import 'package:offpitch_app/res/components/textformfied_components.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_player_add_view_model.dart';
 import 'package:offpitch_app/view_model/services.dart/add_player_validation/add_player_validation.dart';
 import 'package:provider/provider.dart';

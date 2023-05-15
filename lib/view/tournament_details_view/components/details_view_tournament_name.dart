@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 
 class DetailsViewTournamentName extends StatelessWidget {
   const DetailsViewTournamentName({super.key, required this.tournamentName});

@@ -133,4 +133,11 @@ class RegistorationViewModel with ChangeNotifier {
       log(error.toString());
     });
   }
+
+  clearAllDataLogout() {
+    paymentId = null;
+    orderId = null;
+    signature = null;
+    tournamentIdforSavePay = null;
+  }
 }

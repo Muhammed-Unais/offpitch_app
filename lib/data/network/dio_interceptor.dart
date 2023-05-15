@@ -29,8 +29,7 @@ class AppInterceptor {
           final accessToken = preferences.getString('accessToken');
 
           //
-          if (err.response?.statusCode == 401 ||
-              err.response?.statusCode == 403) {
+          if (err.response?.statusCode == 401) {
             log("Refreshing Token");
 
             // ignore: deprecated_member_use

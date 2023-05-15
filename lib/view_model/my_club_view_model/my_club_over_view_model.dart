@@ -10,6 +10,8 @@ class MyClubViewModel extends ChangeNotifier {
   final _myRepo = ClubRepository();
   int count = 0;
 
+  bool isUserhasClub = false;
+
   // for registration view ============
   List<bool> selectedPlayers = [];
 
@@ -24,13 +26,14 @@ class MyClubViewModel extends ChangeNotifier {
   Future getMyClub() async {
     setMyClubdetails(ApiResponse.loading());
     _myRepo.getAllClubWithAccessTokem().then((value) async {
+      isUserhasClub = value.success;
       // stored my club id in local storage===============
+      isUserhasClub = value.success;
       final sp = await SharedPreferences.getInstance();
       if (value.data?.id != null) {
         final String myClubId = value.data!.id!;
         sp.setString('myClubId', myClubId);
       }
-
       setMyClubdetails(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setMyClubdetails(ApiResponse.error(error.toString()));
@@ -63,6 +66,11 @@ class MyClubViewModel extends ChangeNotifier {
         setAllPlayerslist(ApiResponse.error(error.toString()));
       },
     );
+  }
+
+  clearAllDateLogout() {
+    apiResponse.data = null;
+    getPlayerapiResponse.data = null;
   }
 
   MyClubViewModel() {

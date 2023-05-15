@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/textformfied_components.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
 

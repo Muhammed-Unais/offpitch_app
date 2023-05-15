@@ -1,12 +1,11 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/home_view/components/home_top_card.dart';
 import 'package:offpitch_app/view/home_view/components/home_topbar.dart';
 import 'package:offpitch_app/view/home_view/components/home_upconing_tites.dart';
@@ -14,8 +13,21 @@ import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_mo
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+     final values = Provider.of<HomeAndExpViewModel>(context, listen: false);
+    values.userFuture ??= values.getAllTournaments();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,86 +69,74 @@ class HomeBody extends StatelessWidget {
                               const SizedBox(
                                 height: AppMargin.small,
                               ),
-                              Consumer<HomeAndExpViewModel>(
-                                builder: (context, value, _) {
-                                  switch (value.allTournamentModel.status) {
-                                    case Status.LOADING:
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: AppMargin.large,
-                                        ),
-                                        itemCount: 3,
-                                        itemBuilder: (context, index) {
-                                          return ShimerWidget.rectangular(
-                                            borderRadius:
-                                                AppRadius.borderRadiusM,
-                                            verticalMargin: AppMargin.small,
-                                            hight: size.height * 0.2,
-                                          );
-                                        },
-                                      );
-                                    case Status.ERROR:
-                                      log(value.allTournamentModel.message
-                                          .toString());
-                                      return Center(
-                                        child: ErrorComponent(
-                                          errorMessage: value
-                                                  .allTournamentModel.message ??
-                                              "",
-                                        ),
-                                      );
-                                    case Status.COMPLETED:
-                                      final data = value.allTournamentModel.data
-                                          ?.data.allTournaments;
-                                      if (data ==null ||data.isEmpty) {
-                                        return const EmptyComponts(
-                                          addText: "",
-                                          height: 200,
-                                          width: 200,
-                                          showMessage: "No Tournaments",
-                                          image: "assets/images/no-data.svg",
+                              FutureBuilder(
+                                future: Provider.of<HomeAndExpViewModel>(context).userFuture,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: AppMargin.large,
+                                      ),
+                                      itemCount: 3,
+                                      itemBuilder: (context, index) {
+                                        return ShimerWidget.rectangular(
+                                          borderRadius: AppRadius.borderRadiusM,
+                                          verticalMargin: AppMargin.small,
+                                          hight: size.height * 0.2,
                                         );
-                                      }
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: 3,
-                                        itemBuilder: (context, index) {
-                                          final values =data
-                                              .reversed
-                                              .toList()[index];
-                                          return InkWell(
-                                            onTap: () async {
-                                              final provider = Provider.of<
-                                                      DetailsTouramentViewModel>(
-                                                  context,
-                                                  listen: false);
-                                              provider.getSingleTournament(
-                                                  values.id);
-                                              await Navigator.pushNamed(
-                                                  context, "tournamentdetails");
-                                            },
-                                            child: TournamentCard(
-                                              shortDescription:
-                                                  values.shortDescription,
-                                              tornamentDate: values.startDate,
-                                              tornamentName: values.title,
-                                              tornamentPlace: values.location,
-                                              touranmentCoverImage:
-                                                  values.cover,
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    default:
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
+                                      },
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                      child: ErrorComponent(
+                                        errorMessage: snapshot.error.toString(),
+                                      ),
+                                    );
+                                  } else {
+                                    final user =
+                                        snapshot.data?.data?.allTournaments!;
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount:
+                                          user!.length > 3 ? 3 : user.length,
+                                      itemBuilder: (context, index) {
+                                        final values =
+                                            user.reversed.toList()[index];
+                                        return InkWell(
+                                          onTap: () async {
+                                            final provider = Provider.of<
+                                                    DetailsTouramentViewModel>(
+                                                context,
+                                                listen: false);
+                                            provider
+                                                .getSingleTournament(values.id);
+                                            await Navigator.pushNamed(
+                                                context, RoutesName.tournamentDetails);
+                                          },
+                                          child: TournamentCard(
+                                            shortDescription:
+                                                values.shortDescription ??
+                                                    "No Description",
+                                            tornamentDate:
+                                                values.startDate ?? "",
+                                            tornamentName:
+                                                values.title ?? "No title",
+                                            tornamentPlace: values.location ??
+                                                "No location",
+                                            touranmentCoverImage:
+                                                values.cover ??
+                                                    AppProfilesCover.clubCover,
+                                          ),
+                                        );
+                                      },
+                                    );
                                   }
                                 },
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -144,6 +144,7 @@ class HomeBody extends StatelessWidget {
                     ],
                   ),
                 ),
+                // Home carosole card==============
                 const HomeTopCard(),
               ],
             ),

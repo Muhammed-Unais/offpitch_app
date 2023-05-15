@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 
 class ErrorComponent extends StatelessWidget {
   const ErrorComponent({super.key, required this.errorMessage});

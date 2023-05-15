@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/styles/constats.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
 
 class ScheduleViewT1TeamsTab extends StatelessWidget {
@@ -87,11 +87,15 @@ class ScheduleViewT1TeamsTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16.0),
-              ListView.builder(
+              ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const Divider(color: AppColors.black,thickness: 0.2,);
+                },
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount:
-                    singleTournamentModel.data?.groups?[index].teams?.length,
+                    singleTournamentModel.data?.groups?[index].teams?.length ??
+                        0,
                 itemBuilder: (BuildContext context, int index1) {
                   final data =
                       singleTournamentModel.data?.groups?[index].teams?[index1];
@@ -102,7 +106,7 @@ class ScheduleViewT1TeamsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Row(
                             children: [
                               Flexible(

@@ -11,7 +11,7 @@ class LogoutAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAuthModel = Provider.of<UserViewModel>(context);
-    final userAuthviewModel = Provider.of<AuthViewModel>(context);
+    // final userAuthviewModel = Provider.of<AuthViewModel>(context);
     final bottomviewModel = Provider.of<BottomBarViewModel>(context);
 
     return AlertDialog(
@@ -23,15 +23,13 @@ class LogoutAlertDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            userAuthviewModel.userlogout();
-            userAuthModel.remove();
-            // userAuthModel.club();
+            // userAuthviewModel.userlogout();
+            userAuthModel.logoutRemoveAllData(context);
             Navigator.pushNamedAndRemoveUntil(
               context,
               RoutesName.login,
               (route) => false,
             ); // Close the dialog
-            bottomviewModel.onTap(0, context);
           },
           child: const Text(
             'Logout',

@@ -72,20 +72,15 @@ class ScheduleTournametViewModel with ChangeNotifier {
         matchNo: matchNo, roundNo: roundNo, teamA: teamA, teamB: teamB);
     await _myRepo1.getPostAddResult(id, data).then(
       (value) {
-         Navigator.pop(context!);
-        Map<String, dynamic> values = value;
-        log(values["message"]);
-        Provider.of<DetailsTouramentViewModel>(context, listen: false)
+        Provider.of<DetailsTouramentViewModel>(context!, listen: false)
             .getSingleTournament(id);
-        Utils.showCustomFlushbar(
-          context,values["message"]
-        );
+        Navigator.pop(context);
+        Map<String, dynamic> values = value;
+        Utils.showCustomFlushbar(context, values["message"],isError: false);
       },
     ).onError(
       (error, stackTrace) {
-         Utils.showCustomFlushbar(
-          context!,error.toString()
-        );
+        Utils.showCustomFlushbar(context!, error.toString());
         log(error.toString());
       },
     );

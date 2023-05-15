@@ -29,7 +29,8 @@ class Utils {
   static showCustomFlushbar(BuildContext context, String message,{bool isError =true}) {
     Flushbar(
       message: message,
-      messageColor:isError? Colors.red :AppColors.primary,
+      messageColor:isError? Colors.red :Colors.green,
+      messageSize: 16,
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.FLOATING,
@@ -65,13 +66,13 @@ class Utils {
       icon:  Icon(
         Icons.info_outline,
         size: 28.0,
-        color: isError ? Colors.red :AppColors.primary,
+        color: isError ? Colors.red :Colors.green,
       ),
       shouldIconPulse: false,
       showProgressIndicator: true,
-      progressIndicatorBackgroundColor:isError ? Colors.red :AppColors.primary,
+      progressIndicatorBackgroundColor:isError ? Colors.red :Colors.green,
       progressIndicatorValueColor:
-          const AlwaysStoppedAnimation<Color>(Colors.red),
+           AlwaysStoppedAnimation<Color>(isError? Colors.red: Colors.green),
       titleText:  Text(
         isError ?'Error':'Message',
         style: TextStyle(
@@ -90,7 +91,9 @@ class Utils {
   }
 
   static showDialogue(context, {required Widget child}) {
-    showDialog(
+    showModalBottomSheet(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
         return child;

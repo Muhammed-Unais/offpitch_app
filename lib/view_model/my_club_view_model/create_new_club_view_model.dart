@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:offpitch_app/models/create_new_club_model.dart';
 import 'package:offpitch_app/repository/create_club_repository.dart';
+import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,9 @@ class CreateNewClubViewModel extends ChangeNotifier {
 
   // create or update variable==========
   bool isCreate = true;
+
+  // postClub successmessge===========
+  Map<String, dynamic>? succesMessage;
 
 //  nameTexteditincontroller
   final TextEditingController nameController = TextEditingController();
@@ -152,9 +156,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
     setUpdateisLoding(true);
 
     bool just = false;
-
     if (_imageUrl != null || _docUrl != null) {
-      log("success");
       final value = CreateClubModel(
           doc: isCreate ? _docUrl : null,
           profile: _imageUrl,
@@ -167,10 +169,16 @@ class CreateNewClubViewModel extends ChangeNotifier {
       await _myrepo.postClubapi(value).then((value) async {
         setUpdateisLoding(false);
         just = true;
-
         await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
+
         isCreate ? Navigator.pop(context) : null;
+        succesMessage = value;
+        isCreate
+            ? Utils.showCustomFlushbar(context, succesMessage?['message'] ?? "",
+                isError: false)
+            : null;
       }).onError((error, stackTrace) {
+        Utils.showCustomFlushbar(context, error.toString());
         setUpdateisLoding(false);
         just = false;
         log(error.toString());
@@ -208,12 +216,22 @@ class CreateNewClubViewModel extends ChangeNotifier {
   }
 
   updateFunc(context) async {
-    log("hhhhh");
     final isSuccess = await postClubCreate(context);
-    log(isSuccess.toString());
     if (isSuccess) {
-      await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
+      Utils.showCustomFlushbar(context, succesMessage?['message'],
+          isError: false);
+      await Future.delayed(const Duration(seconds: 3));
       Navigator.pop(context);
+      await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
     }
+  }
+
+  clearAllDataLogout() {
+    _imageUrl = null;
+    _docUrl = null;
+    succesMessage = null;
+    _docErroBorder = null;
+    _imageErroBorder = null;
+    _docName = null;
   }
 }

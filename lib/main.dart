@@ -5,6 +5,8 @@ import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view_model/auth_view_model/auth_view_model.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
+import 'package:offpitch_app/view_model/logout_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
@@ -12,6 +14,7 @@ import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
+import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 import 'view_model/my_club_view_model/my_club_player_add_view_model.dart';
 import 'view_model/tournament_details_view_model.dart/registration_view_model.dart';
@@ -64,6 +67,15 @@ class MyApp extends StatelessWidget {
         ),
          ChangeNotifierProvider(
           create: (context) => CreateTournamentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeAndExpViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LogoutViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProfileViewModel(),
         ),
       ],
       child: MaterialApp(

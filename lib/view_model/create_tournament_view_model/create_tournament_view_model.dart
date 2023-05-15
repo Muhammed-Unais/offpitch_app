@@ -249,12 +249,19 @@ class CreateTournamentViewModel extends ChangeNotifier {
       Map<String, dynamic> values = value;
       Utils.showCustomFlushbar(context, values['message']);
       Provider.of<ExploreViewViewModel>(context, listen: false)
-          .getExpAndSrchTournmts(query: 'filter=all&limit=45', sortingQuery: "all");
+          .getExpAndSrchTournmts(
+              query: 'filter=all&limit=45', sortingQuery: "all");
       Provider.of<BottomBarViewModel>(context, listen: false).onTap(1, context);
     }).onError((error, stackTrace) {
       setLoadingCreation(false);
       Utils.showCustomFlushbar(context, error.toString());
       log(error.toString());
     });
+  }
+
+  clearAllDataLogout() {
+    border = null;
+    _images = null;
+    imageUrl = null;
   }
 }

@@ -38,3 +38,8 @@ class AppProfilesCover {
   static const String clubCover =
       "https://www.gstatic.com/onebox/sports/logos/crest_48dp.png";
 }
+
+class AppUserIdsAndTokes {
+  static String? userClubId;
+  static String? userAuthTokes;
+}

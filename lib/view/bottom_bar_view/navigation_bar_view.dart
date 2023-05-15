@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -39,7 +40,8 @@ class _BottomBarViewState extends State<BottomBarView> {
       body: views[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) => bottomBarVieModel.onTap(value, context,controller: pageController),
+        onTap: (value) =>
+            bottomBarVieModel.onTap(value, context, controller: pageController),
         currentIndex: bottomBarVieModel.currentIndex,
         iconSize: 24,
         showSelectedLabels: false,

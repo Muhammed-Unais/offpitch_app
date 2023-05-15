@@ -65,4 +65,9 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
     getAllUserHostedTournaments();
     getAllUserRegisteredTournaments();
   }
+
+  clearAllDataLogout() {
+    apiResponse.data = null;
+    apiResponsetwo.data = null;
+  }
 }
