@@ -60,4 +60,9 @@ class UserProfileViewModel with ChangeNotifier {
     getUserProfile();
     getUserProfileWatchlist();
   }
+
+  clearAlldataLogout() {
+    userProfileResponse.data = null;
+    userProfileWatchlist.data = null;
+  }
 }

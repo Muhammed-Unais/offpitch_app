@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/auth_view_model/auth_view_model.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class LogoutAlertDialog extends StatelessWidget {
@@ -11,9 +9,6 @@ class LogoutAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAuthModel = Provider.of<UserViewModel>(context);
-    // final userAuthviewModel = Provider.of<AuthViewModel>(context);
-    final bottomviewModel = Provider.of<BottomBarViewModel>(context);
-
     return AlertDialog(
       title: const Text('Logout'),
       content: Text(

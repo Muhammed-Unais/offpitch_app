@@ -3,8 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/app_exception.dart';
 import 'package:offpitch_app/data/network/base_api_service.dart';
 import 'package:offpitch_app/data/network/dio_interceptor.dart';
-import 'package:offpitch_app/main.dart';
-import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkApiServices extends BaseApiService {
@@ -142,8 +140,6 @@ class NetworkApiServices extends BaseApiService {
         case 401:
           throw UnauthorisedException(response.data['message']);
         case 403:
-          navigatorKey.currentState!
-              .pushNamedAndRemoveUntil(RoutesName.login, (route) => false);
           throw "Your Session Expired";
         case 500:
           throw FetchDataException('Something went wrong');

@@ -29,8 +29,7 @@ class AppInterceptor {
           final accessToken = preferences.getString('accessToken');
 
           //
-          if (err.response?.statusCode == 401) {
-            log("Refreshing Token");
+          if (err.response?.statusCode == 401|| err.response?.statusCode ==403) {
 
             // ignore: deprecated_member_use
             dio.interceptors.requestLock.lock();
@@ -50,9 +49,7 @@ class AppInterceptor {
                 // ignore: deprecated_member_use
                 dio.interceptors.responseLock.unlock();
                 RequestOptions options = err.requestOptions;
-                log("new Request================");
                 try {
-                log("new Request=======ssssssss=========");
                   var resp = await dio.request(err.requestOptions.path,
                       data: options.data,
                       cancelToken: options.cancelToken,

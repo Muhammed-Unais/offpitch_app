@@ -7,6 +7,7 @@ import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_mod
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_player_add_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 import 'create_tournament_view_model/create_tournament_view_model.dart';
 import 'tournament_details_view_model.dart/registration_view_model.dart';
@@ -30,5 +31,7 @@ class LogoutViewModel extends ChangeNotifier {
         .clearAllDataLogout();
     Provider.of<CreateTournamentViewModel>(context, listen: false)
         .clearAllDataLogout();
+    Provider.of<UserProfileViewModel>(context, listen: false)
+        .clearAlldataLogout();    
   }
 }

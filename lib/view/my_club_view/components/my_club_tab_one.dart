@@ -97,7 +97,7 @@ class MyClubTabOne extends StatelessWidget {
             }
           case Status.ERROR:
             return ErrorComponent(
-              errorMessage: value.apiResponse.message!,
+              errorMessage: value.apiResponse.message ??"",
             );
           default:
             return const Center(

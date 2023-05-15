@@ -20,7 +20,7 @@ class AppTheme {
       overflow: TextOverflow.ellipsis);
 
   static const TextStyle _bodyTextStyle =
-      TextStyle(color: AppColors.black, overflow: TextOverflow.ellipsis);
+      TextStyle(color: AppColors.black, overflow: TextOverflow.ellipsis,);
 
   static const TextStyle _subBodyTextStyle =
       TextStyle(color: AppColors.grey, overflow: TextOverflow.ellipsis);

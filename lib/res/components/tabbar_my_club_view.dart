@@ -32,7 +32,8 @@ class TabbarMyClubView extends StatelessWidget {
         bottom: AppPadding.extraSmall
       ),
       child: TabBar(
-        onTap: (value) {},
+        onTap: (value) {
+        },
         controller: tabController,
         labelStyle: Theme.of(context).textTheme.titleMedium,
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusL),

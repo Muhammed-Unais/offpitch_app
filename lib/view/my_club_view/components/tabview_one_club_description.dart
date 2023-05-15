@@ -27,7 +27,7 @@ class TabViewOneClubDescription extends StatelessWidget {
             ReadMoreText(
               description,
               style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.start,
+              textAlign: TextAlign.justify,
               trimMode: TrimMode.Line,
               trimLines: 8,
             ),

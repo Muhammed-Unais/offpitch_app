@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -21,11 +20,10 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-     final values = Provider.of<HomeAndExpViewModel>(context, listen: false);
+    final values = Provider.of<HomeAndExpViewModel>(context, listen: false);
     values.userFuture ??= values.getAllTournaments();
   }
 
@@ -70,7 +68,9 @@ class _HomeBodyState extends State<HomeBody> {
                                 height: AppMargin.small,
                               ),
                               FutureBuilder(
-                                future: Provider.of<HomeAndExpViewModel>(context).userFuture,
+                                future:
+                                    Provider.of<HomeAndExpViewModel>(context)
+                                        .userFuture,
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -89,10 +89,14 @@ class _HomeBodyState extends State<HomeBody> {
                                       },
                                     );
                                   } else if (snapshot.hasError) {
-                                    return Center(
-                                      child: ErrorComponent(
-                                        errorMessage: snapshot.error.toString(),
-                                      ),
+                                    return Column(
+                                      children: [
+                                        const SizedBox(height: 100),
+                                        ErrorComponent(
+                                          errorMessage:
+                                              snapshot.error.toString(),
+                                        ),
+                                      ],
                                     );
                                   } else {
                                     final user =
@@ -114,8 +118,8 @@ class _HomeBodyState extends State<HomeBody> {
                                                 listen: false);
                                             provider
                                                 .getSingleTournament(values.id);
-                                            await Navigator.pushNamed(
-                                                context, RoutesName.tournamentDetails);
+                                            await Navigator.pushNamed(context,
+                                                RoutesName.tournamentDetails);
                                           },
                                           child: TournamentCard(
                                             shortDescription:

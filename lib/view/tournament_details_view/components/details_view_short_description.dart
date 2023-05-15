@@ -21,6 +21,7 @@ class DetailsViewShortDescription extends StatelessWidget {
         colorClickableText: AppColors.primary,
         trimMode: TrimMode.Line,
         style: Theme.of(context).textTheme.bodyLarge,
+        textAlign: TextAlign.justify,
       ),
     );
   }

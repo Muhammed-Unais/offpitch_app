@@ -31,6 +31,7 @@ class DetailsViewAbout extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
             trimMode: TrimMode.Line,
             trimLines: 10,
+            textAlign: TextAlign.justify,
           )
         ],
       ),

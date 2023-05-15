@@ -12,61 +12,58 @@ class UserWatchListBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserProfileViewModel(),
-      child: Column(
-        children: [
-          Consumer<UserProfileViewModel>(
-            builder: (context, value, _) {
-              switch (value.userProfileWatchlist.status) {
-                case Status.LOADING:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                case Status.COMPLETED:
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.userProfileWatchlist.data?.data?.length,
-                    itemBuilder: (context, index) {
-                      final data = value.userProfileWatchlist.data?.data?.reversed
-                          .toList()[index];
-                      if (data == null) {
-                       return  const EmptyComponts(
-                            image: "assets/images/no-data.svg",
-                            showMessage: "Add Tournament",
-                            height: 200,
-                            width: 200,
-                            addText: "");
-                      }
-                      return InkWell(
-                        onTap: () async {
-                          final provider = Provider.of<DetailsTouramentViewModel>(
-                              context,
-                              listen: false);
-                          provider.getSingleTournament(data.id);
-                          await Navigator.pushNamed(context, "tournamentdetails");
-                        },
-                        child: UsersTournametCard(
-                          isUserHost: false,
-                          image: data.cover,
-                          tournamentName: data.title,
-                          tournamentPlace: "",
-                          tournamentDate: data.startDate,
-                        ),
-                      );
-                    },
-                  );
-                case Status.ERROR:
-                  return ErrorComponent(
-                    errorMessage: value.userProfileWatchlist.message ?? "",
-                  );
-                default:
-                  return const SizedBox();
-              }
-            },
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Consumer<UserProfileViewModel>(
+          builder: (context, value, _) {
+            switch (value.userProfileWatchlist.status) {
+              case Status.LOADING:
+                return const Align(
+                  child: CircularProgressIndicator(),
+                );
+              case Status.COMPLETED:
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: value.userProfileWatchlist.data?.data?.length,
+                  itemBuilder: (context, index) {
+                    final data = value.userProfileWatchlist.data?.data?.reversed
+                        .toList()[index];
+                    if (data == null) {
+                     return  const EmptyComponts(
+                          image: "assets/images/no-data.svg",
+                          showMessage: "Add Tournament",
+                          height: 200,
+                          width: 200,
+                          addText: "");
+                    }
+                    return InkWell(
+                      onTap: () async {
+                        final provider = Provider.of<DetailsTouramentViewModel>(
+                            context,
+                            listen: false);
+                        provider.getSingleTournament(data.id);
+                        await Navigator.pushNamed(context, "tournamentdetails");
+                      },
+                      child: UsersTournametCard(
+                        isUserHost: false,
+                        image: data.cover,
+                        tournamentName: data.title,
+                        tournamentPlace: "",
+                        tournamentDate: data.startDate,
+                      ),
+                    );
+                  },
+                );
+              case Status.ERROR:
+                return ErrorComponent(
+                  errorMessage: value.userProfileWatchlist.message ?? "",
+                );
+              default:
+                return const SizedBox();
+            }
+          },
+        ),
+      ],
     );
   }
 }
