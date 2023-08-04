@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_logout_alert_dia.dart';
+import 'package:share_plus/share_plus.dart';
 
 class UserProfileSettingsExpansion extends StatelessWidget {
   const UserProfileSettingsExpansion({super.key});
@@ -22,8 +23,8 @@ class UserProfileSettingsExpansion extends StatelessWidget {
           thickness: 0.5,
         ),
         InkWell(
-            onTap: () {
-             
+            onTap: () async{
+              await Share.share("com.example.offpitch_app");
             },
             child: Text(
               "ShareApp",
@@ -43,7 +44,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-             Utils.showDialogue(context, child: const LogoutAlertDialog());
+            Utils.showDialogue(context, child: const LogoutAlertDialog());
           },
           child: Text(
             "Logout",

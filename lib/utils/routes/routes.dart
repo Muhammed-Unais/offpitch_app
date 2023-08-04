@@ -50,7 +50,7 @@ class Routes {
         );
       case RoutesName.myClub:
         return MaterialPageRoute(
-          builder: (context) => const MyClubView(),
+          builder: (context) =>const MyClubView(),
         );
       case RoutesName.clubCreation:
         return MaterialPageRoute(

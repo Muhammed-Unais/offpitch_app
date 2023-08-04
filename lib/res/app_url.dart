@@ -1,6 +1,6 @@
 class AppUrl {
   // Base url
-  static var baseUrl = "https://offpitch.live/api";
+  static var baseUrl = "https://api.offpitch.live/api";
 
   // login post uri
   static var loginEndPoint = "$baseUrl/auth/login";
@@ -13,6 +13,9 @@ class AppUrl {
 
   // forgotPasswordEndPoint
   static var forgotPasswordEndPonint = "$baseUrl/auth/forgot-password";
+
+  // resendOtp
+  static var resendOtpEndPonint = "$baseUrl/auth/resend-otp";
 
   // user logout=
   static var userlogout = "$baseUrl/auth/logout";
@@ -52,14 +55,14 @@ class AppUrl {
   // User registered tournaments
   static var userRegisteredTournamements =
       "$baseUrl/user/tournaments/registered";
-   
+
   //  add result match
   static var tournamentTypeT1AddResult = "$baseUrl/user/tournament/";
 
-  // user profile 
+  // user profile
   static var userProfile = "$baseUrl/user/profile";
 
-  // user watchList 
+  // user watchList
   static var userWatchlist = "$baseUrl/user/watchlist";
 
   // save payment
@@ -67,7 +70,7 @@ class AppUrl {
 
   // Add Result =====
   static var addResult = "$baseUrl/user/tournament";
-  
+
   // registered teams
   static var registeredTeams = "$baseUrl/tournament";
 }

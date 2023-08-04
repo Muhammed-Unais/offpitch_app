@@ -27,11 +27,7 @@ class HommeTopBar extends StatelessWidget {
               IconButton(
                 color: AppColors.white,
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.login,
-                    (route) => false,
-                  );
+                 
                 },
                 icon: const Icon(
                   Icons.notifications,

@@ -5,8 +5,7 @@ import 'package:offpitch_app/view/my_club_view/components/my_club_tab_three.dart
 import 'package:offpitch_app/view/my_club_view/components/my_club_tab_two.dart';
 
 class MyClubView extends StatelessWidget {
-  const MyClubView({super.key});
-
+  const MyClubView({super.key,});
   @override
   Widget build(BuildContext context) {
     return const DefaultTabController(

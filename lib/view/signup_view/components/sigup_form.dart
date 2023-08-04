@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/auth_form_fields.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
@@ -96,8 +97,8 @@ class _SignupFormState extends State<SignupForm> {
                     obsecureValue ? Icons.visibility_off : Icons.visibility,
                   ),
                 ),
-                hintText: "PassWord",
-                labalText: "PassWord",
+                hintText: "Password",
+                labalText: "Password",
                 validator: (value) =>
                     SignupValidation.passwordValidatiion(value),
                 textInputType: TextInputType.visiblePassword,
@@ -115,7 +116,12 @@ class _SignupFormState extends State<SignupForm> {
                 final email = _emailTextEditController.text;
                 final password = _passwordTextEditController.text;
                 final name = _userNameTextEditController.text;
-                Map data = {'name': name, 'email': email, 'password': password};
+
+                Map<String, dynamic> data = {
+                  'name': name,
+                  'email': email,
+                  'password': password
+                };
                 authViewModel.signUpApi(data, context);
               }
             },

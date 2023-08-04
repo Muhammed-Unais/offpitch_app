@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
@@ -78,7 +78,6 @@ class ExploreViewViewModel extends ChangeNotifier {
       // setAll tournament
       setallTournaments(ApiResponse.completed(allTournament));
     }).onError((error, stackTrace) {
-      log(error.toString());
       // set all tournaments for home================
       setliveTournaments(ApiResponse.error(error.toString()));
       setallTournaments(ApiResponse.error(error.toString()));

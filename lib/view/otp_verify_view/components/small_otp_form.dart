@@ -7,11 +7,12 @@ class SmallOtpForm extends StatelessWidget {
       {super.key,
       required this.onChanged,
       this.focusNode,
-      required this.validator});
+      required this.validator, this.onTap});
 
   final void Function(String?) onChanged;
   final FocusNode? focusNode;
   final String? Function(String?) validator;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +20,17 @@ class SmallOtpForm extends StatelessWidget {
     return SizedBox(
       width: size.width / 8,
       child: TextFormField(
+        onTap: onTap,
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp("[0-9]")),
           LengthLimitingTextInputFormatter(1),
         ],
         validator: validator,
         keyboardType: TextInputType.number,
-        autofocus: true,
+        autofocus: false,
         focusNode: focusNode,
         style: Theme.of(context).textTheme.headlineMedium,
         textAlign: TextAlign.center,
-        obscureText: true,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 20),
           focusedBorder: OutlineInputBorder(

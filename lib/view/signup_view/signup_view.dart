@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/signup_view/components/signup_top_image.dart';
 import 'package:offpitch_app/view/signup_view/components/sigup_form.dart';
 
@@ -13,6 +12,8 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -26,33 +27,33 @@ class _SignupViewState extends State<SignupView> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              const SizedBox(
-                height: AppMargin.extraLarge * 1.5,
-              ),
-              // Signup Top image ===============
+              SizedBox(height: size.height * 0.03),
               Row(
                 children: const [
                   Spacer(),
-                  Expanded(flex: 8,
-                    child: SignupTopimage()),
+                  Expanded(
+                    flex: 8,
+                    child: SignupTopimage(),
+                  ),
                   Spacer()
                 ],
               ),
-              // create an accoount===============
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Text("Create an account",
                           style: Theme.of(context).textTheme.headlineLarge),
-                      const SizedBox(
-                        height: AppMargin.extraLarge,
+                       SizedBox(
+                        height: size.height * 0.03,
                       ),
-                      // sign form field==================
                       Row(
                         children: const [
                           Spacer(),
-                          Expanded(flex: 8, child: SignupForm()),
+                          Expanded(
+                            flex: 8,
+                            child: SignupForm(),
+                          ),
                           Spacer(),
                         ],
                       )

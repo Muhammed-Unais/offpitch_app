@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/network/http_helpor.dart';
+import 'package:offpitch_app/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInterceptor {
   var dio = Dio();
-  static String baseUrl = "https://offpitch.live/api";
+  static String baseUrl = "https://offpitch-api.onrender.com/api";
 
   AppInterceptor() {
     dio.options =
@@ -16,8 +17,9 @@ class AppInterceptor {
         // on request method===================
         onRequest: (RequestOptions requestOptions,
             RequestInterceptorHandler handler) async {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          final accessToken = preferences.getString('accessToken');
+          log("onlog");
+          final accessToken =
+              await Utils.sharedPrefrenceGetValue(key: 'accessToken');
           requestOptions.headers
               .putIfAbsent('Authorization', () => 'Bearer $accessToken');
           handler.next(requestOptions);

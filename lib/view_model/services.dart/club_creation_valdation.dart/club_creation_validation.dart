@@ -1,11 +1,10 @@
-import 'dart:developer';
 
 import 'package:email_validator/email_validator.dart';
 
 class ClubCreationValidation {
-  static emailValidation(value) {
+  static String? emailValidation(String? value) {
     final email = value;
-    final isValid = EmailValidator.validate(email);
+    final isValid = EmailValidator.validate(email ??"");
     if (value == null || value.isEmpty) {
       return "Enter Your Email";
     } else if (!isValid) {
@@ -14,14 +13,11 @@ class ClubCreationValidation {
     return null;
   }
 
-  static nameValidaton(value) {
+  static String? nameValidaton(String? value) {
     const pattern = r'^(?=.*?[a-z])';
     RegExp regExp = RegExp(pattern);
 
-    log("1");
-    log(value);
-    log(regExp.hasMatch(value).toString());
-    if (!regExp.hasMatch(value)) {
+    if (!regExp.hasMatch(value ??"")) {
       return "Enter valid name";
     }
     String? values;
@@ -35,7 +31,7 @@ class ClubCreationValidation {
     return null;
   }
 
-  static phoneValidation(value) {
+  static String? phoneValidation(String? value) {
     if (value == null || value.isEmpty) {
       return "Enter Your Email";
     }
@@ -47,7 +43,7 @@ class ClubCreationValidation {
     return null;
   }
 
-  static discrptionValidation(String? value) {
+  static String? discrptionValidation(String? value) {
     if (value == null || value.isEmpty || value.length < 220) {
       return "Too Short";
     }

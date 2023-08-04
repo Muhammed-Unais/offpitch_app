@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/app_exception.dart';
 import 'package:offpitch_app/data/network/base_api_service.dart';
 import 'package:offpitch_app/data/network/app_interceptor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:offpitch_app/utils/utils.dart';
 
 class NetworkApiServices extends BaseApiService {
 //  Get api Method without accessToken====================
@@ -15,8 +15,7 @@ class NetworkApiServices extends BaseApiService {
     dynamic responseJson;
 
     try {
-      final response =
-          await dio.get(url + queries).timeout(const Duration(seconds: 10));
+      final response = await dio.get(url + queries);
       responseJson = returnResponse(response);
       return responseJson;
     } on DioError catch (e) {
@@ -28,24 +27,23 @@ class NetworkApiServices extends BaseApiService {
   @override
   Future getPostApiResponse(String url, dynamic data) async {
     final dio = Dio();
-    dynamic responseJson;
 
+    dynamic responseJson;
     try {
-      Response response =
-          await dio.post(url, data: data).timeout(const Duration(seconds: 10));
+      Response response = await dio.post(url, data: data);
+
       if (response.headers.map.containsKey('set-cookie')) {
         final cookies = response.headers.map['set-cookie'];
-        log(cookies.toString());
-
-        if (cookies!.isNotEmpty) {
-          final authToken = cookies[0].split('=')[1].split(';')[0];
-          log(authToken.toString());
-          final sp = await SharedPreferences.getInstance();
-          sp.setString('authToken', authToken);
+        if (cookies != null) {
+          if (cookies.isNotEmpty) {
+            final authToken = cookies[0].split('=')[1].split(';')[0];
+            Utils.sharedPrefrence(key: 'authToken', value: authToken);
+          }
         }
       }
 
       responseJson = returnResponse(response);
+
       return responseJson;
     } on DioError catch (e) {
       return returnResponse(e.response);
@@ -57,14 +55,12 @@ class NetworkApiServices extends BaseApiService {
   Future getGetApiWithAccessToken(String url) async {
     final dio = Dio();
     final appinterceptor = AppInterceptor();
-
     dynamic successResponseData;
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
     dio.interceptors.addAll(appinterceptor.dio.interceptors);
 
     try {
-      final accessToken = preferences.getString("accessToken");
+      final accessToken = Utils.sharedPrefrenceGetValue(key: 'accessToken');
       dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
       final response = await dio.get(url);
@@ -84,15 +80,15 @@ class NetworkApiServices extends BaseApiService {
     final dio = Dio();
     final appinterceptor = AppInterceptor();
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
     dio.interceptors.addAll(appinterceptor.dio.interceptors);
 
     try {
-      final accessToken = preferences.getString("accessToken");
+      final accessToken =await Utils.sharedPrefrenceGetValue(key: 'accessToken');
 
       dio.options.headers['Authorization'] = 'Bearer $accessToken';
-      final response =
-          await dio.put(url, data: data).timeout(const Duration(seconds: 10));
+      final response = await dio.put(url, data: data).timeout(
+            const Duration(seconds: 10),
+          );
 
       successResponseData = returnResponse(response);
       return successResponseData;
@@ -108,18 +104,16 @@ class NetworkApiServices extends BaseApiService {
 
     final dio = Dio();
     final appinterceptor = AppInterceptor();
-
-    SharedPreferences preferences = await SharedPreferences.getInstance();
     dio.interceptors.addAll(appinterceptor.dio.interceptors);
 
     try {
-      final accessToken = preferences.getString("accessToken");
+      final accessToken =await Utils.sharedPrefrenceGetValue(key: 'accessToken');
 
       dio.options.headers['Authorization'] = 'Bearer $accessToken';
       final response =
           await dio.post(url, data: data).timeout(const Duration(seconds: 10));
 
-      successResponseData = returnResponse(response);
+      returnResponse(response);
       return successResponseData;
     } on DioError catch (e) {
       log(e.response!.statusCode.toString());
@@ -133,7 +127,6 @@ class NetworkApiServices extends BaseApiService {
       switch (response.statusCode) {
         case 200:
           final responseJson = response.data;
-          log(responseJson.toString());
           return responseJson;
         case 400:
           throw BadRequestException(response.data['message']);
@@ -144,9 +137,7 @@ class NetworkApiServices extends BaseApiService {
         case 500:
           throw FetchDataException('Something went wrong');
         default:
-          throw FetchDataException(
-            response.data['message'],
-          );
+          throw FetchDataException(response.statusMessage);
       }
     } else {
       throw FetchDataException('No internet connection');

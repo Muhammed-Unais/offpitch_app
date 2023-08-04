@@ -37,16 +37,17 @@ class AuthRepository {
 
       return response;
     } catch (error) {
+      log('catched or not');
       rethrow;
     }
   }
 
-  Future<dynamic> otpVerifyApi(dynamic data) async {
+  Future<UserModel> otpVerifyApi(dynamic data) async {
     try {
       final response =
-          _apiService.getPostApiResponse(AppUrl.otpVerifyEndPoint, data);
+          await _apiService.getPostApiResponse(AppUrl.otpVerifyEndPoint, data);
 
-      return response;
+      return userModelFromJson(response);
     } catch (error) {
       rethrow;
     }
@@ -58,7 +59,18 @@ class AuthRepository {
       log(response.toString());
       return response;
     } catch (error) {
-      
+      log(error.toString());
+      rethrow;
+    }
+  }
+
+  Future<dynamic> resendOtp(query) async {
+    try {
+      final response =
+          _apiService.getGetApiResponse(AppUrl.resendOtpEndPonint, "/$query");
+      log(response.toString());
+      return response;
+    } catch (error) {
       log(error.toString());
       rethrow;
     }

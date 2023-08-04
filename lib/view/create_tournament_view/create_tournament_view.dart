@@ -1,7 +1,9 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
+import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_one.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_three.dart';
@@ -20,6 +22,7 @@ class CreateTournamentView extends StatefulWidget {
 
 class _CreateTournamentViewState extends State<CreateTournamentView>
     with TickerProviderStateMixin {
+      
   late TabController tabController;
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
@@ -47,6 +50,7 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
   @override
   void dispose() {
     tabController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -56,11 +60,12 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
         Provider.of<UserViewModel>(context, listen: false).userClubId;
     return Consumer<CreateTournamentViewModel>(
       builder: (context, value, _) {
-        log(value.isVisible.toString());
         return DefaultTabController(
           length: 3,
           child: Scaffold(
             appBar: AppBar(
+             shadowColor: AppColors.white,
+              elevation: 5,
               title: Text(
                 "Host Tournament",
                 style: Theme.of(context).textTheme.titleLarge,
@@ -69,9 +74,14 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                 preferredSize: const Size.fromHeight(
                   60,
                 ),
-                child: CreateTournamentViewTabbar(
-                  tabController: tabController,
-                  value: value,
+                child: Column(
+                  children: [
+                    CreateTournamentViewTabbar(
+                      tabController: tabController,
+                      value: value,
+                    ),
+                    const SizedBox(height: AppMargin.extraSmall,)
+                  ],
                 ),
               ),
             ),
@@ -99,16 +109,25 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                       )
                     ],
                   )
-                : InkWell(
-                    onTap: () {
-                      
-                    },
-                    child: const EmptyComponts(
-                      image: "assets/images/no-club.svg",
-                      showMessage: "You didn't create a club",
-                      height: 200,
-                      width: 200,
-                      addText: "Create new",
+                : SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.clubCreation);
+                          },
+                          child: const EmptyComponts(
+                            image: "assets/images/no-club.svg",
+                            showMessage: "You didn't create a club",
+                            height: 200,
+                            width: 200,
+                            addText: "Create new",
+                          ),
+                        ),
+                      ],
                     ),
                   ),
           ),

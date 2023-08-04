@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/club_tournamentmodel.dart';
@@ -22,10 +23,14 @@ class MyClubViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getMyClub() async {
+  Future getMyClub(BuildContext context) async {
     setMyClubdetails(ApiResponse.loading());
     _myRepo.getAllClubWithAccessTokem().then((value) async {
       setMyClubdetails(ApiResponse.completed(value));
+
+      await context
+          .read<UserViewModel>()
+          .saveUserClubIdWhenClubcreate(value.data?.id);
     }).onError((error, stackTrace) {
       setMyClubdetails(ApiResponse.error(error.toString()));
     });
@@ -49,11 +54,9 @@ class MyClubViewModel extends ChangeNotifier {
       (value) {
         setValueChecBoxIndex(value);
         setAllPlayerslist(ApiResponse.completed(value));
-        log("suscess");
       },
     ).onError(
       (error, stackTrace) {
-        log(error.toString());
         setAllPlayerslist(ApiResponse.error(error.toString()));
       },
     );
@@ -64,12 +67,12 @@ class MyClubViewModel extends ChangeNotifier {
     getPlayerapiResponse.data = null;
   }
 
-  MyClubViewModel(context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
-    if (userClubId != null && userClubId.isNotEmpty) {
-      getMyClub();
-      getAllPlayers();
-    }
+  MyClubViewModel() {
+    // final userClubId =
+    //     Provider.of<UserViewModel>(, listen: false).userClubId;
+    // if (userClubId != null && userClubId.isNotEmpty) {
+    //   getMyClub();
+    //   getAllPlayers();
+    // }
   }
 }

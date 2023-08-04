@@ -9,14 +9,17 @@ class ClubCreationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clubcreatNewViewModel = context.watch<CreateNewClubViewModel>();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.00),
-        child: ClubCreationAppBar(
-          appBarText: clubcreatNewViewModel.isCreate
-              ? "Create New Club"
-              : "Update Your Club",
+        child: Consumer<CreateNewClubViewModel>(
+          builder: (context,createNewClubViewModelProvider,_) {
+            return ClubCreationAppBar(
+              appBarText: createNewClubViewModelProvider.isCreate
+                  ? "Create New Club"
+                  : "Update Your Club",
+            );
+          }
         ),
       ),
       body: const ClubCreationBody(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/models/all_tournaments_model.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
@@ -54,99 +55,7 @@ class _HomeBodyState extends State<HomeBody> {
                       ),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.height / 11),
-                      // home upcoming title
-                      const HomeUpcomingtitle(),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: AppMargin.small,
-                              ),
-                              FutureBuilder(
-                                future:
-                                    Provider.of<HomeAndExpViewModel>(context)
-                                        .userFuture,
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: AppMargin.large,
-                                      ),
-                                      itemCount: 3,
-                                      itemBuilder: (context, index) {
-                                        return ShimerWidget.rectangular(
-                                          borderRadius: AppRadius.borderRadiusM,
-                                          verticalMargin: AppMargin.small,
-                                          hight: size.height * 0.2,
-                                        );
-                                      },
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Column(
-                                      children: [
-                                        const SizedBox(height: 100),
-                                        ErrorComponent(
-                                          errorMessage:
-                                              snapshot.error.toString(),
-                                        ),
-                                      ],
-                                    );
-                                  } else {
-                                    final user =
-                                        snapshot.data?.data?.allTournaments!;
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          user!.length > 3 ? 3 : user.length,
-                                      itemBuilder: (context, index) {
-                                        final values =
-                                            user.reversed.toList()[index];
-                                        return InkWell(
-                                          onTap: () async {
-                                            final provider = Provider.of<
-                                                    DetailsTouramentViewModel>(
-                                                context,
-                                                listen: false);
-                                            provider
-                                                .getSingleTournament(values.id);
-                                            await Navigator.pushNamed(context,
-                                                RoutesName.tournamentDetails);
-                                          },
-                                          child: TournamentCard(
-                                            shortDescription:
-                                                values.shortDescription ??
-                                                    "No Description",
-                                            tornamentDate:
-                                                values.startDate ?? "",
-                                            tornamentName:
-                                                values.title ?? "No title",
-                                            tornamentPlace: values.location ??
-                                                "No location",
-                                            touranmentCoverImage:
-                                                values.cover ??
-                                                    AppProfilesCover.clubCover,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                  child: allTournamentsDetails(size, context),
                 ),
                 // Home carosole card==============
                 const HomeTopCard(),
@@ -155,6 +64,101 @@ class _HomeBodyState extends State<HomeBody> {
           )
         ],
       ),
+    );
+  }
+
+  Column allTournamentsDetails(Size size, BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: size.height / 11),
+        // home upcoming title
+        const HomeUpcomingtitle(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: AppMargin.small,
+                ),
+                futureBuilderForAllTournaments(context, size)
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  FutureBuilder<AllTournamentsModel> futureBuilderForAllTournaments(
+      BuildContext context, Size size) {
+    return FutureBuilder(
+      future: Provider.of<HomeAndExpViewModel>(context).userFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return ListView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppMargin.large,
+            ),
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return ShimerWidget.rectangular(
+                borderRadius: AppRadius.borderRadiusM,
+                verticalMargin: AppMargin.small,
+                hight: size.height * 0.2,
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Column(
+            children: [
+              const SizedBox(height: 100),
+              ErrorComponent(
+                errorMessage: snapshot.error.toString(),
+              ),
+            ],
+          );
+        } else if (snapshot.data!.data!.allTournaments!.isEmpty) {
+          return Column(
+            children:const [
+               SizedBox(height: 100),
+              ErrorComponent(
+                errorMessage: "No Tournaments",
+              ),
+            ],
+          );
+        } else {
+          final user = snapshot.data?.data?.allTournaments!;
+          return tournamentCardBuilder(user);
+        }
+      },
+    );
+  }
+
+  ListView tournamentCardBuilder(List<AllTournament>? user) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: user!.length > 3 ? 3 : user.length,
+      itemBuilder: (context, index) {
+        final values = user.reversed.toList()[index];
+        return InkWell(
+          onTap: () async {
+            final provider =
+                Provider.of<DetailsTouramentViewModel>(context, listen: false);
+            provider.getSingleTournament(values.id);
+            await Navigator.pushNamed(context, RoutesName.tournamentDetails);
+          },
+          child: TournamentCard(
+            shortDescription: values.shortDescription ?? "No Description",
+            tornamentDate: values.startDate ?? "",
+            tornamentName: values.title ?? "No title",
+            tornamentPlace: values.location ?? "No location",
+            touranmentCoverImage: values.cover ?? AppProfilesCover.clubCover,
+          ),
+        );
+      },
     );
   }
 }

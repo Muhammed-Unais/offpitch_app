@@ -3,7 +3,7 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
 
 class AuthFormField extends StatelessWidget {
-   const AuthFormField(
+  const AuthFormField(
       {super.key,
       required this.currentFocusNode,
       required this.controller,
@@ -16,7 +16,9 @@ class AuthFormField extends StatelessWidget {
       required this.textInputType,
       this.obsecureValue = "",
       this.suffix,
-      this.prefix, this.isoutFocusnode=false});
+      this.prefix,
+      this.isoutFocusnode = false,
+      });
 
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
@@ -31,7 +33,6 @@ class AuthFormField extends StatelessWidget {
   final Widget? suffix;
   final Widget? prefix;
   final bool isoutFocusnode;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,6 +43,7 @@ class AuthFormField extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             vertical: AppPadding.small, horizontal: AppPadding.medium),
         child: TextFormField(
+          onChanged: (value) {},
           obscureText: obsecureText,
           focusNode: currentFocusNode,
           keyboardType: textInputType,

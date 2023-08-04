@@ -2,10 +2,11 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
   // Textfield auto focus change
-  static fieldFocusChange(
+  static void fieldFocusChange(
       {required BuildContext context,
       required bool isOutfocusNode,
       required FocusNode current,
@@ -15,21 +16,23 @@ class Utils {
         : FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  static showToastMessage(String message) {
+  static void showToastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      gravity: ToastGravity.TOP,
-      fontSize: 16,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 2,
+      backgroundColor: AppColors.primary,
+      textColor: AppColors.white,
+      fontSize: 16.0,
     );
   }
 
-  static showCustomFlushbar(BuildContext context, String message,{bool isError =true}) {
+  static void showCustomFlushbar(BuildContext context, String message,
+      {bool isError = true}) {
     Flushbar(
       message: message,
-      messageColor:isError? Colors.red :Colors.green,
+      messageColor: isError ? Colors.red : Colors.green,
       messageSize: 16,
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
@@ -53,7 +56,7 @@ class Utils {
           // Add your button action here
         },
         child: IconButton(
-          color:isError? Colors.red :Colors.black,
+          color: isError ? Colors.red : Colors.black,
           onPressed: () {
             Navigator.pop(context);
           },
@@ -63,28 +66,28 @@ class Utils {
         ),
       ),
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      icon:  Icon(
+      icon: Icon(
         Icons.info_outline,
         size: 28.0,
-        color: isError ? Colors.red :Colors.green,
+        color: isError ? Colors.red : Colors.green,
       ),
       shouldIconPulse: false,
       showProgressIndicator: true,
-      progressIndicatorBackgroundColor:isError ? Colors.red :Colors.green,
+      progressIndicatorBackgroundColor: isError ? Colors.red : Colors.green,
       progressIndicatorValueColor:
-           AlwaysStoppedAnimation<Color>(isError? Colors.red: Colors.green),
-      titleText:  Text(
-        isError ?'Error':'Message',
+          AlwaysStoppedAnimation<Color>(isError ? Colors.red : Colors.green),
+      titleText: Text(
+        isError ? 'Error' : 'Message',
         style: TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
-          color:isError ? Colors.red :AppColors.primary,
+          color: isError ? Colors.red : AppColors.primary,
         ),
       ),
     ).show(context);
   }
 
-  static showSnackbar(String message, context) {
+  static void showSnackbar(String message, context) {
     final snackBar = SnackBar(content: Text(message));
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -99,5 +102,16 @@ class Utils {
         return child;
       },
     );
+  }
+
+  static Future<void> sharedPrefrence(
+      {required String key, required String value}) async {
+    final sp = await SharedPreferences.getInstance();
+    sp.setString(key, value);
+  }
+
+  static Future<String?> sharedPrefrenceGetValue({required String key}) async {
+    final sp = await SharedPreferences.getInstance();
+    return sp.getString(key);
   }
 }

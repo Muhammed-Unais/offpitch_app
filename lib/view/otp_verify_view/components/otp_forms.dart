@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/view/otp_verify_view/components/small_otp_form.dart';
@@ -8,34 +7,32 @@ import 'package:offpitch_app/view_model/services.dart/auth_validation/otp_valida
 import 'package:provider/provider.dart';
 
 class OtpForms extends StatefulWidget {
-  const OtpForms({super.key});
+  const OtpForms({super.key, required this.currentSeconds});
+
+  final int currentSeconds;
 
   @override
   State<OtpForms> createState() => _OtpFormsState();
 }
 
 class _OtpFormsState extends State<OtpForms> {
-  final TextEditingController otpeditController = TextEditingController();
   final formkey = GlobalKey<FormState>();
 
-  late FocusNode focusNode2;
-  late FocusNode focusNode3;
-  late FocusNode focusNode4;
-  late FocusNode focusNode5;
-  late FocusNode focusNode6;
+  late FocusNode focusNode1 = FocusNode();
+  late FocusNode focusNode2 = FocusNode();
+  late FocusNode focusNode3 = FocusNode();
+  late FocusNode focusNode4 = FocusNode();
+  late FocusNode focusNode5 = FocusNode();
+  late FocusNode focusNode6 = FocusNode();
 
   @override
   void initState() {
-    focusNode2 = FocusNode();
-    focusNode3 = FocusNode();
-    focusNode4 = FocusNode();
-    focusNode5 = FocusNode();
-    focusNode6 = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
+    focusNode1.dispose();
     focusNode2.dispose();
     focusNode3.dispose();
     focusNode4.dispose();
@@ -44,9 +41,14 @@ class _OtpFormsState extends State<OtpForms> {
     super.dispose();
   }
 
-  nextField(String value, FocusNode focusNode) {
-    if (value.length == 1) {
+  void nextField(String? value, FocusNode focusNode) {
+    if (value?.length == 1) {
       focusNode.requestFocus();
+      return;
+    }
+    if (value == null || value.isEmpty) {
+      focusNode.unfocus();
+      return;
     }
   }
 
@@ -59,6 +61,7 @@ class _OtpFormsState extends State<OtpForms> {
 
   @override
   Widget build(BuildContext context) {
+    log("called forms scrren");
     final size = MediaQuery.of(context).size;
     final authviewModel = Provider.of<AuthViewModel>(context);
     return Column(
@@ -69,6 +72,7 @@ class _OtpFormsState extends State<OtpForms> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmallOtpForm(
+                focusNode: focusNode1,
                 validator: (value) => OtpValidation.otpValidation(value),
                 onChanged: (value) {
                   nextField(value.toString(), focusNode2);
@@ -79,8 +83,8 @@ class _OtpFormsState extends State<OtpForms> {
                 validator: (value) => OtpValidation.otpValidation(value),
                 focusNode: focusNode2,
                 onChanged: (value) {
-                  nextField(value.toString(), focusNode3);
                   otpForm2 = value;
+                  nextField(value.toString(), focusNode3);
                 },
               ),
               SmallOtpForm(
@@ -111,8 +115,10 @@ class _OtpFormsState extends State<OtpForms> {
                 validator: (value) => OtpValidation.otpValidation(value),
                 focusNode: focusNode6,
                 onChanged: (value) {
-                  focusNode6.unfocus();
                   otpForm6 = value;
+                  if (value != null && value.isNotEmpty) {
+                    focusNode6.unfocus();
+                  }
                 },
               ),
             ],
@@ -123,19 +129,20 @@ class _OtpFormsState extends State<OtpForms> {
         ),
         SubmitButton(
           isLoading: authviewModel.otpVerifyIsLoading,
-          buttonChildtext: "Verify",
-          actionFunction: () {
-            if (formkey.currentState!.validate()) {
-              String totalOtpValue = otpForm1! +
-                  otpForm2! +
-                  otpForm3! +
-                  otpForm4! +
-                  otpForm5! +
-                  otpForm6!;
-              log(totalOtpValue);
-              authviewModel.otpVerifyApi(totalOtpValue, context);
-            }
-          },
+          buttonChildtext: "VERIFY",
+          actionFunction: widget.currentSeconds >= 90
+              ? null
+              : () {
+                  if (formkey.currentState!.validate()) {
+                    String totalOtpValue = otpForm1! +
+                        otpForm2! +
+                        otpForm3! +
+                        otpForm4! +
+                        otpForm5! +
+                        otpForm6!;
+                    authviewModel.otpVerifyApi(totalOtpValue, context);
+                  }
+                },
         ),
       ],
     );

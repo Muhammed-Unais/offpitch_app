@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes.dart';
@@ -10,7 +12,7 @@ import 'package:offpitch_app/view_model/logout_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
@@ -19,9 +21,10 @@ import 'package:provider/provider.dart';
 import 'view_model/my_club_view_model/my_club_player_add_view_model.dart';
 import 'view_model/tournament_details_view_model.dart/registration_view_model.dart';
 
-final GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -34,11 +37,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => UserViewModel(),
         ),
-         ChangeNotifierProvider(
-          create: (context) => MyClubViewModel(context),
+        ChangeNotifierProvider(
+          create: (context) => MyClubViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => BottomBarViewModel(),
@@ -52,19 +55,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserHostRegTournamentViewModel(context),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => ExploreViewViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => RegistorationViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => ScheduleTournametViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => MyClubPlayerAddViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => CreateTournamentViewModel(),
         ),
         ChangeNotifierProvider(

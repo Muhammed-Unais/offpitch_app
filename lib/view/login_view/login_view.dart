@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -21,20 +22,17 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: AppMargin.extraLarge*1.5,),
-                 // Top Image=================
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                // Top Image=================
                 Row(
-                  children: const [
-                    Spacer(),
-                    LoginViewTopimage(),
-                    Spacer()
-                  ],
+                  children: const [Spacer(), LoginViewTopimage(), Spacer()],
                 ),
-                const SizedBox(
-                  height: AppMargin.extraLarge,
-                ),
+                SizedBox(height: size.height * 0.03),
                 // Welcome Text===============
-                Text("Hi Welcome back",style: Theme.of(context).textTheme.headlineLarge),
+                Text("Hi Welcome back",
+                    style: Theme.of(context).textTheme.headlineLarge),
                 const SizedBox(
                   height: AppMargin.extraLarge,
                 ),

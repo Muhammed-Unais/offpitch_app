@@ -1,8 +1,5 @@
 import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:offpitch_app/utils/utils.dart';
 
 class SignupValidation {
   static passwordValidatiion(value) {
@@ -47,32 +44,5 @@ class SignupValidation {
       return "Name can not be empty";
     }
     return null;
-  }
-
-  static signupErrorDisplay(BuildContext context, error) {
-    if (error.toString().contains("No Internet connection")) {
-      Utils.showCustomFlushbar(
-        context,
-        "No Internet connection",
-      );
-    }
-
-    // default somthing went wrong
-    else if (error
-        .toString()
-        .contains("error occured while communicating with server")) {
-      Utils.showCustomFlushbar(
-        context,
-        "Something went wrong",
-      );
-    }
-
-    // exception message from server
-    else {
-      Utils.showCustomFlushbar(
-        context,
-        error.toString(),
-      );
-    }
   }
 }

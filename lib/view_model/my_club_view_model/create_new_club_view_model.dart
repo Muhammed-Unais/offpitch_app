@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:offpitch_app/models/create_new_club_model.dart';
 import 'package:offpitch_app/repository/create_club_repository.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
@@ -14,9 +15,14 @@ import 'package:cloudinary/cloudinary.dart';
 class CreateNewClubViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
 
+  MyClubViewModel myClubViewModel = MyClubViewModel();
+
   // imageUrl
   String? _imageUrl;
   String? get imageUrl => _imageUrl;
+
+  bool _isClubCreated = false;
+  bool get isClubCreate => _isClubCreated;
 
   // Docment url
   String? _docUrl;
@@ -65,29 +71,57 @@ class CreateNewClubViewModel extends ChangeNotifier {
 // descriptionFocusNode
   final FocusNode descriptionFoucusNode = FocusNode();
 
-  setOptions(bool isCreates) {
+// instance of repository
+  final _myrepo = CreateClubRepository();
+
+  void setOptions(bool isCreates) {
     isCreate = isCreates;
     notifyListeners();
   }
 
-  setUpdateisLoding(bool upadateisLoading) {
+  void setUpdateisLoding(bool upadateisLoading) {
     _updateIsLoding = upadateisLoading;
     notifyListeners();
   }
 
-  setDocName(String? docName) {
+  void setDocName(String? docName) {
     _docName = docName;
     notifyListeners();
   }
 
-  setImageErrorBorder(BoxBorder? border) {
+  void setImageErrorBorder(BoxBorder? border) {
     _imageErroBorder = border;
     notifyListeners();
   }
 
-  setDocErrorBorder(BoxBorder? border) {
+  void setDocErrorBorder(BoxBorder? border) {
     _docErroBorder = border;
     notifyListeners();
+  }
+
+  CreateClubModel setClubCreatingData() {
+    final createClubModelData = CreateClubModel(
+        doc: isCreate ? _docUrl : null,
+        profile: _imageUrl,
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        description: descriptionController.text.trim(),
+        phone: phoneController.text.trim());
+    return createClubModelData;
+  }
+
+  void setNavigationAndDisplayMessage(BuildContext context, dynamic values) {
+    if (isCreate) {
+      succesMessage = values;
+      _isClubCreated = succesMessage?["success"];
+      notifyListeners();
+      Navigator.pushReplacementNamed(
+        context,
+        RoutesName.navigation,
+      );
+      Utils.showCustomFlushbar(context, succesMessage?['message'] ?? "",
+          isError: false);
+    }
   }
 
   final cloudinary = Cloudinary.signedConfig(
@@ -96,7 +130,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
       cloudName: "dvihywo6p");
 
 // imagePicker from user gallery
-  getImageFromGallery() async {
+  void getImageFromGallery() async {
     final img = await imagePicker.pickImage(
       source: ImageSource.gallery,
     );
@@ -123,7 +157,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
   }
 
 // doc picker from user files picker
-  getGovtRegfiles() async {
+  void getGovtRegfiles() async {
     final FilePickerResult? doc = await FilePicker.platform
         .pickFiles(allowedExtensions: ['pdf'], type: FileType.custom);
     File? clubGoveCert;
@@ -136,9 +170,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
         file: clubGoveCert.path,
         fileBytes: clubGoveCert.readAsBytesSync(),
         resourceType: CloudinaryResourceType.auto,
-        progressCallback: (count, total) {
-          log('$count/$total');
-        },
+        progressCallback: (count, total) {},
       );
       if (response.isSuccessful) {
         _docUrl = response.secureUrl;
@@ -150,59 +182,45 @@ class CreateNewClubViewModel extends ChangeNotifier {
     }
   }
 
-  final _myrepo = CreateClubRepository();
-
   Future<bool> postClubCreate(context) async {
     setUpdateisLoding(true);
+    bool isSuccuess = false;
 
-    bool just = false;
     if (_imageUrl != null || _docUrl != null) {
-      final value = CreateClubModel(
-          doc: isCreate ? _docUrl : null,
-          profile: _imageUrl,
-          name: nameController.text.trim(),
-          email: emailController.text.trim(),
-          description: descriptionController.text.trim(),
-          phone: phoneController.text.trim());
+      final createClubModelData = setClubCreatingData();
 
-      //  Post Api call========================
-      await _myrepo.postClubapi(value).then((value) async {
+      await _myrepo.postClubapi(createClubModelData).then((value) async {
+        isSuccuess = true;
+
         setUpdateisLoding(false);
-        just = true;
-        await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
 
-        isCreate ? Navigator.pop(context) : null;
-        succesMessage = value;
-        isCreate
-            ? Utils.showCustomFlushbar(context, succesMessage?['message'] ?? "",
-                isError: false)
-            : null;
+        setNavigationAndDisplayMessage(context, value);
       }).onError((error, stackTrace) {
         Utils.showCustomFlushbar(context, error.toString());
         setUpdateisLoding(false);
-        just = false;
-        log(error.toString());
+        isSuccuess = false;
       });
     }
-    return just;
+    return isSuccuess;
   }
 
-  saveButtonFunc(context) async {
-    final userViewModel = Provider.of<UserViewModel>(context, listen: false);
+  Future<void> saveButtonFunc(context) async {
+    final userViewModel = UserViewModel();
     final authToken = await userViewModel.getUser();
-    if (authToken == null || authToken == "") {
+
+    if (authToken == null || authToken.isEmpty) {
       await navigateTologin(context);
       return;
     }
-    postClubCreate(context);
+    await postClubCreate(context);
   }
 
   Future navigateTologin(context) async {
-    await Navigator.pushNamed(context, "login_screen");
+    await Navigator.pushNamed(context, RoutesName.login);
   }
 
   // Creating page using for Updating UI===========================
-  editValueAssaignFunc(context) async {
+  void editValueAssaignFunc(context) async {
     final userViewModel = Provider.of<MyClubViewModel>(context, listen: false);
     _imageUrl = userViewModel.apiResponse.data!.data!.profile;
     nameController.text = userViewModel.apiResponse.data!.data!.name!;
@@ -215,18 +233,17 @@ class CreateNewClubViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateFunc(context) async {
+  Future<void> updateFunc(context) async {
     final isSuccess = await postClubCreate(context);
     if (isSuccess) {
       Utils.showCustomFlushbar(context, succesMessage?['message'],
           isError: false);
       await Future.delayed(const Duration(seconds: 3));
       Navigator.pop(context);
-      await Provider.of<MyClubViewModel>(context, listen: false).getMyClub();
     }
   }
 
-  clearAllDataLogout() {
+  void clearAllDataLogout() {
     _imageUrl = null;
     _docUrl = null;
     succesMessage = null;

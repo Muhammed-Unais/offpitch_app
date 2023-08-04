@@ -10,21 +10,29 @@ import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_descr
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_profile.dart';
 import 'package:offpitch_app/view/my_club_view/components/tav_view_one_email_phone.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MyClubTabOne extends StatelessWidget {
-  const MyClubTabOne({super.key});
+class MyClubTabOne extends StatefulWidget {
+  const MyClubTabOne({
+    super.key,
+  });
 
   @override
+  State<MyClubTabOne> createState() => _MyClubTabOneState();
+}
+
+class _MyClubTabOneState extends State<MyClubTabOne> {
+  @override
   Widget build(BuildContext context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
     final size = MediaQuery.of(context).size;
-    return userClubId != null && userClubId.isNotEmpty
+    final userViewProvider = Provider.of<UserViewModel>(context, listen: false);
+    return userViewProvider.userClubId != null &&
+            userViewProvider.userClubId!.isNotEmpty
         ? Consumer<MyClubViewModel>(
-            builder: (context, value, _) {
-              switch (value.apiResponse.status) {
+            builder: (context, myClubViewModelProvider, _) {
+              switch (myClubViewModelProvider.apiResponse.status) {
                 case Status.LOADING:
                   return const Center(
                     child: CircularProgressIndicator(
@@ -33,77 +41,62 @@ class MyClubTabOne extends StatelessWidget {
                     ),
                   );
                 case Status.COMPLETED:
-                  final data = value.apiResponse.data;
-                  if (value.apiResponse.data!.message
-                      .contains("You don't have a club")) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.clubCreation);
-                      },
-                      child: EmptyComponts(
-                        image: "assets/images/no-club.svg",
-                        showMessage: "${value.apiResponse.data!.message}!",
-                        height: 200,
-                        width: 200,
-                        addText: "Create new",
+                  final data = myClubViewModelProvider.apiResponse.data;
+                  return SingleChildScrollView(
+                    child: SizedBox(
+                      // height: size.height,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TabViewOneClubProfile(
+                            clubName: data?.data?.name ?? "No title",
+                            image: data?.data?.profile ??
+                                AppProfilesCover.clubCover,
+                            playerCount: data?.data?.players.length ?? 0,
+                          ),
+                          TabViewOneClubDescription(
+                            hight: size.height * 0.2,
+                            description:
+                                data?.data?.description ?? "No description",
+                          ),
+                          const SizedBox(
+                            height: AppPadding.small,
+                          ),
+                          TabbarViewOneEmailPhone(
+                            hight: size.height * 0.08,
+                            email: data?.data?.email ?? "No email",
+                            phone: data?.data?.phone ?? 0,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppPadding.large),
+                            child: Divider(
+                              thickness: 0.5,
+                              color: AppColors.grey,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppMargin.large,
+                                vertical: AppMargin.medium),
+                            child: Text(
+                              "Players",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          // Add players and show player details======
+                          MyClubPlayers(hight: size.height * 0.23),
+                          const SizedBox(
+                            height: AppPadding.medium,
+                          ),
+                        ],
                       ),
-                    );
-                  } else {
-                    return SingleChildScrollView(
-                      child: SizedBox(
-                        // height: size.height,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TabViewOneClubProfile(
-                              clubName: data?.data?.name ?? "No title",
-                              image: data?.data?.profile ??
-                                  AppProfilesCover.clubCover,
-                              playerCount: data?.data?.players.length ?? 0,
-                            ),
-                            TabViewOneClubDescription(
-                              hight: size.height * 0.2,
-                              description:
-                                  data?.data?.description ?? "No description",
-                            ),
-                            const SizedBox(
-                              height: AppPadding.small,
-                            ),
-                            TabbarViewOneEmailPhone(
-                              hight: size.height * 0.08,
-                              email: data?.data?.email ?? "No email",
-                              phone: data?.data?.phone ?? 0,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppPadding.large),
-                              child: Divider(
-                                thickness: 0.5,
-                                color: AppColors.grey,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: AppMargin.large,
-                                  vertical: AppMargin.medium),
-                              child: Text(
-                                "Players",
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                            // Add players and show player details======
-                            MyClubPlayers(hight: size.height * 0.23),
-                            const SizedBox(
-                              height: AppPadding.medium,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
+                    ),
+                  );
                 case Status.ERROR:
                   return ErrorComponent(
-                    errorMessage: value.apiResponse.message ?? "",
+                    errorMessage:
+                        myClubViewModelProvider.apiResponse.message ?? "",
                   );
                 default:
                   return const Center(
@@ -112,17 +105,21 @@ class MyClubTabOne extends StatelessWidget {
               }
             },
           )
-        : InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, RoutesName.clubCreation);
-          },
-          child: const EmptyComponts(
-            image: "assets/images/no-club.svg",
-            showMessage: "You didn't create a club",
-            height: 200,
-            width: 200,
-            addText: "Create new",
-          ),
+        : Consumer<CreateNewClubViewModel>(
+          builder: (context,createClubProvider,_) {
+            return InkWell(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, RoutesName.clubCreation);
+                },
+                child:  EmptyComponts(
+                  image:createClubProvider.isClubCreate? "assets/images/Waiting-pana.svg": "assets/images/no-club.svg",
+                  showMessage:createClubProvider.isClubCreate? "Waiting for app approval":  "You didn't create a club",
+                  height: 200,
+                  width: 200,
+                  addText:createClubProvider.isClubCreate? "":  "Create new",
+                ),
+              );
+          }
         );
   }
 }

@@ -12,16 +12,15 @@ class ClubCreationBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final clubcreatNewViewModel = Provider.of<CreateNewClubViewModel>(context);
     final formkey = GlobalKey<FormState>();
     return Column(
       children: [
         ClubCreationPhotoDoc(
           docfunction: () {
-            clubcreatNewViewModel.getImageFromGallery();
+            context.read<CreateNewClubViewModel>().getImageFromGallery();
           },
           imagefunction: () {
-            clubcreatNewViewModel.getGovtRegfiles();
+            context.read<CreateNewClubViewModel>().getGovtRegfiles();
           },
         ),
         Expanded(
@@ -30,31 +29,37 @@ class ClubCreationBody extends StatelessWidget {
               children: [
                 Form(
                   key: formkey,
-                  child: ClubCreationNameEmailPhone(
-                    nameValidator: (value) =>
-                        ClubCreationValidation.nameValidaton(value),
-                    emailValidator: (value) =>
-                        ClubCreationValidation.emailValidation(value),
-                    phomeValidator: (value) =>
-                        ClubCreationValidation.phoneValidation(value),
-                    descValidator: (value) =>
-                        ClubCreationValidation.discrptionValidation(value),
+                  child: const ClubCreationNameEmailPhone(
+                    nameValidator: ClubCreationValidation.nameValidaton,
+                    emailValidator: ClubCreationValidation.emailValidation,
+                    phomeValidator: ClubCreationValidation.phoneValidation,
+                    descValidator: ClubCreationValidation.discrptionValidation,
                   ),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                ClubCreationSaveButton(
-                  processLoading: clubcreatNewViewModel.updateIsLoading,
-                  buttonText:
-                      !clubcreatNewViewModel.isCreate ? "Update" : "Save",
-                  width: size.width * 0.4,
-                  btnFunction: () async {
-                    if (formkey.currentState!.validate()) {
-                      clubcreatNewViewModel.isCreate
-                          ?await clubcreatNewViewModel.saveButtonFunc(context)
-                          :await clubcreatNewViewModel.updateFunc(context);  
-                    }
+                Consumer<CreateNewClubViewModel>(
+                  builder: (context, createNewClubViewModelProvider, _) {
+                    return ClubCreationSaveButton(
+                      processLoading:
+                          createNewClubViewModelProvider.updateIsLoading,
+                      buttonText: !createNewClubViewModelProvider.isCreate
+                          ? "Update"
+                          : "Save",
+                      width: size.width * 0.4,
+                      btnFunction: () async {
+                        if (formkey.currentState!.validate()) {
+                          final clubcreatNewViewModel =
+                              context.read<CreateNewClubViewModel>();
+
+                          createNewClubViewModelProvider.isCreate
+                              ? await clubcreatNewViewModel
+                                  .saveButtonFunc(context)
+                              : await clubcreatNewViewModel.updateFunc(context);
+                        }
+                      },
+                    );
                   },
                 ),
               ],

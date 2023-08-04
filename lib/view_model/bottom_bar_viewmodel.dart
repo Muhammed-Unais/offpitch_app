@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_user_hostreg_tournament_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'user_profile_view_model/user_profile_view_model.dart';
@@ -24,7 +24,7 @@ class BottomBarViewModel extends ChangeNotifier {
     if (index == 3) {
       final value = Provider.of<MyClubViewModel>(context, listen: false);
       if (userClubId != null && userClubId.isNotEmpty) {
-        value.apiResponse.data ?? value.getMyClub();
+        value.apiResponse.data ?? value.getMyClub(context);
         value.getPlayerapiResponse.data ?? value.getAllPlayers();
       }
 

@@ -36,7 +36,6 @@ class RegistorationViewModel with ChangeNotifier {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    log("..........");
     paymentId = response.paymentId;
     orderId = response.orderId;
     signature = response.signature;

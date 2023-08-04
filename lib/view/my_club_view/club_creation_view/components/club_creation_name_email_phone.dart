@@ -4,7 +4,7 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ClubCreationNameEmailPhone extends StatelessWidget {
+class ClubCreationNameEmailPhone extends StatefulWidget {
   const ClubCreationNameEmailPhone(
       {super.key,
       this.nameValidator,
@@ -16,8 +16,12 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
       emailValidator,
       phomeValidator,
       descValidator;
-      
 
+  @override
+  State<ClubCreationNameEmailPhone> createState() => _ClubCreationNameEmailPhoneState();
+}
+
+class _ClubCreationNameEmailPhoneState extends State<ClubCreationNameEmailPhone> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,7 +37,7 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
               type: TextInputType.name,
               nextFocusNode: clubcreatNewViewModel.emailFoucsNode,
               currentFocusNode: clubcreatNewViewModel.nameFoucsNode,
-              validator: nameValidator,
+              validator: widget.nameValidator,
               controller: clubcreatNewViewModel.nameController,
               hintText: "Name",
               maxLines: null,
@@ -44,7 +48,7 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
               type: TextInputType.emailAddress,
               currentFocusNode: clubcreatNewViewModel.emailFoucsNode,
               nextFocusNode: clubcreatNewViewModel.phoneFoucusNode,
-              validator: emailValidator,
+              validator: widget.emailValidator,
               controller: clubcreatNewViewModel.emailController,
               hintText: "Email",
               maxLines: null,
@@ -55,7 +59,7 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
               type: TextInputType.phone,
               currentFocusNode: clubcreatNewViewModel.phoneFoucusNode,
               nextFocusNode: clubcreatNewViewModel.descriptionFoucusNode,
-              validator: phomeValidator,
+              validator: widget.phomeValidator,
               controller: clubcreatNewViewModel.phoneController,
               hintText: "Phone",
               maxLines: null,
@@ -68,7 +72,7 @@ class ClubCreationNameEmailPhone extends StatelessWidget {
               isOutfoucsNode: true,
               currentFocusNode: clubcreatNewViewModel.descriptionFoucusNode,
               nextFocusNode: clubcreatNewViewModel.descriptionFoucusNode,
-              validator: descValidator,
+              validator: widget.descValidator,
               controller: clubcreatNewViewModel.descriptionController,
               hintText: "Description",
               maxLines: 8,

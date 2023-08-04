@@ -57,7 +57,6 @@ class ExploreSearch extends StatelessWidget {
               return TextField(
                 // controller: textEditingController,
                 onChanged: (value) {
-                  log("ccccc");
                   if (values.searchTabbarCount == 0) {
                     exploreViewModel.getExpAndSrchTournmts(
                         query: "filter=all&search=$value", sortingQuery: "all");

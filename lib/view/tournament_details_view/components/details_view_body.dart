@@ -26,8 +26,12 @@ class DetailsViewBody extends StatelessWidget {
         switch (value.detailsTournament.status) {
           case Status.LOADING:
             return const Align(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator());
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+                strokeWidth: 2.0,
+              ),
+            );
           case Status.COMPLETED:
             final data = value.detailsTournament.data?.data;
             if (data == null) {}
@@ -79,7 +83,9 @@ class DetailsViewBody extends StatelessWidget {
                       data: value.detailsTournament.data!,
                     ),
                     // Registered Teams components====================
-                     RegisteredTeams(singleTourdata: value.detailsTournament.data,),
+                    RegisteredTeams(
+                      singleTourdata: value.detailsTournament.data,
+                    ),
                     // about components ========================
                     DetailsViewAbout(data: value.detailsTournament.data!),
                     Container(

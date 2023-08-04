@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/utils/routes/routes_name.dart';
 
 class AlreadyHaveAcc extends StatelessWidget {
   const AlreadyHaveAcc({super.key});
@@ -8,7 +7,7 @@ class AlreadyHaveAcc extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RoutesName.login);
+        Navigator.pop(context);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
