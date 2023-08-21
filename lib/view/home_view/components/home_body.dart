@@ -22,10 +22,14 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    fetchUserDetails();
+    super.initState();
+  }
+
+  void fetchUserDetails() async{
     final values = Provider.of<HomeAndExpViewModel>(context, listen: false);
-    values.userFuture ??= values.getAllTournaments();
+    values.userFuture ??=  values.getAllTournaments();
   }
 
   @override
@@ -121,8 +125,8 @@ class _HomeBodyState extends State<HomeBody> {
           );
         } else if (snapshot.data!.data!.allTournaments!.isEmpty) {
           return Column(
-            children:const [
-               SizedBox(height: 100),
+            children: const [
+              SizedBox(height: 100),
               ErrorComponent(
                 errorMessage: "No Tournaments",
               ),

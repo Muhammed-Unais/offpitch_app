@@ -107,7 +107,9 @@ class Utils {
   static Future<void> sharedPrefrence(
       {required String key, required String value}) async {
     final sp = await SharedPreferences.getInstance();
-    sp.setString(key, value);
+    if (sp.getString(key) == null || sp.getString(key)!.isEmpty) {
+      sp.setString(key, value);
+    }
   }
 
   static Future<String?> sharedPrefrenceGetValue({required String key}) async {

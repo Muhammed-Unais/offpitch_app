@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
@@ -8,13 +7,14 @@ import 'package:offpitch_app/res/components/tabbar_my_club_view.dart';
 import 'package:offpitch_app/res/components/users_tournament_card.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubTabThree extends StatefulWidget {
-  const MyClubTabThree({super.key});
+  const MyClubTabThree({super.key, this.userClubId});
+
+  final String? userClubId;
 
   @override
   State<MyClubTabThree> createState() => _MyClubTabThreeState();
@@ -32,10 +32,6 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
 
   @override
   Widget build(BuildContext context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
-    log(userClubId.toString());
-    
     return Column(
       children: [
         TabbarMyClubView(
@@ -45,13 +41,13 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
           tabbar3: "Ended",
         ),
         Expanded(
-          child: userClubId != null && userClubId.isNotEmpty
+          child: widget.userClubId != null && widget.userClubId!.isNotEmpty
               ? TabBarView(
                   controller: tabController,
                   children: [
                     Consumer<UserHostRegTournamentViewModel>(
                       builder: (context, value, _) {
-                        switch (value.apiResponsetwo.status) {
+                        switch (value.apiResponseRegisTournaments.status) {
                           case Status.LOADING:
                             return const Center(
                               child: CircularProgressIndicator(
@@ -60,11 +56,23 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                               ),
                             );
                           case Status.COMPLETED:
+                           if (value.apiResponseRegisTournaments.data ==
+                                    null ||
+                                value.apiResponseRegisTournaments.data!
+                                    .isEmpty) {
+                              return const EmptyComponts(
+                                image: "assets/images/no-data.svg",
+                                showMessage: "No Tournaments",
+                                height: 150,
+                                width: 150,
+                                addText: "Registor...",
+                              );
+                            }
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: value.apiResponsetwo.data!.length,
+                              itemCount: value.apiResponseRegisTournaments.data!.length,
                               itemBuilder: (context, index) {
-                                final data = value.apiResponsetwo.data!.reversed
+                                final data = value.apiResponseRegisTournaments.data!.reversed
                                     .toList()[index];
                                 return InkWell(
                                   onTap: () async {
@@ -89,7 +97,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                             );
                           case Status.ERROR:
                             return ErrorComponent(
-                              errorMessage: value.apiResponsetwo.message!,
+                              errorMessage: value.apiResponseRegisTournaments.message!,
                             );
                           default:
                             return const SizedBox();

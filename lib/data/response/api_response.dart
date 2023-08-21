@@ -1,4 +1,3 @@
-
 import 'package:offpitch_app/data/response/status.dart';
 
 class ApiResponse<T> {

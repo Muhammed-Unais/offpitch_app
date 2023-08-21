@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:offpitch_app/data/network/base_api_service.dart';
 import 'package:offpitch_app/data/network/network_api_service.dart';
@@ -14,7 +13,6 @@ class UserRegisteredTournamentsRepository {
           .getGetApiWithAccessToken(AppUrl.userRegisteredTournamements);
       return userRegisterdTournametnModelFromJson(response);
     } catch (error) {
-      log(error.toString());
       rethrow;
     }
   }

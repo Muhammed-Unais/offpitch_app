@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -11,9 +13,20 @@ import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_watchli
 import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
-class UserDetailsView extends StatelessWidget {
+class UserDetailsView extends StatefulWidget {
   const UserDetailsView({super.key});
 
+  @override
+  State<UserDetailsView> createState() => _UserDetailsViewState();
+}
+
+class _UserDetailsViewState extends State<UserDetailsView> {
+
+  @override
+  void initState() {
+     log("userScreenCalled");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,28 +1,25 @@
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/user_host_tournament_model.dart';
 import 'package:offpitch_app/models/user_registered_model.dart';
 import 'package:offpitch_app/repository/user_host_tournament_repository.dart';
 import 'package:offpitch_app/repository/user_registerd_tournaments_repository.dart';
-import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
-import 'package:provider/provider.dart';
 
 class UserHostRegTournamentViewModel extends ChangeNotifier {
   final _myRepo = UserHostTournamentRepository();
 
-  ApiResponse<List<Datum>> apiResponse = ApiResponse.loading();
+  ApiResponse<List<Datum>> apiResponseHostedTournaments = ApiResponse.loading();
 
-  ApiResponse<List<RegisteredTournaments>> apiResponsetwo =
+  ApiResponse<List<RegisteredTournaments>> apiResponseRegisTournaments =
       ApiResponse.loading();
 
   setAllUserTournaments(ApiResponse<List<Datum>> data) {
-    apiResponse = data;
+    apiResponseHostedTournaments = data;
     notifyListeners();
   }
 
   setAllUserRegTournaments(ApiResponse<List<RegisteredTournaments>> data) {
-    apiResponsetwo = data;
+    apiResponseRegisTournaments = data;
     notifyListeners();
   }
 
@@ -35,18 +32,11 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
       for (var element in value!.data!) {
         if (element.status != StatusTour.DRAFT) {
           allCompletedTour.add(element);
-          setAllUserTournaments(
-            ApiResponse.completed(
-              allCompletedTour,
-            ),
-          );
         }
       }
-      log(value.toString());
+      setAllUserTournaments(ApiResponse.completed(allCompletedTour));
     }).onError((error, stackTrace) {
       setAllUserTournaments(ApiResponse.error(error.toString()));
-
-      log(error.toString());
     });
   }
 
@@ -56,24 +46,13 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
     setAllUserRegTournaments(ApiResponse.loading());
     _myRegsteredRepo.getUserRegistedTournaments().then((value) {
       setAllUserRegTournaments(ApiResponse.completed(value.data));
-      log(value.data.toString());
     }).onError((error, stackTrace) {
       setAllUserRegTournaments(ApiResponse.error(error.toString()));
-      log(error.toString());
     });
   }
 
-  UserHostRegTournamentViewModel(context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
-    if (userClubId != null && userClubId.isNotEmpty) {
-      getAllUserHostedTournaments();
-      getAllUserRegisteredTournaments();
-    }
-  }
-
   clearAllDataLogout() {
-    apiResponse.data = null;
-    apiResponsetwo.data = null;
+    apiResponseHostedTournaments.data = null;
+    apiResponseRegisTournaments.data = null;
   }
 }

@@ -192,9 +192,12 @@ class CreateNewClubViewModel extends ChangeNotifier {
       await _myrepo.postClubapi(createClubModelData).then((value) async {
         isSuccuess = true;
 
+        await myClubViewModel.getMyClub(context);
+        
         setUpdateisLoding(false);
 
         setNavigationAndDisplayMessage(context, value);
+
       }).onError((error, stackTrace) {
         Utils.showCustomFlushbar(context, error.toString());
         setUpdateisLoding(false);

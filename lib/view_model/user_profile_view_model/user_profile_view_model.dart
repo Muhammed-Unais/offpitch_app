@@ -4,7 +4,6 @@ import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/user_profile_model.dart';
 import 'package:offpitch_app/models/user_watchlist_model.dart';
 import 'package:offpitch_app/repository/user_profile_repository.dart';
-import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 
 class UserProfileViewModel with ChangeNotifier {
   final _myRepo = UserProfileRepository();

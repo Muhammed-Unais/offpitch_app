@@ -17,9 +17,10 @@ class LogoutAlertDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () {
+          onPressed: () async{
             // userAuthviewModel.userlogout();
-            userAuthModel.logoutRemoveAllData(context);
+           await  userAuthModel.logoutRemoveAllData(context);
+            // ignore: use_build_context_synchronously
             Navigator.pushNamedAndRemoveUntil(
               context,
               RoutesName.login,

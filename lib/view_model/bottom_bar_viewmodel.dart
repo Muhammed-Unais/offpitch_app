@@ -12,34 +12,9 @@ class BottomBarViewModel extends ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   onTap(int index, context, {PageController? controller}) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
     _currentIndex = index;
     notifyListeners();
-    if (index == 1) {
-      final value = Provider.of<ExploreViewViewModel>(context, listen: false);
-      value.allTournaments.data ??
-          value.getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
-    }
-    if (index == 3) {
-      final value = Provider.of<MyClubViewModel>(context, listen: false);
-      if (userClubId != null && userClubId.isNotEmpty) {
-        value.apiResponse.data ?? value.getMyClub(context);
-        value.getPlayerapiResponse.data ?? value.getAllPlayers();
-      }
 
-      if (userClubId != null && userClubId.isNotEmpty) {
-        final value1 =
-            Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
-        value1.apiResponse.data ?? value1.getAllUserHostedTournaments();
-      }
-
-      if (userClubId != null && userClubId.isNotEmpty) {
-        final value2 =
-            Provider.of<UserHostRegTournamentViewModel>(context, listen: false);
-        value2.apiResponsetwo.data ?? value2.getAllUserRegisteredTournaments();
-      }
-    }
     if (index == 4) {
       final value = Provider.of<UserProfileViewModel>(context, listen: false);
       value.userProfileResponse.data ?? value.getUserProfile();

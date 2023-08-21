@@ -21,8 +21,12 @@ class _ExploreViewState extends State<ExploreView>
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
-      Provider.of<ExploreViewViewModel>(context, listen: false)
+      context
+          .read<ExploreViewViewModel>()
           .setSearchTabbarIndex(tabController.index);
+      context
+          .read<ExploreViewViewModel>()
+          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
     });
     super.initState();
   }

@@ -17,14 +17,16 @@ class OtpVerifyView extends StatefulWidget {
 class _OtpVerifyViewState extends State<OtpVerifyView> {
   final int timerMaxSeconds = 90;
   int currentSeconds = 0;
+  late Timer timer;
 
   String get timerText =>
       '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
 
   void _stratTimer() {
     const oneSec = Duration(seconds: 1);
-    Timer.periodic(oneSec, (Timer timer) {
+    Timer.periodic(oneSec, (Timer timers) {
       setState(() {
+        timer = timers;
         currentSeconds = timer.tick;
         if (timer.tick >= timerMaxSeconds) timer.cancel();
       });
@@ -40,9 +42,15 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
   }
 
   @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    final authViewModel = context.watch<AuthViewModel>();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -96,13 +104,15 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
                 currentSeconds >= timerMaxSeconds
                     ? GestureDetector(
                         onTap: () {
-                          authViewModel.resendOtp(context);
+                          authViewModel.resendOtp(context).then((_) {
+                            _stratTimer();
+                          });
                         },
                         child: authViewModel.signUpLoading
                             ? const CircularProgressIndicator(
-                              strokeWidth: 2,value: 5,
-                              color: AppColors.primary,
-                            )
+                                strokeWidth: 2,
+                                color: AppColors.primary,
+                              )
                             : const Text(
                                 "Resend OTP Code",
                                 style: TextStyle(

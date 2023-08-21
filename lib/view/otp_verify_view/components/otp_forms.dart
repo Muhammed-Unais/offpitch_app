@@ -47,7 +47,7 @@ class _OtpFormsState extends State<OtpForms> {
       return;
     }
     if (value == null || value.isEmpty) {
-      focusNode.unfocus();
+      focusNode.previousFocus();
       return;
     }
   }
@@ -61,7 +61,6 @@ class _OtpFormsState extends State<OtpForms> {
 
   @override
   Widget build(BuildContext context) {
-    log("called forms scrren");
     final size = MediaQuery.of(context).size;
     final authviewModel = Provider.of<AuthViewModel>(context);
     return Column(
@@ -118,6 +117,8 @@ class _OtpFormsState extends State<OtpForms> {
                   otpForm6 = value;
                   if (value != null && value.isNotEmpty) {
                     focusNode6.unfocus();
+                  } else {
+                    focusNode6.previousFocus();
                   }
                 },
               ),

@@ -6,13 +6,17 @@ import 'package:offpitch_app/res/components/tabbar_my_club_view.dart';
 import 'package:offpitch_app/res/components/users_tournament_card.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubTabTwo extends StatefulWidget {
-  const MyClubTabTwo({super.key});
+  const MyClubTabTwo({
+    super.key,
+    this.userClubId,
+  });
+
+  final String? userClubId;
 
   @override
   State<MyClubTabTwo> createState() => _MyClubTabTwoState();
@@ -30,7 +34,6 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
 
   @override
   Widget build(BuildContext context) {
-    final userClubId = Provider.of<UserViewModel>(context,listen: false).userClubId;
     return Column(
       children: [
         TabbarMyClubView(
@@ -40,13 +43,13 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
           tabbar3: "Ended",
         ),
         Expanded(
-          child: userClubId !=null && userClubId.isNotEmpty
+          child: widget.userClubId != null && widget.userClubId!.isNotEmpty
               ? TabBarView(
                   controller: tabController,
                   children: [
                     Consumer<UserHostRegTournamentViewModel>(
                       builder: (context, value, _) {
-                        switch (value.apiResponse.status) {
+                        switch (value.apiResponseHostedTournaments.status) {
                           case Status.LOADING:
                             return const Center(
                               child: CircularProgressIndicator(
@@ -55,19 +58,31 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                               ),
                             );
                           case Status.COMPLETED:
+                            if (value.apiResponseHostedTournaments.data ==
+                                    null ||
+                                value.apiResponseHostedTournaments.data!
+                                    .isEmpty) {
+                              return const EmptyComponts(
+                                image: "assets/images/no-data.svg",
+                                showMessage: "No Tournaments",
+                                height: 150,
+                                width: 150,
+                                addText: "Host Tournaments",
+                              );
+                            }
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: value.apiResponse.data!.length,
+                              itemCount: value
+                                  .apiResponseHostedTournaments.data?.length,
                               itemBuilder: (context, index) {
-                                final data = value.apiResponse.data!.reversed
+                                final data = value
+                                    .apiResponseHostedTournaments.data!.reversed
                                     .toList()[index];
                                 return InkWell(
                                   onTap: () async {
-                                    final provider =
-                                        Provider.of<DetailsTouramentViewModel>(
-                                            context,
-                                            listen: false);
-                                    provider.getSingleTournament(data.id);
+                                    context
+                                        .read<DetailsTouramentViewModel>()
+                                        .getSingleTournament(data.id);
                                     await Navigator.pushNamed(
                                         context, "tournamentdetails");
                                   },
@@ -83,7 +98,8 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                             );
                           case Status.ERROR:
                             return ErrorComponent(
-                              errorMessage: value.apiResponse.message!,
+                              errorMessage:
+                                  value.apiResponseHostedTournaments.message!,
                             );
                           default:
                             return const SizedBox();
@@ -95,17 +111,17 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                   ],
                 )
               : InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.clubCreation);
-                },
-                child: const EmptyComponts(
-                  image: "assets/images/no-club.svg",
-                  showMessage: "You Don't have a club",
-                  height: 200,
-                  width: 200,
-                  addText: "Create new",
+                  onTap: () {
+                    Navigator.pushNamed(context, RoutesName.clubCreation);
+                  },
+                  child: const EmptyComponts(
+                    image: "assets/images/no-club.svg",
+                    showMessage: "You Don't have a club",
+                    height: 200,
+                    width: 200,
+                    addText: "Create new",
+                  ),
                 ),
-              ),
         )
       ],
     );

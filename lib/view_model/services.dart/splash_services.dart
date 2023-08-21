@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashServices {
   Future getUserData() => UserViewModel().getUser();
@@ -20,7 +19,6 @@ class SplashServices {
         // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, RoutesName.navigation);
       }
-    }).onError((error, stackTrace) {
-    });
+    }).onError((error, stackTrace) {});
   }
 }

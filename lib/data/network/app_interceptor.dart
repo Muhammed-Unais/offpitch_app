@@ -41,9 +41,7 @@ class AppInterceptor {
             if (accessToken != "") {
               Response<dynamic> response = await HttpHelpor.refreshToken();
               if (response.statusCode == 200) {
-                log("New Token Received: ${response.data}");
                 final accessToken = response.data['data']['accessToken'];
-                log("newAccessToken     $accessToken");
                 preferences.remove('accessToken');
                 await preferences.setString('accessToken', accessToken);
                 // ignore: deprecated_member_use
@@ -67,7 +65,6 @@ class AppInterceptor {
 
                 // else case==============
               } else {
-                log("Error refreshing token: ${response.statusCode}");
                 // ignore: deprecated_member_use
                 dio.interceptors.requestLock.unlock();
                 // ignore: deprecated_member_use

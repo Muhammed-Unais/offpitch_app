@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
@@ -22,11 +21,12 @@ class CreateTournamentView extends StatefulWidget {
 
 class _CreateTournamentViewState extends State<CreateTournamentView>
     with TickerProviderStateMixin {
-      
   late TabController tabController;
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
   ScrollController controller = ScrollController();
+  late String? userClubId;
+  late String? userClubStatus;
 
   @override
   void initState() {
@@ -45,6 +45,13 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
       }
     });
     super.initState();
+
+    setCheckhasClubId();
+  }
+
+  void setCheckhasClubId() {
+    userClubId = context.read<UserViewModel>().userClubId;
+    userClubStatus = context.read<UserViewModel>().userClubStatus;
   }
 
   @override
@@ -56,15 +63,13 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
 
   @override
   Widget build(BuildContext context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
     return Consumer<CreateTournamentViewModel>(
       builder: (context, value, _) {
         return DefaultTabController(
           length: 3,
           child: Scaffold(
             appBar: AppBar(
-             shadowColor: AppColors.white,
+              shadowColor: AppColors.white,
               elevation: 5,
               title: Text(
                 "Host Tournament",
@@ -80,12 +85,16 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                       tabController: tabController,
                       value: value,
                     ),
-                    const SizedBox(height: AppMargin.extraSmall,)
+                    const SizedBox(
+                      height: AppMargin.extraSmall,
+                    )
                   ],
                 ),
               ),
             ),
-            body: userClubId != null && userClubId.isNotEmpty
+            body: userClubId != null &&
+                    userClubId!.isNotEmpty &&
+                    userClubStatus != "awaiting"
                 ? TabBarView(
                     controller: tabController,
                     physics: const NeverScrollableScrollPhysics(),
@@ -116,15 +125,22 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                       children: [
                         InkWell(
                           onTap: () {
+                            userClubStatus=="awaiting"?null:
                             Navigator.pushNamed(
                                 context, RoutesName.clubCreation);
                           },
-                          child: const EmptyComponts(
-                            image: "assets/images/no-club.svg",
-                            showMessage: "You didn't create a club",
+                          child: EmptyComponts(
+                            image: userClubStatus == "awaiting"
+                                ? "assets/images/Waiting-pana.svg"
+                                : "assets/images/no-club.svg",
+                            showMessage: userClubStatus == "awaiting"
+                                ? "Waiting for app approval"
+                                : "You didn't create a club",
                             height: 200,
                             width: 200,
-                            addText: "Create new",
+                            addText: userClubStatus == "awaiting"
+                                ? "...."
+                                : "Create new",
                           ),
                         ),
                       ],

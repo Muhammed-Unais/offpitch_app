@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/utils/utils.dart';
@@ -10,14 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserViewModel with ChangeNotifier {
   String? _userClubId;
   String? get userClubId => _userClubId;
+  String? _userClubStatus;
+  String? get userClubStatus => _userClubStatus;
 
   Future saveAcesssToken(
       {String key = 'accessToken', required String value}) async {
     await Utils.sharedPrefrence(key: key, value: value);
   }
 
-  Future<void> saveUserClubIdWhenClubcreate(String? clubId) async {
+  Future<void> saveUserClubIdWhenClubcreate(
+      String? clubId, String? clubStatus) async {
     await Utils.sharedPrefrence(key: 'userClubId', value: clubId ?? "");
+    Utils.sharedPrefrence(key: "userClubStatus", value: clubStatus ?? "");
     await getUserClubId();
   }
 
@@ -27,12 +29,16 @@ class UserViewModel with ChangeNotifier {
         model.data!.club!.isNotEmpty &&
         model.data!.clubStatus!.isNotEmpty) {
       Utils.sharedPrefrence(key: "userClubId", value: model.data?.club ?? "");
+      Utils.sharedPrefrence(
+          key: "userClubStatus", value: model.data?.clubStatus ?? "");
     }
     await getUserClubId();
   }
 
   Future<void> getUserClubId() async {
     _userClubId = await Utils.sharedPrefrenceGetValue(key: 'userClubId');
+    _userClubStatus =
+        await Utils.sharedPrefrenceGetValue(key: 'userClubStatus');
     notifyListeners();
   }
 
@@ -49,6 +55,7 @@ class UserViewModel with ChangeNotifier {
     await sp.remove('authToken');
     await sp.remove("userClubId");
     await sp.remove("accessToken");
+    await sp.remove("userClubStatus");
     return true;
   }
 }

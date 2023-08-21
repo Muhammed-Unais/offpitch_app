@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/club_tournamentmodel.dart';
@@ -25,12 +23,11 @@ class MyClubViewModel extends ChangeNotifier {
 
   Future getMyClub(BuildContext context) async {
     setMyClubdetails(ApiResponse.loading());
-    _myRepo.getAllClubWithAccessTokem().then((value) async {
+    await _myRepo.getAllClubWithAccessTokem().then((value) async {
       setMyClubdetails(ApiResponse.completed(value));
-
-      await context
+      context
           .read<UserViewModel>()
-          .saveUserClubIdWhenClubcreate(value.data?.id);
+          .saveUserClubIdWhenClubcreate(value.data?.id,value.data?.status);
     }).onError((error, stackTrace) {
       setMyClubdetails(ApiResponse.error(error.toString()));
     });
@@ -65,14 +62,5 @@ class MyClubViewModel extends ChangeNotifier {
   clearAllDateLogout() {
     apiResponse.data = null;
     getPlayerapiResponse.data = null;
-  }
-
-  MyClubViewModel() {
-    // final userClubId =
-    //     Provider.of<UserViewModel>(, listen: false).userClubId;
-    // if (userClubId != null && userClubId.isNotEmpty) {
-    //   getMyClub();
-    //   getAllPlayers();
-    // }
   }
 }

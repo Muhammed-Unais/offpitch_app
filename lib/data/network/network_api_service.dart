@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/app_exception.dart';
 import 'package:offpitch_app/data/network/base_api_service.dart';
@@ -10,7 +9,6 @@ class NetworkApiServices extends BaseApiService {
 
   @override
   Future getGetApiResponse(String url, queries) async {
-    log(url);
     final dio = Dio();
     dynamic responseJson;
 
@@ -116,7 +114,6 @@ class NetworkApiServices extends BaseApiService {
       returnResponse(response);
       return successResponseData;
     } on DioError catch (e) {
-      log(e.response!.statusCode.toString());
       return returnResponse(e.response);
     }
   }
