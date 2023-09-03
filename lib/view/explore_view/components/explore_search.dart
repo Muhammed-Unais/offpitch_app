@@ -52,41 +52,46 @@ class ExploreSearch extends StatelessWidget {
                 AppRadius.borderRadiusS,
               ),
             ),
-            child:
-                Consumer<ExploreViewViewModel>(builder: (context, values, _) {
-              return TextField(
-                // controller: textEditingController,
-                onChanged: (value) {
-                  if (values.searchTabbarCount == 0) {
-                    exploreViewModel.getExpAndSrchTournmts(
-                        query: "filter=all&search=$value", sortingQuery: "all");
-                  }
+            child: Consumer<ExploreViewViewModel>(
+              builder: (context, values, _) {
+                return TextField(
+                  // controller: textEditingController,
+                  onChanged: (value) {
+                    if (values.searchTabbarCount == 0) {
+                      exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "all",isNotify: true);
+                    }
 
-                  if (sampleItem == PoupMenuButtons.all) {
-                    exploreViewModel.getExpAndSrchTournmts(
-                        query: "filter=all&search=$value", sortingQuery: "all");
-                  }
-                  if (sampleItem == PoupMenuButtons.upcoming) {
-                    exploreViewModel.getExpAndSrchTournmts(
-                        query: "filter=all&search=$value",
-                        sortingQuery: "upComing");
-                  }
-                  if (sampleItem == null) {
-                    exploreViewModel.getExpAndSrchTournmts(
-                        query: "filter=all&search=$value", sortingQuery: "all");
-                  }
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Search",
-                  filled: false,
-                  prefixIcon: Icon(
-                    IconlyBroken.search,
-                    color: Theme.of(context).colorScheme.secondary,
+                    if (sampleItem == PoupMenuButtons.all) {
+                      exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "all",isNotify: true);
+                    }
+                    if (sampleItem == PoupMenuButtons.upcoming) {
+                      exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "upComing",isNotify: true);
+                    }
+                    if (sampleItem == null) {
+                      exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          isNotify: true,
+                          sortingQuery: "all");
+                    }
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Search",
+                    filled: false,
+                    prefixIcon: Icon(
+                      IconlyBroken.search,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
           ),
           Consumer<ExploreViewViewModel>(
             builder: (context, value, _) {
@@ -99,6 +104,10 @@ class ExploreSearch extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     )
                   : PopupMenuButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      surfaceTintColor: Colors.white,
                       initialValue: sampleItem,
                       icon: const Icon(IconlyBold.filter),
                       onSelected: (value) {
@@ -114,7 +123,9 @@ class ExploreSearch extends StatelessWidget {
                           ),
                           onTap: () {
                             exploreViewModel.getExpAndSrchTournmts(
-                                query: 'filter=all', sortingQuery: "all");
+                                query: 'filter=all',
+                                sortingQuery: "all",
+                                isNotify: true);
                           },
                         ),
                         PopupMenuItem(
@@ -126,7 +137,9 @@ class ExploreSearch extends StatelessWidget {
                           ),
                           onTap: () async {
                             exploreViewModel.getExpAndSrchTournmts(
-                                query: 'filter=all', sortingQuery: "upComing");
+                                query: 'filter=all',
+                                sortingQuery: "upComing",
+                                isNotify: true);
                           },
                         ),
                       ],

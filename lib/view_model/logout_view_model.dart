@@ -13,7 +13,7 @@ import 'tournament_details_view_model.dart/registration_view_model.dart';
 
 class LogoutViewModel extends ChangeNotifier {
   clearAllDatasLogout(BuildContext context) {
-    Provider.of<HomeAndExpViewModel>(context, listen: false)
+    Provider.of<HomeViewModel>(context, listen: false)
         .clearAllDataLogout();
     Provider.of<ExploreViewViewModel>(context, listen: false)
         .clearAllDataLogout();

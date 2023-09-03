@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/utils/utils.dart';
@@ -18,9 +19,9 @@ class UserViewModel with ChangeNotifier {
 
   Future<void> saveUserClubIdWhenClubcreate(
       String? clubId, String? clubStatus) async {
+        
     await Utils.sharedPrefrence(key: 'userClubId', value: clubId ?? "");
-    Utils.sharedPrefrence(key: "userClubStatus", value: clubStatus ?? "");
-    await getUserClubId();
+    await Utils.sharedPrefrence(key: "userClubStatus", value: clubStatus ?? "");
   }
 
   Future<void> saveUserClubId(UserModel model) async {
@@ -37,8 +38,10 @@ class UserViewModel with ChangeNotifier {
 
   Future<void> getUserClubId() async {
     _userClubId = await Utils.sharedPrefrenceGetValue(key: 'userClubId');
+
     _userClubStatus =
         await Utils.sharedPrefrenceGetValue(key: 'userClubStatus');
+    log(_userClubStatus.toString());
     notifyListeners();
   }
 

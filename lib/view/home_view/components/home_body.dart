@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/models/all_tournaments_model.dart';
+import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/models/user_host_tournament_model.dart';
+import 'package:offpitch_app/models/user_registered_model.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
+import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';
 import 'package:offpitch_app/view/home_view/components/home_top_card.dart';
-import 'package:offpitch_app/view/home_view/components/home_topbar.dart';
-import 'package:offpitch_app/view/home_view/components/home_upconing_tites.dart';
-import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
+import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
+import '../../../view_model/my_club_view_model/my_club_over_view_model.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
@@ -20,53 +24,65 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
-class _HomeBodyState extends State<HomeBody> {
+class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
+  late TabController tabController;
   @override
   void initState() {
+    tabController = TabController(length: 2, vsync: this);
     fetchUserDetails();
     super.initState();
   }
 
-  void fetchUserDetails() async{
-    final values = Provider.of<HomeAndExpViewModel>(context, listen: false);
-    values.userFuture ??=  values.getAllTournaments();
+  void fetchUserDetails() async {
+    var homeProvider = context.read<UserHostRegTournamentViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      homeProvider.getAllUserRegisteredTournaments();
+      homeProvider.getAllUserHostedTournaments();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Column(
-        children: [
-          // homw top icon and iconbutton
-          const HommeTopBar(),
-          Expanded(
-            child: Stack(
-              children: [
-                Container(
-                  height: size.height,
-                  margin: const EdgeInsets.only(
-                    top: AppMargin.extraLarge * 5,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        AppRadius.borderRadiusL,
-                      ),
-                      topRight: Radius.circular(
-                        AppRadius.borderRadiusL,
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(
+            child: ColoredBox(
+              color: AppColors.primary,
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: size.height * 0.1,
+                      width: size.width,
+                      decoration: const BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            AppRadius.borderRadiusL,
+                          ),
+                          topRight: Radius.circular(
+                            AppRadius.borderRadiusL,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  child: allTournamentsDetails(size, context),
-                ),
-                // Home carosole card==============
-                const HomeTopCard(),
-              ],
+                  const HomeTopCard(),
+                ],
+              ),
             ),
           )
-        ],
+        ];
+      },
+      body: Container(
+        height: size.height,
+        decoration: const BoxDecoration(
+          color: AppColors.white,
+        ),
+        child: allTournamentsDetails(size, context),
       ),
     );
   }
@@ -74,93 +90,210 @@ class _HomeBodyState extends State<HomeBody> {
   Column allTournamentsDetails(Size size, BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: size.height / 11),
-        // home upcoming title
-        const HomeUpcomingtitle(),
+        ExploreTabBar(
+          tabController: tabController,
+          firstTab: "Registred",
+          secondTab: "Hosted",
+        ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: AppMargin.small,
-                ),
-                futureBuilderForAllTournaments(context, size)
-              ],
-            ),
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              registredTournaments(context, size),
+              hostedTournaments(context, size)
+            ],
           ),
         )
       ],
     );
   }
 
-  FutureBuilder<AllTournamentsModel> futureBuilderForAllTournaments(
-      BuildContext context, Size size) {
-    return FutureBuilder(
-      future: Provider.of<HomeAndExpViewModel>(context).userFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppMargin.large,
-            ),
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return ShimerWidget.rectangular(
-                borderRadius: AppRadius.borderRadiusM,
-                verticalMargin: AppMargin.small,
-                hight: size.height * 0.2,
+  Widget registredTournaments(BuildContext context, Size size) {
+    return Consumer<UserHostRegTournamentViewModel>(
+      builder: (context, usertournamentProvider, child) {
+        switch (usertournamentProvider.apiResponseRegisTournaments.status) {
+          case Status.LOADING:
+            return ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppMargin.large,
+              ),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return ShimerWidget.rectangular(
+                  borderRadius: AppRadius.borderRadiusM,
+                  verticalMargin: AppMargin.small,
+                  hight: size.height * 0.2,
+                );
+              },
+            );
+          case Status.COMPLETED:
+            if (usertournamentProvider.apiResponseRegisTournaments.data ==
+                    null ||
+                usertournamentProvider
+                    .apiResponseRegisTournaments.data!.isEmpty) {
+              return const Center(
+                child: EmptyComponts(
+                  image: "assets/images/no-data.svg",
+                  showMessage: "No Tournaments",
+                  height: 150,
+                  width: 150,
+                  addText: "...",
+                ),
               );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Column(
-            children: [
-              const SizedBox(height: 100),
-              ErrorComponent(
-                errorMessage: snapshot.error.toString(),
+            }
+            var user = usertournamentProvider.apiResponseRegisTournaments.data;
+            return registredtournamentCardBuilder(user);
+          case Status.ERROR:
+            return Center(
+              child: ErrorComponent(
+                errorMessage: usertournamentProvider
+                    .apiResponseRegisTournaments.message
+                    .toString(),
               ),
-            ],
-          );
-        } else if (snapshot.data!.data!.allTournaments!.isEmpty) {
-          return Column(
-            children: const [
-              SizedBox(height: 100),
-              ErrorComponent(
-                errorMessage: "No Tournaments",
-              ),
-            ],
-          );
-        } else {
-          final user = snapshot.data?.data?.allTournaments!;
-          return tournamentCardBuilder(user);
+            );
+          default:
+            return const SizedBox();
         }
       },
     );
   }
 
-  ListView tournamentCardBuilder(List<AllTournament>? user) {
+  Widget hostedTournaments(BuildContext context, Size size) {
+    return Consumer<UserHostRegTournamentViewModel>(
+      builder: (context, usertournamentProvider, child) {
+        switch (usertournamentProvider.apiResponseHostedTournaments.status) {
+          case Status.LOADING:
+            return ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppMargin.large,
+              ),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return ShimerWidget.rectangular(
+                  borderRadius: AppRadius.borderRadiusM,
+                  verticalMargin: AppMargin.small,
+                  hight: size.height * 0.2,
+                );
+              },
+            );
+          case Status.COMPLETED:
+            if (usertournamentProvider.apiResponseHostedTournaments.data ==
+                    null ||
+                usertournamentProvider
+                    .apiResponseHostedTournaments.data!.isEmpty) {
+              return const Center(
+                child: EmptyComponts(
+                  image: "assets/images/no-data.svg",
+                  showMessage: "No Tournaments",
+                  height: 150,
+                  width: 150,
+                  addText: "...",
+                ),
+              );
+            }
+            var user = usertournamentProvider.apiResponseHostedTournaments.data;
+            return hostedtournamentCardBuilder(user);
+          case Status.ERROR:
+            return Center(
+              child: ErrorComponent(
+                errorMessage: usertournamentProvider
+                    .apiResponseHostedTournaments.message
+                    .toString(),
+              ),
+            );
+          default:
+            return const SizedBox();
+        }
+      },
+    );
+  }
+
+  ListView registredtournamentCardBuilder(List<RegisteredTournaments>? user) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: user!.length > 3 ? 3 : user.length,
+      itemCount: user!.length > 4 ? 4 : user.length,
       itemBuilder: (context, index) {
         final values = user.reversed.toList()[index];
-        return InkWell(
+        return GestureDetector(
           onTap: () async {
-            final provider =
-                Provider.of<DetailsTouramentViewModel>(context, listen: false);
+            var provider = context.read<DetailsTouramentViewModel>();
             provider.getSingleTournament(values.id);
             await Navigator.pushNamed(context, RoutesName.tournamentDetails);
           },
-          child: TournamentCard(
-            shortDescription: values.shortDescription ?? "No Description",
-            tornamentDate: values.startDate ?? "",
-            tornamentName: values.title ?? "No title",
-            tornamentPlace: values.location ?? "No location",
-            touranmentCoverImage: values.cover ?? AppProfilesCover.clubCover,
-          ),
+          child: index == 3
+              ?  Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Provider.of<BottomBarViewModel>(context, listen: false)
+                            .onTap(3, context);
+
+                        context.read<MyClubViewModel>().setCurrenIndex(2);
+                      },
+                      child: const Text(
+                        "View more",
+                        style:
+                            TextStyle(color: AppColors.primary, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                )
+              : TournamentCard(
+                  shortDescription: values.status,
+                  tornamentDate: values.startDate ?? "",
+                  tornamentName: values.title ?? "No title",
+                  tornamentPlace: values.location ?? "No location",
+                  touranmentCoverImage:
+                      values.cover ?? AppProfilesCover.clubCover,
+                ),
+        );
+      },
+    );
+  }
+
+  ListView hostedtournamentCardBuilder(List<Datum>? user) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: user!.length > 4 ? 4 : user.length,
+      itemBuilder: (context, index) {
+        final values = user.reversed.toList()[index];
+        return GestureDetector(
+          onTap: () async {
+            var provider = context.read<DetailsTouramentViewModel>();
+            provider.getSingleTournament(values.id);
+            await Navigator.pushNamed(context, RoutesName.tournamentDetails);
+          },
+          child: index == 3
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Provider.of<BottomBarViewModel>(context, listen: false)
+                            .onTap(3, context);
+
+                        context.read<MyClubViewModel>().setCurrenIndex(1);
+                      },
+                      child: const Text(
+                        "View more",
+                        style:
+                            TextStyle(color: AppColors.primary, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                )
+              : TournamentCard(
+                  shortDescription: values.shortDescription,
+                  tornamentDate: values.startDate ?? "",
+                  tornamentName: values.title ?? "No title",
+                  tornamentPlace: values.location ?? "No location",
+                  touranmentCoverImage:
+                      values.cover ?? AppProfilesCover.clubCover,
+                ),
         );
       },
     );

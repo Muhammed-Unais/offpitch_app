@@ -1,28 +1,37 @@
-
 import 'package:flutter/foundation.dart';
+import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/models/all_tournaments_model.dart';
 import 'package:offpitch_app/repository/home_repository.dart';
 
-class HomeAndExpViewModel extends ChangeNotifier {
+class HomeViewModel extends ChangeNotifier {
   final _myrepo = HomeRepository();
 
-  int? _count;
+  int _count = 0;
 
-  int? get count => _count;
+  int get count => _count;
 
-  Future<AllTournamentsModel>? userFuture;
+  ApiResponse<AllTournamentsModel>? apiResponse = ApiResponse.loading();
 
-  setValue() async {
-    _count = _count != 4
-        ? await userFuture?.then((value) {
-            return value.data?.allTournaments?.length;
-          })
-        : 4;
+  void setApiresponse(ApiResponse<AllTournamentsModel> apiResponses) {
+    apiResponse = apiResponses;
+    notifyListeners();
   }
 
-  Future<AllTournamentsModel> getAllTournaments() => _myrepo.allTournamentApi();
+  Future<void> getAllTournaments() async {
+    setApiresponse(ApiResponse.loading());
+    _myrepo.allTournamentApi().then((value) {
+      if (value.data!.allTournaments!.length > 4) {
+        _count = 4;
+      } else {
+        _count = value.data!.allTournaments!.length;
+      }
+      setApiresponse(ApiResponse.completed(value));
+    }).onError((error, stackTrace) {
+      setApiresponse(ApiResponse.error(error.toString()));
+    });
+  }
 
-  clearAllDataLogout() {
-    userFuture = null;
+  void clearAllDataLogout() {
+    apiResponse = null;
   }
 }

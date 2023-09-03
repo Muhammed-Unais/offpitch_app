@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
@@ -16,27 +15,35 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   // ApiResponse<AllTournamentsModel> upcomingTournments = ApiResponse.loading();
 
-  setSearchTabbarIndex(int value) {
+  void setSearchTabbarIndex(int value) {
     searchTabbarCount = value;
     notifyListeners();
   }
 
-  setliveTournaments(ApiResponse<List<AllTournament>> response) {
+  void setliveTournaments(ApiResponse<List<AllTournament>> response, bool isNotify) {
     liveTournaments = response;
-    notifyListeners();
+
+    if (isNotify) {
+      notifyListeners();
+    }
   }
 
-  setallTournaments(ApiResponse<List<AllTournament>> response) {
+  void setallTournaments(ApiResponse<List<AllTournament>> response, bool isNotify) {
     allTournaments = response;
-    notifyListeners();
+
+    if (isNotify) {
+      notifyListeners();
+    }
   }
 
   Future<void> getExpAndSrchTournmts(
-      {required String query, required String sortingQuery}) async {
+      {required String query,
+      required String sortingQuery,
+      required bool isNotify}) async {
     // // set all tournaments for home=========
 
-    setliveTournaments(ApiResponse.loading());
-    setallTournaments(ApiResponse.loading());
+    setliveTournaments(ApiResponse.loading(), isNotify);
+    setallTournaments(ApiResponse.loading(), isNotify);
 
     _myrepo.exploreAndSearchTournaments(query: query).then((value) {
       DateFormat inputFormat = DateFormat('dd MMM yyyy');
@@ -73,23 +80,24 @@ class ExploreViewViewModel extends ChangeNotifier {
       }
 
       // setLive tournaments
-      setliveTournaments(ApiResponse.completed(liveTournament));
+      setliveTournaments(ApiResponse.completed(liveTournament), isNotify);
 
       // setAll tournament
-      setallTournaments(ApiResponse.completed(allTournament));
+      setallTournaments(ApiResponse.completed(allTournament), isNotify);
     }).onError((error, stackTrace) {
       // set all tournaments for home================
-      setliveTournaments(ApiResponse.error(error.toString()));
-      setallTournaments(ApiResponse.error(error.toString()));
+      setliveTournaments(ApiResponse.error(error.toString()), isNotify);
+      setallTournaments(ApiResponse.error(error.toString()), isNotify);
     });
   }
 
   clearAllDataLogout() {
-    liveTournaments.data =null;
-    allTournaments.data =null;
+    liveTournaments.data = null;
+    allTournaments.data = null;
   }
 
   ExploreViewViewModel() {
-    getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
+    getExpAndSrchTournmts(
+        query: 'filter=all', sortingQuery: "all", isNotify: true);
   }
 }

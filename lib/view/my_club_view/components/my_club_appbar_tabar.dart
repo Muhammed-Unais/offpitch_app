@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class MyclubAppbarTabbar extends StatelessWidget {
-  const MyclubAppbarTabbar({super.key});
+  const MyclubAppbarTabbar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,7 @@ class MyclubAppbarTabbar extends StatelessWidget {
         "Club Details",
       ),
       bottom: TabBar(
-        onTap: (value) {
-        },
+        onTap: (value) {},
         labelStyle: Theme.of(context).textTheme.titleMedium,
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: AppColors.primary,

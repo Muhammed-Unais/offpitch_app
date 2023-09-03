@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
@@ -11,13 +10,13 @@ class TournamentCard extends StatelessWidget {
       required this.tornamentName,
       required this.tornamentPlace,
       required this.tornamentDate,
-      required this.shortDescription});
+       this.shortDescription});
 
   final String touranmentCoverImage;
   final String tornamentName;
   final String tornamentPlace;
   final String tornamentDate;
-  final String shortDescription;
+  final String? shortDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -25,71 +24,66 @@ class TournamentCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: size.height / 4.95,
-          width: size.width,
           margin: const EdgeInsets.only(
             left: AppMargin.large,
             right: AppMargin.large,
             top: AppMargin.small,
-            bottom: AppMargin.small
+            bottom: AppMargin.small,
           ),
           decoration: BoxDecoration(
-            border: Border.all(width: .5, color: AppColors.grey),
             color: AppColors.white,
             borderRadius: BorderRadius.circular(
               AppRadius.borderRadiusM,
             ),
           ),
-          child: Column(
-            children: [
-              Container(
-                height: size.height / 10,
-                width: size.width,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(
-                      AppRadius.borderRadiusM,
+          child: Card(
+            elevation: 5,
+            child: Column(
+              children: [
+                Container(
+                  height: size.height * 0.15,
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(
+                        AppRadius.borderRadiusM,
+                      ),
+                      topRight: Radius.circular(
+                        AppRadius.borderRadiusM,
+                      ),
                     ),
-                    topRight: Radius.circular(
-                      AppRadius.borderRadiusM,
-                    ),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      touranmentCoverImage,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(AppPadding.small),
-                height: size.height / 10,
-                width: size.width,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                      AppRadius.borderRadiusM,
-                    ),
-                    bottomRight: Radius.circular(
-                      AppRadius.borderRadiusM,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        touranmentCoverImage,
+                      ),
                     ),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Text(
+                Container(
+                  padding: const EdgeInsets.all(AppPadding.small),
+                  height: size.height * 0.1,
+                  width: size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(
+                        AppRadius.borderRadiusM,
+                      ),
+                      bottomRight: Radius.circular(
+                        AppRadius.borderRadiusM,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         tornamentName,
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
-                    ),
-                    const Spacer(),
-                    Flexible(
-                      flex: 3,
-                      child: Row(
+                      Row(
                         children: [
                           const Icon(
                             Icons.location_on_outlined,
@@ -107,25 +101,21 @@ class TournamentCard extends StatelessWidget {
                             size: 16,
                           ),
                           Text(
-                            tornamentDate,
+                            tornamentDate.toString(),
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],
                       ),
-                    ),
-                    // const Spacer(),
-                    Flexible(
-                      flex: 5,
-                      child: Text(
-                        shortDescription,
+                      Text(
+                        shortDescription ??"",
                         style: Theme.of(context).textTheme.bodyMedium,
                         maxLines: 2,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -137,14 +127,9 @@ class TournamentCard extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(
-                    0.5,
-                  ),
+                  color: Colors.grey.withOpacity(0.5),
                   blurRadius: 5,
-                  offset: const Offset(
-                    0,
-                    0,
-                  ),
+                  offset: const Offset(0, 0),
                 ),
               ],
               color: AppColors.white,
@@ -157,7 +142,7 @@ class TournamentCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                tournamentStand(tornamentDate),
+                (tornamentDate),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
@@ -168,21 +153,18 @@ class TournamentCard extends StatelessWidget {
     );
   }
 
-  String tournamentStand(startDate) {
-    DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day );
-    DateTime tournamentStartingDate =
-        DateFormat("dd MMM yyyy").parse(startDate);
-    int difference = date.compareTo(tournamentStartingDate);
-    if (difference < 0) {
-      // Tournament is before starting date
-      return "Upcoming";
-    } else if (difference == 0) {
-      // Tournament is currently live
-      return "Live";
-    } else {
-      // Tournament is after starting date
-      return "Results";
-    }
-  }
+  // String tournamentStand(startDate) {
+  //   DateTime now = DateTime.now();
+  //   DateTime date = DateTime(now.year, now.month, now.day);
+  //   DateTime tournamentStartingDate =
+  //       DateFormat("dd MMM yyyy").parse(startDate);
+  //   int difference = date.compareTo(tournamentStartingDate);
+  //   if (difference < 0) {
+  //     return "Upcoming";
+  //   } else if (difference == 0) {
+  //     return "Live";
+  //   } else {
+  //     return "Results";
+  //   }
+  // }
 }

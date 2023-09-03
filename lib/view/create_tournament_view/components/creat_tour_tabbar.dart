@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -29,15 +27,17 @@ class _CreateTournamentViewTabbarState
           AppRadius.borderRadiusL,
         ),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      margin: const EdgeInsets.only(
+        left: AppMargin.large,
+        right: AppMargin.large,
+        top: AppMargin.medium,
+      ),
       child: TabBar(
         onTap: (value) {
           widget.tabController.index = 0;
           if (value == 2) {
-            widget.tabController.index = 0; 
+            widget.tabController.index = 0;
           }
-          log("tab${widget.tabController.index.toString()}");
-          log(value.toString());
         },
         controller: widget.tabController,
         labelStyle: Theme.of(context).textTheme.titleMedium,

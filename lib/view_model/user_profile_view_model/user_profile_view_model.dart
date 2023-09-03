@@ -28,6 +28,8 @@ class UserProfileViewModel with ChangeNotifier {
     setUserProfile(ApiResponse.loading());
     _myRepo.getUserProfile().then(
       (value) {
+        log(value.data!.id.toString());
+        
         setUserProfile(ApiResponse.completed(value));
       },
     ).onError(

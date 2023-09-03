@@ -17,12 +17,12 @@ class HomeUpcomingtitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "All Tournaments",
+            "Registred Tournaments",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           InkWell(
             onTap: () {
-              Provider.of<BottomBarViewModel>(context,listen: false).onTap(1, context);
+              context.read<BottomBarViewModel>().onTap(1, context);
             },
             child: Text(
               "See All",

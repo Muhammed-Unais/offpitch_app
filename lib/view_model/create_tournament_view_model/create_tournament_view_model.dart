@@ -250,7 +250,9 @@ class CreateTournamentViewModel extends ChangeNotifier {
       Utils.showCustomFlushbar(context, values['message']);
       Provider.of<ExploreViewViewModel>(context, listen: false)
           .getExpAndSrchTournmts(
-              query: 'filter=all&limit=45', sortingQuery: "all");
+              query: 'filter=all&limit=45',
+              sortingQuery: "all",
+              isNotify: true);
       Provider.of<BottomBarViewModel>(context, listen: false).onTap(1, context);
     }).onError((error, stackTrace) {
       setLoadingCreation(false);

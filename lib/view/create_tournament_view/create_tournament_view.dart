@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_one.dart';
@@ -25,33 +24,33 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
   ScrollController controller = ScrollController();
-  late String? userClubId;
-  late String? userClubStatus;
 
   @override
   void initState() {
     tabController = TabController(initialIndex: 0, length: 3, vsync: this);
-    controller.addListener(() {
-      final provider =
-          Provider.of<CreateTournamentViewModel>(context, listen: false);
-      if (controller.position.userScrollDirection == ScrollDirection.reverse) {
-        if (provider.isVisible != false) {
-          provider.setScrollFabVisibility(false);
+    controller.addListener(
+      () {
+        final provider =
+            Provider.of<CreateTournamentViewModel>(context, listen: false);
+        if (controller.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+          if (provider.isVisible != false) {
+            provider.setScrollFabVisibility(false);
+          }
+        } else {
+          if (provider.isVisible != true) {
+            provider.setScrollFabVisibility(true);
+          }
         }
-      } else {
-        if (provider.isVisible != true) {
-          provider.setScrollFabVisibility(true);
-        }
-      }
-    });
+      },
+    );
     super.initState();
 
     setCheckhasClubId();
   }
 
   void setCheckhasClubId() {
-    userClubId = context.read<UserViewModel>().userClubId;
-    userClubStatus = context.read<UserViewModel>().userClubStatus;
+    context.read<UserViewModel>().getUserClubId();
   }
 
   @override
@@ -63,89 +62,79 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CreateTournamentViewModel>(
-      builder: (context, value, _) {
+    return Consumer2<CreateTournamentViewModel, UserViewModel>(
+      builder: (context, value, userViewModel, _) {
         return DefaultTabController(
           length: 3,
           child: Scaffold(
             appBar: AppBar(
               shadowColor: AppColors.white,
-              elevation: 5,
+              elevation: 2,
               title: Text(
-                "Host Tournament",
+                "Host your tournament",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(
-                  60,
-                ),
-                child: Column(
-                  children: [
-                    CreateTournamentViewTabbar(
-                      tabController: tabController,
-                      value: value,
-                    ),
-                    const SizedBox(
-                      height: AppMargin.extraSmall,
-                    )
-                  ],
-                ),
-              ),
             ),
-            body: userClubId != null &&
-                    userClubId!.isNotEmpty &&
-                    userClubStatus != "awaiting"
-                ? TabBarView(
-                    controller: tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      // Tab one=====
-                      CreateTournamentTabOne(
-                        controller: controller,
-                        tabController: tabController,
-                        formKey: formKey,
-                        value: value,
-                      ),
-                      // Tab two====
-                      CreatTournamentTabTwo(
-                        value: value,
-                        formKey1: formKey1,
-                        tabController: tabController,
-                      ),
-                      // Tab three====
-                      CreatTournamentTabThree(
-                        value: value,
-                      )
-                    ],
-                  )
-                : SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            body: Column(
+              children: [
+                CreateTournamentViewTabbar(
+                  tabController: tabController,
+                  value: value,
+                ),
+                if (userViewModel.userClubId != null &&
+                    userViewModel.userClubId!.isNotEmpty &&
+                    userViewModel.userClubStatus != "awaiting")
+                  Expanded(
+                    child: TabBarView(
+                      physics:const NeverScrollableScrollPhysics(),
+                      controller: tabController,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            userClubStatus=="awaiting"?null:
-                            Navigator.pushNamed(
-                                context, RoutesName.clubCreation);
-                          },
-                          child: EmptyComponts(
-                            image: userClubStatus == "awaiting"
-                                ? "assets/images/Waiting-pana.svg"
-                                : "assets/images/no-club.svg",
-                            showMessage: userClubStatus == "awaiting"
-                                ? "Waiting for app approval"
-                                : "You didn't create a club",
-                            height: 200,
-                            width: 200,
-                            addText: userClubStatus == "awaiting"
-                                ? "...."
-                                : "Create new",
-                          ),
+                        CreateTournamentTabOne(
+                          controller: controller,
+                          tabController: tabController,
+                          formKey: formKey,
+                          value: value,
                         ),
+                        CreatTournamentTabTwo(
+                          value: value,
+                          formKey1: formKey1,
+                          tabController: tabController,
+                        ),
+                        CreatTournamentTabThree(
+                          value: value,
+                        )
                       ],
                     ),
+                  )
+                else
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          userViewModel.userClubStatus == "awaiting"
+                              ? null
+                              : Navigator.pushNamed(
+                                  context, RoutesName.clubCreation);
+                        },
+                        child: EmptyComponts(
+                          image: userViewModel.userClubStatus == "awaiting"
+                              ? "assets/images/Waiting-pana.svg"
+                              : "assets/images/no-club.svg",
+                          showMessage:
+                              userViewModel.userClubStatus == "awaiting"
+                                  ? "Waiting for app approval"
+                                  : "You didn't create a club",
+                          height: 200,
+                          width: 200,
+                          addText: userViewModel.userClubStatus == "awaiting"
+                              ? "...."
+                              : "Create new",
+                        ),
+                      ),
+                    ),
                   ),
+              ],
+            ),
           ),
         );
       },

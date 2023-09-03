@@ -8,44 +8,49 @@ import 'package:provider/provider.dart';
 
 class MyClubViewModel extends ChangeNotifier {
   final _myRepo = ClubRepository();
+
   int count = 0;
 
-  // for registration view ============
+  int currentIndex = 0;
+
   List<bool> selectedPlayers = [];
 
-// get All club=====================
   ApiResponse<ClubTournamentModel> apiResponse = ApiResponse.loading();
 
-  setMyClubdetails(ApiResponse<ClubTournamentModel> response) {
+  ApiResponse<PlayersModel> getPlayerapiResponse = ApiResponse.loading();
+
+  void setCurrenIndex(int index) {
+    currentIndex = index;
+    notifyListeners();
+  }
+
+  void setMyClubdetails(ApiResponse<ClubTournamentModel> response) {
     apiResponse = response;
     notifyListeners();
   }
 
-  Future getMyClub(BuildContext context) async {
+  Future<void> getMyClub(BuildContext context) async {
     setMyClubdetails(ApiResponse.loading());
     await _myRepo.getAllClubWithAccessTokem().then((value) async {
       setMyClubdetails(ApiResponse.completed(value));
-      context
+      await context
           .read<UserViewModel>()
-          .saveUserClubIdWhenClubcreate(value.data?.id,value.data?.status);
+          .saveUserClubIdWhenClubcreate(value.data?.id, value.data?.status);
     }).onError((error, stackTrace) {
       setMyClubdetails(ApiResponse.error(error.toString()));
     });
   }
 
-// get all players====================
-  ApiResponse<PlayersModel> getPlayerapiResponse = ApiResponse.loading();
-
-  setAllPlayerslist(ApiResponse<PlayersModel> response) {
+  void setAllPlayerslist(ApiResponse<PlayersModel> response) {
     getPlayerapiResponse = response;
     notifyListeners();
   }
 
-  setValueChecBoxIndex(PlayersModel players) {
+  void setValueChecBoxIndex(PlayersModel players) {
     selectedPlayers = List.filled(players.data!.length, false);
   }
 
-  Future getAllPlayers() async {
+  Future<void> getAllPlayers() async {
     setAllPlayerslist(ApiResponse.loading());
     await _myRepo.getAllPlayerWithAccessToken().then(
       (value) {
@@ -59,7 +64,7 @@ class MyClubViewModel extends ChangeNotifier {
     );
   }
 
-  clearAllDateLogout() {
+  void clearAllDateLogout() {
     apiResponse.data = null;
     getPlayerapiResponse.data = null;
   }

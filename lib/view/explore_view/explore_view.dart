@@ -21,12 +21,13 @@ class _ExploreViewState extends State<ExploreView>
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
-      context
-          .read<ExploreViewViewModel>()
-          .setSearchTabbarIndex(tabController.index);
-      context
-          .read<ExploreViewViewModel>()
-          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
+      context.read<ExploreViewViewModel>().setSearchTabbarIndex(
+            tabController.index,
+          );
+    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<ExploreViewViewModel>().getExpAndSrchTournmts(
+          query: 'filter=all', sortingQuery: "all", isNotify: true);
     });
     super.initState();
   }
@@ -49,28 +50,35 @@ class _ExploreViewState extends State<ExploreView>
       },
       child: Scaffold(
         appBar: AppBar(
-          bottomOpacity: 1,
-          title: const Text('Tournaments'),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(
-              80,
-            ),
-            child: ExploreSearch(controller: tabController),
-          ),
+          title: const Text("Tournaments"),
+          backgroundColor: Colors.white,
         ),
-        body: Column(
-          children: [
-            ExploreTabBar(tabController: tabController),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: const [
-                  Tab1TodayMatches(),
-                  Tab2UpcomingMatches(),
-                ],
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: ExploreSearch(controller: tabController),
+              )
+            ];
+          },
+          body: Column(
+            children: [
+              ExploreTabBar(
+                tabController: tabController,
+                firstTab: "Today Matches",
+                secondTab: "Tournaments",
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  controller: tabController,
+                  children: const [
+                    Tab1TodayMatches(),
+                    Tab2UpcomingMatches(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
