@@ -16,8 +16,6 @@ class MyClubView extends StatefulWidget {
 }
 
 class _MyClubViewState extends State<MyClubView> {
-  UserViewModel userViewModel = UserViewModel();
-
   String? userClubId;
 
   @override
@@ -32,54 +30,48 @@ class _MyClubViewState extends State<MyClubView> {
     super.initState();
   }
 
-  void getUserRegisteredTournaments() async {
+  Future<void> getUserRegisteredTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
     if (userClubId != null && userClubId!.isNotEmpty) {
-      userHostRegProvider.apiResponseRegisTournaments.data ??
-          await userHostRegProvider.getAllUserRegisteredTournaments();
+      await userHostRegProvider.getAllUserRegisteredTournaments();
     }
   }
 
-  void getUserHostedTournaments() async {
+  Future<void> getUserHostedTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
-
     if (userClubId != null && userClubId!.isNotEmpty) {
-      userHostRegProvider.apiResponseHostedTournaments.data ??
-          await userHostRegProvider.getAllUserHostedTournaments();
+      await userHostRegProvider.getAllUserHostedTournaments();
     }
   }
 
-  void getClubAndPlayers() async {
+  Future<void> getClubAndPlayers() async {
     var myClubViewModel = context.read<MyClubViewModel>();
     if (userClubId != null && userClubId!.isNotEmpty) {
-       myClubViewModel.getMyClub(context);
-      myClubViewModel.getPlayerapiResponse.data ??
-          myClubViewModel.getAllPlayers();
+      myClubViewModel.getMyClub(context);
+      myClubViewModel.getAllPlayers();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyClubViewModel>(
-      builder: (context,myClubViewModel,_) {
-        return DefaultTabController(
-          initialIndex: myClubViewModel.currentIndex,
-          length: 3,
-          child: Scaffold(
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(120.00),
-              child: MyclubAppbarTabbar(),
-            ),
-            body: TabBarView(
-              children: [
-                MyClubTabOne(userClubId: userClubId),
-                MyClubTabTwo(userClubId: userClubId),
-                MyClubTabThree(userClubId: userClubId),
-              ],
-            ),
+    return Consumer<MyClubViewModel>(builder: (context, myClubViewModel, _) {
+      return DefaultTabController(
+        initialIndex: myClubViewModel.currentIndex,
+        length: 3,
+        child: Scaffold(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(100.00),
+            child: MyclubAppbarTabbar(),
           ),
-        );
-      }
-    );
+          body: TabBarView(
+            children: [
+              MyClubTabOne(userClubId: userClubId),
+              MyClubTabTwo(userClubId: userClubId),
+              MyClubTabThree(userClubId: userClubId),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

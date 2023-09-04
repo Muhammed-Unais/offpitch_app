@@ -60,9 +60,6 @@ class MyApp extends StatelessWidget {
           create: (context) => ScheduleTournametViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => MyClubPlayerAddViewModel(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => HomeViewModel(),
         ),
         ChangeNotifierProvider(

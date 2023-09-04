@@ -13,17 +13,17 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
   ApiResponse<List<RegisteredTournaments>> apiResponseRegisTournaments =
       ApiResponse.loading();
 
-  setAllUserTournaments(ApiResponse<List<Datum>> data) {
+  void setAllUserTournaments(ApiResponse<List<Datum>> data) {
     apiResponseHostedTournaments = data;
     notifyListeners();
   }
 
-  setAllUserRegTournaments(ApiResponse<List<RegisteredTournaments>> data) {
+  void setAllUserRegTournaments(ApiResponse<List<RegisteredTournaments>> data) {
     apiResponseRegisTournaments = data;
     notifyListeners();
   }
 
-  getAllUserHostedTournaments() async {
+  Future<void> getAllUserHostedTournaments() async {
     setAllUserTournaments(ApiResponse.loading());
 
     await _myRepo.getAllUserHostTorunament().then((value) {
@@ -42,7 +42,7 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
 
   final _myRegsteredRepo = UserRegisteredTournamentsRepository();
 
-  getAllUserRegisteredTournaments() async {
+  Future<void> getAllUserRegisteredTournaments() async {
     setAllUserRegTournaments(ApiResponse.loading());
     _myRegsteredRepo.getUserRegistedTournaments().then((value) {
       setAllUserRegTournaments(ApiResponse.completed(value.data));
@@ -51,7 +51,7 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
     });
   }
 
-  clearAllDataLogout() {
+  void clearAllDataLogout() {
     apiResponseHostedTournaments.data = null;
     apiResponseRegisTournaments.data = null;
   }

@@ -15,7 +15,7 @@ import 'package:cloudinary/cloudinary.dart';
 class CreateNewClubViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
 
-  MyClubViewModel myClubViewModel = MyClubViewModel();
+  // MyClubViewModel myClubViewModel = MyClubViewModel();
 
   // imageUrl
   String? _imageUrl;
@@ -182,7 +182,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> postClubCreate(context) async {
+  Future<bool> postClubCreate(BuildContext context) async {
     setUpdateisLoding(true);
     bool isSuccuess = false;
 
@@ -192,12 +192,13 @@ class CreateNewClubViewModel extends ChangeNotifier {
       await _myrepo.postClubapi(createClubModelData).then((value) async {
         isSuccuess = true;
 
-        await myClubViewModel.getMyClub(context);
-        
+        succesMessage = value;
+
         setUpdateisLoding(false);
 
-        setNavigationAndDisplayMessage(context, value);
+        context.read<MyClubViewModel>().getMyClub(context);
 
+        setNavigationAndDisplayMessage(context, value);
       }).onError((error, stackTrace) {
         Utils.showCustomFlushbar(context, error.toString());
         setUpdateisLoding(false);
@@ -241,8 +242,6 @@ class CreateNewClubViewModel extends ChangeNotifier {
     if (isSuccess) {
       Utils.showCustomFlushbar(context, succesMessage?['message'],
           isError: false);
-      await Future.delayed(const Duration(seconds: 3));
-      Navigator.pop(context);
     }
   }
 

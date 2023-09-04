@@ -4,7 +4,10 @@ import 'package:offpitch_app/res/constats.dart';
 
 class TabbarViewOneEmailPhone extends StatelessWidget {
   const TabbarViewOneEmailPhone(
-      {super.key, required this.email, required this.phone, required this.hight});
+      {super.key,
+      required this.email,
+      required this.phone,
+      required this.hight});
 
   final String email;
   final int phone;
@@ -15,49 +18,45 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
     return Container(
       height: hight,
       width: double.infinity,
-      margin:const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.email,
-                      color: AppColors.black,
-                      size: 22,
-                    ),
-                    const SizedBox(
-                      width: AppMargin.small,
-                    ),
-                    Text(
-                      email,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: AppPadding.small,
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      size: 22,
-                      Icons.call,
-                      color: AppColors.black,
-                    ),
-                    const SizedBox(
-                      width: AppMargin.small,
-                    ),
-                    Text(
-                      phone.toString(),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              const Icon(
+                Icons.email,
+                color: AppColors.black,
+                size: 22,
+              ),
+              const SizedBox(
+                width: AppMargin.small,
+              ),
+              Text(
+                email,
+                style: Theme.of(context).textTheme.bodyLarge,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: AppPadding.small,
+          ),
+          Row(
+            children: [
+              const Icon(
+                size: 22,
+                Icons.call,
+                color: AppColors.black,
+              ),
+              const SizedBox(
+                width: AppMargin.small,
+              ),
+              Text(
+                phone.toString(),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
           ),
         ],
       ),

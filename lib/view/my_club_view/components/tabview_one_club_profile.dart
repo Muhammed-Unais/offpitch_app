@@ -20,34 +20,31 @@ class TabViewOneClubProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final clubcreatNewViewModel =
-        Provider.of<CreateNewClubViewModel>(context, listen: false);
     return Container(
-      height: size.height * 0.1,
       margin: const EdgeInsetsDirectional.symmetric(
-        vertical: AppMargin.medium,
         horizontal: AppMargin.large,
       ),
       child: Row(
         children: [
-          Expanded(
+          Flexible(
             flex: 2,
             child: CircleImages(
               image: image,
               radius: 60,
             ),
           ),
-          const SizedBox(width: AppMargin.medium,),
+          const SizedBox(
+            width: AppMargin.medium,
+          ),
           Expanded(
-            flex: 6,
+            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   clubName,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   "Players:$playerCount",
@@ -56,13 +53,14 @@ class TabViewOneClubProfile extends StatelessWidget {
               ],
             ),
           ),
-          
           Expanded(
             flex: 1,
             child: InkWell(
               onTap: () {
-                clubcreatNewViewModel.setOptions(false);
-                clubcreatNewViewModel.editValueAssaignFunc(context);
+                context.read<CreateNewClubViewModel>().setOptions(false);
+                context
+                    .read<CreateNewClubViewModel>()
+                    .editValueAssaignFunc(context);
                 Navigator.pushNamed(context, RoutesName.clubCreation);
               },
               child: const Icon(

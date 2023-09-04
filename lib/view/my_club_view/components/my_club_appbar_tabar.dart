@@ -9,9 +9,11 @@ class MyclubAppbarTabbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      shape: const Border(
+        bottom: BorderSide(color: Colors.grey, width: 0.5),
+      ),
       backgroundColor: AppColors.white,
       shadowColor: AppColors.white,
-      elevation: 5,
       title: const Text(
         "Club Details",
       ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -57,56 +56,50 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
                       ),
                     );
                   }
-                  return SingleChildScrollView(
-                    child: SizedBox(
-                      // height: size.height,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TabViewOneClubProfile(
-                            clubName: data?.data?.name ?? "No title",
-                            image: data?.data?.profile ??
-                                AppProfilesCover.clubCover,
-                            playerCount: data?.data?.players.length ?? 0,
-                          ),
-                          TabViewOneClubDescription(
-                            hight: size.height * 0.2,
-                            description:
-                                data?.data?.description ?? "No description",
-                          ),
-                          const SizedBox(
-                            height: AppPadding.small,
-                          ),
-                          TabbarViewOneEmailPhone(
-                            hight: size.height * 0.08,
-                            email: data?.data?.email ?? "No email",
-                            phone: data?.data?.phone ?? 0,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: AppPadding.large),
-                            child: Divider(
-                              thickness: 0.5,
-                              color: AppColors.grey,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: AppMargin.large,
-                                vertical: AppMargin.medium),
-                            child: Text(
-                              "Players",
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                          // Add players and show player details======
-                          MyClubPlayers(hight: size.height * 0.23),
-                          const SizedBox(
-                            height: AppPadding.medium,
-                          ),
-                        ],
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TabViewOneClubProfile(
+                        clubName: data?.data?.name ?? "No title",
+                        image:
+                            data?.data?.profile ?? AppProfilesCover.clubCover,
+                        playerCount: data?.data?.players.length ?? 0,
                       ),
-                    ),
+                      Expanded(
+                        child: TabViewOneClubDescription(
+                          description:
+                              data?.data?.description ?? "No description",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: AppPadding.small,
+                      ),
+                      TabbarViewOneEmailPhone(
+                        hight: size.height * 0.08,
+                        email: data?.data?.email ?? "No email",
+                        phone: data?.data?.phone ?? 0,
+                      ),
+                      const Divider(
+                        thickness: 0.5,
+                        color: AppColors.grey,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppMargin.large,
+                          vertical: AppMargin.medium,
+                        ),
+                        child: Text(
+                          "Club players",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      const Expanded(
+                        child: MyClubPlayers(),
+                      ),
+                      const SizedBox(
+                        height: AppPadding.small,
+                      ),
+                    ],
                   );
                 case Status.ERROR:
                   return ErrorComponent(

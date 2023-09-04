@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/models/players_model.dart';
@@ -11,58 +10,53 @@ import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_mod
 import 'package:provider/provider.dart';
 
 class MyClubPlayers extends StatelessWidget {
-  const MyClubPlayers({super.key, required this.hight});
-
-  final double hight;
+  const MyClubPlayers({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<bool> isAddPlayer = [true];
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
-      height: hight,
+      margin: const EdgeInsets.only(left: AppMargin.large),
       child: Consumer<MyClubViewModel>(
         builder: (context, value, _) {
           switch (value.getPlayerapiResponse.status) {
             case Status.LOADING:
               return const Center(
-                child:  CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   strokeWidth: 2,
                   color: AppColors.primary,
                 ),
               );
             case Status.COMPLETED:
               final data = value.getPlayerapiResponse.data!.data!;
-              log("Count:${value.count.toString()}");
-              if (value.count == 0) {
-                data.insert(0, Datum());
-                value.count++;
-              }
-              // log(data.length.toString());
+
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: data.length,
+                itemCount: data.length + 1,
                 itemBuilder: (context, index) {
-                  if (isAddPlayer.length < data.length) {
-                    isAddPlayer.add(false);
+                  Datum? player;
+                  if (index != 0) {
+                    player = data[index - 1];
                   }
-                  log(isAddPlayer.length.toString());
-                  return PlayersCard(
-                    dob: data[index].dateOfBirth,
-                    buttonAction: () {
-                      AddPlayerBottomSheet.showBottomAddPlayer(
-                        context,
-                      );
-                    },
-                    image: data[index].profile,
-                    isAddplayer: isAddPlayer[index],
-                    playerName: data[index].name,
-                  );
+                  return index == 0
+                      ? AddPlayerCard(
+                          buttonAction: () {
+                            AddPlayerBottomSheet.showBottomAddPlayer(context);
+                          },
+                        )
+                      : PlayersCard(
+                          dob: player?.dateOfBirth,
+                          image: player?.profile,
+                          playerName: player?.name,
+                        );
                 },
               );
             case Status.ERROR:
-              return ErrorComponent(
-                errorMessage: value.getPlayerapiResponse.message!,
+              return Center(
+                child: ErrorComponent(
+                  errorMessage: value.getPlayerapiResponse.message!,
+                ),
               );
             default:
               return const SizedBox();

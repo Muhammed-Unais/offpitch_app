@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,22 +7,21 @@ import 'package:intl/intl.dart';
 import 'package:offpitch_app/models/add_players_model.dart';
 import 'package:offpitch_app/repository/add_players_repository.dart';
 import 'package:offpitch_app/utils/utils.dart';
+import 'package:provider/provider.dart';
+import '../../res/styles/app_theme.dart';
+import 'my_club_over_view_model.dart';
 
 class MyClubPlayerAddViewModel with ChangeNotifier {
-  // posted To backend======
   String? _imageUrl;
+
   String? get imageUrl => _imageUrl;
 
-  // this imageBorder for ui==========
   BoxBorder? border;
 
-  // posted To backend======
   String? docUrl;
 
-  // this for ui==========
   String? _docName;
 
-  // this PDFBorder for ui==========
   BoxBorder? pdfborder;
 
   ImagePicker imagePicker = ImagePicker();
@@ -31,9 +29,8 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
   String? get docName => _docName;
 
   bool _plyerAddSaveAndContinue = false;
-  bool get plyerAddSaveAndContinue => _plyerAddSaveAndContinue;
 
-  // Add Player textEditing controller and focuesNodes============================
+  bool get plyerAddSaveAndContinue => _plyerAddSaveAndContinue;
 
   TextEditingController controllerName = TextEditingController();
 
@@ -45,6 +42,23 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
 
   showDatePickerforDate(context) async {
     final pickedDate = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primary,
+              onPrimary: AppColors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.black,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
       initialDate: DateTime(2000, 01, 01),
       firstDate: DateTime(1983),
@@ -56,7 +70,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
     }
   }
 
-  final cloudinary = Cloudinary.signedConfig(
+  var cloudinary = Cloudinary.signedConfig(
     apiKey: "946723352357176",
     apiSecret: "HUEBHwIULpeCa-5MsrZ0z7xrCsU",
     cloudName: "dvihywo6p",
@@ -82,13 +96,11 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-// Taken image from gallery===========================
   getProfileFromGallery() async {
     final XFile? img = await imagePicker.pickImage(
       source: ImageSource.gallery,
     );
 
-    // Xfile coverted to File=================
     File? porfileImage;
     if (img != null) {
       porfileImage = File(img.path);
@@ -98,15 +110,11 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
         file: porfileImage.path,
         fileBytes: porfileImage.readAsBytesSync(),
         resourceType: CloudinaryResourceType.image,
-        progressCallback: (count, total) {
-          log('$count/$total');
-        },
+        progressCallback: (count, total) {},
       );
       if (response.isSuccessful) {
-        log("success");
         _imageUrl = response.secureUrl;
         notifyListeners();
-        log(imageUrl.toString());
       }
     } else {
       setBorderError(
@@ -118,12 +126,9 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
     }
   }
 
-  // doc picker from user files picker =====================
   getGovtRegfiles() async {
     final FilePickerResult? doc = await FilePicker.platform
         .pickFiles(allowedExtensions: ['pdf'], type: FileType.custom);
-
-    // PlatformFile coverted to File=================
     File? userAgeProofDoc;
     if (doc != null) {
       PlatformFile file = doc.files.first;
@@ -135,9 +140,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
         file: userAgeProofDoc.path,
         fileBytes: userAgeProofDoc.readAsBytesSync(),
         resourceType: CloudinaryResourceType.auto,
-        progressCallback: (count, total) {
-          log('$count/$total');
-        },
+        progressCallback: (count, total) {},
       );
       if (response.isSuccessful) {
         docUrl = response.secureUrl;
@@ -152,17 +155,8 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
     }
   }
 
-  clearAllData() {
-    pdfborder = null;
-    _imageUrl = null;
-    _docName = null;
-    controllerName.clear();
-    controllerDob.clear();
-  }
-
-  // Plyers Adding Api==========================
   final _myaddPlayerRepo = AddPlayerRepository();
-  postPlayers(context) async {
+  Future<void> postPlayers(BuildContext context) async {
     if (_imageUrl != null && _docName != null) {
       final modelData = AddPlayersModel(
         profile: imageUrl,
@@ -170,29 +164,27 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
         dateOfBirth: controllerDob.text,
         name: controllerName.text,
       );
+
       setSaveButtonLoading(true);
-      // Post Players================================
+
       _myaddPlayerRepo.postPlayers(modelData).then((value) async {
         setSaveButtonLoading(false);
-        clearAllData();
-
-        Map<String, dynamic> sucssesMessage = value;
+        context.read<MyClubViewModel>().getAllPlayers();
         Navigator.pop(context);
-        Utils.showCustomFlushbar(context, sucssesMessage['message'],
-            isError: false);
+        Utils.showCustomFlushbar(context, "New Player added", isError: false);
       }).onError((error, stackTrace) {
         Utils.showCustomFlushbar(context, error.toString());
         setSaveButtonLoading(false);
-        log(error.toString());
       });
     }
   }
 
-  clearAllDataLogout() {
-    pdfborder = null;
-    _docName = null;
-    docUrl = null;
-    border = null;
-    _imageUrl = null;
+  @override
+  void dispose() {
+    focusNodeDob.dispose();
+    focusNodeName.dispose();
+    controllerDob.dispose();
+    controllerName.dispose();
+    super.dispose();
   }
 }
