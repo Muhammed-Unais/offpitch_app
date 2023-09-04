@@ -31,7 +31,7 @@ class CreateTournamentfirstFields extends StatelessWidget {
         children: [
           TextFormFieldsComponent(
             type: TextInputType.none,
-            onTap: () async {
+            onTap: () {
               tournamentcreatNewViewModel.datePickerinTextfield(context);
             },
             nextFocusNode: tournamentcreatNewViewModel.locationFoucsNode,
@@ -51,7 +51,7 @@ class CreateTournamentfirstFields extends StatelessWidget {
             validator: locationValidator,
             controller: tournamentcreatNewViewModel.locationController,
             hintText: "Location",
-            maxLines: null,
+            maxLines: 1,
           ),
           const SizedBox(
             height: AppMargin.medium,

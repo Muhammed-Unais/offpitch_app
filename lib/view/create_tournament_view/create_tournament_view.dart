@@ -23,23 +23,22 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
   late TabController tabController;
   final formKey = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
+  bool isVisible = true;
   ScrollController controller = ScrollController();
 
   @override
   void initState() {
-    tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     controller.addListener(
       () {
-        final provider =
-            Provider.of<CreateTournamentViewModel>(context, listen: false);
         if (controller.position.userScrollDirection ==
             ScrollDirection.reverse) {
-          if (provider.isVisible != false) {
-            provider.setScrollFabVisibility(false);
+          if (isVisible != false) {
+            setScrollFabVisibility(false);
           }
         } else {
-          if (provider.isVisible != true) {
-            provider.setScrollFabVisibility(true);
+          if (isVisible != true) {
+            setScrollFabVisibility(true);
           }
         }
       },
@@ -47,6 +46,11 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
     super.initState();
 
     setCheckhasClubId();
+  }
+
+  void setScrollFabVisibility(bool value) {
+    isVisible = value;
+    setState(() {});
   }
 
   void setCheckhasClubId() {
@@ -62,11 +66,11 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<CreateTournamentViewModel, UserViewModel>(
-      builder: (context, value, userViewModel, _) {
-        return DefaultTabController(
-          length: 3,
-          child: Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => CreateTournamentViewModel(),
+      child: Consumer2<CreateTournamentViewModel, UserViewModel>(
+        builder: (context, createTournamentProvider, userViewModel, _) {
+          return Scaffold(
             appBar: AppBar(
               shadowColor: AppColors.white,
               elevation: 2,
@@ -79,29 +83,30 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
               children: [
                 CreateTournamentViewTabbar(
                   tabController: tabController,
-                  value: value,
                 ),
                 if (userViewModel.userClubId != null &&
                     userViewModel.userClubId!.isNotEmpty &&
                     userViewModel.userClubStatus != "awaiting")
                   Expanded(
                     child: TabBarView(
-                      physics:const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: tabController,
                       children: [
                         CreateTournamentTabOne(
+                          isVisible: isVisible,
                           controller: controller,
                           tabController: tabController,
                           formKey: formKey,
-                          value: value,
+                          value: createTournamentProvider,
                         ),
                         CreatTournamentTabTwo(
-                          value: value,
+                          value: createTournamentProvider,
                           formKey1: formKey1,
                           tabController: tabController,
                         ),
                         CreatTournamentTabThree(
-                          value: value,
+                          tabController: tabController,
+                          value: createTournamentProvider,
                         )
                       ],
                     ),
@@ -135,9 +140,9 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                   ),
               ],
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

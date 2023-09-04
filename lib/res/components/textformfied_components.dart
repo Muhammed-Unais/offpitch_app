@@ -12,7 +12,10 @@ class TextFormFieldsComponent extends StatelessWidget {
       this.validator,
       this.isOutfoucsNode = false,
       required this.currentFocusNode,
-      required this.nextFocusNode, this.onTap, this.enabled});
+      required this.nextFocusNode,
+      this.onTap,
+      this.enabled,
+      this.maxlength});
 
   final String hintText;
   final Function()? onTap;
@@ -24,23 +27,27 @@ class TextFormFieldsComponent extends StatelessWidget {
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
   final bool? enabled;
+  final int? maxlength;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      scrollPadding:const EdgeInsets.all(0),
+      scrollPadding: const EdgeInsets.all(0),
       enabled: enabled,
-      onTap:onTap,
+      onTap: onTap,
       onFieldSubmitted: (value) => Utils.fieldFocusChange(
-          context: context,
-          isOutfocusNode: isOutfoucsNode,
-          current: currentFocusNode,
-          nextFocus: nextFocusNode),
+        context: context,
+        isOutfocusNode: isOutfoucsNode,
+        current: currentFocusNode,
+        nextFocus: nextFocusNode,
+      ),
       validator: validator,
       keyboardType: type,
       focusNode: currentFocusNode,
       controller: controller,
       maxLines: maxLines,
+      enableSuggestions: true,
+      maxLength: maxlength,
       decoration: InputDecoration(
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),

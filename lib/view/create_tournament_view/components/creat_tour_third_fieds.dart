@@ -10,7 +10,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tourCreateViewModel = Provider.of<CreateTournamentViewModel>(context);
+    var tourCreateViewModel = context.watch<CreateTournamentViewModel>();
     return Container(
       margin: const EdgeInsets.symmetric(
           horizontal: AppMargin.large, vertical: AppMargin.large),
@@ -38,7 +38,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(color: AppColors.grey),
+          const Divider(color: AppColors.grey, thickness: 0.5),
           Row(
             children: [
               CheckBoxs(
@@ -53,7 +53,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(color: AppColors.grey),
+          const Divider(color: AppColors.grey, thickness: 0.5),
           Row(
             children: [
               CheckBoxs(
@@ -68,7 +68,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(color: AppColors.grey),
+          const Divider(color: AppColors.grey, thickness: 0.5),
         ],
       ),
     );

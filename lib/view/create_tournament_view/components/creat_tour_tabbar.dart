@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 
 class CreateTournamentViewTabbar extends StatefulWidget {
-  const CreateTournamentViewTabbar(
-      {super.key, required this.tabController, required this.value});
+  const CreateTournamentViewTabbar({
+    super.key,
+    required this.tabController,
+  });
 
   final TabController tabController;
-  final CreateTournamentViewModel value;
 
   @override
   State<CreateTournamentViewTabbar> createState() =>
@@ -35,9 +35,6 @@ class _CreateTournamentViewTabbarState
       child: TabBar(
         onTap: (value) {
           widget.tabController.index = 0;
-          if (value == 2) {
-            widget.tabController.index = 0;
-          }
         },
         controller: widget.tabController,
         labelStyle: Theme.of(context).textTheme.titleMedium,
@@ -47,8 +44,9 @@ class _CreateTournamentViewTabbarState
             const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
-            color: AppColors.primary),
+          borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+          color: AppColors.primary,
+        ),
         tabs: const [
           Tab(
             text: "1",

@@ -59,7 +59,6 @@ class CreatTournamentTabTwo extends StatelessWidget {
               if (formKey1.currentState!.validate()) {
                 tabController.animateTo(tabController.index + 1);
               }
-              value.testValue = tabController.index + 1;
             },
             child: const Icon(Icons.arrow_forward_ios),
           ),

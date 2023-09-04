@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -8,18 +7,20 @@ import 'package:offpitch_app/view_model/create_tournament_view_model/create_tour
 import 'package:offpitch_app/view_model/services.dart/tournament_creation_validation/tournamen_creation_validation.dart';
 
 class CreateTournamentTabOne extends StatelessWidget {
-  const CreateTournamentTabOne(
-      {super.key,
-      required this.controller,
-      required this.value,
-      required this.tabController,
-      required this.formKey,
-      });
+  const CreateTournamentTabOne({
+    super.key,
+    required this.controller,
+    required this.value,
+    required this.tabController,
+    required this.formKey,
+    required this.isVisible,
+  });
 
   final ScrollController controller;
   final CreateTournamentViewModel value;
   final TabController tabController;
   final GlobalKey<FormState> formKey;
+  final bool isVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class CreateTournamentTabOne extends StatelessWidget {
           bottom: AppMargin.large,
           right: AppMargin.large,
           child: Visibility(
-            visible: value.isVisible,
+            visible: isVisible,
             child: FloatingActionButton(
               backgroundColor: AppColors.primary,
               shape: RoundedRectangleBorder(
@@ -64,8 +65,7 @@ class CreateTournamentTabOne extends StatelessWidget {
                       )
                     : null;
                 if (formKey.currentState!.validate() && value.images != null) {
-                  tabController.animateTo(tabController.index + 1);
-                  value.testValue = tabController.index + 1;
+                  tabController.animateTo(1);
                 }
               },
               child: const Icon(Icons.arrow_forward_ios),

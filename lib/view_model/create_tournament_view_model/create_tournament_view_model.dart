@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/models/create_tournament_model.dart';
 import 'package:offpitch_app/repository/create_tournament_repository.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
@@ -15,16 +15,15 @@ class CreateTournamentViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
   String? imageUrl;
   File? _images;
-  BoxBorder? border;
+  BoxBorder? _border;
   bool? ischeck = false;
   bool? isCheckTourType1 = false;
   bool? isCheckTourType2 = false;
   bool? isCheckTourType3 = false;
-  bool isVisible = true;
-  int testValue = 0;
   bool? isLoading = false;
 
-  get images => _images;
+  BoxBorder? get border => _border;
+  File? get images => _images;
 
   //  nameTexteditincontroller
   final TextEditingController dateController = TextEditingController();
@@ -95,12 +94,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
 // descriptionFocusNode
   final FocusNode amountFoucusNode = FocusNode();
 
-  setScrollFabVisibility(bool value) {
-    isVisible = value;
-    notifyListeners();
-  }
-
-  setLoadingCreation(bool? value) {
+  void setLoadingCreation(bool? value) {
     isLoading = value;
     notifyListeners();
   }
@@ -110,22 +104,22 @@ class CreateTournamentViewModel extends ChangeNotifier {
       apiSecret: "HUEBHwIULpeCa-5MsrZ0z7xrCsU",
       cloudName: "dvihywo6p");
 
-  setImages(File? image) {
+  void setImages(File? image) {
     _images = image;
     notifyListeners();
   }
 
-  setBorderError(BoxBorder? boxBorder) {
-    border = boxBorder;
+  void setBorderError(BoxBorder? boxBorder) {
+    _border = boxBorder;
     notifyListeners();
   }
 
-  setAmountCheck(bool? value) {
+  void setAmountCheck(bool? value) {
     ischeck = value;
     notifyListeners();
   }
 
-  setIsCheckTourTypeOne(bool? value) {
+  void setIsCheckTourTypeOne(bool? value) {
     isCheckTourType1 = value;
     if (isCheckTourType1!) {
       isCheckTourType2 = !isCheckTourType1!;
@@ -134,7 +128,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setIsCheckTourTypeTwo(bool? value) {
+  void setIsCheckTourTypeTwo(bool? value) {
     isCheckTourType2 = value;
     if (isCheckTourType2!) {
       isCheckTourType1 = !isCheckTourType2!;
@@ -143,7 +137,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setIsCheckTourTypeThree(bool? value) {
+  void setIsCheckTourTypeThree(bool? value) {
     isCheckTourType3 = value;
     if (isCheckTourType3!) {
       isCheckTourType1 = !isCheckTourType3!;
@@ -153,27 +147,23 @@ class CreateTournamentViewModel extends ChangeNotifier {
   }
 
 // imagePicker from user gallery
-  getImageFromGallery() async {
+  Future<void> getImageFromGallery() async {
     final XFile? img = await imagePicker.pickImage(
       source: ImageSource.gallery,
     );
-    File? images;
+
     if (img != null) {
-      images = File(img.path);
+      var images = File(img.path);
       setBorderError(null);
       setImages(images);
-      CloudinaryResponse response = await cloudinary.upload(
+      var response = await cloudinary.upload(
         file: images.path,
         fileBytes: images.readAsBytesSync(),
         resourceType: CloudinaryResourceType.image,
-        progressCallback: (count, total) {
-          log('$count/$total');
-        },
+        progressCallback: (count, total) {},
       );
       if (response.isSuccessful) {
-        log("success");
         imageUrl = response.secureUrl;
-        log(imageUrl.toString());
       }
     } else {
       setBorderError(
@@ -186,8 +176,25 @@ class CreateTournamentViewModel extends ChangeNotifier {
   }
 
   // date picker from textfield
-  datePickerinTextfield(context, {isStartDate = true}) async {
+  Future<void> datePickerinTextfield(context, {isStartDate = true}) async {
     DateTime? pickedDate = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primary,
+              onPrimary: AppColors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.black,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
@@ -219,7 +226,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
   final _myRepo = CreateTournamentRepository();
 
-  submitButtonTourCreate(context) async {
+  Future<void> submitButtonTournamentCreate(context) async {
     setLoadingCreation(true);
     final value = CreateTournament(
       cover: imageUrl,
@@ -245,7 +252,6 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
     _myRepo.putTournamentapi(value).then((value) {
       setLoadingCreation(false);
-      clearAllData();
       Map<String, dynamic> values = value;
       Utils.showCustomFlushbar(context, values['message']);
       Provider.of<ExploreViewViewModel>(context, listen: false)
@@ -257,30 +263,37 @@ class CreateTournamentViewModel extends ChangeNotifier {
     }).onError((error, stackTrace) {
       setLoadingCreation(false);
       Utils.showCustomFlushbar(context, error.toString());
-      log(error.toString());
     });
   }
 
-  clearAllData() {
-    border = null;
-    _images = null;
-    imageUrl = null;
-    amountController.clear();
-    maxOfPlayersController.clear();
-    minOfPlayersController.clear();
-    lastDateTorurnamentController.clear();
-    noOfRegistrationController.clear();
-    instructionController.clear();
-    aboutController.clear();
-    descriptionController.clear();
-    titleTorurnamentController.clear();
-    locationController.clear();
-    dateController.clear();
+  void clearAllData() {
+    amountController.dispose();
+    maxOfPlayersController.dispose();
+    minOfPlayersController.dispose();
+    lastDateTorurnamentController.dispose();
+    noOfRegistrationController.dispose();
+    instructionController.dispose();
+    aboutController.dispose();
+    descriptionController.dispose();
+    titleTorurnamentController.dispose();
+    locationController.dispose();
+    dateController.dispose();
+    aboutFoucusNode.dispose();
+    amountFoucusNode.dispose();
+    maxOfPlayersFoucusNode.dispose();
+    minOfPlayersFoucusNode.dispose();
+    lastDateRegusNode.dispose();
+    maxNoOfRegFoucsNode.dispose();
+    instructionFoucsNode.dispose();
+    descriptionFoucusNode.dispose();
+    titleFoucusNode.dispose();
+    locationFoucsNode.dispose();
+    dateFoucsNode.dispose();
   }
 
-  clearAllDataLogout() {
-    border = null;
-    _images = null;
-    imageUrl = null;
+  @override
+  void dispose() {
+    clearAllData();
+    super.dispose();
   }
 }

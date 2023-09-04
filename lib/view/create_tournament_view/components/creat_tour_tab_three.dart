@@ -4,14 +4,15 @@ import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_t
 import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
 
 class CreatTournamentTabThree extends StatelessWidget {
-  const CreatTournamentTabThree({super.key, required this.value});
+  const CreatTournamentTabThree(
+      {super.key, required this.value, required this.tabController});
 
   final CreateTournamentViewModel value;
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -19,9 +20,14 @@ class CreatTournamentTabThree extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(
-              "Back",
-              style: Theme.of(context).textTheme.labelMedium,
+            GestureDetector(
+              onTap: () {
+                tabController.animateTo(1);
+              },
+              child: Text(
+                "Back",
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
             ),
             SaveContinueButton(
               isloading: value.isLoading!,
@@ -30,7 +36,7 @@ class CreatTournamentTabThree extends StatelessWidget {
                 if (value.isCheckTourType1 != null ||
                     value.isCheckTourType2 != null ||
                     value.isCheckTourType3 != null) {
-                  value.submitButtonTourCreate(context);
+                  value.submitButtonTournamentCreate(context);
                 }
               },
               text: "Submit",
