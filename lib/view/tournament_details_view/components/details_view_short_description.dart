@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:readmore/readmore.dart';
 
 class DetailsViewShortDescription extends StatelessWidget {
@@ -10,11 +9,7 @@ class DetailsViewShortDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: AppMargin.large,
-        vertical: AppMargin.medium,
-      ),
+    return SizedBox(
       child: ReadMoreText(
         shortDescription ?? "",
         trimLines: 6,

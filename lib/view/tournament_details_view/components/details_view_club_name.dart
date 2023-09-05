@@ -10,10 +10,7 @@ class DetailsViewClubName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: AppMargin.large,
-      ),
+    return SizedBox(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

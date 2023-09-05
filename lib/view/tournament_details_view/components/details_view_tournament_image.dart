@@ -17,9 +17,6 @@ class DetailsViewTournamentImage extends StatelessWidget {
     return Container(
       height: hight,
       width: width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: AppMargin.large,
-      ),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(

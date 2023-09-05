@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -11,7 +12,6 @@ import 'package:offpitch_app/view/tournament_details_view/components/details_vie
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/scheduled_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_short_description.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_image.dart';
-import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_name.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +22,8 @@ class DetailsViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Consumer<DetailsTouramentViewModel>(
-      builder: (context, value, _) {
-        switch (value.detailsTournament.status) {
+      builder: (context, tournametnDetailProvider, _) {
+        switch (tournametnDetailProvider.detailsTournament.status) {
           case Status.LOADING:
             return const Align(
               alignment: Alignment.center,
@@ -33,32 +33,50 @@ class DetailsViewBody extends StatelessWidget {
               ),
             );
           case Status.COMPLETED:
-            final data = value.detailsTournament.data?.data;
-            if (data == null) {}
-            //============== Scheduled to screen results======================
+            var data = tournametnDetailProvider.detailsTournament.data?.data;
+            final teams =
+                tournametnDetailProvider.detailsTournament.data?.data?.teams;
+
             if (data?.registration?.status == "scheduled") {
               return ScheduledView(
-                singleTournamentModel: value.detailsTournament.data!,
+                singleTournamentModel:
+                    tournametnDetailProvider.detailsTournament.data!,
               );
-              // Details Screen Tournament closed without shedule  =============
             } else {
-              return SingleChildScrollView(
-                child: Column(
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: AppPadding.large),
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
                     DetailsViewClubName(
                       clubImage:
                           data?.host?.profile ?? AppProfilesCover.clubCover,
                       clubName: data?.host?.name ?? "",
                     ),
-                    DetailsViewTournamentName(
-                        tournamentName: data?.title ?? ""),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppMargin.large,
+                        ),
+                        child: Text(
+                          data?.title ?? "",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                    ),
                     DetailsViewTournamentImage(
                       image: data?.cover ?? AppProfilesCover.clubCover,
                       hight: size.height * 0.25,
                       width: size.width,
                     ),
-                    DetailsViewShortDescription(
-                      shortDescription: data?.shortDescription,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: AppPadding.medium),
+                      child: DetailsViewShortDescription(
+                        shortDescription: data?.shortDescription,
+                      ),
                     ),
                     DetailsViewDateTime(
                       place: data?.location ?? "",
@@ -70,7 +88,6 @@ class DetailsViewBody extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: AppMargin.large,
                         vertical: AppMargin.large,
                       ),
                       child: Divider(
@@ -78,16 +95,23 @@ class DetailsViewBody extends StatelessWidget {
                         color: AppColors.grey,
                       ),
                     ),
-                    // Registration components=======================
                     DetailsViewRegister(
-                      data: value.detailsTournament.data!,
+                      data: tournametnDetailProvider.detailsTournament.data!,
                     ),
-                    // Registered Teams components====================
-                    RegisteredTeams(
-                      singleTourdata: value.detailsTournament.data,
-                    ),
-                    // about components ========================
-                    DetailsViewAbout(data: value.detailsTournament.data!),
+                    teams!.isEmpty
+                        ? const EmptyComponentPng(
+                            errorMessage: "No Registration",
+                            imagePath: "assets/images/No data-cuate.png",
+                            hight: 100,
+                            width: 100,
+                          )   
+                        : RegisteredTeams(
+                            singleTourdata: tournametnDetailProvider
+                                .detailsTournament.data,
+                          ),
+                    DetailsViewAbout(
+                        data:
+                            tournametnDetailProvider.detailsTournament.data!),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         vertical: AppMargin.large,
@@ -113,7 +137,8 @@ class DetailsViewBody extends StatelessWidget {
           case Status.ERROR:
             return Center(
               child: ErrorComponent(
-                errorMessage: value.detailsTournament.message!,
+                errorMessage:
+                    tournametnDetailProvider.detailsTournament.message!,
               ),
             );
           default:

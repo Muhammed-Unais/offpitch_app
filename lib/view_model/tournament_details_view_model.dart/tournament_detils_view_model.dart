@@ -20,14 +20,14 @@ class DetailsTouramentViewModel with ChangeNotifier {
   }
 
 //  touranemt deatils api call==========
-  Future getSingleTournament(id,) async {
+  Future getSingleTournament(
+    id,
+  ) async {
     setDetilsTournament(ApiResponse.loading());
     _myRepo.sigleTournamentDetails(id).then((value) {
       setDetilsTournament(ApiResponse.completed(value));
-      log(value.toString());
     }).onError((error, stackTrace) {
       setDetilsTournament(ApiResponse.error(error.toString()));
-      log(error.toString());
     });
   }
 
@@ -38,7 +38,7 @@ class DetailsTouramentViewModel with ChangeNotifier {
   ) {
     DateTime tournamentStartingDate = DateFormat("MM/dd/yyyy").parse(lastDate);
     DateTime futureDate = tournamentStartingDate.add(const Duration(days: 1));
-    log(futureDate.toString());
+
     _remainingTime = futureDate.difference(DateTime.now());
     if (_remainingTime!.isNegative) {
       _remainingTime = Duration.zero;
@@ -73,8 +73,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool registeredPendingStatusCheking(SingleTournamentModel? data,context) {
-     String? myClubid =
+  bool registeredPendingStatusCheking(SingleTournamentModel? data, context) {
+    String? myClubid =
         Provider.of<UserViewModel>(context, listen: false).userClubId;
     bool conatain = false;
     for (var element in data!.data!.teams!) {
@@ -89,8 +89,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool userSheduleChecking(SingleTournamentModel? data,context) {
-     String? myClubid =
+  bool userSheduleChecking(SingleTournamentModel? data, context) {
+    String? myClubid =
         Provider.of<UserViewModel>(context, listen: false).userClubId;
     bool conatain = false;
     if (data?.data?.host?.id == myClubid) {
@@ -113,10 +113,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
   getRegisterdClubdetails(String? tId, cId) {
     setRegisterdTeams(ApiResponse.loading());
     _myReop2.getAllRegisteredClubs(tId, cId).then((value) {
-      log(value.toString());
       setRegisterdTeams(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
-      log(error.toString());
       setRegisterdTeams(ApiResponse.error(error.toString()));
     });
   }

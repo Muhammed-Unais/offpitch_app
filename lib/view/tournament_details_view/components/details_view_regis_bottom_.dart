@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/single_tournament_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_btmsht_players_add.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -13,7 +11,6 @@ import 'package:readmore/readmore.dart';
 class DetailsViewRegistrationBottomSheet {
   static Future showModelBottomsheet(context,
       {required SingleTournamentModel model}) async {
-    await Provider.of<MyClubViewModel>(context, listen: false).getAllPlayers();
     final data = model.data;
     return showModalBottomSheet(
       useSafeArea: false,
@@ -117,17 +114,12 @@ class DetailsViewRegistrationBottomSheet {
                   child: ElevatedButton(
                     onPressed: regeistrationViewModel.isPermission
                         ? () async {
-                          
-                            // Registration====================================
-                            log(regeistrationViewModel.playersIds.length
-                                .toString());
-                            log(data!.maxNoPlayers.toString());
+                           
                             if (regeistrationViewModel.playersIds.length >=
-                                    data.minNoPlayers! &&
+                                    data!.minNoPlayers! &&
                                 regeistrationViewModel.playersIds.length <=
                                     data.maxNoPlayers!) {
-                              await Provider.of<RegistorationViewModel>(
-                                      context,
+                              await Provider.of<RegistorationViewModel>(context,
                                       listen: false)
                                   .postRegisterTournament(data.id, context);
                             } else {

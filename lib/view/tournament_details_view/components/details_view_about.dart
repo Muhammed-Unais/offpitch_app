@@ -13,7 +13,6 @@ class DetailsViewAbout extends StatelessWidget {
     return Container(
       width: size.width,
       margin: const EdgeInsets.symmetric(
-        horizontal: AppMargin.large,
         vertical: AppMargin.large,
       ),
       child: Column(
@@ -27,7 +26,7 @@ class DetailsViewAbout extends StatelessWidget {
             height: AppMargin.small,
           ),
           ReadMoreText(
-            data.data?.description??"",
+            data.data?.description ?? "",
             style: Theme.of(context).textTheme.bodyLarge,
             trimMode: TrimMode.Line,
             trimLines: 10,

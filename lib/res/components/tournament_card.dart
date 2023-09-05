@@ -42,6 +42,7 @@ class TournamentCard extends StatelessWidget {
             ),
           ),
           child: Card(
+            surfaceTintColor: AppColors.white,
             elevation: 5,
             child: Column(
               children: [

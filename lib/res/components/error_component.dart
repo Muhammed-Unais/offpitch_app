@@ -33,3 +33,39 @@ class ErrorComponent extends StatelessWidget {
     );
   }
 }
+
+class EmptyComponentPng extends StatelessWidget {
+  const EmptyComponentPng(
+      {super.key, required this.errorMessage, required this.imagePath, required this.hight, required this.width});
+
+  final String errorMessage;
+  final String imagePath;
+  final double hight;
+  final double width;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: AppMargin.small),
+          height: hight,
+          width: width,
+          child: Image.asset(
+            imagePath,
+          ),
+        ),
+        Text(
+          errorMessage,
+          style: const TextStyle(
+            color: AppColors.primary,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}

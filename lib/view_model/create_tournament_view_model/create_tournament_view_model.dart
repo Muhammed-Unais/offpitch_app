@@ -9,7 +9,9 @@ import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:provider/provider.dart';
+import '../home_and_explore_view_model/home_view_model.dart';
 
 class CreateTournamentViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
@@ -226,7 +228,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
   final _myRepo = CreateTournamentRepository();
 
-  Future<void> submitButtonTournamentCreate(context) async {
+  Future<void> submitButtonTournamentCreate(BuildContext context) async {
     setLoadingCreation(true);
     final value = CreateTournament(
       cover: imageUrl,
@@ -253,13 +255,19 @@ class CreateTournamentViewModel extends ChangeNotifier {
     _myRepo.putTournamentapi(value).then((value) {
       setLoadingCreation(false);
       Map<String, dynamic> values = value;
-      Utils.showCustomFlushbar(context, values['message']);
-      Provider.of<ExploreViewViewModel>(context, listen: false)
-          .getExpAndSrchTournmts(
-              query: 'filter=all&limit=45',
-              sortingQuery: "all",
-              isNotify: true);
-      Provider.of<BottomBarViewModel>(context, listen: false).onTap(1, context);
+
+      Utils.showCustomFlushbar(context, values['message'], isError: false);
+
+      context.read<ExploreViewViewModel>().getExpAndSrchTournmts(
+          query: 'filter=all&limit=45', sortingQuery: "all", isNotify: true);
+
+      context
+          .read<UserHostRegTournamentViewModel>()
+          .getAllUserHostedTournaments();
+
+      context.read<HomeViewModel>().getAllTournaments();
+
+      context.read<BottomBarViewModel>().onTap(1, context);
     }).onError((error, stackTrace) {
       setLoadingCreation(false);
       Utils.showCustomFlushbar(context, error.toString());

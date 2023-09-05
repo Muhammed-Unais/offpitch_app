@@ -24,9 +24,6 @@ class DetailsViewTimerRemain extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.large, vertical: AppPadding.medium),
-      margin: const EdgeInsets.symmetric(
-        horizontal: AppMargin.large,
-      ),
       height: height,
       width: width,
       decoration: BoxDecoration(
@@ -48,7 +45,10 @@ class DetailsViewTimerRemain extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Registration closes in",style: Theme.of(context).textTheme.bodyMedium,),
+          Text(
+            "Registration closes in",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

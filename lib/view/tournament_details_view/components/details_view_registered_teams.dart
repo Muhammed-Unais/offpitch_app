@@ -14,10 +14,8 @@ class RegisteredTeams extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+    return SizedBox(
       height: 180,
-      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,11 +40,12 @@ class RegisteredTeams extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: singleTourdata?.data?.teams?.length ?? 0,
               itemBuilder: (context, index) {
-                final data = singleTourdata?.data?.teams;
+                var data = singleTourdata?.data?.teams;
+
                 return InkWell(
                   onTap: () {
-                    // bottom naigatin bar for user can see the club details
-                    Provider.of<DetailsTouramentViewModel>(context,listen: false)
+                    context
+                        .read<DetailsTouramentViewModel>()
                         .getRegisterdClubdetails(
                             singleTourdata?.data?.id, data?[index].id);
                     Utils.showDialogue(
