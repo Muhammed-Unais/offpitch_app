@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_settings_expansion.dart';
 import 'package:readmore/readmore.dart';
 
 class UserProfileAboutUsExpansion extends StatelessWidget {
@@ -9,20 +10,28 @@ class UserProfileAboutUsExpansion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      shape: const Border(
+        bottom: BorderSide(color: AppColors.grey, width: 0.4),
+      ),
       iconColor: AppColors.primary,
       textColor: AppColors.primary,
       expandedAlignment: Alignment.topCenter,
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       tilePadding: const EdgeInsets.all(0),
       childrenPadding: const EdgeInsets.all(0),
-      title: Text("About Us", style: Theme.of(context).textTheme.labelLarge),
+      title: Text("About us", style: Theme.of(context).textTheme.labelLarge),
       children: [
-        const Text(
-          "Why us",
-          style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 18,
-              fontWeight: FontWeight.bold),
+        Row(
+          children:  [
+            const Padding(
+              padding: EdgeInsets.only(right: 10, left: 10, top: 6),
+              child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
+            ),
+            Text(
+              "Why us",
+              style:Theme.of(context).textTheme.bodyLarge
+            ),
+          ],
         ),
         const SizedBox(
           height: AppMargin.small,
@@ -40,6 +49,7 @@ class UserProfileAboutUsExpansion extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
@@ -56,7 +55,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                               ),
                             );
                           case Status.COMPLETED:
-                           if (value.apiResponseRegisTournaments.data ==
+                            if (value.apiResponseRegisTournaments.data ==
                                     null ||
                                 value.apiResponseRegisTournaments.data!
                                     .isEmpty) {
@@ -70,19 +69,21 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                             }
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: value.apiResponseRegisTournaments.data!.length,
+                              itemCount: value
+                                  .apiResponseRegisTournaments.data!.length,
                               itemBuilder: (context, index) {
-                                final data = value.apiResponseRegisTournaments.data!.reversed
+                                final data = value
+                                    .apiResponseRegisTournaments.data!.reversed
                                     .toList()[index];
                                 return InkWell(
                                   onTap: () async {
-                                    final provider =
-                                        Provider.of<DetailsTouramentViewModel>(
-                                            context,
-                                            listen: false);
+                                    final provider = context
+                                        .read<DetailsTouramentViewModel>();
                                     provider.getSingleTournament(data.id);
                                     await Navigator.pushNamed(
-                                        context, "tournamentdetails");
+                                      context,
+                                      "tournamentdetails",
+                                    );
                                   },
                                   child: UsersTournametCard(
                                     image: data.cover,
@@ -97,7 +98,8 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                             );
                           case Status.ERROR:
                             return ErrorComponent(
-                              errorMessage: value.apiResponseRegisTournaments.message!,
+                              errorMessage:
+                                  value.apiResponseRegisTournaments.message!,
                             );
                           default:
                             return const SizedBox();

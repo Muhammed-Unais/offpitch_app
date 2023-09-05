@@ -32,7 +32,7 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
     return widget.userClubId != null && widget.userClubId!.isNotEmpty
         ? Consumer<MyClubViewModel>(
             builder: (context, myClubViewModelProvider, _) {
-              switch (myClubViewModelProvider.apiResponse.status) {
+              switch (myClubViewModelProvider.getClubApiResponse.status) {
                 case Status.LOADING:
                   return const Center(
                     child: CircularProgressIndicator(
@@ -41,7 +41,7 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
                     ),
                   );
                 case Status.COMPLETED:
-                  final data = myClubViewModelProvider.apiResponse.data;
+                  final data = myClubViewModelProvider.getClubApiResponse.data;
                   if (data?.data?.status == "awaiting") {
                     return InkWell(
                       onTap: () {
@@ -104,7 +104,7 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
                 case Status.ERROR:
                   return ErrorComponent(
                     errorMessage:
-                        myClubViewModelProvider.apiResponse.message ?? "",
+                        myClubViewModelProvider.getClubApiResponse.message ?? "",
                   );
                 default:
                   return const Center(

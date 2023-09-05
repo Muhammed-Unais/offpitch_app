@@ -49,7 +49,7 @@ class UserProfileClubCard extends StatelessWidget {
               subtitle: Row(
                 children: [
                   Text(
-                    "$playersCount Players",
+                    "${playersCount ?? 0} Players",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(

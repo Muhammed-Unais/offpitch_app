@@ -10,13 +10,18 @@ class TournamentCard extends StatelessWidget {
       required this.tornamentName,
       required this.tornamentPlace,
       required this.tornamentDate,
-       this.shortDescription});
+      this.shortDescription,
+      this.isDiscription = true,
+      this.status});
 
   final String touranmentCoverImage;
   final String tornamentName;
   final String tornamentPlace;
   final String tornamentDate;
   final String? shortDescription;
+  final String? status;
+
+  final bool isDiscription;
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +112,12 @@ class TournamentCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        shortDescription ??"",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        isDiscription
+                            ? shortDescription ?? ""
+                            : "Registration status: ${status?.toUpperCase()}",
+                        style: isDiscription
+                            ? Theme.of(context).textTheme.bodyMedium
+                            : Theme.of(context).textTheme.bodyLarge,
                         maxLines: 2,
                       ),
                     ],

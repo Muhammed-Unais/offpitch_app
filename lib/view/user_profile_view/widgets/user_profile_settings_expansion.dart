@@ -10,6 +10,9 @@ class UserProfileSettingsExpansion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+       shape: const Border(
+        bottom: BorderSide(color: AppColors.grey,width: 0.4),
+      ),
       iconColor: AppColors.primary,
       textColor: AppColors.primary,
       expandedAlignment: Alignment.topLeft,
@@ -18,44 +21,82 @@ class UserProfileSettingsExpansion extends StatelessWidget {
       childrenPadding: const EdgeInsets.all(0),
       title: Text("Settings", style: Theme.of(context).textTheme.labelLarge),
       children: [
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(right: 10, left: 10, top: 6),
+              child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
+            ),
+            InkWell(
+              onTap: () async {
+                await Share.share(
+                    "https://play.google.com/store/apps/details?id=in.dartz.offpitch");
+              },
+              child: Text(
+                "ShareApp",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+          ],
         ),
-        InkWell(
-            onTap: () async{
-              await Share.share("com.example.offpitch_app");
-            },
-            child: Text(
-              "ShareApp",
-              style: Theme.of(context).textTheme.labelLarge,
-            )),
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
+        const SizedBox(height: 18),
+        Row(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(right: 10, left: 10, top: 6),
+              child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
+            ),
+            InkWell(
+              onTap: () {
+                Utils.showDialogue(context, child: const LogoutAlertDialog());
+              },
+              child: Text(
+                "Logout",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+          ],
         ),
-        Text(
-          "Notification",
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
-        ),
-        InkWell(
-          onTap: () {
-            Utils.showDialogue(context, child: const LogoutAlertDialog());
-          },
-          child: Text(
-            "Logout",
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
-        ),
+        const SizedBox(height: 10),
+
       ],
     );
+  }
+}
+
+class CirclePainterWidget extends StatelessWidget {
+  final double radius;
+  final Color color;
+
+  const CirclePainterWidget(
+      {super.key, required this.radius, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: _CirclePainter(radius: radius, color: color),
+    );
+  }
+}
+
+class _CirclePainter extends CustomPainter {
+  final double radius;
+  final Color color;
+
+  _CirclePainter({required this.radius, required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()..color = color;
+    paint.isAntiAlias = true;
+    final Offset circleOffset = Offset(size.width / 2, size.height - radius);
+    canvas.drawCircle(circleOffset, radius, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

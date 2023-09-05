@@ -26,8 +26,12 @@ class _ExploreViewState extends State<ExploreView>
           );
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<ExploreViewViewModel>().getExpAndSrchTournmts(
-          query: 'filter=all', sortingQuery: "all", isNotify: true);
+      var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
+      if (exploreAndSearchProvider.allTournaments.data == null &&
+          exploreAndSearchProvider.liveTournaments.data == null) {
+        exploreAndSearchProvider.getExpAndSrchTournmts(
+            query: 'filter=all', sortingQuery: "all", isNotify: true);
+      }
     });
     super.initState();
   }

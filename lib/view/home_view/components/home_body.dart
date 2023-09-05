@@ -36,8 +36,10 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   void fetchUserDetails() async {
     var homeProvider = context.read<UserHostRegTournamentViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      homeProvider.getAllUserRegisteredTournaments();
-      homeProvider.getAllUserHostedTournaments();
+      homeProvider.apiResponseRegisTournaments.data ??
+          homeProvider.getAllUserRegisteredTournaments();
+      homeProvider.apiResponseHostedTournaments.data ??
+          homeProvider.getAllUserHostedTournaments();
     });
   }
 
@@ -224,14 +226,12 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
             await Navigator.pushNamed(context, RoutesName.tournamentDetails);
           },
           child: index == 3
-              ?  Center(
+              ? Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
-                        Provider.of<BottomBarViewModel>(context, listen: false)
-                            .onTap(3, context);
-
+                        context.read<BottomBarViewModel>().onTap(3, context);
                         context.read<MyClubViewModel>().setCurrenIndex(2);
                       },
                       child: const Text(
@@ -243,7 +243,9 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
                   ),
                 )
               : TournamentCard(
-                  shortDescription: values.status,
+                  isDiscription: false,
+                  status: values.registration?.status,
+                  shortDescription: values.registration?.status,
                   tornamentDate: values.startDate ?? "",
                   tornamentName: values.title ?? "No title",
                   tornamentPlace: values.location ?? "No location",

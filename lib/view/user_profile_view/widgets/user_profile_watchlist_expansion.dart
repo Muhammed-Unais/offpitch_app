@@ -13,6 +13,9 @@ class UserProfileWatchListExpansion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      shape: const Border(
+        bottom: BorderSide(color: AppColors.grey, width: 0.4),
+      ),
       iconColor: AppColors.primary,
       textColor: AppColors.primary,
       expandedAlignment: Alignment.topLeft,
@@ -24,30 +27,14 @@ class UserProfileWatchListExpansion extends StatelessWidget {
       tilePadding: const EdgeInsets.all(0),
       childrenPadding: const EdgeInsets.all(0),
       children: <Widget>[
-        Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RoutesName.userWatchlist);
-            },
-            child: Text(
-              "View all",
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-          ),
-        ),
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
-        ),
         Consumer<UserProfileViewModel>(
           builder: (context, value, _) {
             final data = value.userProfileWatchlist.data?.data;
-            if (data == null) {
+            if (data == null||data.isEmpty) {
               return const Center(
                 child: EmptyComponts(
                   image: "assets/images/no-data.svg",
-                  showMessage: "Add Tournaments",
+                  showMessage: "No watchlist",
                   height: 100,
                   width: 100,
                   addText: "",
@@ -56,48 +43,60 @@ class UserProfileWatchListExpansion extends StatelessWidget {
             }
             return ListView.builder(
               shrinkWrap: true,
-              itemCount: data.length > 3 ? 3 : data.length,
+              itemCount: data.length > 4 ? 4 : data.length,
               itemBuilder: (context, index) {
-                return Card(
-                  shadowColor: AppColors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    side: const BorderSide(width: 0.1, color: AppColors.black),
-                  ),
-                  elevation: 2,
-                  surfaceTintColor: AppColors.white,
-                  child: ListTile(
-                    onTap: () {
-                      Provider.of<DetailsTouramentViewModel>(context,
-                              listen: false)
-                          .getSingleTournament(data[index].id);
-                      Navigator.pushNamed(
-                          context, RoutesName.tournamentDetails);
-                    },
-                    leading: CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(
-                        data[index].cover ?? AppProfilesCover.clubCover,
-                      ),
-                    ),
-                    title: Text(
-                      data[index].title ?? "",
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                    subtitle: Text(
-                      data[index].startDate ?? "",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                );
+                return index == 4
+                    ? Align(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.userWatchlist);
+                          },
+                          child: Text(
+                            "View all",
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ),
+                      )
+                    : Card(
+                        shadowColor: AppColors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          side: const BorderSide(
+                              width: 0.1, color: AppColors.black),
+                        ),
+                        elevation: 2,
+                        surfaceTintColor: AppColors.white,
+                        child: ListTile(
+                          onTap: () {
+                            Provider.of<DetailsTouramentViewModel>(context,
+                                    listen: false)
+                                .getSingleTournament(data[index].id);
+                            Navigator.pushNamed(
+                                context, RoutesName.tournamentDetails);
+                          },
+                          leading: CircleAvatar(
+                            radius: 24,
+                            backgroundImage: NetworkImage(
+                              data[index].cover ?? AppProfilesCover.clubCover,
+                            ),
+                          ),
+                          title: Text(
+                            data[index].title ?? "",
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          subtitle: Text(
+                            data[index].startDate ?? "",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                      );
               },
             );
           },
         ),
-        const Divider(
-          color: AppColors.black,
-          thickness: 0.5,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

@@ -6,7 +6,6 @@ import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/home_view/components/home_carousels.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
 import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
@@ -21,10 +20,10 @@ class HomeTopCard extends StatefulWidget {
 class _HomeTopCardState extends State<HomeTopCard> {
   @override
   void initState() {
-    var values = context.read<HomeViewModel>();
+    var homeProvider = context.read<HomeViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      values.getAllTournaments();
+      homeProvider.apiResponse?.data ?? homeProvider.getAllTournaments();
     });
     super.initState();
   }
@@ -40,6 +39,7 @@ class _HomeTopCardState extends State<HomeTopCard> {
         horizontal: AppMargin.large,
       ),
       decoration: BoxDecoration(
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(
@@ -49,7 +49,6 @@ class _HomeTopCardState extends State<HomeTopCard> {
             offset: const Offset(0, 3),
           ),
         ],
-        color: AppColors.white,
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusM,
         ),

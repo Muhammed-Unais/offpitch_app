@@ -33,45 +33,51 @@ class _MyClubViewState extends State<MyClubView> {
   Future<void> getUserRegisteredTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
     if (userClubId != null && userClubId!.isNotEmpty) {
-      await userHostRegProvider.getAllUserRegisteredTournaments();
+      userHostRegProvider.apiResponseRegisTournaments.data ??
+          await userHostRegProvider.getAllUserRegisteredTournaments();
     }
   }
 
   Future<void> getUserHostedTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
     if (userClubId != null && userClubId!.isNotEmpty) {
-      await userHostRegProvider.getAllUserHostedTournaments();
+      userHostRegProvider.apiResponseHostedTournaments.data ??
+          await userHostRegProvider.getAllUserHostedTournaments();
     }
   }
 
   Future<void> getClubAndPlayers() async {
     var myClubViewModel = context.read<MyClubViewModel>();
     if (userClubId != null && userClubId!.isNotEmpty) {
-      myClubViewModel.getMyClub(context);
-      myClubViewModel.getAllPlayers();
+      myClubViewModel.getClubApiResponse.data ??
+          myClubViewModel.getMyClub(context);
+      myClubViewModel.getPlayerapiResponse.data ??
+          myClubViewModel.getAllPlayers();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyClubViewModel>(builder: (context, myClubViewModel, _) {
-      return DefaultTabController(
-        initialIndex: myClubViewModel.currentIndex,
-        length: 3,
-        child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(100.00),
-            child: MyclubAppbarTabbar(),
+    return Consumer<MyClubViewModel>(
+      builder: (context, myClubViewModel, _) {
+        return DefaultTabController(
+          initialIndex: myClubViewModel.currentIndex,
+          length: 3,
+          child: Scaffold(
+            appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(100.00),
+              child: MyclubAppbarTabbar(),
+            ),
+            body: TabBarView(
+              children: [
+                MyClubTabOne(userClubId: userClubId),
+                MyClubTabTwo(userClubId: userClubId),
+                MyClubTabThree(userClubId: userClubId),
+              ],
+            ),
           ),
-          body: TabBarView(
-            children: [
-              MyClubTabOne(userClubId: userClubId),
-              MyClubTabTwo(userClubId: userClubId),
-              MyClubTabThree(userClubId: userClubId),
-            ],
-          ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

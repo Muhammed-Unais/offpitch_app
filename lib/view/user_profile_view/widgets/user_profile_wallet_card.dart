@@ -43,7 +43,7 @@ class UserProfileWalletCard extends StatelessWidget {
           ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children:  [
+            children: [
               const Text(
                 "Balance",
                 style: TextStyle(
@@ -53,7 +53,7 @@ class UserProfileWalletCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "₹$walletAmount",
+                "₹${walletAmount ?? 0}",
                 style: const TextStyle(
                   color: AppColors.white,
                   fontSize: 20,

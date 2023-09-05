@@ -226,13 +226,13 @@ class CreateNewClubViewModel extends ChangeNotifier {
   // Creating page using for Updating UI===========================
   void editValueAssaignFunc(context) async {
     final userViewModel = Provider.of<MyClubViewModel>(context, listen: false);
-    _imageUrl = userViewModel.apiResponse.data!.data!.profile;
-    nameController.text = userViewModel.apiResponse.data!.data!.name!;
-    emailController.text = userViewModel.apiResponse.data!.data!.email!;
+    _imageUrl = userViewModel.getClubApiResponse.data!.data!.profile;
+    nameController.text = userViewModel.getClubApiResponse.data!.data!.name!;
+    emailController.text = userViewModel.getClubApiResponse.data!.data!.email!;
     phoneController.text =
-        userViewModel.apiResponse.data!.data!.phone.toString();
+        userViewModel.getClubApiResponse.data!.data!.phone.toString();
     descriptionController.text =
-        userViewModel.apiResponse.data!.data!.description!;
+        userViewModel.getClubApiResponse.data!.data!.description!;
 
     notifyListeners();
   }

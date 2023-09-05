@@ -9,7 +9,9 @@ class UsersTournametCard extends StatelessWidget {
       this.tournamentName,
       this.tournamentPlace,
       this.tournamentDate,
-      this.tournamentRegTeams, this.isUserHost =true, this.paymentStatus});
+      this.tournamentRegTeams,
+      this.isUserHost = true,
+      this.paymentStatus});
 
   final String? image;
   final String? tournamentName;
@@ -17,7 +19,7 @@ class UsersTournametCard extends StatelessWidget {
   final String? tournamentDate;
   final int? tournamentRegTeams;
   final bool isUserHost;
-  final String? paymentStatus; 
+  final String? paymentStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +143,9 @@ class UsersTournametCard extends StatelessWidget {
                   const Spacer(),
                   Flexible(
                     child: Text(
-                      isUserHost?
-                      "$tournamentRegTeams Registered":"Payment Status $paymentStatus",
+                      isUserHost
+                          ? "$tournamentRegTeams Registered"
+                          : "Payment Status $paymentStatus",
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   )

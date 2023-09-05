@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class HomeCarousels extends StatelessWidget {
-  const HomeCarousels(
-      {super.key,
-      required this.image,
-      required this.tournamentName,
-      required this.dateAndTime});
+  const HomeCarousels({
+    super.key,
+    required this.image,
+    required this.tournamentName,
+    required this.dateAndTime,
+  });
 
   final String image;
   final String tournamentName;
@@ -18,18 +20,17 @@ class HomeCarousels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusM,
         ),
         image: DecorationImage(
           colorFilter: const ColorFilter.mode(
-            Color.fromARGB(60, 18, 15, 15),
+            Color.fromARGB(120, 18, 15, 15),
             BlendMode.darken,
           ),
           fit: BoxFit.cover,
-          image: NetworkImage(
-            image,
-          ),
+          image: NetworkImage(image),
         ),
       ),
       child: Stack(
@@ -73,6 +74,7 @@ class HomeTournametnCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusM,
         ),

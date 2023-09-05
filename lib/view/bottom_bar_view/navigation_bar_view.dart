@@ -23,7 +23,7 @@ class _BottomBarViewState extends State<BottomBarView> {
     const ExploreView(),
     const CreateTournamentView(),
     const MyClubView(),
-    const UserDetailsView(),
+    const UserProfileView(),
   ];
 
   late PageController pageController;

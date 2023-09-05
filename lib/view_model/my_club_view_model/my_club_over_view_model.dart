@@ -15,7 +15,7 @@ class MyClubViewModel extends ChangeNotifier {
 
   List<bool> selectedPlayers = [];
 
-  ApiResponse<ClubTournamentModel> apiResponse = ApiResponse.loading();
+  ApiResponse<ClubTournamentModel> getClubApiResponse = ApiResponse.loading();
 
   ApiResponse<PlayersModel> getPlayerapiResponse = ApiResponse.loading();
 
@@ -25,7 +25,7 @@ class MyClubViewModel extends ChangeNotifier {
   }
 
   void setMyClubdetails(ApiResponse<ClubTournamentModel> response) {
-    apiResponse = response;
+    getClubApiResponse = response;
     notifyListeners();
   }
 
@@ -65,7 +65,7 @@ class MyClubViewModel extends ChangeNotifier {
   }
 
   void clearAllDateLogout() {
-    apiResponse.data = null;
+    getClubApiResponse.data = null;
     getPlayerapiResponse.data = null;
   }
 }

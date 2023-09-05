@@ -11,14 +11,14 @@ import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_watchli
 import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
-class UserDetailsView extends StatefulWidget {
-  const UserDetailsView({super.key});
+class UserProfileView extends StatefulWidget {
+  const UserProfileView({super.key});
 
   @override
-  State<UserDetailsView> createState() => _UserDetailsViewState();
+  State<UserProfileView> createState() => _UserProfileViewState();
 }
 
-class _UserDetailsViewState extends State<UserDetailsView> {
+class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProfileViewModel>(builder: (context, userProvider, _) {
@@ -30,20 +30,21 @@ class _UserDetailsViewState extends State<UserDetailsView> {
               left: AppMargin.small,
             ),
             child: Text(
-              "Hi,${data?.name}",
+              "Hi, ${data?.name ?? "welcome"}",
             ),
           ),
           centerTitle: false,
           actions: [
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: data?.profile == null
-                  ? null
-                  : NetworkImage(data!.profile!),
+            Padding(
+              padding: const EdgeInsets.only(right: 24),
+              child: CircleAvatar(
+                backgroundColor: AppColors.white,
+                radius: 14,
+                backgroundImage: data?.profile == null
+                    ? null
+                    : NetworkImage(data!.profile!),
+              ),
             ),
-            const SizedBox(
-              width: 20,
-            )
           ],
         ),
         body: Container(
@@ -67,10 +68,6 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Your Club",
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
                         UserProfileClubCard(
                           clubCover: data?.club?.profile,
                           clubName: data?.club?.name,
@@ -79,8 +76,8 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                         ),
                         UserProfileWalletCard(walletAmount: data?.wallet),
                         const Divider(
-                          height: 0.5,
-                          color: AppColors.black,
+                          height: 0.2,
+                          color: AppColors.grey,
                         ),
                         const UserProfileWatchListExpansion(),
                         const UserProfileSettingsExpansion(),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/models/user_model.dart';
 import 'package:offpitch_app/utils/utils.dart';
@@ -19,7 +18,6 @@ class UserViewModel with ChangeNotifier {
 
   Future<void> saveUserClubIdWhenClubcreate(
       String? clubId, String? clubStatus) async {
-        
     await Utils.sharedPrefrence(key: 'userClubId', value: clubId ?? "");
     await Utils.sharedPrefrence(key: "userClubStatus", value: clubStatus ?? "");
   }
@@ -41,7 +39,7 @@ class UserViewModel with ChangeNotifier {
 
     _userClubStatus =
         await Utils.sharedPrefrenceGetValue(key: 'userClubStatus');
-    log(_userClubStatus.toString());
+
     notifyListeners();
   }
 
@@ -52,8 +50,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   Future<bool> logoutRemoveAllData(BuildContext context) async {
-    Provider.of<LogoutViewModel>(context, listen: false)
-        .clearAllDatasLogout(context);
+    context.read<LogoutViewModel>().clearAllDatasLogout(context);
     final sp = await SharedPreferences.getInstance();
     await sp.remove('authToken');
     await sp.remove("userClubId");
