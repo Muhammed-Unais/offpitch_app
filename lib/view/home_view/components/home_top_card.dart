@@ -42,11 +42,9 @@ class _HomeTopCardState extends State<HomeTopCard> {
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(
-              0.5,
-            ),
-            blurRadius: 7,
-            offset: const Offset(0, 3),
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 5,
+            offset: const Offset(0, 5),
           ),
         ],
         borderRadius: BorderRadius.circular(
@@ -67,6 +65,8 @@ class _HomeTopCardState extends State<HomeTopCard> {
           ? const NeverScrollableScrollPhysics()
           : const ScrollPhysics(),
       duration: 1000,
+      autoplayDelay: 5000,
+      autoplay: true,
       curve: Curves.linearToEaseOut,
       itemCount: homeViewModel.count + 1,
       itemBuilder: (context, index) {

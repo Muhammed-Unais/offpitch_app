@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -20,6 +21,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
       textColor: AppColors.primary,
       expandedAlignment: Alignment.topLeft,
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
+      leading: const Icon(Icons.watch_later_outlined),
       title: Text(
         "Watchlist",
         style: Theme.of(context).textTheme.labelLarge,

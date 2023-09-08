@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     splashServices.checkAuthentication(context);
-    Provider.of<UserViewModel>(context, listen: false).getUserClubId();
+    context.read<UserViewModel>().getUserClubId();
     super.initState();
   }
 

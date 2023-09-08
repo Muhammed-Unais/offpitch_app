@@ -51,7 +51,9 @@ class ScheduledviewT2 extends StatelessWidget {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: AppMargin.large, vertical: AppMargin.small),
+            horizontal: AppMargin.large,
+            vertical: AppMargin.small,
+          ),
           child: Divider(
             thickness: 0.5,
             color: AppColors.grey,
@@ -62,7 +64,8 @@ class ScheduledviewT2 extends StatelessWidget {
             shrinkWrap: true,
             itemCount: singleTournamentModel.data?.matches?.rounds?.length,
             itemBuilder: (context, index) {
-              final roundData = singleTournamentModel.data?.matches?.rounds?[index];
+              final roundData =
+                  singleTournamentModel.data?.matches?.rounds?[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +104,9 @@ class ScheduledviewT2 extends StatelessWidget {
                         final teamBGoal =
                             roundData?.matches?[index1].teamB?.goals;
                         return InkWell(
-                          onTap: teamAGoal == null || teamBGoal == null ||teamAGoal >=0&&teamBGoal>=0
+                          onTap: teamAGoal == null ||
+                                  teamBGoal == null ||
+                                  teamAGoal >= 0 && teamBGoal >= 0
                               ? null
                               : () {
                                   final values = ScheduleTournametViewModel();
@@ -111,11 +116,10 @@ class ScheduledviewT2 extends StatelessWidget {
                                       roundData?.matches?[index1].teamB?.name;
 
                                   // match Score updating show dialog=======
-                                  final myClubId =
-                                      Provider.of<UserViewModel>(
-                                              context,
-                                              listen: false)
-                                          .userClubId;
+                                  final myClubId = Provider.of<UserViewModel>(
+                                          context,
+                                          listen: false)
+                                      .userClubId;
                                   if (myClubId ==
                                       singleTournamentModel.data?.host?.id) {
                                     Utils.showDialogue(
@@ -140,8 +144,10 @@ class ScheduledviewT2 extends StatelessWidget {
                                 },
                           child: MatchesResultCards(
                             matchNo: roundData?.matches?[index1].matchNo,
-                            team1Cover: roundData?.matches?[index1].teamA?.profile,
-                            team2Cover: roundData?.matches?[index1].teamB?.profile,
+                            team1Cover:
+                                roundData?.matches?[index1].teamA?.profile,
+                            team2Cover:
+                                roundData?.matches?[index1].teamB?.profile,
                             team1Name: roundData?.matches?[index1].teamA?.name,
                             team2Name: roundData?.matches?[index1].teamB?.name,
                             team1Goal: roundData?.matches?[index1].teamA?.goals,

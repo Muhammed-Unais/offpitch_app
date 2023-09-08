@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -16,7 +15,9 @@ import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tourn
 import 'package:provider/provider.dart';
 
 class DetailsViewBody extends StatelessWidget {
-  const DetailsViewBody({super.key});
+  const DetailsViewBody({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +105,13 @@ class DetailsViewBody extends StatelessWidget {
                             imagePath: "assets/images/No data-cuate.png",
                             hight: 100,
                             width: 100,
-                          )   
+                          )
                         : RegisteredTeams(
-                            singleTourdata: tournametnDetailProvider
-                                .detailsTournament.data,
+                            singleTourdata:
+                                tournametnDetailProvider.detailsTournament.data,
                           ),
                     DetailsViewAbout(
-                        data:
-                            tournametnDetailProvider.detailsTournament.data!),
+                        data: tournametnDetailProvider.detailsTournament.data!),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         vertical: AppMargin.large,

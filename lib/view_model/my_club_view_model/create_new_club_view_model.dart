@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +14,6 @@ import 'package:cloudinary/cloudinary.dart';
 class CreateNewClubViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
 
-  // MyClubViewModel myClubViewModel = MyClubViewModel();
-
-  // imageUrl
   String? _imageUrl;
   String? get imageUrl => _imageUrl;
 
@@ -140,9 +136,7 @@ class CreateNewClubViewModel extends ChangeNotifier {
         file: images.path,
         fileBytes: images.readAsBytesSync(),
         resourceType: CloudinaryResourceType.image,
-        progressCallback: (count, total) {
-          log('$count/$total');
-        },
+        progressCallback: (count, total) {},
       );
       if (response.isSuccessful) {
         _imageUrl = response.secureUrl;
@@ -223,7 +217,6 @@ class CreateNewClubViewModel extends ChangeNotifier {
     await Navigator.pushNamed(context, RoutesName.login);
   }
 
-  // Creating page using for Updating UI===========================
   void editValueAssaignFunc(context) async {
     final userViewModel = Provider.of<MyClubViewModel>(context, listen: false);
     _imageUrl = userViewModel.getClubApiResponse.data!.data!.profile;

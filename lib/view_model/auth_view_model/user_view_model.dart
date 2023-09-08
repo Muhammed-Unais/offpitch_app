@@ -50,6 +50,8 @@ class UserViewModel with ChangeNotifier {
   }
 
   Future<bool> logoutRemoveAllData(BuildContext context) async {
+    _userClubStatus = null;
+    _userClubId = null;
     context.read<LogoutViewModel>().clearAllDatasLogout(context);
     final sp = await SharedPreferences.getInstance();
     await sp.remove('authToken');

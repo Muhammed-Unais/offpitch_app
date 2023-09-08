@@ -20,13 +20,13 @@ class HomeCarousels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusM,
         ),
         image: DecorationImage(
           colorFilter: const ColorFilter.mode(
-            Color.fromARGB(120, 18, 15, 15),
+            Color.fromARGB(100, 18, 15, 15),
             BlendMode.darken,
           ),
           fit: BoxFit.cover,
@@ -99,8 +99,7 @@ class HomeTournametnCard extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(),
               onPressed: () {
-                Provider.of<BottomBarViewModel>(context, listen: false)
-                    .onTap(3, context);
+                context.read<BottomBarViewModel>().onTap(3, context);
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppPadding.large),

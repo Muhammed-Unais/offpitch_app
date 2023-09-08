@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/main.dart';
 import 'package:offpitch_app/models/registration_model.dart';
@@ -22,14 +21,14 @@ class RegistorationViewModel with ChangeNotifier {
   String? signature;
   String? tournamentIdforSavePay;
 
-  setPermission(bool isApprove) {
+  void setPermission(bool isApprove) {
     isPermission = isApprove;
     notifyListeners();
   }
 
-  final Razorpay _razorpay = Razorpay(); //Instance of razor pay
+  final Razorpay _razorpay = Razorpay();
 
-  intiateRazorPay() {
+  void intiateRazorPay() {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -55,7 +54,7 @@ class RegistorationViewModel with ChangeNotifier {
     Utils.showToastMessage("External Wallet:${response.walletName}");
   }
 
-  openSession({required num amount, required String orderId}) {
+  void openSession({required num amount, required String orderId}) {
     var options = {
       'key': razorPayKey,
       'amount': amount,
@@ -76,7 +75,6 @@ class RegistorationViewModel with ChangeNotifier {
     }
   }
 
-  // details Page registration =================
   String dobToAge(DateTime dobs) {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
@@ -88,14 +86,13 @@ class RegistorationViewModel with ChangeNotifier {
   }
 
   List<String> playersIds = [];
-  playersAddingcheckbox(bool value, index, BuildContext context) {
-    final myclub = Provider.of<MyClubViewModel>(context, listen: false);
+  void playersAddingcheckbox(bool value, index, BuildContext context) {
+    final myclub = context.read<MyClubViewModel>();
     myclub.selectedPlayers[index] = value;
     notifyListeners();
   }
 
-  // Post Registration Api call===================================
-  postRegisterTournament(id, context) async {
+  Future<void> postRegisterTournament(id, BuildContext context) async {
     tournamentIdforSavePay = id;
     final value = playersIds;
     final data = RegistrationTour(players: value);
@@ -103,20 +100,21 @@ class RegistorationViewModel with ChangeNotifier {
       if (value.data?.amount == null) {
         return;
       }
+
       if (value.data!.amount! > 0) {
         openSession(amount: value.data!.amount!, orderId: value.data!.orderId!);
       }
-      Provider.of<DetailsTouramentViewModel>(context, listen: false)
-          .getSingleTournament(id,);
+      context.read<DetailsTouramentViewModel>().getSingleTournament(id);
+
       Navigator.pop(context);
+
       Utils.showCustomFlushbar(context, value.message!);
     }).onError((error, stackTrace) {
       Utils.showCustomFlushbar(context, error.toString());
-      log(error.toString());
     });
   }
 
-  postPaymentSave(
+  Future<void> postPaymentSave(
       {required String? razorpayPaymentId,
       razorpayOrderId,
       razorpaySignature}) async {
@@ -124,19 +122,9 @@ class RegistorationViewModel with ChangeNotifier {
         razorpayPaymentId: paymentId,
         razorpayOrderId: orderId,
         razorpaySignature: signature);
-    log("success post save payment");
-    await _myrepo.postPaymentSave(tournamentIdforSavePay, data).then((value) {
-      log(value.toString());
-      navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage);
-    }).onError((error, stackTrace) {
-      log(error.toString());
-    });
-  }
 
-  clearAllDataLogout() {
-    paymentId = null;
-    orderId = null;
-    signature = null;
-    tournamentIdforSavePay = null;
+    await _myrepo.postPaymentSave(tournamentIdforSavePay, data).then((value) {
+      navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage);
+    }).onError((error, stackTrace) {});
   }
 }

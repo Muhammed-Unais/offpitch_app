@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -13,7 +15,7 @@ import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_
 import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MyClubTabOne extends StatefulWidget {
+class MyClubTabOne extends StatelessWidget {
   const MyClubTabOne({
     super.key,
     this.userClubId,
@@ -22,16 +24,12 @@ class MyClubTabOne extends StatefulWidget {
   final String? userClubId;
 
   @override
-  State<MyClubTabOne> createState() => _MyClubTabOneState();
-}
-
-class _MyClubTabOneState extends State<MyClubTabOne> {
-  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return widget.userClubId != null && widget.userClubId!.isNotEmpty
+    return userClubId != null && userClubId!.isNotEmpty
         ? Consumer<MyClubViewModel>(
             builder: (context, myClubViewModelProvider, _) {
+              log(userClubId.toString());
               switch (myClubViewModelProvider.getClubApiResponse.status) {
                 case Status.LOADING:
                   return const Center(
@@ -43,6 +41,7 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
                 case Status.COMPLETED:
                   final data = myClubViewModelProvider.getClubApiResponse.data;
                   if (data?.data?.status == "awaiting") {
+                    log("==awaiting");
                     return InkWell(
                       onTap: () {
                         myClubViewModelProvider.getMyClub(context);
@@ -104,7 +103,8 @@ class _MyClubTabOneState extends State<MyClubTabOne> {
                 case Status.ERROR:
                   return ErrorComponent(
                     errorMessage:
-                        myClubViewModelProvider.getClubApiResponse.message ?? "",
+                        myClubViewModelProvider.getClubApiResponse.message ??
+                            "",
                   );
                 default:
                   return const Center(

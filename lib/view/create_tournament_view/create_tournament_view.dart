@@ -119,7 +119,9 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
                           userViewModel.userClubStatus == "awaiting"
                               ? null
                               : Navigator.pushNamed(
-                                  context, RoutesName.clubCreation);
+                                  context,
+                                  RoutesName.clubCreation,
+                                );
                         },
                         child: EmptyComponts(
                           image: userViewModel.userClubStatus == "awaiting"

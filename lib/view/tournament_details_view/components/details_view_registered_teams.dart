@@ -41,76 +41,63 @@ class RegisteredTeams extends StatelessWidget {
               itemCount: singleTourdata?.data?.teams?.length ?? 0,
               itemBuilder: (context, index) {
                 var data = singleTourdata?.data?.teams;
-
-                return InkWell(
-                  onTap: () {
-                    context
-                        .read<DetailsTouramentViewModel>()
-                        .getRegisterdClubdetails(
-                            singleTourdata?.data?.id, data?[index].id);
-                    Utils.showDialogue(
-                      context,
-                      child: const DetailsViewRegisteredTeams(),
-                    );
-                  },
-                  child: Card(
-                    elevation: 0,
-                    surfaceTintColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side:
-                          const BorderSide(color: AppColors.black, width: 0.5),
-                      borderRadius:
-                          BorderRadius.circular(AppRadius.borderRadiusS),
-                    ),
-                    child: SizedBox(
-                      height: 120,
-                      width: 120,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 120,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(
-                                  AppRadius.borderRadiusS,
-                                ),
-                                topRight: Radius.circular(
-                                  AppRadius.borderRadiusS,
-                                ),
+                return Card(
+                  elevation: 0,
+                  surfaceTintColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side:
+                        const BorderSide(color: AppColors.black, width: 0.5),
+                    borderRadius:
+                        BorderRadius.circular(AppRadius.borderRadiusS),
+                  ),
+                  child: SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(
+                                AppRadius.borderRadiusS,
                               ),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(data?[index].profile ??
-                                    AppProfilesCover.clubCover),
+                              topRight: Radius.circular(
+                                AppRadius.borderRadiusS,
                               ),
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(data?[index].profile ??
+                                  AppProfilesCover.clubCover),
                             ),
                           ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(
-                                  AppRadius.borderRadiusS,
-                                ),
-                                bottomRight:
-                                    Radius.circular(AppRadius.borderRadiusS),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(
+                                AppRadius.borderRadiusS,
                               ),
+                              bottomRight:
+                                  Radius.circular(AppRadius.borderRadiusS),
                             ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  data?[index].name ?? "No title",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                Text(
-                                  "Players:${data?[index].players?.length ?? 0}",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                data?[index].name ?? "No title",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              Text(
+                                "Players:${data?[index].players?.length ?? 0}",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 );

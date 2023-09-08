@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_logout_alert_dia.dart';
@@ -10,8 +13,9 @@ class UserProfileSettingsExpansion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-       shape: const Border(
-        bottom: BorderSide(color: AppColors.grey,width: 0.4),
+      leading: const Icon(IconlyBold.setting),
+      shape: const Border(
+        bottom: BorderSide(color: AppColors.grey, width: 0.4),
       ),
       iconColor: AppColors.primary,
       textColor: AppColors.primary,
@@ -29,7 +33,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
               padding: EdgeInsets.only(right: 10, left: 10, top: 6),
               child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
             ),
-            InkWell(
+            GestureDetector(
               onTap: () async {
                 await Share.share(
                     "https://play.google.com/store/apps/details?id=in.dartz.offpitch");
@@ -48,7 +52,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
               padding: EdgeInsets.only(right: 10, left: 10, top: 6),
               child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
             ),
-            InkWell(
+            GestureDetector(
               onTap: () {
                 Utils.showDialogue(context, child: const LogoutAlertDialog());
               },
@@ -60,7 +64,6 @@ class UserProfileSettingsExpansion extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-
       ],
     );
   }

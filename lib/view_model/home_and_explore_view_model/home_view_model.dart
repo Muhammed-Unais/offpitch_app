@@ -32,6 +32,6 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void clearAllDataLogout() {
-    apiResponse = null;
+    apiResponse?.data = null;
   }
 }

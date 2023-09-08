@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -11,7 +10,6 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return SizedBox(
       height: 200.0,
       child: Consumer<MyClubViewModel>(
@@ -50,25 +48,27 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                               Text(
                                 data?[index].name ?? "",
                                 style: const TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const SizedBox(height: 5.0),
                               Text(
                                 'Age: ${registrViewModel.dobToAge(data?[index].dateOfBirth ?? DateTime.now())}',
                                 style: const TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
                       Checkbox(
-                        fillColor: MaterialStatePropertyAll(
-                          Colors.white.withOpacity(0.5),
+                        fillColor: const MaterialStatePropertyAll(
+                          Colors.white,
                         ),
                         activeColor: AppColors.white,
                         checkColor: AppColors.primary,

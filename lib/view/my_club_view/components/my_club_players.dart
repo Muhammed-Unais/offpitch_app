@@ -29,6 +29,7 @@ class MyClubPlayers extends StatelessWidget {
                 ),
               );
             case Status.COMPLETED:
+        
               final data = value.getPlayerapiResponse.data!.data!;
 
               return ListView.builder(

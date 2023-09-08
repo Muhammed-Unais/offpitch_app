@@ -19,6 +19,7 @@ class UserProfileAboutUsExpansion extends StatelessWidget {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       tilePadding: const EdgeInsets.all(0),
       childrenPadding: const EdgeInsets.all(0),
+      leading: const Icon(Icons.info_rounded),
       title: Text("About us", style: Theme.of(context).textTheme.labelLarge),
       children: [
         Row(

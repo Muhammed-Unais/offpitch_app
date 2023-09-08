@@ -20,11 +20,9 @@ class DetailsTouramentViewModel with ChangeNotifier {
   }
 
 //  touranemt deatils api call==========
-  Future getSingleTournament(
-    id,
-  ) async {
+  Future<void> getSingleTournament(id) async {
     setDetilsTournament(ApiResponse.loading());
-    _myRepo.sigleTournamentDetails(id).then((value) {
+    await _myRepo.sigleTournamentDetails(id).then((value) {
       setDetilsTournament(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setDetilsTournament(ApiResponse.error(error.toString()));
@@ -73,9 +71,9 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool registeredPendingStatusCheking(SingleTournamentModel? data, context) {
-    String? myClubid =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
+  bool registeredPendingStatusCheking(
+      SingleTournamentModel? data, BuildContext context) {
+    String? myClubid = context.read<UserViewModel>().userClubId;
     bool conatain = false;
     for (var element in data!.data!.teams!) {
       if (element.club?.trim() == myClubid?.trim()) {
@@ -89,9 +87,8 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  bool userSheduleChecking(SingleTournamentModel? data, context) {
-    String? myClubid =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
+  bool userSheduleChecking(SingleTournamentModel? data, BuildContext context) {
+    String? myClubid = context.read<UserViewModel>().userClubId;
     bool conatain = false;
     if (data?.data?.host?.id == myClubid) {
       conatain = true;
@@ -105,17 +102,19 @@ class DetailsTouramentViewModel with ChangeNotifier {
 
   ApiResponse<RegisterdTeamsModel> registeredTeams = ApiResponse.loading();
 
-  setRegisterdTeams(ApiResponse<RegisterdTeamsModel> model) {
+  void setRegisterdTeams(ApiResponse<RegisterdTeamsModel> model) {
     registeredTeams = model;
     notifyListeners();
   }
 
-  getRegisterdClubdetails(String? tId, cId) {
+  Future<void> getRegisterdClubdetails(String? tId, cId) async {
     setRegisterdTeams(ApiResponse.loading());
-    _myReop2.getAllRegisteredClubs(tId, cId).then((value) {
+    await _myReop2.getAllRegisteredClubs(tId, cId).then((value) {
+      log(value.data!.players![0].name!);
       setRegisterdTeams(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setRegisterdTeams(ApiResponse.error(error.toString()));
+      log(error.toString());
     });
   }
 

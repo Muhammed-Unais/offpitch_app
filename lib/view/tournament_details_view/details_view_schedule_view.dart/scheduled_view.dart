@@ -7,14 +7,12 @@ import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_
 import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/components/scheduled_view_tabbar1.dart';
 
 class ScheduledView extends StatefulWidget {
-  const ScheduledView(
-      {super.key, required this.singleTournamentModel});
+  const ScheduledView({super.key, required this.singleTournamentModel});
 
   final SingleTournamentModel singleTournamentModel;
 
   @override
-  State<ScheduledView> createState() =>
-      _ScheduledViewState();
+  State<ScheduledView> createState() => _ScheduledViewState();
 }
 
 class _ScheduledViewState extends State<ScheduledView>
@@ -44,7 +42,6 @@ class _ScheduledViewState extends State<ScheduledView>
             child: TabBarView(
               controller: tabController,
               children: [
-                // Tornamet Checking and P change the Screeen ===========
                 widget.singleTournamentModel.data?.tournamentType == "t2"
                     ? ScheduledviewT2(
                         singleTournamentModel: widget.singleTournamentModel,

@@ -13,7 +13,10 @@ import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tourn
 import 'package:provider/provider.dart';
 
 class DetailsViewRegister extends StatelessWidget {
-  const DetailsViewRegister({super.key, required this.data});
+  const DetailsViewRegister({
+    super.key,
+    required this.data,
+  });
 
   final SingleTournamentModel data;
 
@@ -110,10 +113,11 @@ class DetailsViewRegister extends StatelessWidget {
                           value.playersIds.clear();
                           value.isPermission = false;
                           context.read<MyClubViewModel>().getAllPlayers();
-                           DetailsViewRegistrationBottomSheet
+                          DetailsViewRegistrationBottomSheet
                               .showModelBottomsheet(
                             model: data,
                             context,
+                            registorationViewModel: value,
                           );
                         },
                       ),

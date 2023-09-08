@@ -11,6 +11,8 @@ import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_watchli
 import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../view_model/auth_view_model/user_view_model.dart';
+
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
 
@@ -19,6 +21,16 @@ class UserProfileView extends StatefulWidget {
 }
 
 class _UserProfileViewState extends State<UserProfileView> {
+  @override
+  void initState() {
+    var userClubId = context.read<UserViewModel>().userClubId;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      userClubId ?? context.read<UserViewModel>().getUserClubId();
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProfileViewModel>(builder: (context, userProvider, _) {
@@ -40,9 +52,8 @@ class _UserProfileViewState extends State<UserProfileView> {
               child: CircleAvatar(
                 backgroundColor: AppColors.white,
                 radius: 14,
-                backgroundImage: data?.profile == null
-                    ? null
-                    : NetworkImage(data!.profile!),
+                backgroundImage:
+                    data?.profile == null ? null : NetworkImage(data!.profile!),
               ),
             ),
           ],

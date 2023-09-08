@@ -54,9 +54,6 @@ class MyApp extends StatelessWidget {
           create: (context) => ExploreViewViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => RegistorationViewModel(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => ScheduleTournametViewModel(),
         ),
         ChangeNotifierProvider(
@@ -68,7 +65,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserProfileViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => UserHostRegTournamentViewModel(),
         ),
       ],

@@ -22,6 +22,7 @@ class _MyClubViewState extends State<MyClubView> {
   void initState() {
     userClubId = context.read<UserViewModel>().userClubId;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      userClubId ?? context.read<UserViewModel>().getUserClubId();
       getClubAndPlayers();
       getUserHostedTournaments();
       getUserRegisteredTournaments();

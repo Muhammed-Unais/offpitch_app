@@ -49,32 +49,10 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: ColoredBox(
-              color: AppColors.primary,
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      height: size.height * 0.1,
-                      width: size.width,
-                      decoration: const BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(
-                            AppRadius.borderRadiusL,
-                          ),
-                          topRight: Radius.circular(
-                            AppRadius.borderRadiusL,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const HomeTopCard(),
-                ],
-              ),
+              color: AppColors.white                                                                                                      ,
+              child: HomeTopCard(),
             ),
           )
         ];

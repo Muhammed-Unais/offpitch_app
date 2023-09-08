@@ -65,7 +65,9 @@ class MyClubViewModel extends ChangeNotifier {
   }
 
   void clearAllDateLogout() {
+    getClubApiResponse.status = null;
     getClubApiResponse.data = null;
+    getPlayerapiResponse.status = null;
     getPlayerapiResponse.data = null;
   }
 }
