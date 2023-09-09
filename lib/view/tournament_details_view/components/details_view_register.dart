@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/models/single_tournament_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_regis_bottom_.dart';
@@ -7,9 +7,9 @@ import 'package:offpitch_app/view/tournament_details_view/components/details_vie
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_closed.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_schedule_button.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_timer_remaining.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/registration_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DetailsViewRegister extends StatelessWidget {

@@ -11,8 +11,8 @@ import 'package:offpitch_app/view/my_club_view/components/my_club_players.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_description.dart';
 import 'package:offpitch_app/view/my_club_view/components/tabview_one_club_profile.dart';
 import 'package:offpitch_app/view/my_club_view/components/tav_view_one_email_phone.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/create_new_club_view_model.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view/club_creation_view/view_model/create_new_club_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubTabOne extends StatelessWidget {
@@ -29,7 +29,6 @@ class MyClubTabOne extends StatelessWidget {
     return userClubId != null && userClubId!.isNotEmpty
         ? Consumer<MyClubViewModel>(
             builder: (context, myClubViewModelProvider, _) {
-              log(userClubId.toString());
               switch (myClubViewModelProvider.getClubApiResponse.status) {
                 case Status.LOADING:
                   return const Center(
@@ -41,7 +40,6 @@ class MyClubTabOne extends StatelessWidget {
                 case Status.COMPLETED:
                   final data = myClubViewModelProvider.getClubApiResponse.data;
                   if (data?.data?.status == "awaiting") {
-                    log("==awaiting");
                     return InkWell(
                       onTap: () {
                         myClubViewModelProvider.getMyClub(context);

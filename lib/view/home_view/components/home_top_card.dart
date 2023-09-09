@@ -1,14 +1,15 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/models/all_tournaments_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/home_view/components/home_carousels.dart';
-import 'package:offpitch_app/view_model/home_and_explore_view_model/home_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/home_view/view_model/home_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../../explore_view/model/all_tournaments_model.dart';
 
 class HomeTopCard extends StatefulWidget {
   const HomeTopCard({super.key});
@@ -38,23 +39,14 @@ class _HomeTopCardState extends State<HomeTopCard> {
         vertical: AppMargin.small,
         horizontal: AppMargin.large,
       ),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 5,
-            offset: const Offset(0, 5),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(
-          AppRadius.borderRadiusM,
+      child: Card(
+        surfaceTintColor: AppColors.white,
+        elevation: 10,
+        child: Consumer<HomeViewModel>(
+          builder: (context, homeViewModel, _) {
+            return swiperWidget(homeViewModel);
+          },
         ),
-      ),
-      child: Consumer<HomeViewModel>(
-        builder: (context, homeViewModel, _) {
-          return swiperWidget(homeViewModel);
-        },
       ),
     );
   }

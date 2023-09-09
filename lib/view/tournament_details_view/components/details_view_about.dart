@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/models/single_tournament_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:readmore/readmore.dart';
 

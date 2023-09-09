@@ -4,8 +4,8 @@ import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
-import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/user_profile_view/view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileWatchListExpansion extends StatelessWidget {

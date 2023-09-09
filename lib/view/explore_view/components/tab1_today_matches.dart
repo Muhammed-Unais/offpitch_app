@@ -6,8 +6,8 @@ import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
 // import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/explore_view/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class Tab1TodayMatches extends StatefulWidget {

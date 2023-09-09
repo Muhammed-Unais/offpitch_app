@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/registration_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/registration_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PaymentStatusScreen extends StatelessWidget {

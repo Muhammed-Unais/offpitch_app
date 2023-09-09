@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/textformfied_components.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/view/create_tournament_view/view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateTournamentfirstFields extends StatelessWidget {

@@ -8,7 +8,7 @@ import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_t
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tab_two.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_tabbar.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/view/create_tournament_view/view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateTournamentView extends StatefulWidget {

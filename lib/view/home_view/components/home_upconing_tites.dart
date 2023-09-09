@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class HomeUpcomingtitle extends StatelessWidget {

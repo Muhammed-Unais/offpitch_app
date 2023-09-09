@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/schedule_tournament_view_model.dart';
+import 'package:offpitch_app/view/details_view_schedule_view.dart/view_model/schedule_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DetailsViewRegisteredScheduleBotton extends StatelessWidget {

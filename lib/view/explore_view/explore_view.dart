@@ -3,7 +3,7 @@ import 'package:offpitch_app/view/explore_view/components/explore_search.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';
 import 'package:offpitch_app/view/explore_view/components/tab1_today_matches.dart';
 import 'package:offpitch_app/view/explore_view/components/tab2_upcoming_matches.dart';
-import 'package:offpitch_app/view_model/home_and_explore_view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/view/explore_view/view_model/explore_view_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ExploreView extends StatefulWidget {

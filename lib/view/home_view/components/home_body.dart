@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/models/user_host_tournament_model.dart';
-import 'package:offpitch_app/models/user_registered_model.dart';
+import 'package:offpitch_app/view/my_club_view/model/user_host_tournament_model.dart';
+import 'package:offpitch_app/view/my_club_view/model/user_registered_model.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -11,11 +11,11 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/view/explore_view/components/explore_tabbar.dart';
 import 'package:offpitch_app/view/home_view/components/home_top_card.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../../view_model/my_club_view_model/my_club_over_view_model.dart';
+import '../../my_club_view/view_model/my_club_over_view_model.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});

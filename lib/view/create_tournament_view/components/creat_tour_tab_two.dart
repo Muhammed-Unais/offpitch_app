@@ -3,7 +3,7 @@ import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_checkbox.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_second_field.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/view/create_tournament_view/view_model/create_tournament_view_model.dart';
 import 'package:offpitch_app/view_model/services.dart/tournament_creation_validation/tournamen_creation_validation.dart';
 
 class CreatTournamentTabTwo extends StatelessWidget {

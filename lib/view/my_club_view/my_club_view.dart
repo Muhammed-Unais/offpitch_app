@@ -4,8 +4,8 @@ import 'package:offpitch_app/view/my_club_view/components/my_club_tab_one.dart';
 import 'package:offpitch_app/view/my_club_view/components/my_club_tab_three.dart';
 import 'package:offpitch_app/view/my_club_view/components/my_club_tab_two.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/myclub_user_hostreg_tour_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubView extends StatefulWidget {

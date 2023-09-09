@@ -8,10 +8,10 @@ import 'package:offpitch_app/view/tournament_details_view/components/details_vie
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_data_place.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_register.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_registered_teams.dart';
-import 'package:offpitch_app/view/tournament_details_view/details_view_schedule_view.dart/scheduled_view.dart';
+import 'package:offpitch_app/view/details_view_schedule_view.dart/scheduled_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_short_description.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_tournament_image.dart';
-import 'package:offpitch_app/view_model/tournament_details_view_model.dart/tournament_detils_view_model.dart';
+import 'package:offpitch_app/view/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DetailsViewBody extends StatelessWidget {

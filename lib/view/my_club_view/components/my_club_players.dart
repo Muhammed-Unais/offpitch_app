@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/models/players_model.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/players_card.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/view/my_club_view/components/my_club_add_player_bottom_sheet.dart';
-import 'package:offpitch_app/view_model/my_club_view_model/my_club_over_view_model.dart';
+import 'package:offpitch_app/view/my_club_view/model/players_model.dart';
+import 'package:offpitch_app/view/my_club_view/view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyClubPlayers extends StatelessWidget {

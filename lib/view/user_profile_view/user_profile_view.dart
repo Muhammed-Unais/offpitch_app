@@ -8,7 +8,7 @@ import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_club_ca
 import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_settings_expansion.dart';
 import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_wallet_card.dart';
 import 'package:offpitch_app/view/user_profile_view/widgets/user_profile_watchlist_expansion.dart';
-import 'package:offpitch_app/view_model/user_profile_view_model/user_profile_view_model.dart';
+import 'package:offpitch_app/view/user_profile_view/view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/auth_view_model/user_view_model.dart';

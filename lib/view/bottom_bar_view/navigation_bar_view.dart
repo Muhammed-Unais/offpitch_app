@@ -7,7 +7,7 @@ import 'package:offpitch_app/view/explore_view/explore_view.dart';
 import 'package:offpitch_app/view/home_view/home_view.dart';
 import 'package:offpitch_app/view/my_club_view/my_club_view.dart';
 import 'package:offpitch_app/view/user_profile_view/user_profile_view.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class BottomBarView extends StatefulWidget {

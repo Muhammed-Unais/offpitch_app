@@ -4,14 +4,14 @@ import 'package:offpitch_app/view/explore_view/explore_view.dart';
 import 'package:offpitch_app/view/home_view/home_view.dart';
 import 'package:offpitch_app/view/login_view/login_view.dart';
 import 'package:offpitch_app/view/bottom_bar_view/navigation_bar_view.dart';
-import 'package:offpitch_app/view/my_club_view/club_creation_view/club_creation_view.dart';
+import 'package:offpitch_app/view/club_creation_view/club_creation_view.dart';
 import 'package:offpitch_app/view/my_club_view/my_club_view.dart';
 import 'package:offpitch_app/view/otp_verify_view/otp_verify_view.dart';
 import 'package:offpitch_app/view/signup_view/signup_view.dart';
 import 'package:offpitch_app/view/splash_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/components/details_view_registration_payment_success_view.dart';
 import 'package:offpitch_app/view/tournament_details_view/torunament_details_view.dart';
-import 'package:offpitch_app/view/user_profile_view/user_watch_list_view/user_watch_list.dart';
+import 'package:offpitch_app/view/user_watch_list_view/user_watch_list.dart';
 
 class Routes {
   static Route<dynamic> genericRoute(RouteSettings settings) {

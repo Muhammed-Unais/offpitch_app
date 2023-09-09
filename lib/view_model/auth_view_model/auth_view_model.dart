@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/repository/auth_repository.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/view_model/bottom_bar_viewmodel.dart';
+import 'package:offpitch_app/view/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/view_model/auth_view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 

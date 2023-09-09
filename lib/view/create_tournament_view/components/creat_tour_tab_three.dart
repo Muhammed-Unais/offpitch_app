@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/save_continue_button.dart';
 import 'package:offpitch_app/view/create_tournament_view/components/creat_tour_third_fieds.dart';
-import 'package:offpitch_app/view_model/create_tournament_view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/view/create_tournament_view/view_model/create_tournament_view_model.dart';
 
 class CreatTournamentTabThree extends StatelessWidget {
   const CreatTournamentTabThree(

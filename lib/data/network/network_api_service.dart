@@ -81,7 +81,8 @@ class NetworkApiServices extends BaseApiService {
     dio.interceptors.addAll(appinterceptor.dio.interceptors);
 
     try {
-      final accessToken =await Utils.sharedPrefrenceGetValue(key: 'accessToken');
+      final accessToken =
+          await Utils.sharedPrefrenceGetValue(key: 'accessToken');
 
       dio.options.headers['Authorization'] = 'Bearer $accessToken';
       final response = await dio.put(url, data: data).timeout(
@@ -98,21 +99,19 @@ class NetworkApiServices extends BaseApiService {
 // Post Api method with AccessToken=====================
   @override
   Future getPostApiWithAccessToken(String url, data) async {
-    dynamic successResponseData;
-
     final dio = Dio();
     final appinterceptor = AppInterceptor();
     dio.interceptors.addAll(appinterceptor.dio.interceptors);
 
     try {
-      final accessToken =await Utils.sharedPrefrenceGetValue(key: 'accessToken');
+      final accessToken =
+          await Utils.sharedPrefrenceGetValue(key: 'accessToken');
 
       dio.options.headers['Authorization'] = 'Bearer $accessToken';
       final response =
           await dio.post(url, data: data).timeout(const Duration(seconds: 10));
 
-      returnResponse(response);
-      return successResponseData;
+      return returnResponse(response);
     } on DioError catch (e) {
       return returnResponse(e.response);
     }
