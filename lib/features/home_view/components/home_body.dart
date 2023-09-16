@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/features/explore_view/components/explore_search.dart';
+import 'package:offpitch_app/features/home_view/components/home_top_card.dart';
 import 'package:offpitch_app/features/my_club_view/model/user_host_tournament_model.dart';
 import 'package:offpitch_app/features/my_club_view/model/user_registered_model.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
@@ -10,7 +12,6 @@ import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/features/explore_view/components/explore_tabbar.dart';
-import 'package:offpitch_app/features/home_view/components/home_top_card.dart';
 import 'package:offpitch_app/features/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/features/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
@@ -46,24 +47,33 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          const SliverToBoxAdapter(
-            child: ColoredBox(
-              color: AppColors.white                                                                                                      ,
-              child: HomeTopCard(),
+    return Column(
+      children: [
+        const HomeTitleWidget(),
+        const SizedBox(height: 15),
+        const SearchWidget(),
+        const SizedBox(height: 15),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Tournaments",
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: AppColors.grey,
+                fontSize: 16,
+              ),
             ),
-          )
-        ];
-      },
-      body: Container(
-        height: size.height,
-        decoration: const BoxDecoration(
-          color: AppColors.white,
+          ),
         ),
-        child: allTournamentsDetails(size, context),
-      ),
+        const SizedBox(height: 15),
+        SizedBox(
+          height: size.height * 0.2,
+         
+          child: const HomeTopCard(),
+        )
+      ],
     );
   }
 
@@ -276,6 +286,68 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
                 ),
         );
       },
+    );
+  }
+}
+
+class HomeTitleWidget extends StatelessWidget {
+  const HomeTitleWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                "Hello,",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.black,
+                ),
+              ),
+              Text(
+                "WELCOME",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.black,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: 40,
+                width: 40,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.add,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

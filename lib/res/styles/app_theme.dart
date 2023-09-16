@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   static const Color primary = Color.fromRGBO(242, 129, 29, 1.0);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color lightgrey = Color.fromRGBO(243, 244, 245, 1);
   static const Color grey = Colors.grey;
+  static const Color lightBlack = Color.fromRGBO(0, 0, 0, 1);
 }
 
 class AppTheme {
@@ -19,8 +22,10 @@ class AppTheme {
       color: AppColors.black,
       overflow: TextOverflow.ellipsis);
 
-  static const TextStyle _bodyTextStyle =
-      TextStyle(color: AppColors.black, overflow: TextOverflow.ellipsis,);
+  static const TextStyle _bodyTextStyle = TextStyle(
+    color: AppColors.black,
+    overflow: TextOverflow.ellipsis,
+  );
 
   static const TextStyle _subBodyTextStyle =
       TextStyle(color: AppColors.grey, overflow: TextOverflow.ellipsis);
@@ -28,10 +33,9 @@ class AppTheme {
   static const TextStyle _labeltextStyle =
       TextStyle(color: AppColors.primary, overflow: TextOverflow.ellipsis);
 
-
   static final ThemeData lightTheme = ThemeData(
     cardColor: AppColors.white,
-    fontFamily: GoogleFonts.quattrocentoSans().fontFamily,
+    fontFamily: "Pilat",
     useMaterial3: true,
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.white,

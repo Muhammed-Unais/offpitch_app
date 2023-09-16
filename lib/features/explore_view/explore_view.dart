@@ -60,8 +60,8 @@ class _ExploreViewState extends State<ExploreView>
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
-              SliverToBoxAdapter(
-                child: ExploreSearch(controller: tabController),
+              const SliverToBoxAdapter(
+                child: SearchWidget(),
               )
             ];
           },
