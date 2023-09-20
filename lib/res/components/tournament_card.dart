@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
@@ -20,7 +19,6 @@ class TournamentCard extends StatelessWidget {
   final String tornamentDate;
   final String? shortDescription;
   final String? status;
-
   final bool isDiscription;
 
   @override
@@ -29,136 +27,117 @@ class TournamentCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.only(
-            left: AppMargin.large,
-            right: AppMargin.large,
-            top: AppMargin.small,
-            bottom: AppMargin.small,
-          ),
+          margin:
+              const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           decoration: BoxDecoration(
+            border: Border.all(
+                color: const Color.fromRGBO(228, 229, 229, 1), width: 1),
             color: AppColors.white,
             borderRadius: BorderRadius.circular(
-              AppRadius.borderRadiusM,
+              AppRadius.borderRadiusS,
             ),
           ),
-          child: Card(
-            surfaceTintColor: AppColors.white,
-            elevation: 5,
-            child: Column(
-              children: [
-                Container(
-                  height: size.height * 0.15,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(
-                        AppRadius.borderRadiusM,
-                      ),
-                      topRight: Radius.circular(
-                        AppRadius.borderRadiusM,
-                      ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: AppColors.white,
+                      backgroundImage: NetworkImage(touranmentCoverImage),
+                      maxRadius: 36,
                     ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        touranmentCoverImage,
-                      ),
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(AppPadding.small),
-                  height: size.height * 0.1,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(
-                        AppRadius.borderRadiusM,
-                      ),
-                      bottomRight: Radius.circular(
-                        AppRadius.borderRadiusM,
-                      ),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        tornamentName,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                      Row(
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            size: 16,
-                          ),
                           Text(
-                            tornamentPlace,
-                            style: Theme.of(context).textTheme.labelMedium,
+                            tornamentName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(
-                            width: AppMargin.extraSmall,
+                            height: 5,
                           ),
-                          const Icon(
-                            Icons.calendar_month_outlined,
-                            size: 16,
-                          ),
-                          Text(
-                            tornamentDate.toString(),
-                            style: Theme.of(context).textTheme.labelMedium,
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_month_outlined,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                overflow: TextOverflow.ellipsis,
+                                tornamentDate.toString(),
+                                style: const TextStyle(
+                                  fontFamily: "SFUIDisplay",
+                                  fontSize: 12,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Icon(
+                                Icons.location_on_outlined,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                tornamentPlace,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: "SFUIDisplay",
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Text(
-                        isDiscription
-                            ? shortDescription ?? ""
-                            : "Registration status: ${status?.toUpperCase()}",
-                        style: isDiscription
-                            ? Theme.of(context).textTheme.bodyMedium
-                            : Theme.of(context).textTheme.bodyLarge,
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                width: size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      shortDescription ?? "",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontFamily: "SFUIDisplay",
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        Positioned(
-          top: 0,
-          left: size.width / 2 - 40,
-          child: Container(
-            height: 24,
-            width: 80,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 5,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-              color: AppColors.white,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(
-                  AppRadius.borderRadiusM,
-                ),
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                (tornamentDate),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ),
-          ),
-        )
       ],
     );
   }

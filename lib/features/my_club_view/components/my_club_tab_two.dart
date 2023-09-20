@@ -33,6 +33,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return widget.userClubId != null && widget.userClubId!.isNotEmpty
         ? Consumer<UserHostRegTournamentViewModel>(
             builder: (context, value, _) {
@@ -58,8 +59,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                   return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 10),
                     shrinkWrap: true,
-                    itemCount:
-                        value.apiResponseHostedTournaments.data?.length,
+                    itemCount: value.apiResponseHostedTournaments.data?.length,
                     itemBuilder: (context, index) {
                       final data = value
                           .apiResponseHostedTournaments.data!.reversed
@@ -84,8 +84,9 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                   );
                 case Status.ERROR:
                   return ErrorComponent(
-                    errorMessage:
-                        value.apiResponseHostedTournaments.message!,
+                    hight: size.height*0.15,
+                    width: size.height*0.15,
+                    errorMessage: value.apiResponseHostedTournaments.message!,
                   );
                 default:
                   return const SizedBox();

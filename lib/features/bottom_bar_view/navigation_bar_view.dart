@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/features/create_tournament_view/create_tournament_view.dart';
 import 'package:offpitch_app/features/explore_view/explore_view.dart';
 import 'package:offpitch_app/features/home_view/home_view.dart';
 import 'package:offpitch_app/features/my_club_view/my_club_view.dart';
@@ -18,10 +16,9 @@ class BottomBarView extends StatefulWidget {
 }
 
 class _BottomBarViewState extends State<BottomBarView> {
-  List<Widget> views = [
+  List<Widget> screens = [
     const HomeView(),
-    const ExploreView(),
-    const CreateTournamentView(),
+    const ExploreView(searchQuery: ""),
     const MyClubView(),
     const UserProfileView(),
   ];
@@ -37,7 +34,7 @@ class _BottomBarViewState extends State<BottomBarView> {
   Widget build(BuildContext context) {
     final bottomBarVieModel = Provider.of<BottomBarViewModel>(context);
     return Scaffold(
-      body: views[bottomBarVieModel.currentIndex],
+      body: screens[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) =>
@@ -62,14 +59,6 @@ class _BottomBarViewState extends State<BottomBarView> {
             label: "Explore",
             icon: Icon(
               Icons.explore,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: "add",
-            icon: Icon(
-              Icons.add_circle,
-              color: AppColors.primary,
-              size: 36,
             ),
           ),
           BottomNavigationBarItem(

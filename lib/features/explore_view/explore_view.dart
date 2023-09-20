@@ -1,5 +1,6 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/features/explore_view/components/explore_search.dart';
+import 'package:offpitch_app/res/components/search_component.dart';
 import 'package:offpitch_app/features/explore_view/components/explore_tabbar.dart';
 import 'package:offpitch_app/features/explore_view/components/tab1_today_matches.dart';
 import 'package:offpitch_app/features/explore_view/components/tab2_upcoming_matches.dart';
@@ -7,7 +8,9 @@ import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_
 import 'package:provider/provider.dart';
 
 class ExploreView extends StatefulWidget {
-  const ExploreView({super.key});
+  const ExploreView({super.key, required this.searchQuery});
+
+  final String searchQuery;
 
   @override
   State<ExploreView> createState() => _ExploreViewState();
@@ -19,6 +22,7 @@ class _ExploreViewState extends State<ExploreView>
 
   @override
   void initState() {
+    log(widget.searchQuery);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       context.read<ExploreViewViewModel>().setSearchTabbarIndex(
@@ -30,7 +34,9 @@ class _ExploreViewState extends State<ExploreView>
       if (exploreAndSearchProvider.allTournaments.data == null &&
           exploreAndSearchProvider.liveTournaments.data == null) {
         exploreAndSearchProvider.getExpAndSrchTournmts(
-            query: 'filter=all', sortingQuery: "all", isNotify: true);
+          query: 'filter=all',
+          sortingQuery: "all",
+        );
       }
     });
     super.initState();

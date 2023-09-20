@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/features/create_tournament_view/create_tournament_view.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/features/explore_view/explore_view.dart';
 import 'package:offpitch_app/features/home_view/home_view.dart';
@@ -28,6 +29,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => const HomeView(),
         );
+      case RoutesName.tournamentHost:
+        return MaterialPageRoute(
+          builder: (context) => const CreateTournamentView(),
+        );
       case RoutesName.splash:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
@@ -41,8 +46,9 @@ class Routes {
           builder: (context) => const BottomBarView(),
         );
       case RoutesName.explore:
+        var query = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) => const ExploreView(),
+          builder: (context) => ExploreView(searchQuery: query),
         );
       case RoutesName.tournamentDetails:
         return MaterialPageRoute(
@@ -50,7 +56,7 @@ class Routes {
         );
       case RoutesName.myClub:
         return MaterialPageRoute(
-          builder: (context) =>const MyClubView(),
+          builder: (context) => const MyClubView(),
         );
       case RoutesName.clubCreation:
         return MaterialPageRoute(

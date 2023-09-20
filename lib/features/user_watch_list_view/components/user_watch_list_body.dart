@@ -12,6 +12,7 @@ class UserWatchListBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Consumer<UserProfileViewModel>(
@@ -29,7 +30,7 @@ class UserWatchListBody extends StatelessWidget {
                     final data = value.userProfileWatchlist.data?.data?.reversed
                         .toList()[index];
                     if (data == null) {
-                     return  const EmptyComponts(
+                      return const EmptyComponts(
                           image: "assets/images/no-data.svg",
                           showMessage: "Add Tournament",
                           height: 200,
@@ -56,6 +57,8 @@ class UserWatchListBody extends StatelessWidget {
                 );
               case Status.ERROR:
                 return ErrorComponent(
+                  hight: size.height*0.15,
+                  width: size.height * 0.15,
                   errorMessage: value.userProfileWatchlist.message ?? "",
                 );
               default:

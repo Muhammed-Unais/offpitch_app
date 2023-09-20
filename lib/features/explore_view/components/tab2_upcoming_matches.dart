@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
@@ -39,18 +40,23 @@ class Tab2UpcomingMatches extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ErrorComponent(errorMessage: value.allTournaments.message ?? "")
+                ErrorComponent(
+                  errorMessage: value.allTournaments.message ?? "",
+                  hight: size.height * 0.15,
+                  width: size.height * 0.15,
+                )
               ],
             );
           case Status.COMPLETED:
             final allTournamentdata =
                 value.allTournaments.data?.reversed.toList();
             if (allTournamentdata == null || allTournamentdata.isEmpty) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  ErrorComponent(errorMessage: "No Tournaments")
-                ],
+              return EmptyComponts(
+                showMessage: "No Tournaments",
+                image: "assets/images/no-data.svg",
+                height: size.height * 0.15,
+                width: size.height * 0.15,
+                addText: "",
               );
             }
             return ListView.builder(

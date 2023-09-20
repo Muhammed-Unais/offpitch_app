@@ -13,6 +13,8 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   ApiResponse<List<AllTournament>> allTournaments = ApiResponse.loading();
 
+  ApiResponse<List<AllTournament>> upcomingTournaments = ApiResponse.loading();
+
   // ApiResponse<AllTournamentsModel> upcomingTournments = ApiResponse.loading();
 
   void setSearchTabbarIndex(int value) {
@@ -20,30 +22,41 @@ class ExploreViewViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setliveTournaments(ApiResponse<List<AllTournament>> response, bool isNotify) {
+  void setliveTournaments(
+    ApiResponse<List<AllTournament>> response,
+  ) {
     liveTournaments = response;
 
-    if (isNotify) {
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
-  void setallTournaments(ApiResponse<List<AllTournament>> response, bool isNotify) {
+  void setallTournaments(
+    ApiResponse<List<AllTournament>> response,
+  ) {
     allTournaments = response;
 
-    if (isNotify) {
-      notifyListeners();
-    }
+    notifyListeners();
+  }
+
+  void setUpcomingTournaments(
+    ApiResponse<List<AllTournament>> response,
+  ) {
+    upcomingTournaments = response;
+
+    notifyListeners();
   }
 
   Future<void> getExpAndSrchTournmts(
-      {required String query,
-      required String sortingQuery,
-      required bool isNotify}) async {
-    // // set all tournaments for home=========
+      {required String query, required String sortingQuery, required}) async {
 
-    setliveTournaments(ApiResponse.loading(), isNotify);
-    setallTournaments(ApiResponse.loading(), isNotify);
+    if (sortingQuery == "upcomingT") {
+      setUpcomingTournaments(ApiResponse.loading());
+    }
+
+    if (sortingQuery == "all") {
+      setliveTournaments(ApiResponse.loading());
+      setallTournaments(ApiResponse.loading());
+    }
 
     _myrepo.exploreAndSearchTournaments(query: query).then((value) {
       DateFormat inputFormat = DateFormat('dd MMM yyyy');
@@ -51,11 +64,23 @@ class ExploreViewViewModel extends ChangeNotifier {
       final now = DateTime.now();
       String dateStr = "${now.day} ${now.month} ${now.year}";
 
-      List<AllTournament> liveTournament = [];
-      liveTournament.clear();
+      late List<AllTournament> liveTournament;
 
-      List<AllTournament> allTournament = [];
-      allTournament.clear();
+      late List<AllTournament> allTournament;
+
+      late List<AllTournament> upComingTournament;
+
+      if (sortingQuery == "all") {
+        allTournament = [];
+        liveTournament = [];
+        allTournament.clear();
+        liveTournament.clear();
+      }
+
+      if (sortingQuery == "upcomingT") {
+        upComingTournament = [];
+        upComingTournament.clear();
+      }
 
       for (AllTournament element in value.data!.allTournaments!) {
         String input = element.startDate!;
@@ -63,13 +88,18 @@ class ExploreViewViewModel extends ChangeNotifier {
         String outputDate = outputFormat.format(startDate);
         DateTime forUpcomingDate = DateFormat('dd MMM yyyy').parse(input);
 
+        if (forUpcomingDate.isAfter(now) && sortingQuery == "upcomingT") {
+          upComingTournament.add(element);
+        }
+
         // UPCOMING=============
         if (forUpcomingDate.isAfter(now) && sortingQuery == "upComing") {
-          allTournament.add(element);
+          upComingTournament.add(element);
         }
 
         // LIVE=================
         if (dateStr.trim() == outputDate.trim()) {
+          liveTournament.clear();
           liveTournament.add(element);
         }
 
@@ -79,15 +109,20 @@ class ExploreViewViewModel extends ChangeNotifier {
         }
       }
 
-      // setLive tournaments
-      setliveTournaments(ApiResponse.completed(liveTournament), isNotify);
+      if (sortingQuery == "upcomingT") {
+        setUpcomingTournaments(ApiResponse.completed(upComingTournament));
+      }
 
       // setAll tournament
-      setallTournaments(ApiResponse.completed(allTournament), isNotify);
+      if (sortingQuery == "all") {
+        setallTournaments(ApiResponse.completed(allTournament));
+        setliveTournaments(ApiResponse.completed(liveTournament));
+      }
     }).onError((error, stackTrace) {
       // set all tournaments for home================
-      setliveTournaments(ApiResponse.error(error.toString()), isNotify);
-      setallTournaments(ApiResponse.error(error.toString()), isNotify);
+      setliveTournaments(ApiResponse.error(error.toString()));
+      setallTournaments(ApiResponse.error(error.toString()));
+      setUpcomingTournaments(ApiResponse.error(error.toString()));
     });
   }
 
@@ -98,6 +133,8 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   ExploreViewViewModel() {
     getExpAndSrchTournmts(
-        query: 'filter=all', sortingQuery: "all", isNotify: true);
+      query: 'filter=all',
+      sortingQuery: "all",
+    );
   }
 }

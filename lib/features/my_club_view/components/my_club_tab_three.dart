@@ -30,6 +30,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return widget.userClubId != null && widget.userClubId!.isNotEmpty
         ? Consumer<UserHostRegTournamentViewModel>(
             builder: (context, value, _) {
@@ -83,6 +84,8 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                   );
                 case Status.ERROR:
                   return ErrorComponent(
+                    width: size.height*0.15,
+                    hight: size.height * 0.15,
                     errorMessage: value.apiResponseRegisTournaments.message!,
                   );
                 default:

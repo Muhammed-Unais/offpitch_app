@@ -33,6 +33,7 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Consumer<UserProfileViewModel>(builder: (context, userProvider, _) {
       var data = userProvider.userProfileResponse.data?.data;
       return Scaffold(
@@ -99,6 +100,8 @@ class _UserProfileViewState extends State<UserProfileView> {
                 case Status.ERROR:
                   return Center(
                     child: ErrorComponent(
+                      width: size.height*0.15,
+                      hight: size.height * 0.15,
                       errorMessage: value.userProfileResponse.message ?? "",
                     ),
                   );

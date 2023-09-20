@@ -100,6 +100,8 @@ class MyClubTabOne extends StatelessWidget {
                   );
                 case Status.ERROR:
                   return ErrorComponent(
+                    hight: size.height*0.15,
+                    width: size.height*0.15,
                     errorMessage:
                         myClubViewModelProvider.getClubApiResponse.message ??
                             "",

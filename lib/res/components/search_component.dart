@@ -6,18 +6,29 @@ import 'package:provider/provider.dart';
 
 enum PoupMenuButtons { all, upcoming }
 
-class SearchWidget extends StatelessWidget {
+class SearchWidget extends StatefulWidget {
   const SearchWidget({
     super.key,
+    this.isHome = false,
   });
+
+  final bool isHome;
+
+  @override
+  State<SearchWidget> createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  void navigateToExploreScreen(String query) {
+    Navigator.pushNamed(context, "explore", arguments: query);
+  }
 
   @override
   Widget build(BuildContext context) {
     PoupMenuButtons? sampleItem;
-    final size = MediaQuery.of(context).size;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      width: size.width,
       decoration: BoxDecoration(
         color: AppColors.lightgrey,
         borderRadius: BorderRadius.circular(
@@ -28,37 +39,49 @@ class SearchWidget extends StatelessWidget {
         builder: (context, values, _) {
           return Center(
             child: TextField(
-              onChanged: (value) {
-                var exploreViewModel = context.read<ExploreViewViewModel>();
-                if (values.searchTabbarCount == 0) {
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=all&search=$value",
-                      sortingQuery: "all",
-                      isNotify: true);
-                }
-
-                if (sampleItem == PoupMenuButtons.all) {
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=all&search=$value",
-                      sortingQuery: "all",
-                      isNotify: true);
-                }
-                if (sampleItem == PoupMenuButtons.upcoming) {
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=all&search=$value",
-                      sortingQuery: "upComing",
-                      isNotify: true);
-                }
-                if (sampleItem == null) {
-                  exploreViewModel.getExpAndSrchTournmts(
-                      query: "filter=all&search=$value",
-                      isNotify: true,
-                      sortingQuery: "all");
-                }
+              style: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontFamily: "SFUIDisplay",
+                fontSize: 14,
+              ),
+              onSubmitted: (value) {
+                navigateToExploreScreen(value);
               },
+              onChanged: widget.isHome
+                  ? null
+                  : (value) {
+                      var exploreViewModel =
+                          context.read<ExploreViewViewModel>();
+                      if (values.searchTabbarCount == 0) {
+                        exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "all",
+                        );
+                      }
+
+                      if (sampleItem == PoupMenuButtons.all) {
+                        exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "all",
+                        );
+                      }
+                      if (sampleItem == PoupMenuButtons.upcoming) {
+                        exploreViewModel.getExpAndSrchTournmts(
+                          query: "filter=all&search=$value",
+                          sortingQuery: "upComing",
+                        );
+                      }
+                      if (sampleItem == null) {
+                        exploreViewModel.getExpAndSrchTournmts(
+                            query: "filter=all&search=$value",
+                            sortingQuery: "all");
+                      }
+                    },
+              textAlign: TextAlign.left,
               decoration: const InputDecoration(
+                contentPadding: EdgeInsets.only(top: 13),
                 border: InputBorder.none,
-                hintText: "",
+                hintText: "Search by tournaments",
                 hintStyle: TextStyle(
                   decorationStyle: TextDecorationStyle.solid,
                   decoration: TextDecoration.none,

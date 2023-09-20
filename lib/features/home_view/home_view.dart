@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:offpitch_app/features/home_view/components/home_body.dart';
+import 'package:offpitch_app/features/home_view/components/home_create_tournament_icon.dart';
+import 'package:offpitch_app/features/home_view/components/home_titile_widget.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,9 +9,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: const HomeTitleWidget(),
+        actions: const [HomeCreateTournamentIcon()],
+        centerTitle: false,
+      ),
       backgroundColor: AppColors.white,
-      body: SafeArea(child: HomeBody()),
+      body: const SafeArea(child: HomeBody()),
     );
   }
 }

@@ -56,6 +56,8 @@ class MyClubPlayers extends StatelessWidget {
             case Status.ERROR:
               return Center(
                 child: ErrorComponent(
+                  hight: 80,
+                  width: 80,
                   errorMessage: value.getPlayerapiResponse.message!,
                 ),
               );

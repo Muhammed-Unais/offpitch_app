@@ -2,6 +2,9 @@ class RoutesName {
   // home screen routes name
   static const String home = "home_screen";
 
+  static const String tournamentHost = "host_tournament";
+
+
   // account routes name
   static const String signup = "signup_screen";
   static const String login = "login_screen";

@@ -137,6 +137,8 @@ class DetailsViewBody extends StatelessWidget {
           case Status.ERROR:
             return Center(
               child: ErrorComponent(
+                hight: size.height*0.15,
+                width: size.height*0.15,
                 errorMessage:
                     tournametnDetailProvider.detailsTournament.message!,
               ),

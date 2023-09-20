@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
-// import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
@@ -18,42 +18,6 @@ class Tab1TodayMatches extends StatefulWidget {
 }
 
 class _Tab1TodayMatchesState extends State<Tab1TodayMatches> {
-  // ScrollController scrollController = ScrollController();
-
-  // int limit = 5;
-  // // bool isLimit = false;
-
-  // @override
-  // void didChangeDependencies() {
-  //   if (mounted) {
-  //     scrollController.addListener(
-  //       () {
-  //         if (scrollController.position.pixels ==
-  //             scrollController.position.maxScrollExtent) {
-  //           limit += 5;
-  //           setState(() {});
-  //           todayTournamentsFetchingWithPagination();
-  //         }
-  //       },
-  //     );
-  //   }
-
-  //   super.didChangeDependencies();
-  // }
-
-  // @override
-  // void dispose() {
-  //   scrollController.dispose();
-  //   super.dispose();
-  // }
-
-  // Future<void> todayTournamentsFetchingWithPagination() async {
-  //   var exploreViewModelProvider =
-  //       Provider.of<ExploreViewViewModel>(context, listen: false);
-  //   await exploreViewModelProvider.getExpAndSrchTournmts(
-  //       query: "filter=all&$limit", sortingQuery: "all", isNotify: false);
-  // }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -83,17 +47,21 @@ class _Tab1TodayMatchesState extends State<Tab1TodayMatches> {
                   height: AppMargin.large,
                 ),
                 ErrorComponent(
-                    errorMessage: value.liveTournaments.message ?? "")
+                  hight: size.height * 0.15,
+                  width: size.height * 0.15,
+                  errorMessage: value.liveTournaments.message ?? "",
+                )
               ],
             );
           case Status.COMPLETED:
             final allTournamentdata = value.liveTournaments.data;
             if (allTournamentdata == null || allTournamentdata.isEmpty) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  ErrorComponent(errorMessage: "No Tournaments")
-                ],
+              return EmptyComponts(
+                image: "assets/images/no-data.svg",
+                showMessage: "No data",
+                height: size.height * 0.15,
+                width: size.height * 0.15,
+                addText: "",
               );
             }
             return ListView.builder(
