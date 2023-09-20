@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/save_continue_button.dart';
 import 'package:offpitch_app/features/create_tournament_view/components/creat_tour_third_fieds.dart';
 import 'package:offpitch_app/features/create_tournament_view/view_model/create_tournament_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class CreatTournamentTabThree extends StatelessWidget {
   const CreatTournamentTabThree(
@@ -24,9 +25,13 @@ class CreatTournamentTabThree extends StatelessWidget {
               onTap: () {
                 tabController.animateTo(1);
               },
-              child: Text(
+              child: const Text(
                 "Back",
-                style: Theme.of(context).textTheme.labelMedium,
+                style:  TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ),
             SaveContinueButton(

@@ -48,31 +48,56 @@ class CreateTournamentTabOne extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          bottom: AppMargin.large,
-          right: AppMargin.large,
-          child: Visibility(
-            visible: isVisible,
-            child: FloatingActionButton(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-              ),
-              onPressed: () {
-                value.images == null
-                    ? value.setBorderError(
-                        Border.all(color: Colors.red),
-                      )
-                    : null;
-                if (formKey.currentState!.validate() && value.images != null) {
-                  tabController.animateTo(1);
-                }
-              },
-              child: const Icon(Icons.arrow_forward_ios),
-            ),
-          ),
+        FloatingButton(
+          isVisible: isVisible,
+          value: value,
+          formKey: formKey,
+          tabController: tabController,
         )
       ],
+    );
+  }
+}
+
+class FloatingButton extends StatelessWidget {
+  const FloatingButton({
+    super.key,
+    required this.isVisible,
+    required this.value,
+    required this.formKey,
+    required this.tabController,
+  });
+
+  final bool isVisible;
+  final CreateTournamentViewModel value;
+  final GlobalKey<FormState> formKey;
+  final TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: AppMargin.large,
+      right: AppMargin.large,
+      child: Visibility(
+        visible: isVisible,
+        child: FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          onPressed: () {
+            value.images == null
+                ? value.setBorderError(
+                    Border.all(color: Colors.red),
+                  )
+                : null;
+            if (formKey.currentState!.validate() && value.images != null) {
+              tabController.animateTo(1);
+            }
+          },
+          child: const Icon(Icons.arrow_forward_ios),
+        ),
+      ),
     );
   }
 }

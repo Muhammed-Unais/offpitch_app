@@ -24,7 +24,7 @@ class _CreateTournamentViewTabbarState
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.2),
         borderRadius: BorderRadius.circular(
-          AppRadius.borderRadiusL,
+          AppRadius.borderRadiusS,
         ),
       ),
       margin: const EdgeInsets.only(
@@ -37,14 +37,18 @@ class _CreateTournamentViewTabbarState
           widget.tabController.index = 0;
         },
         controller: widget.tabController,
-        labelStyle: Theme.of(context).textTheme.titleMedium,
-        splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+        labelStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Pilat",
+        ),
+        splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
         labelColor: AppColors.white,
         indicatorPadding:
             const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+          borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
           color: AppColors.primary,
         ),
         tabs: const [

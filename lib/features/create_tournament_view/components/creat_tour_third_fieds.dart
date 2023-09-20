@@ -17,9 +17,14 @@ class CreateTournamentThirdFields extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Tournament type:",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: AppColors.black,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(
             height: AppMargin.large,
@@ -32,9 +37,14 @@ class CreateTournamentThirdFields extends StatelessWidget {
                   tourCreateViewModel.setIsCheckTourTypeOne(value);
                 },
               ),
-              Text(
-                "League (Round robin tournament)",
-                style: Theme.of(context).textTheme.bodyLarge,
+              const Text(
+                "LEAGUE\n(Round robin tournament)",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -47,24 +57,13 @@ class CreateTournamentThirdFields extends StatelessWidget {
                   tourCreateViewModel.setIsCheckTourTypeTwo(value);
                 },
               ),
-              Text(
-                "Knock out (Elimination tournament)",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
-          ),
-          const Divider(color: AppColors.grey, thickness: 0.5),
-          Row(
-            children: [
-              CheckBoxs(
-                isCheck: tourCreateViewModel.isCheckTourType3,
-                function: (value) {
-                  tourCreateViewModel.setIsCheckTourTypeThree(value);
-                },
-              ),
-              Text(
-                "Group Stage + Knockout",
-                style: Theme.of(context).textTheme.bodyLarge,
+              const Text(
+                "KNOCK OUT\n(Elimination tournament)",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ],
           ),

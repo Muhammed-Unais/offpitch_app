@@ -183,6 +183,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
+            textTheme:const TextTheme(),
             colorScheme: const ColorScheme.light(
               primary: AppColors.primary,
               onPrimary: AppColors.white,
@@ -259,7 +260,9 @@ class CreateTournamentViewModel extends ChangeNotifier {
       Utils.showCustomFlushbar(context, values['message'], isError: false);
 
       context.read<ExploreViewViewModel>().getExpAndSrchTournmts(
-          query: 'filter=all&limit=45', sortingQuery: "all",);
+            query: 'filter=all&limit=45',
+            sortingQuery: "all",
+          );
 
       context
           .read<UserHostRegTournamentViewModel>()

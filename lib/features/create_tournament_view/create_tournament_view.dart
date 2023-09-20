@@ -74,9 +74,9 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
             appBar: AppBar(
               shadowColor: AppColors.white,
               elevation: 2,
-              title: Text(
-                "Host your tournament",
-                style: Theme.of(context).textTheme.titleLarge,
+              title: const Text(
+                "HOST TOURNAMENT",
+                style: TextStyle(fontSize: 12,)
               ),
             ),
             body: Column(

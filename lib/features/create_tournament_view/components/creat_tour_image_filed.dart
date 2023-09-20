@@ -37,7 +37,7 @@ class CreateTournamentImagefield extends StatelessWidget {
                   )
                 : null,
             color: Colors.black.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
           ),
           child: createTorunamentViewModel.images == null
               ? const Icon(

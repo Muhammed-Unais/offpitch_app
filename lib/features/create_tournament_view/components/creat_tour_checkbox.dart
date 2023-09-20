@@ -15,9 +15,8 @@ class CreateTournamentCheckbox extends StatelessWidget {
     final tourCreateViewModel = Provider.of<CreateTournamentViewModel>(context);
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.only(
-          left: AppMargin.large,
-          right: AppMargin.large),
+      margin:
+          const EdgeInsets.only(left: AppMargin.large, right: AppMargin.large),
       child: Column(
         children: [
           Row(
@@ -30,9 +29,13 @@ class CreateTournamentCheckbox extends StatelessWidget {
                   tourCreateViewModel.setAmountCheck(value);
                 },
               ),
-              Text(
+              const Text(
                 "Registration fee",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ],
           ),
@@ -58,9 +61,14 @@ class CreateTournamentCheckbox extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(
+                    const Text(
                       "₹",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: TextStyle(
+                        fontFamily: "Pilat",
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
                     )
                   ],
                 )

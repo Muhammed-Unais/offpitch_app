@@ -32,6 +32,11 @@ class TextFormFieldsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(
+        fontSize: 12,
+        fontFamily: "SFUIDisplay",
+        fontWeight: FontWeight.bold,
+      ),
       scrollPadding: const EdgeInsets.all(0),
       enabled: enabled,
       onTap: onTap,
@@ -49,17 +54,18 @@ class TextFormFieldsComponent extends StatelessWidget {
       enableSuggestions: true,
       maxLength: maxlength,
       decoration: InputDecoration(
+        errorStyle: const TextStyle(fontSize: 12, fontFamily: "SFUIDisplay"),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.red),
         ),
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: AppColors.grey),
         ),
         border: InputBorder.none,
@@ -67,7 +73,7 @@ class TextFormFieldsComponent extends StatelessWidget {
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
           ),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
