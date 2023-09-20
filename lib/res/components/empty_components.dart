@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class EmptyComponts extends StatelessWidget {
   const EmptyComponts(
@@ -34,12 +35,22 @@ class EmptyComponts extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: showMessage,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: const TextStyle(
+              color: AppColors.black,
+              fontSize: 12,
+              fontFamily: "SFUIDisplay",
+              fontWeight: FontWeight.bold,
+            ),
             children: [
               const TextSpan(text: ' '),
               TextSpan(
                 text: addText,
-                style: Theme.of(context).textTheme.labelMedium,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.primary,
+                  fontFamily: "SFUIDisplay",
+                  fontWeight: FontWeight.bold,
+                ),
               )
             ],
           ),

@@ -26,7 +26,7 @@ class CreateTournamentSecondFields extends StatelessWidget {
     return Container(
       width: size.width,
       margin: const EdgeInsets.symmetric(
-          horizontal: AppMargin.large, vertical: AppMargin.large),
+          horizontal: 20, vertical: AppMargin.large),
       child: Column(
         children: [
           TextFormFieldsComponent(

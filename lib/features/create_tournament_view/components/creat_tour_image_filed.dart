@@ -18,8 +18,8 @@ class CreateTournamentImagefield extends StatelessWidget {
     return Container(
       height: size.height * 0.14,
       width: size.width,
-      margin: const EdgeInsets.symmetric(
-          vertical: AppMargin.medium, horizontal: AppMargin.large),
+      margin: const EdgeInsets.only(
+         left: 20,right: 20,bottom: 20),
       child: InkWell(
         onTap: () async {
           await createTorunamentViewModel.getImageFromGallery();

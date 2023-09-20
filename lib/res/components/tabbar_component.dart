@@ -2,40 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
-class CreateTournamentViewTabbar extends StatefulWidget {
-  const CreateTournamentViewTabbar({
+class TabbarWidget extends StatefulWidget {
+  const TabbarWidget({
     super.key,
     required this.tabController,
+    required this.selectedTabColor,
+    required this.tabOne,
+    required this.tabTwo,
+    required this.tabThree,
+    this.margin,
+    required this.hight, this.onTap,
   });
 
   final TabController tabController;
+  final Color selectedTabColor;
+  final String tabOne;
+  final String tabTwo;
+  final String tabThree;
+  final EdgeInsetsGeometry? margin;
+  final double hight;
+  final void Function(int)? onTap;
 
   @override
-  State<CreateTournamentViewTabbar> createState() =>
-      _CreateTournamentViewTabbarState();
+  State<TabbarWidget> createState() => TabbarWidgetState();
 }
 
-class _CreateTournamentViewTabbarState
-    extends State<CreateTournamentViewTabbar> {
+class TabbarWidgetState extends State<TabbarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34,
+      height: widget.hight,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+        color: AppColors.lightgrey,
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusS,
         ),
       ),
-      margin: const EdgeInsets.only(
-        left: AppMargin.large,
-        right: AppMargin.large,
-        top: AppMargin.medium,
-      ),
+      margin: widget.margin,
       child: TabBar(
-        onTap: (value) {
-          widget.tabController.index = 0;
-        },
+        onTap: widget.onTap,
         controller: widget.tabController,
         labelStyle: const TextStyle(
           fontSize: 12,
@@ -49,17 +54,17 @@ class _CreateTournamentViewTabbarState
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
-          color: AppColors.primary,
+          color: widget.selectedTabColor,
         ),
-        tabs: const [
+        tabs: [
           Tab(
-            text: "1",
+            text: widget.tabOne,
           ),
           Tab(
-            text: "2",
+            text: widget.tabTwo,
           ),
           Tab(
-            text: "3",
+            text: widget.tabThree,
           )
         ],
       ),

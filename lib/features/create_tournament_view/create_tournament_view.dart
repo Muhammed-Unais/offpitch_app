@@ -6,7 +6,7 @@ import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/features/create_tournament_view/components/creat_tour_tab_one.dart';
 import 'package:offpitch_app/features/create_tournament_view/components/creat_tour_tab_three.dart';
 import 'package:offpitch_app/features/create_tournament_view/components/creat_tour_tab_two.dart';
-import 'package:offpitch_app/features/create_tournament_view/components/creat_tour_tabbar.dart';
+import 'package:offpitch_app/res/components/tabbar_component.dart';
 import 'package:offpitch_app/features/splash_screen/view_model/user_view_model.dart';
 import 'package:offpitch_app/features/create_tournament_view/view_model/create_tournament_view_model.dart';
 import 'package:provider/provider.dart';
@@ -76,12 +76,24 @@ class _CreateTournamentViewState extends State<CreateTournamentView>
               elevation: 2,
               title: const Text(
                 "HOST TOURNAMENT",
-                style: TextStyle(fontSize: 12,)
+                style: TextStyle(
+                  fontSize: 12,
+                ),
               ),
             ),
             body: Column(
               children: [
-                CreateTournamentViewTabbar(
+                TabbarWidget(
+                  onTap: (value) {
+                    tabController.index = 0;
+                  },
+                  hight: 36,
+                  margin: const EdgeInsets.only(
+                      bottom: 20, top: 20, left: 20, right: 20),
+                  selectedTabColor: AppColors.primary,
+                  tabOne: "1",
+                  tabTwo: "2",
+                  tabThree: "3",
                   tabController: tabController,
                 ),
                 if (userViewModel.userClubId != null &&

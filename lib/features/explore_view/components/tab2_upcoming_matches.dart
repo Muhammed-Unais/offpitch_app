@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/features/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
@@ -10,29 +13,51 @@ import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
-class Tab2UpcomingMatches extends StatelessWidget {
-  const Tab2UpcomingMatches({super.key});
+class ExploreTournaments extends StatelessWidget {
+  const ExploreTournaments({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final tournametDetailsProvider =
-        Provider.of<DetailsTouramentViewModel>(context, listen: false);
+
     return Consumer<ExploreViewViewModel>(
       builder: (context, value, child) {
-        switch (value.allTournaments.status) {
+        Status? status;
+        int? length;
+        List<AllTournament>? tournaments;
+
+        switch (value.exploretournaments) {
+          case Exploretournaments.all:
+            status = value.allTournaments.status;
+            length = value.allTournaments.data?.length;
+            tournaments = value.allTournaments.data?.reversed.toList();
+            break;
+          case Exploretournaments.live:
+            status = value.liveTournaments.status;
+            length = value.liveTournaments.data?.length;
+            tournaments = value.liveTournaments.data?.reversed.toList();
+            break;
+          case Exploretournaments.upcoming:
+            status = value.upcomingTournaments.status;
+            length = value.upcomingTournaments.data?.length;
+            tournaments = value.upcomingTournaments.data?.reversed.toList();
+            break;
+          default:
+        }
+
+        switch (status) {
           case Status.LOADING:
             return ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(
                 horizontal: AppMargin.large,
               ),
-              itemCount: value.allTournaments.data?.length,
+              itemCount: length,
               itemBuilder: (context, index) {
                 return ShimerWidget.rectangular(
-                  borderRadius: AppRadius.borderRadiusM,
+                  borderRadius: AppRadius.borderRadiusS,
                   verticalMargin: AppMargin.small,
-                  hight: size.height * 0.2,
+                  hight: size.height * 0.15,
                 );
               },
             );
@@ -48,35 +73,35 @@ class Tab2UpcomingMatches extends StatelessWidget {
               ],
             );
           case Status.COMPLETED:
-            final allTournamentdata =
-                value.allTournaments.data?.reversed.toList();
-            if (allTournamentdata == null || allTournamentdata.isEmpty) {
+            if (tournaments == null || tournaments.isEmpty) {
               return EmptyComponts(
                 showMessage: "No Tournaments",
                 image: "assets/images/no-data.svg",
                 height: size.height * 0.15,
                 width: size.height * 0.15,
-                addText: "",
+                addText: "...",
               );
             }
             return ListView.builder(
-              itemCount: allTournamentdata.length,
+              itemCount: tournaments.length,
               shrinkWrap: false,
               itemBuilder: (context, index) {
-                final tournaments = allTournamentdata[index];
+                final tournament = tournaments?[index];
                 return InkWell(
                   onTap: () async {
+                    var tournametDetailsProvider =
+                        context.read<DetailsTouramentViewModel>();
                     tournametDetailsProvider
-                        .getSingleTournament(tournaments.id);
+                        .getSingleTournament(tournament?.id);
                     await Navigator.pushNamed(context, "tournamentdetails");
                   },
                   child: TournamentCard(
                     touranmentCoverImage:
-                        tournaments.cover ?? AppProfilesCover.clubCover,
-                    tornamentName: tournaments.title ?? "No title",
-                    tornamentPlace: tournaments.location ?? "",
-                    tornamentDate: tournaments.startDate ?? "",
-                    shortDescription: tournaments.shortDescription ?? "",
+                        tournament?.cover ?? AppProfilesCover.clubCover,
+                    tornamentName: tournament?.title ?? "No title",
+                    tornamentPlace: tournament?.location ?? "",
+                    tornamentDate: tournament?.startDate ?? "",
+                    shortDescription: tournament?.shortDescription ?? "",
                   ),
                 );
               },
@@ -84,8 +109,8 @@ class Tab2UpcomingMatches extends StatelessWidget {
           default:
             return Center(
               child: SizedBox(
-                height: 200,
-                width: 200,
+                height: size.height * 0.15,
+                width: size.height * 0.15,
                 child: SvgPicture.asset(
                   "assets/images/no-data.svg",
                 ),

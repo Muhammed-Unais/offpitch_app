@@ -4,29 +4,40 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
 import 'package:provider/provider.dart';
 
-enum PoupMenuButtons { all, upcoming }
-
 class SearchWidget extends StatefulWidget {
   const SearchWidget({
     super.key,
     this.isHome = false,
+    required this.searchQuery,
   });
 
   final bool isHome;
+  final String searchQuery;
 
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var exploreViewModel = context.read<ExploreViewViewModel>();
+      exploreViewModel.getExpAndSrchTournmts(
+        query: "filter=all&search=${widget.searchQuery}",
+        sortingQuery: "all",
+      );
+    });
+
+    super.initState();
+  }
+
   void navigateToExploreScreen(String query) {
     Navigator.pushNamed(context, "explore", arguments: query);
   }
 
   @override
   Widget build(BuildContext context) {
-    PoupMenuButtons? sampleItem;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -44,37 +55,36 @@ class _SearchWidgetState extends State<SearchWidget> {
                 fontFamily: "SFUIDisplay",
                 fontSize: 14,
               ),
-              onSubmitted: (value) {
-                navigateToExploreScreen(value);
-              },
+              onSubmitted: widget.isHome
+                  ? (value) {
+                      navigateToExploreScreen(value);
+                    }
+                  : null,
               onChanged: widget.isHome
                   ? null
                   : (value) {
                       var exploreViewModel =
                           context.read<ExploreViewViewModel>();
-                      if (values.searchTabbarCount == 0) {
-                        exploreViewModel.getExpAndSrchTournmts(
-                          query: "filter=all&search=$value",
-                          sortingQuery: "all",
-                        );
-                      }
-
-                      if (sampleItem == PoupMenuButtons.all) {
-                        exploreViewModel.getExpAndSrchTournmts(
-                          query: "filter=all&search=$value",
-                          sortingQuery: "all",
-                        );
-                      }
-                      if (sampleItem == PoupMenuButtons.upcoming) {
-                        exploreViewModel.getExpAndSrchTournmts(
-                          query: "filter=all&search=$value",
-                          sortingQuery: "upComing",
-                        );
-                      }
-                      if (sampleItem == null) {
-                        exploreViewModel.getExpAndSrchTournmts(
+                      switch (exploreViewModel.exploretournaments) {
+                        case Exploretournaments.all:
+                          exploreViewModel.getExpAndSrchTournmts(
                             query: "filter=all&search=$value",
-                            sortingQuery: "all");
+                            sortingQuery: "all",
+                          );
+                          break;
+                        case Exploretournaments.live:
+                          exploreViewModel.getExpAndSrchTournmts(
+                            query: "filter=all&search=$value",
+                            sortingQuery: "all",
+                          );
+                          break;
+                        case Exploretournaments.upcoming:
+                          exploreViewModel.getExpAndSrchTournmts(
+                            query: "filter=all&search=$value",
+                            sortingQuery: "upcoming",
+                          );
+                          break;
+                        default:
                       }
                     },
               textAlign: TextAlign.left,
@@ -102,56 +112,3 @@ class _SearchWidgetState extends State<SearchWidget> {
     );
   }
 }
-  //  Consumer<ExploreViewViewModel>(
-  //           builder: (context, value, _) {
-  //             return value.searchTabbarCount == 0
-  //                 ? const Text(
-  //                     "Live",
-  //                     style: TextStyle(
-  //                         color: AppColors.primary,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.bold),
-  //                   )
-  //                 : PopupMenuButton(
-  //                     shape: RoundedRectangleBorder(
-  //                       borderRadius: BorderRadius.circular(20),
-  //                     ),
-  //                     surfaceTintColor: Colors.white,
-  //                     initialValue: sampleItem,
-  //                     icon: const Icon(IconlyBold.filter),
-  //                     onSelected: (value) {
-  //                       sampleItem = value;
-  //                     },
-  //                     itemBuilder: (context) => [
-  //                       PopupMenuItem(
-  //                         value: PoupMenuButtons.all,
-  //                         child: Row(
-  //                           children: const [
-  //                             Text("All"),
-  //                           ],
-  //                         ),
-  //                         onTap: () {
-  //                           exploreViewModel.getExpAndSrchTournmts(
-  //                               query: 'filter=all',
-  //                               sortingQuery: "all",
-  //                               isNotify: true);
-  //                         },
-  //                       ),
-  //                       PopupMenuItem(
-  //                         value: PoupMenuButtons.upcoming,
-  //                         child: Row(
-  //                           children: const [
-  //                             Text("Upcoming"),
-  //                           ],
-  //                         ),
-  //                         onTap: () async {
-  //                           exploreViewModel.getExpAndSrchTournmts(
-  //                               query: 'filter=all',
-  //                               sortingQuery: "upComing",
-  //                               isNotify: true);
-  //                         },
-  //                       ),
-  //                     ],
-  //                   );
-  //           },
-  //         )

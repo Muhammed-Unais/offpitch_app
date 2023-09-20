@@ -1,10 +1,21 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/features/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/features/explore_view/repository/explore_repository.dart';
 
+enum Exploretournaments { all, live, upcoming }
+
 class ExploreViewViewModel extends ChangeNotifier {
+  Exploretournaments _exploretournaments = Exploretournaments.all;
+
+  Exploretournaments get exploretournaments => _exploretournaments;
+
+  set setExploretournaments(Exploretournaments exploreIntial) {
+    _exploretournaments = exploreIntial;
+  }
+
   final _myrepo = ExploreRepository();
 
   int? searchTabbarCount = 0;
@@ -18,29 +29,32 @@ class ExploreViewViewModel extends ChangeNotifier {
   // ApiResponse<AllTournamentsModel> upcomingTournments = ApiResponse.loading();
 
   void setSearchTabbarIndex(int value) {
+    if (value == 0) {
+      _exploretournaments = Exploretournaments.all;
+    }
+    if (value == 1) {
+      _exploretournaments = Exploretournaments.live;
+    }
+    if (value == 2) {
+      _exploretournaments = Exploretournaments.upcoming;
+    }
     searchTabbarCount = value;
     notifyListeners();
   }
 
-  void setliveTournaments(
-    ApiResponse<List<AllTournament>> response,
-  ) {
+  void setliveTournaments(ApiResponse<List<AllTournament>> response) {
     liveTournaments = response;
 
     notifyListeners();
   }
 
-  void setallTournaments(
-    ApiResponse<List<AllTournament>> response,
-  ) {
+  void setallTournaments(ApiResponse<List<AllTournament>> response) {
     allTournaments = response;
 
     notifyListeners();
   }
 
-  void setUpcomingTournaments(
-    ApiResponse<List<AllTournament>> response,
-  ) {
+  void setUpcomingTournaments(ApiResponse<List<AllTournament>> response) {
     upcomingTournaments = response;
 
     notifyListeners();
@@ -48,8 +62,7 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   Future<void> getExpAndSrchTournmts(
       {required String query, required String sortingQuery, required}) async {
-
-    if (sortingQuery == "upcomingT") {
+    if (sortingQuery == "upcoming") {
       setUpcomingTournaments(ApiResponse.loading());
     }
 
@@ -77,7 +90,7 @@ class ExploreViewViewModel extends ChangeNotifier {
         liveTournament.clear();
       }
 
-      if (sortingQuery == "upcomingT") {
+      if (sortingQuery == "upcoming") {
         upComingTournament = [];
         upComingTournament.clear();
       }
@@ -88,12 +101,7 @@ class ExploreViewViewModel extends ChangeNotifier {
         String outputDate = outputFormat.format(startDate);
         DateTime forUpcomingDate = DateFormat('dd MMM yyyy').parse(input);
 
-        if (forUpcomingDate.isAfter(now) && sortingQuery == "upcomingT") {
-          upComingTournament.add(element);
-        }
-
-        // UPCOMING=============
-        if (forUpcomingDate.isAfter(now) && sortingQuery == "upComing") {
+        if (forUpcomingDate.isAfter(now) && sortingQuery == "upcoming") {
           upComingTournament.add(element);
         }
 
@@ -109,7 +117,7 @@ class ExploreViewViewModel extends ChangeNotifier {
         }
       }
 
-      if (sortingQuery == "upcomingT") {
+      if (sortingQuery == "upcoming") {
         setUpcomingTournaments(ApiResponse.completed(upComingTournament));
       }
 
@@ -132,9 +140,6 @@ class ExploreViewViewModel extends ChangeNotifier {
   }
 
   ExploreViewViewModel() {
-    getExpAndSrchTournmts(
-      query: 'filter=all',
-      sortingQuery: "all",
-    );
+    getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
   }
 }

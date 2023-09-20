@@ -1,10 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/search_component.dart';
-import 'package:offpitch_app/features/explore_view/components/explore_tabbar.dart';
-import 'package:offpitch_app/features/explore_view/components/tab1_today_matches.dart';
 import 'package:offpitch_app/features/explore_view/components/tab2_upcoming_matches.dart';
 import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/res/components/tabbar_component.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class ExploreView extends StatefulWidget {
@@ -22,21 +21,27 @@ class _ExploreViewState extends State<ExploreView>
 
   @override
   void initState() {
-    log(widget.searchQuery);
-    tabController = TabController(length: 2, vsync: this);
+    var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
+
+    tabController = TabController(length: 3, vsync: this);
+
+    exploreAndSearchProvider.setExploretournaments = Exploretournaments.all;
+
     tabController.addListener(() {
       context.read<ExploreViewViewModel>().setSearchTabbarIndex(
             tabController.index,
           );
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
       if (exploreAndSearchProvider.allTournaments.data == null &&
           exploreAndSearchProvider.liveTournaments.data == null) {
         exploreAndSearchProvider.getExpAndSrchTournmts(
-          query: 'filter=all',
-          sortingQuery: "all",
-        );
+            query: 'filter=all', sortingQuery: "all");
+      }
+
+      if (exploreAndSearchProvider.upcomingTournaments.data == null) {
+        exploreAndSearchProvider.getExpAndSrchTournmts(
+            query: 'filter=all', sortingQuery: "upcoming");
       }
     });
     super.initState();
@@ -53,37 +58,51 @@ class _ExploreViewState extends State<ExploreView>
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Tournaments"),
+          centerTitle: false,
+          title: const Text(
+            "TOURNAMENTS",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
           backgroundColor: Colors.white,
         ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
-              const SliverToBoxAdapter(
-                child: SearchWidget(),
+              SliverToBoxAdapter(
+                child: SearchWidget(searchQuery: widget.searchQuery),
               )
             ];
           },
           body: Column(
             children: [
-              ExploreTabBar(
+              TabbarWidget(
+                onTap: (value) {},
+                hight: 50,
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                  left: 20,
+                  right: 20,
+                ),
                 tabController: tabController,
-                firstTab: "Today Matches",
-                secondTab: "Tournaments",
+                tabOne: "All",
+                tabTwo: "Live",
+                tabThree: "Upcoming",
+                selectedTabColor: AppColors.black,
               ),
               Expanded(
                 child: TabBarView(
                   controller: tabController,
                   children: const [
-                    Tab1TodayMatches(),
-                    Tab2UpcomingMatches(),
+                    ExploreTournaments(),
+                    ExploreTournaments(),
+                    ExploreTournaments(),
                   ],
                 ),
               ),

@@ -26,7 +26,7 @@ class CreateTournamentfirstFields extends StatelessWidget {
         Provider.of<CreateTournamentViewModel>(context);
     return Container(
       width: size.width,
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      margin: const EdgeInsets.symmetric(horizontal:20),
       child: Column(
         children: [
           TextFormFieldsComponent(

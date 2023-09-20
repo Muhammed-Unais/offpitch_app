@@ -45,6 +45,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         children: [
           const SizedBox(height: 20),
           const SearchWidget(
+            searchQuery: "",
             isHome: true,
           ),
           const SizedBox(height: 20),
