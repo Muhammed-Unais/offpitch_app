@@ -91,7 +91,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.only(top: 13),
                 border: InputBorder.none,
-                hintText: "Search by tournaments",
+                hintText: "Search by tournaments,place and club",
                 hintStyle: TextStyle(
                   decorationStyle: TextDecorationStyle.solid,
                   decoration: TextDecoration.none,

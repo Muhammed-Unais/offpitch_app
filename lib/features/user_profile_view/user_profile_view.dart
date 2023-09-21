@@ -10,7 +10,6 @@ import 'package:offpitch_app/features/user_profile_view/widgets/user_profile_wal
 import 'package:offpitch_app/features/user_profile_view/widgets/user_profile_watchlist_expansion.dart';
 import 'package:offpitch_app/features/user_profile_view/view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
-
 import '../splash_screen/view_model/user_view_model.dart';
 
 class UserProfileView extends StatefulWidget {
@@ -43,7 +42,12 @@ class _UserProfileViewState extends State<UserProfileView> {
               left: AppMargin.small,
             ),
             child: Text(
-              "Hi, ${data?.name ?? "welcome"}",
+              "Hi, ${data?.name?.toUpperCase() ?? "WELCOME"}",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.black,
+              ),
             ),
           ),
           centerTitle: false,
@@ -61,8 +65,8 @@ class _UserProfileViewState extends State<UserProfileView> {
         ),
         body: Container(
           margin: const EdgeInsets.only(
-            left: AppMargin.large,
-            right: AppMargin.large,
+            left: 20,
+            right:20,
           ),
           child: Consumer<UserProfileViewModel>(
             builder: (context, value, _) {
@@ -100,7 +104,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                 case Status.ERROR:
                   return Center(
                     child: ErrorComponent(
-                      width: size.height*0.15,
+                      width: size.height * 0.15,
                       hight: size.height * 0.15,
                       errorMessage: value.userProfileResponse.message ?? "",
                     ),

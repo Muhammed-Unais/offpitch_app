@@ -45,6 +45,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
+            textTheme: const TextTheme(),
             colorScheme: const ColorScheme.light(
               primary: AppColors.primary,
               onPrimary: AppColors.white,

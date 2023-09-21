@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -13,6 +12,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return ExpansionTile(
       shape: const Border(
         bottom: BorderSide(color: AppColors.grey, width: 0.4),
@@ -22,9 +22,14 @@ class UserProfileWatchListExpansion extends StatelessWidget {
       expandedAlignment: Alignment.topLeft,
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       leading: const Icon(Icons.watch_later_outlined),
-      title: Text(
+      title: const Text(
         "Watchlist",
-        style: Theme.of(context).textTheme.labelLarge,
+        style: TextStyle(
+          fontFamily: "SFUIDisplay",
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
       ),
       tilePadding: const EdgeInsets.all(0),
       childrenPadding: const EdgeInsets.all(0),
@@ -32,13 +37,13 @@ class UserProfileWatchListExpansion extends StatelessWidget {
         Consumer<UserProfileViewModel>(
           builder: (context, value, _) {
             final data = value.userProfileWatchlist.data?.data;
-            if (data == null||data.isEmpty) {
-              return const Center(
+            if (data == null || data.isEmpty) {
+              return Center(
                 child: EmptyComponts(
                   image: "assets/images/no-data.svg",
                   showMessage: "No watchlist",
-                  height: 100,
-                  width: 100,
+                  height: size.height * 0.15,
+                  width: size.height * 0.15,
                   addText: "",
                 ),
               );
@@ -66,14 +71,16 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                           side: const BorderSide(
-                              width: 0.1, color: AppColors.black),
+                            width: 0.1,
+                            color: AppColors.black,
+                          ),
                         ),
                         elevation: 2,
                         surfaceTintColor: AppColors.white,
                         child: ListTile(
                           onTap: () {
-                            Provider.of<DetailsTouramentViewModel>(context,
-                                    listen: false)
+                            context
+                                .read<DetailsTouramentViewModel>()
                                 .getSingleTournament(data[index].id);
                             Navigator.pushNamed(
                                 context, RoutesName.tournamentDetails);

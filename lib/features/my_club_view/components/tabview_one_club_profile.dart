@@ -22,7 +22,7 @@ class TabViewOneClubProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppMargin.large,
+        horizontal: 20,
       ),
       child: Row(
         children: [
@@ -44,11 +44,21 @@ class TabViewOneClubProfile extends StatelessWidget {
               children: [
                 Text(
                   clubName,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: const TextStyle(
+                    overflow: TextOverflow.clip,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
                 ),
                 Text(
-                  "Players:$playerCount",
-                  style: Theme.of(context).textTheme.titleMedium,
+                  "Players: $playerCount",
+                  style: const TextStyle(
+                    fontFamily: "SFUIDisplay",
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.grey,
+                  ),
                 )
               ],
             ),

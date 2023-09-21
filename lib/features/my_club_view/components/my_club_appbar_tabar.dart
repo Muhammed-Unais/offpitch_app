@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class MyclubAppbarTabbar extends StatelessWidget {
@@ -7,28 +8,41 @@ class MyclubAppbarTabbar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  AppBar build(BuildContext context) {
     return AppBar(
       shape: const Border(
-        bottom: BorderSide(color: Colors.grey, width: 0.5),
+        bottom: BorderSide(color: Colors.black, width: 0.5),
       ),
       backgroundColor: AppColors.white,
       shadowColor: AppColors.white,
+      centerTitle: false,
       title: const Text(
-        "Club Details",
+        "CLUB DETAILS",
+        style: TextStyle(
+          fontSize: 16,
+        ),
       ),
       bottom: TabBar(
         onTap: (value) {},
-        labelStyle: Theme.of(context).textTheme.titleMedium,
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        labelStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Pilat",
+        ),
+        splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
+        labelColor: AppColors.black,
+        indicatorColor: AppColors.black,
+        indicatorPadding:
+            const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: AppColors.primary,
-        indicatorColor: AppColors.primary,
-        tabs: const <Widget>[
+        unselectedLabelColor: AppColors.grey,
+        tabs: const [
           Tab(
             text: "Overview",
           ),
           Tab(
-            text: "Tournament",
+            text: "Hosted",
           ),
           Tab(
             text: "Registered",

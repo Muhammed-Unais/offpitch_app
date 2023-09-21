@@ -48,11 +48,11 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                 case Status.COMPLETED:
                   if (value.apiResponseHostedTournaments.data == null ||
                       value.apiResponseHostedTournaments.data!.isEmpty) {
-                    return const EmptyComponts(
+                    return  EmptyComponts(
                       image: "assets/images/no-data.svg",
                       showMessage: "No Tournaments",
-                      height: 150,
-                      width: 150,
+                      height: size.height * 0.15,
+                      width: size.height * 0.15,
                       addText: "Host Tournaments",
                     );
                   }
@@ -97,11 +97,11 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
             onTap: () {
               Navigator.pushNamed(context, RoutesName.clubCreation);
             },
-            child: const EmptyComponts(
+            child:  EmptyComponts(
               image: "assets/images/no-club.svg",
               showMessage: "You Don't have a club",
-              height: 200,
-              width: 200,
+              height: size.height * 0.15,
+              width: size.height * 0.15,
               addText: "Create new",
             ),
           );

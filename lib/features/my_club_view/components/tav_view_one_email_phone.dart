@@ -18,7 +18,7 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
     return Container(
       height: hight,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,12 +35,18 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
               ),
               Text(
                 email,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               )
             ],
           ),
           const SizedBox(
-            height: AppPadding.small,
+            height: 10,
           ),
           Row(
             children: [
@@ -54,7 +60,13 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
               ),
               Text(
                 phone.toString(),
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ],
           ),

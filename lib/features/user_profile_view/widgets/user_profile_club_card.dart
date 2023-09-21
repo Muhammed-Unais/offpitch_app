@@ -21,13 +21,12 @@ class UserProfileClubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userClubId =
-        Provider.of<UserViewModel>(context, listen: false).userClubId;
+    final userClubId = context.read<UserViewModel>().userClubId;
     return Card(
       margin: const EdgeInsets.only(
-          bottom: AppMargin.medium, top: AppPadding.small),
+          bottom: 10, top: 10),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         side: const BorderSide(width: 0.2, color: AppColors.black),
       ),
       surfaceTintColor: AppColors.white,
@@ -43,47 +42,66 @@ class UserProfileClubCard extends StatelessWidget {
                 ),
               ),
               title: Text(
-                clubName ?? "",
-                style: Theme.of(context).textTheme.labelLarge,
+                clubName?.toUpperCase() ?? "",
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
               subtitle: Row(
                 children: [
                   Text(
-                    "${playersCount ?? 0} Players",
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    "${playersCount ?? 0} PLAYERS",
+                    style: const TextStyle(
+                      fontFamily: "SFUIDisplay",
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.grey,
+                    ),
                   ),
                   const SizedBox(
                     width: AppMargin.small,
                   ),
                   Text(
-                    clubStatus ?? "",
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    clubStatus?.toUpperCase() ?? "",
+                    style: const TextStyle(
+                      fontFamily: "SFUIDisplay",
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ],
               ),
               trailing: InkWell(
                 onTap: () {
-                  Provider.of<BottomBarViewModel>(context, listen: false).onTap(
-                    3,
-                    context,
-                  );
+                  context.read<BottomBarViewModel>().onTap(3, context);
                 },
-                child: Text(
+                child: const Text(
                   "View",
-                  style: Theme.of(context).textTheme.labelMedium,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontFamily: "SFUIDisplay",
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
                 ),
               ),
             )
           : ListTile(
               onTap: () {
-                Provider.of<BottomBarViewModel>(context, listen: false).onTap(
-                  3,
-                  context,
-                );
+                context.read<BottomBarViewModel>().onTap(3, context);
               },
-              title: Text(
+              title: const Text(
                 "You didn't create a club,Create Now",
-                style: Theme.of(context).textTheme.labelLarge,
+                style: TextStyle(
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
               trailing: const Icon(
                 Icons.arrow_right_alt,

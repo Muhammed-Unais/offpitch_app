@@ -26,21 +26,12 @@ class UsersTournametCard extends StatelessWidget {
     return Container(
       height: 120,
       margin: const EdgeInsets.only(
-          left: AppMargin.large, right: AppMargin.large, top: AppMargin.medium),
+          left:20, right: 20, top: 10),
       decoration: BoxDecoration(
         color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(
-              0.5,
-            ),
-            blurRadius: 7,
-            offset: const Offset(
-              0,
-              3,
-            ),
-          ),
-        ],
+        border: Border.all(
+          color: const Color.fromRGBO(228, 229, 229, 1),
+        ),
         borderRadius: BorderRadius.circular(
           AppRadius.borderRadiusS,
         ),
@@ -72,82 +63,64 @@ class UsersTournametCard extends StatelessWidget {
           Flexible(
             flex: 7,
             child: Container(
-              padding: const EdgeInsetsDirectional.all(AppPadding.medium),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(
-                    AppRadius.borderRadiusS,
-                  ),
-                  topRight: Radius.circular(
-                    AppRadius.borderRadiusS,
-                  ),
-                ),
-              ),
+              padding: const EdgeInsetsDirectional.all(10),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: Text(
-                      tournamentName ?? "",
-                      style: Theme.of(context).textTheme.labelLarge,
+                  Text(
+                    tournamentName ?? "",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
                     ),
                   ),
-                  const Spacer(),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Row(
-                            children: [
-                              const Flexible(
-                                child: Icon(
-                                  Icons.location_on_outlined,
-                                  size: 16,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 6,
-                                child: Text(
-                                  tournamentPlace ?? "",
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium,
-                                ),
-                              ),
-                              const Flexible(
-                                child: SizedBox(
-                                  width: AppMargin.extraSmall,
-                                ),
-                              ),
-                              const Flexible(
-                                child: Icon(
-                                  Icons.calendar_month_outlined,
-                                  size: 16,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 5,
-                                child: Text(
-                                  tournamentDate ?? "",
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium,
-                                ),
-                              ),
-                            ],
-                          ),
+                  Row(
+                    children: [
+                    
+                      const Icon(
+                        Icons.calendar_month_outlined,
+                        size: 16,
+                      ),
+                      Text(
+                        tournamentDate ?? "",
+                        style:  const TextStyle(
+                          fontFamily: "SFUIDisplay",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
                         ),
-                      ],
-                    ),
+                      ),  const SizedBox(
+                        width: AppMargin.extraSmall,
+                      ),
+
+                        const Icon(
+                        Icons.location_on_outlined,
+                        size: 16,
+                      ),
+                      Text(
+                         tournamentPlace ?? "",
+                        style:  const TextStyle(
+                          fontFamily: "SFUIDisplay",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                    
+                    ],
                   ),
-                  const Spacer(),
-                  Flexible(
-                    child: Text(
-                      isUserHost
-                          ? "$tournamentRegTeams Registered"
-                          : "Payment Status $paymentStatus",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                  Text(
+                    isUserHost
+                        ? "$tournamentRegTeams Registered"
+                        : "Payment Status $paymentStatus",
+                    style:  const TextStyle(
+                          fontFamily: "SFUIDisplay",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
                   )
                 ],
               ),

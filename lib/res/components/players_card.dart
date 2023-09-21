@@ -47,10 +47,11 @@ class PlayersCard extends StatelessWidget {
                   child: Text(
                     playerName!,
                     style: const TextStyle(
-                      color: AppColors.white,
+                      overflow: TextOverflow.clip,
+                      fontFamily: "SFUIDisplay",
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 18,
+                      color: AppColors.white,
                     ),
                   ),
                 ),
@@ -58,9 +59,11 @@ class PlayersCard extends StatelessWidget {
                   child: Text(
                     'Age: ${dobToAge(dob)}',
                     style: const TextStyle(
-                      color: AppColors.white,
+                      overflow: TextOverflow.ellipsis,
+                      fontFamily: "SFUIDisplay",
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      color: AppColors.white,
                     ),
                   ),
                 )
@@ -84,10 +87,7 @@ class PlayersCard extends StatelessWidget {
 }
 
 class AddPlayerCard extends StatelessWidget {
-  const AddPlayerCard(
-      {super.key, this.buttonAction});
-
-  
+  const AddPlayerCard({super.key, this.buttonAction});
 
   final void Function()? buttonAction;
 
@@ -117,13 +117,18 @@ class AddPlayerCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             bottom: 10,
             left: 10,
             right: 10,
             child: Text(
               "Add Players",
-              style: Theme.of(context).textTheme.labelLarge,
+              style: TextStyle(
+                fontFamily: "SFUIDisplay",
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: AppColors.black,
+              ),
               textAlign: TextAlign.center,
             ),
           )

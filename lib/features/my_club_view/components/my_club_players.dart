@@ -3,7 +3,6 @@ import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/players_card.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/my_club_view/components/my_club_add_player_bottom_sheet.dart';
 import 'package:offpitch_app/features/my_club_view/model/players_model.dart';
 import 'package:offpitch_app/features/my_club_view/view_model/my_club_over_view_model.dart';
@@ -17,7 +16,7 @@ class MyClubPlayers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: AppMargin.large),
+      margin: const EdgeInsets.only(left: 20),
       child: Consumer<MyClubViewModel>(
         builder: (context, value, _) {
           switch (value.getPlayerapiResponse.status) {
@@ -29,7 +28,6 @@ class MyClubPlayers extends StatelessWidget {
                 ),
               );
             case Status.COMPLETED:
-        
               final data = value.getPlayerapiResponse.data!.data!;
 
               return ListView.builder(

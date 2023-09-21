@@ -32,9 +32,13 @@ class AddPlayerBottomSheet {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Add new player",
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(
@@ -104,6 +108,12 @@ class AddPlayerBottomSheet {
                                   )
                                 : const Text(
                                     "Save & Continue",
+                                    style:  TextStyle(
+                                      fontFamily: "SFUIDisplay",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.black,
+                                    ),
                                   ),
                           ),
                         ),

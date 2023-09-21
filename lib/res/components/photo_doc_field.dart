@@ -73,7 +73,12 @@ class PhotoDocfield extends StatelessWidget {
                     child: Center(
                       child: Text(
                         docName != null ? docName! : textOfPdf,
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: const TextStyle(
+                          fontFamily: "SFUIDisplay",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),

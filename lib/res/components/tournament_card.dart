@@ -58,7 +58,7 @@ class TournamentCard extends StatelessWidget {
                           Text(
                             tornamentName,
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppColors.black,
                               fontWeight: FontWeight.bold,
                             ),

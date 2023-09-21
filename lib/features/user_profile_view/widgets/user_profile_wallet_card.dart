@@ -9,16 +9,13 @@ class UserProfileWalletCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(
-        bottom: AppMargin.large,
-        top: AppPadding.extraSmall,
-      ),
+      margin: const EdgeInsets.only(bottom: 10, top: 5),
       surfaceTintColor: AppColors.white,
       color: AppColors.primary,
       elevation: 4,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
             colors: [
               AppColors.primary,
@@ -27,17 +24,21 @@ class UserProfileWalletCard extends StatelessWidget {
           ),
         ),
         child: ListTile(
-          contentPadding: const EdgeInsets.all(AppPadding.small),
+          contentPadding: const EdgeInsets.all(8),
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.account_balance_wallet_outlined),
-              const SizedBox(
+            children: const [
+              Icon(Icons.account_balance_wallet_outlined),
+              SizedBox(
                 width: AppMargin.small,
               ),
               Text(
-                "Wallet",
-                style: Theme.of(context).textTheme.bodyLarge,
+                "WALLET",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ],
           ),
@@ -47,17 +48,20 @@ class UserProfileWalletCard extends StatelessWidget {
               const Text(
                 "Balance",
                 style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 18,
+                  overflow: TextOverflow.clip,
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.white,
                 ),
               ),
               Text(
                 "₹${walletAmount ?? 0}",
                 style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 20,
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.white,
                 ),
               ),
             ],

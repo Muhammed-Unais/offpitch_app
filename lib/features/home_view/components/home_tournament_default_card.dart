@@ -20,7 +20,7 @@ class HomeTournametnCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 0.5,
-          color: AppColors.primary,
+          color: AppColors.black,
         ),
         color: AppColors.white,
         borderRadius: BorderRadius.circular(

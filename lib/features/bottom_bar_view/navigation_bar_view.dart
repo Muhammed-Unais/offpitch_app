@@ -34,9 +34,11 @@ class _BottomBarViewState extends State<BottomBarView> {
   Widget build(BuildContext context) {
     final bottomBarVieModel = Provider.of<BottomBarViewModel>(context);
     return Scaffold(
+     
       body: screens[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
+      
         onTap: (value) =>
             bottomBarVieModel.onTap(value, context, controller: pageController),
         currentIndex: bottomBarVieModel.currentIndex,
@@ -44,9 +46,9 @@ class _BottomBarViewState extends State<BottomBarView> {
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.black,
         elevation: 10,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: AppColors.white ,
         unselectedItemColor: AppColors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

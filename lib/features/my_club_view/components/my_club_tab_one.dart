@@ -1,16 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/features/my_club_view/components/club_detils_widget.dart';
+import 'package:offpitch_app/features/my_club_view/components/club_player_widget.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/features/my_club_view/components/my_club_players.dart';
-import 'package:offpitch_app/features/my_club_view/components/tabview_one_club_description.dart';
-import 'package:offpitch_app/features/my_club_view/components/tabview_one_club_profile.dart';
-import 'package:offpitch_app/features/my_club_view/components/tav_view_one_email_phone.dart';
 import 'package:offpitch_app/features/club_creation_view/view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/features/my_club_view/view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
@@ -44,64 +39,28 @@ class MyClubTabOne extends StatelessWidget {
                       onTap: () {
                         myClubViewModelProvider.getMyClub(context);
                       },
-                      child: const EmptyComponts(
+                      child:  EmptyComponts(
                         image: "assets/images/Waiting-pana.svg",
                         showMessage: "Waiting for app approval",
-                        height: 200,
-                        width: 200,
+                        height: size.height * 0.15,
+                        width: size.height * 0.15,
                         addText: "Refresh",
                       ),
                     );
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TabViewOneClubProfile(
-                        clubName: data?.data?.name ?? "No title",
-                        image:
-                            data?.data?.profile ?? AppProfilesCover.clubCover,
-                        playerCount: data?.data?.players.length ?? 0,
-                      ),
-                      Expanded(
-                        child: TabViewOneClubDescription(
-                          description:
-                              data?.data?.description ?? "No description",
-                        ),
-                      ),
-                      const SizedBox(
-                        height: AppPadding.small,
-                      ),
-                      TabbarViewOneEmailPhone(
-                        hight: size.height * 0.08,
-                        email: data?.data?.email ?? "No email",
-                        phone: data?.data?.phone ?? 0,
-                      ),
-                      const Divider(
-                        thickness: 0.5,
-                        color: AppColors.grey,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppMargin.large,
-                          vertical: AppMargin.medium,
-                        ),
-                        child: Text(
-                          "Club players",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
-                      const Expanded(
-                        child: MyClubPlayers(),
-                      ),
-                      const SizedBox(
-                        height: AppPadding.small,
-                      ),
-                    ],
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClubDetailsWidget(size: size, data: data),
+                        const ClubPlayerWidget(),
+                      ],
+                    ),
                   );
                 case Status.ERROR:
                   return ErrorComponent(
-                    hight: size.height*0.15,
-                    width: size.height*0.15,
+                    hight: size.height * 0.15,
+                    width: size.height * 0.15,
                     errorMessage:
                         myClubViewModelProvider.getClubApiResponse.message ??
                             "",
@@ -128,8 +87,8 @@ class MyClubTabOne extends StatelessWidget {
                   showMessage: createClubProvider.isClubCreate
                       ? "Waiting for app approval"
                       : "You didn't create a club",
-                  height: 200,
-                  width: 200,
+                  height: size.height * 0.15,
+                  width: size.height * 0.15,
                   addText: createClubProvider.isClubCreate
                       ? "Refresh"
                       : "Create new",
