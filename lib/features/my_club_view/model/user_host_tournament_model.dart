@@ -6,7 +6,7 @@ String userHostTournametModelToJson(UserHostTournametModel data) => json.encode(
 
 class UserHostTournametModel {
     bool? success;
-    List<Datum>? data;
+    List<HostedTournaments>? data;
 
     UserHostTournametModel({
         this.success,
@@ -15,7 +15,7 @@ class UserHostTournametModel {
 
     factory UserHostTournametModel.fromJson(Map<String, dynamic> json) => UserHostTournametModel(
         success: json["success"],
-        data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        data: json["data"] == null ? [] : List<HostedTournaments>.from(json["data"]!.map((x) => HostedTournaments.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -24,7 +24,7 @@ class UserHostTournametModel {
     };
 }
 
-class Datum {
+class HostedTournaments {
     String? id;
     String? cover;
     String? location;
@@ -34,7 +34,7 @@ class Datum {
     String? title;
     int? teamsCount;
 
-    Datum({
+    HostedTournaments({
         this.id,
         this.cover,
         this.location,
@@ -45,7 +45,7 @@ class Datum {
         this.teamsCount,
     });
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    factory HostedTournaments.fromJson(Map<String, dynamic> json) => HostedTournaments(
         id: json["_id"],
         cover: json["cover"],
         location: json["location"],

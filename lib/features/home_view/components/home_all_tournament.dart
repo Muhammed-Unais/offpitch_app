@@ -27,18 +27,24 @@ class HomeAllTournaments extends StatelessWidget {
       builder: (context, exploreViewModel, child) {
         int? toruanmentLength;
         Status? fetchinStatus;
+        List<AllTournament>? tournaments;
 
         if (homeTournaments == HomeTournamentsEnum.all) {
           toruanmentLength = exploreViewModel.allTournaments.data?.length;
           fetchinStatus = exploreViewModel.allTournaments.status;
+          tournaments = exploreViewModel.allTournaments.data?.reversed.toList();
         }
         if (homeTournaments == HomeTournamentsEnum.live) {
           toruanmentLength = exploreViewModel.liveTournaments.data?.length;
           fetchinStatus = exploreViewModel.liveTournaments.status;
+          tournaments =
+              exploreViewModel.liveTournaments.data?.reversed.toList();
         }
         if (homeTournaments == HomeTournamentsEnum.upcoming) {
           toruanmentLength = exploreViewModel.upcomingTournaments.data?.length;
           fetchinStatus = exploreViewModel.upcomingTournaments.status;
+          tournaments =
+              exploreViewModel.upcomingTournaments.data?.reversed.toList();
         }
 
         switch (fetchinStatus) {
@@ -63,34 +69,20 @@ class HomeAllTournaments extends StatelessWidget {
               shrinkWrap: true,
               itemCount: toruanmentLength! > 3 ? 3 : toruanmentLength,
               itemBuilder: (context, index) {
-                AllTournament? tournaments;
-                if (homeTournaments == HomeTournamentsEnum.all) {
-                  tournaments = exploreViewModel.allTournaments.data?.reversed
-                      .toList()[index];
-                }
-                if (homeTournaments == HomeTournamentsEnum.live) {
-                  tournaments = exploreViewModel.liveTournaments.data?.reversed
-                      .toList()[index];
-                }
-                if (homeTournaments == HomeTournamentsEnum.upcoming) {
-                  tournaments = exploreViewModel
-                      .upcomingTournaments.data?.reversed
-                      .toList()[index];
-                }
-
+                var tournament = tournaments?[index];
                 return GestureDetector(
                   onTap: () async {
                     var provider = context.read<DetailsTouramentViewModel>();
-                    provider.getSingleTournament(tournaments?.id);
+                    provider.getSingleTournament(tournament?.id);
                     await Navigator.pushNamed(
                         context, RoutesName.tournamentDetails);
                   },
                   child: TournamentCard(
-                    shortDescription: tournaments?.shortDescription,
-                    touranmentCoverImage: tournaments?.cover ?? "",
-                    tornamentName: tournaments?.title ?? "",
-                    tornamentPlace: tournaments?.location ?? "",
-                    tornamentDate: tournaments?.startDate ?? "",
+                    shortDescription: tournament?.shortDescription,
+                    touranmentCoverImage: tournament?.cover ?? "",
+                    tornamentName: tournament?.title ?? "",
+                    tornamentPlace: tournament?.location ?? "",
+                    tornamentDate: tournament?.startDate ?? "",
                   ),
                 );
               },

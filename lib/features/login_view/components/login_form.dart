@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           const SizedBox(
-            height: AppMargin.extraLarge,
+            height: 20,
           ),
 
           // Forgot Password ================
@@ -119,7 +119,7 @@ class _LoginFormState extends State<LoginForm> {
             buttonChildtext: "Submit",
           ),
           const SizedBox(
-            height: AppMargin.extraLarge,
+            height: 26,
           ),
           const DoyouhaveAcc(),
         ],

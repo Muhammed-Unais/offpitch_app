@@ -33,7 +33,7 @@ class _ExploreViewState extends State<ExploreView>
           );
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (exploreAndSearchProvider.allTournaments.data == null &&
+      if (exploreAndSearchProvider.allTournaments.data == null ||
           exploreAndSearchProvider.liveTournaments.data == null) {
         exploreAndSearchProvider.getExpAndSrchTournmts(
             query: 'filter=all', sortingQuery: "all");

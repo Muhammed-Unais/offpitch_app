@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
 import 'package:offpitch_app/features/otp_verify_view/components/small_otp_form.dart';

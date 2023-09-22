@@ -27,6 +27,12 @@ class SubmitButton extends StatelessWidget {
               )
             : Text(
                 buttonChildtext,
+                style: const TextStyle(
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.white,
+                ),
               ),
       ),
     );

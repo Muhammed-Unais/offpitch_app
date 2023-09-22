@@ -35,6 +35,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   Future<void> getUserClubId() async {
+    
     _userClubId = await Utils.sharedPrefrenceGetValue(key: 'userClubId');
 
     _userClubStatus =

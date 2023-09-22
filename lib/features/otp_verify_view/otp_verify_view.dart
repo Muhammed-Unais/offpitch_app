@@ -74,23 +74,33 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
                 SizedBox(
                   height: size.height / 12,
                 ),
-                Text(
-                  "OTP Verification",
-                  style: Theme.of(context).textTheme.headlineLarge,
+                const Text(
+                  "OTP VERIFICATION",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
                 ),
-                const SizedBox(height: AppMargin.medium),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Enter the code recived in Your registered email',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: TextStyle(
+                    fontFamily: "SFUIDisplay",
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
                 ),
-                const SizedBox(height: AppMargin.small),
+                const SizedBox(height: 10),
                 currentSeconds >= timerMaxSeconds
                     ? const Text(
                         "Your OTP has expired",
                         style: TextStyle(
+                          fontFamily: "SFUIDisplay",
                           color: Colors.red,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
                         ),
                       )
                     : OtpTimer(timerText: timerText),
@@ -116,17 +126,20 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
                             : const Text(
                                 "Resend OTP Code",
                                 style: TextStyle(
+                                  fontFamily: "SFUIDisplay",
                                   color: AppColors.primary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                       )
                     : Text(
                         "Resend OTP Code",
                         style: TextStyle(
+                          fontFamily: "SFUIDisplay",
                           color: Colors.grey.shade400,
-                          fontSize: 18,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       )
               ],

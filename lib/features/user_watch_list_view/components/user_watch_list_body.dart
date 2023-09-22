@@ -30,18 +30,18 @@ class UserWatchListBody extends StatelessWidget {
                     final data = value.userProfileWatchlist.data?.data?.reversed
                         .toList()[index];
                     if (data == null) {
-                      return const EmptyComponts(
-                          image: "assets/images/no-data.svg",
-                          showMessage: "Add Tournament",
-                          height: 200,
-                          width: 200,
-                          addText: "");
+                      return EmptyComponts(
+                        image: "assets/images/no-data.svg",
+                        showMessage: "Add Tournament",
+                        height: size.height * 0.15,
+                        width: size.height * 0.15,
+                        addText: "",
+                      );
                     }
                     return InkWell(
                       onTap: () async {
-                        final provider = Provider.of<DetailsTouramentViewModel>(
-                            context,
-                            listen: false);
+                        final provider =
+                            context.read<DetailsTouramentViewModel>();
                         provider.getSingleTournament(data.id);
                         await Navigator.pushNamed(context, "tournamentdetails");
                       },
@@ -57,7 +57,7 @@ class UserWatchListBody extends StatelessWidget {
                 );
               case Status.ERROR:
                 return ErrorComponent(
-                  hight: size.height*0.15,
+                  hight: size.height * 0.15,
                   width: size.height * 0.15,
                   errorMessage: value.userProfileWatchlist.message ?? "",
                 );

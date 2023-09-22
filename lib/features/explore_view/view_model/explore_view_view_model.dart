@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
@@ -25,8 +24,6 @@ class ExploreViewViewModel extends ChangeNotifier {
   ApiResponse<List<AllTournament>> allTournaments = ApiResponse.loading();
 
   ApiResponse<List<AllTournament>> upcomingTournaments = ApiResponse.loading();
-
-  // ApiResponse<AllTournamentsModel> upcomingTournments = ApiResponse.loading();
 
   void setSearchTabbarIndex(int value) {
     if (value == 0) {
@@ -136,6 +133,7 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   clearAllDataLogout() {
     liveTournaments.data = null;
+    upcomingTournaments.data = null;
     allTournaments.data = null;
   }
 

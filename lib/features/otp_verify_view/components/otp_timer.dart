@@ -11,15 +11,21 @@ class OtpTimer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           "This code will expired in ",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
         ),
         Text(
           timerText.toString(),
           style: const TextStyle(
+            fontFamily: "SFUIDisplay",
             color: AppColors.primary,
-            fontSize: 18,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         )

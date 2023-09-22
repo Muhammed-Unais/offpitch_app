@@ -9,12 +9,12 @@ import '../repository/user_registerd_tournaments_repository.dart';
 class UserHostRegTournamentViewModel extends ChangeNotifier {
   final _myRepo = UserHostTournamentRepository();
 
-  ApiResponse<List<Datum>> apiResponseHostedTournaments = ApiResponse.loading();
+  ApiResponse<List<HostedTournaments>> apiResponseHostedTournaments = ApiResponse.loading();
 
   ApiResponse<List<RegisteredTournaments>> apiResponseRegisTournaments =
       ApiResponse.loading();
 
-  void setAllUserTournaments(ApiResponse<List<Datum>> data) {
+  void setAllUserTournaments(ApiResponse<List<HostedTournaments>> data) {
     apiResponseHostedTournaments = data;
     notifyListeners();
   }
@@ -28,7 +28,7 @@ class UserHostRegTournamentViewModel extends ChangeNotifier {
     setAllUserTournaments(ApiResponse.loading());
 
     await _myRepo.getAllUserHostTorunament().then((value) {
-      List<Datum> allCompletedTour = [];
+      List<HostedTournaments> allCompletedTour = [];
       allCompletedTour.clear();
       for (var element in value!.data!) {
         if (element.status != StatusTour.DRAFT) {

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
 
 class AuthFormField extends StatelessWidget {
-  const AuthFormField(
-      {super.key,
-      required this.currentFocusNode,
-      required this.controller,
-      required this.nextFocusNode,
-      required this.hintText,
-      required this.labalText,
-      this.formkey,
-      required this.validator,
-      this.obsecureText = false,
-      required this.textInputType,
-      this.obsecureValue = "",
-      this.suffix,
-      this.prefix,
-      this.isoutFocusnode = false,
-      });
+  const AuthFormField({
+    super.key,
+    required this.currentFocusNode,
+    required this.controller,
+    required this.nextFocusNode,
+    required this.hintText,
+    required this.labalText,
+    this.formkey,
+    required this.validator,
+    this.obsecureText = false,
+    required this.textInputType,
+    this.obsecureValue = "",
+    this.suffix,
+    this.prefix,
+    this.isoutFocusnode = false,
+  });
 
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
@@ -37,21 +37,38 @@ class AuthFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xFFF1F1F1),
-          borderRadius: BorderRadius.circular(8)),
+        color: const Color(0xFFF1F1F1),
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            vertical: AppPadding.small, horizontal: AppPadding.medium),
-        child: TextFormField(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: TextFormField( 
+          style: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
           onChanged: (value) {},
           obscureText: obsecureText,
           focusNode: currentFocusNode,
           keyboardType: textInputType,
           controller: controller,
           decoration: InputDecoration(
+            helperStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
+            labelStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
             border: InputBorder.none,
             hintText: hintText,
-            // prefixIcon: prefix,
             labelText: labalText,
             suffixIcon: suffix,
           ),
@@ -61,7 +78,6 @@ class AuthFormField extends StatelessWidget {
             current: currentFocusNode,
             nextFocus: nextFocusNode,
           ),
-          // validation
           validator: validator,
           key: formkey,
         ),

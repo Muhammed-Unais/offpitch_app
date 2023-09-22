@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class UserWatchlistAppbar extends StatelessWidget {
-  const UserWatchlistAppbar({super.key,});
-
+  const UserWatchlistAppbar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,14 @@ class UserWatchlistAppbar extends StatelessWidget {
           Icons.arrow_back,
         ),
       ),
-      title:const Text("Watchlist"),
+      title: const Text(
+        "Watchlist",
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
+      ),
     );
   }
 }

@@ -7,7 +7,8 @@ class SmallOtpForm extends StatelessWidget {
       {super.key,
       required this.onChanged,
       this.focusNode,
-      required this.validator, this.onTap});
+      required this.validator,
+      this.onTap});
 
   final void Function(String?) onChanged;
   final FocusNode? focusNode;
@@ -29,9 +30,19 @@ class SmallOtpForm extends StatelessWidget {
         keyboardType: TextInputType.number,
         autofocus: false,
         focusNode: focusNode,
-        style: Theme.of(context).textTheme.headlineMedium,
+        style: const TextStyle(
+          fontFamily: "SFUIDisplay",
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
+          errorStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ),
           contentPadding: const EdgeInsets.symmetric(vertical: 20),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(

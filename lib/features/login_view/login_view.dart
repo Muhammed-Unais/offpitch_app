@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/login_view/components/login_form.dart';
 import 'package:offpitch_app/features/login_view/components/login_view_topimage.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,18 +26,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                // Top Image=================
                 Row(
                   children: const [Spacer(), LoginViewTopimage(), Spacer()],
                 ),
                 SizedBox(height: size.height * 0.03),
-                // Welcome Text===============
-                Text("Hi Welcome back",
-                    style: Theme.of(context).textTheme.headlineLarge),
-                const SizedBox(
-                  height: AppMargin.extraLarge,
+                const Text(
+                  "Hi WELCOME BACK",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
                 ),
-                // Form fields=================
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   children: const [
                     Spacer(),

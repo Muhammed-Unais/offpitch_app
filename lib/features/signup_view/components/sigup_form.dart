@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/auth_form_fields.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/signup_view/components/already_have_acc.dart';
 import 'package:offpitch_app/features/login_view/view_model/auth_view_model.dart';
 import 'package:offpitch_app/res/common/services.dart/auth_validation/signup_validation.dart';
@@ -64,7 +62,7 @@ class _SignupFormState extends State<SignupForm> {
             textInputType: TextInputType.name,
           ),
           const SizedBox(
-            height: AppMargin.large,
+            height: 20,
           ),
           // Email Field===================
           AuthFormField(
@@ -77,7 +75,7 @@ class _SignupFormState extends State<SignupForm> {
             textInputType: TextInputType.emailAddress,
           ),
           const SizedBox(
-            height: AppMargin.large,
+            height: 20,
           ),
           // Password Field ===============
           ValueListenableBuilder(
@@ -106,9 +104,8 @@ class _SignupFormState extends State<SignupForm> {
             },
           ),
           const SizedBox(
-            height: AppMargin.large,
+            height: 20,
           ),
-          // Submit button================
           SubmitButton(
             isLoading: authViewModel.signUpLoading,
             actionFunction: () {
@@ -128,12 +125,11 @@ class _SignupFormState extends State<SignupForm> {
             buttonChildtext: "Submit",
           ),
           const SizedBox(
-            height: AppMargin.extraLarge,
+            height: 20,
           ),
-          // Already have an accoount======
           const AlreadyHaveAcc(),
           const SizedBox(
-            height: AppMargin.extraLarge,
+            height: 20,
           ),
         ],
       ),

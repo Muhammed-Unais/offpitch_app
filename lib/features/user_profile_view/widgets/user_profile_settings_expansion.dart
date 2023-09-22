@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
@@ -23,7 +21,14 @@ class UserProfileSettingsExpansion extends StatelessWidget {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       tilePadding: const EdgeInsets.all(0),
       childrenPadding: const EdgeInsets.all(0),
-      title: Text("Settings", style: Theme.of(context).textTheme.labelLarge),
+      title: const Text(
+        "Settings",
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
+      ),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -31,16 +36,21 @@ class UserProfileSettingsExpansion extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.only(right: 10, left: 10, top: 6),
-              child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
+              child: CirclePainterWidget(radius: 3.5, color: AppColors.black),
             ),
             GestureDetector(
               onTap: () async {
                 await Share.share(
                     "https://play.google.com/store/apps/details?id=in.dartz.offpitch");
               },
-              child: Text(
+              child: const Text(
                 "ShareApp",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ),
           ],
@@ -50,15 +60,20 @@ class UserProfileSettingsExpansion extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.only(right: 10, left: 10, top: 6),
-              child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
+              child: CirclePainterWidget(radius: 3.5, color: AppColors.black),
             ),
             GestureDetector(
               onTap: () {
                 Utils.showDialogue(context, child: const LogoutAlertDialog());
               },
-              child: Text(
+              child: const Text(
                 "Logout",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(
+                  fontFamily: "SFUIDisplay",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
               ),
             ),
           ],

@@ -21,11 +21,13 @@ class UserProfileWatchListExpansion extends StatelessWidget {
       textColor: AppColors.primary,
       expandedAlignment: Alignment.topLeft,
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      leading: const Icon(Icons.watch_later_outlined),
+      leading: const Icon(
+        Icons.watch_later_outlined,
+        color: AppColors.black,
+      ),
       title: const Text(
         "Watchlist",
         style: TextStyle(
-          fontFamily: "SFUIDisplay",
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
@@ -60,9 +62,14 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                             Navigator.pushNamed(
                                 context, RoutesName.userWatchlist);
                           },
-                          child: Text(
+                          child: const Text(
                             "View all",
-                            style: Theme.of(context).textTheme.labelMedium,
+                            style: TextStyle(
+                              fontFamily: "SFUIDisplay",
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.black,
+                            ),
                           ),
                         ),
                       )
@@ -93,11 +100,20 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                           ),
                           title: Text(
                             data[index].title ?? "",
-                            style: Theme.of(context).textTheme.labelLarge,
+                            style: const TextStyle(
+                              fontFamily: "SFUIDisplay",
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.black,
+                            ),
                           ),
                           subtitle: Text(
                             data[index].startDate ?? "",
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: const TextStyle(
+                              fontFamily: "SFUIDisplay",
+                              fontSize: 12,
+                              color: AppColors.black,
+                            ),
                           ),
                         ),
                       );

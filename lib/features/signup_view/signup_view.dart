@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/signup_view/components/signup_top_image.dart';
 import 'package:offpitch_app/features/signup_view/components/sigup_form.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -42,9 +43,15 @@ class _SignupViewState extends State<SignupView> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Text("Create an account",
-                          style: Theme.of(context).textTheme.headlineLarge),
-                       SizedBox(
+                      const Text(
+                        "CREATE AN ACCOUNT",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      SizedBox(
                         height: size.height * 0.03,
                       ),
                       Row(

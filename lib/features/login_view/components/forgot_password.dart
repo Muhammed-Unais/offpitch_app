@@ -19,9 +19,14 @@ class ForgotPassword extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
-           Text(
+          const Text(
             "Forgot Password? ",
-            style:Theme.of(context).textTheme.bodyLarge
+            style: TextStyle(
+              fontFamily: "SFUIDisplay",
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: AppColors.black,
+            ),
           ),
           GestureDetector(
             onTap: () {
@@ -39,9 +44,14 @@ class ForgotPassword extends StatelessWidget {
                       color: AppColors.primary,
                     ),
                   )
-                :  Text(
+                : const Text(
                     "reset now",
-                    style: Theme.of(context).textTheme.labelMedium
+                    style: TextStyle(
+                      fontFamily: "SFUIDisplay",
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
                   ),
           ),
         ],
