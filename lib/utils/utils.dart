@@ -24,16 +24,22 @@ class Utils {
       timeInSecForIosWeb: 2,
       backgroundColor: AppColors.primary,
       textColor: AppColors.white,
-      fontSize: 16.0,
+      fontSize: 12.0,
     );
   }
 
   static void showCustomFlushbar(BuildContext context, String message,
       {bool isError = true}) {
     Flushbar(
-      message: message,
-      messageColor: isError ? Colors.red : Colors.green,
-      messageSize: 16,
+      messageText: Text(
+        message,
+        style: TextStyle(
+          fontFamily: "SFUIDisplay",
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: isError ? Colors.red : Colors.green,
+        ),
+      ),
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.FLOATING,
@@ -68,7 +74,7 @@ class Utils {
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       icon: Icon(
         Icons.info_outline,
-        size: 28.0,
+        size: 24.0,
         color: isError ? Colors.red : Colors.green,
       ),
       shouldIconPulse: false,
@@ -79,7 +85,8 @@ class Utils {
       titleText: Text(
         isError ? 'Error' : 'Message',
         style: TextStyle(
-          fontSize: 20.0,
+          fontSize: 16.0,
+          fontFamily: "SFUIDisplay",
           fontWeight: FontWeight.bold,
           color: isError ? Colors.red : AppColors.primary,
         ),

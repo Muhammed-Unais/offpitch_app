@@ -11,7 +11,8 @@ class TabbarWidget extends StatefulWidget {
     required this.tabTwo,
     required this.tabThree,
     this.margin,
-    required this.hight, this.onTap,
+    required this.hight,
+    this.onTap,
   });
 
   final TabController tabController;
@@ -44,8 +45,8 @@ class TabbarWidgetState extends State<TabbarWidget> {
         controller: widget.tabController,
         labelStyle: const TextStyle(
           fontSize: 12,
+          color: AppColors.black,
           fontWeight: FontWeight.bold,
-          fontFamily: "Pilat",
         ),
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
         labelColor: AppColors.white,

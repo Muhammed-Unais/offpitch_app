@@ -17,59 +17,38 @@ class PlayersCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 7, bottom: 5),
-      width: 150,
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
-        image: DecorationImage(
-          colorFilter: const ColorFilter.mode(
-            Colors.black38,
-            BlendMode.darken,
-          ),
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            image!,
-          ),
-        ),
-      ),
-      child: Stack(
+    return SizedBox(
+      width: 80,
+      child: Column(
         children: [
-          Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    playerName!,
-                    style: const TextStyle(
-                      overflow: TextOverflow.clip,
-                      fontFamily: "SFUIDisplay",
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white,
-                    ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    image!,
                   ),
                 ),
-                Flexible(
-                  child: Text(
-                    'Age: ${dobToAge(dob)}',
-                    style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontFamily: "SFUIDisplay",
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white,
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            playerName!,
+            style: const TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontFamily: "SFUIDisplay",
+              fontSize: 12,
+              color: AppColors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          
         ],
       ),
     );
@@ -93,46 +72,37 @@ class AddPlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 7, bottom: 5),
-      width: 150,
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
-      ),
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: InkWell(
-              onTap: buttonAction,
-              child: const CircleAvatar(
+    return GestureDetector(
+      onTap: buttonAction,
+      child: SizedBox(
+        width: 80,
+        child: Column(
+          children: const [
+            Expanded(
+              child: CircleAvatar(
                 backgroundColor: AppColors.primary,
-                radius: 26,
+                radius: 42,
                 child: Icon(
                   Icons.add,
                   color: AppColors.white,
-                  size: 26,
+                  size: 24,
                 ),
               ),
             ),
-          ),
-          const Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
-            child: Text(
-              "Add Players",
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Add player",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "SFUIDisplay",
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
                 color: AppColors.black,
               ),
-              textAlign: TextAlign.center,
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

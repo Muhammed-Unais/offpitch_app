@@ -15,20 +15,17 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: hight,
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      width: MediaQuery.of(context).size.width,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
               const Icon(
                 Icons.email,
                 color: AppColors.black,
-                size: 22,
+                size: 16,
               ),
               const SizedBox(
                 width: AppMargin.small,
@@ -46,12 +43,12 @@ class TabbarViewOneEmailPhone extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           Row(
             children: [
               const Icon(
-                size: 22,
+                size: 16,
                 Icons.call,
                 color: AppColors.black,
               ),

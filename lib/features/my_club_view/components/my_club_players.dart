@@ -15,55 +15,70 @@ class MyClubPlayers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 20),
-      child: Consumer<MyClubViewModel>(
-        builder: (context, value, _) {
-          switch (value.getPlayerapiResponse.status) {
-            case Status.LOADING:
-              return const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppColors.primary,
-                ),
-              );
-            case Status.COMPLETED:
-              final data = value.getPlayerapiResponse.data!.data!;
+    return Column(
+      children: [
+        Container(
+          height: 100,
+          margin: const EdgeInsets.only(left: 20),
+          child: Consumer<MyClubViewModel>(
+            builder: (context, value, _) {
+              switch (value.getPlayerapiResponse.status) {
+                case Status.LOADING:
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
+                  );
+                case Status.COMPLETED:
+                  final data = value.getPlayerapiResponse.data!.data!;
 
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: data.length + 1,
-                itemBuilder: (context, index) {
-                  Datum? player;
-                  if (index != 0) {
-                    player = data[index - 1];
-                  }
-                  return index == 0
-                      ? AddPlayerCard(
-                          buttonAction: () {
-                            AddPlayerBottomSheet.showBottomAddPlayer(context);
-                          },
-                        )
-                      : PlayersCard(
-                          dob: player?.dateOfBirth,
-                          image: player?.profile,
-                          playerName: player?.name,
-                        );
-                },
-              );
-            case Status.ERROR:
-              return Center(
-                child: ErrorComponent(
-                  hight: 80,
-                  width: 80,
-                  errorMessage: value.getPlayerapiResponse.message!,
-                ),
-              );
-            default:
-              return const SizedBox();
-          }
-        },
-      ),
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: data.length + 1,
+                    itemBuilder: (context, index) {
+                      Datum? player;
+                      if (index != 0) {
+                        player = data[index - 1];
+                      }
+                      return index == 0
+                          ? Padding(
+                            padding: const EdgeInsets.only(right: 10,),
+                            child: AddPlayerCard(
+                                buttonAction: () {
+                                  AddPlayerBottomSheet.showBottomAddPlayer(context);
+                                },
+                              ),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: PlayersCard(
+                                dob: player?.dateOfBirth,
+                                image: player?.profile,
+                                playerName: player?.name,
+                              ),
+                          );
+                    },
+                  );
+                case Status.ERROR:
+                  return Center(
+                    child: ErrorComponent(
+                      hight: 80,
+                      width: 80,
+                      errorMessage: value.getPlayerapiResponse.message!,
+                    ),
+                  );
+                default:
+                  return const SizedBox();
+              }
+            },
+          ),
+        ),
+        const SizedBox(
+            height: 20,
+          ),
+      ],
     );
   }
 }

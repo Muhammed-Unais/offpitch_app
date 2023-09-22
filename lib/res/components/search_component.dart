@@ -51,9 +51,9 @@ class _SearchWidgetState extends State<SearchWidget> {
           return Center(
             child: TextField(
               style: const TextStyle(
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
                 fontFamily: "SFUIDisplay",
-                fontSize: 14,
+                fontSize: 12,
               ),
               onSubmitted: widget.isHome
                   ? (value) {
@@ -97,7 +97,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   decoration: TextDecoration.none,
                   fontSize: 12,
                   fontFamily: "SFUIDisplay",
-                  color: AppColors.black,
+                  color: AppColors.grey,
                   fontWeight: FontWeight.normal,
                 ),
                 prefixIcon: Icon(

@@ -27,8 +27,8 @@ class MyclubAppbarTabbar extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20, right: 20),
         labelStyle: const TextStyle(
           fontSize: 12,
+          color: AppColors.black,
           fontWeight: FontWeight.bold,
-          fontFamily: "Pilat",
         ),
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
         labelColor: AppColors.black,

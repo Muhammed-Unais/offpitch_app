@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/circle_images.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/features/club_creation_view/view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
@@ -21,23 +20,24 @@ class TabViewOneClubProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 80,
+      width: MediaQuery.of(context).size.width,
       margin: const EdgeInsetsDirectional.symmetric(
         horizontal: 20,
       ),
       child: Row(
         children: [
-          Flexible(
-            flex: 2,
+          SizedBox(
+            width: 70,
             child: CircleImages(
               image: image,
-              radius: 60,
+              radius: 42,
             ),
           ),
           const SizedBox(
-            width: AppMargin.medium,
+            width: 10,
           ),
           Expanded(
-            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +50,7 @@ class TabViewOneClubProfile extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: AppColors.black,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   "Players: $playerCount",
@@ -63,8 +64,8 @@ class TabViewOneClubProfile extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            flex: 1,
+          Align(
+            alignment: Alignment.centerRight,
             child: InkWell(
               onTap: () {
                 context.read<CreateNewClubViewModel>().setOptions(false);

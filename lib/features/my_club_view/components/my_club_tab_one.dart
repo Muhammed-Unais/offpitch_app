@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/features/my_club_view/components/club_detils_widget.dart';
-import 'package:offpitch_app/features/my_club_view/components/club_player_widget.dart';
+import 'package:offpitch_app/features/my_club_view/components/my_club_players.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
@@ -39,7 +39,7 @@ class MyClubTabOne extends StatelessWidget {
                       onTap: () {
                         myClubViewModelProvider.getMyClub(context);
                       },
-                      child:  EmptyComponts(
+                      child: EmptyComponts(
                         image: "assets/images/Waiting-pana.svg",
                         showMessage: "Waiting for app approval",
                         height: size.height * 0.15,
@@ -48,14 +48,32 @@ class MyClubTabOne extends StatelessWidget {
                       ),
                     );
                   }
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClubDetailsWidget(size: size, data: data),
-                        const ClubPlayerWidget(),
-                      ],
-                    ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                        child: Text(
+                          "CLUB PLAYERS",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                      ),
+                      const MyClubPlayers(),
+                      const Divider(
+                        color: AppColors.grey,
+                        thickness: 0.4,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        child: ClubDetailsWidget(data: data),
+                      ),
+                    ],
                   );
                 case Status.ERROR:
                   return ErrorComponent(
