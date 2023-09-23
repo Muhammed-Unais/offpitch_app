@@ -19,19 +19,6 @@ class SearchWidget extends StatefulWidget {
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var exploreViewModel = context.read<ExploreViewViewModel>();
-      exploreViewModel.getExpAndSrchTournmts(
-        query: "filter=all&search=${widget.searchQuery}",
-        sortingQuery: "all",
-      );
-    });
-
-    super.initState();
-  }
-
   void navigateToExploreScreen(String query) {
     Navigator.pushNamed(context, "explore", arguments: query);
   }
@@ -50,6 +37,8 @@ class _SearchWidgetState extends State<SearchWidget> {
         builder: (context, values, _) {
           return Center(
             child: TextField(
+              controller:
+                  widget.isHome ? null : values.searchTextEditingController,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: "SFUIDisplay",

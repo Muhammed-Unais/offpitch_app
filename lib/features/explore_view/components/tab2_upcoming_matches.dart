@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/data/response/status.dart';
@@ -23,24 +21,24 @@ class ExploreTournaments extends StatelessWidget {
     return Consumer<ExploreViewViewModel>(
       builder: (context, value, child) {
         Status? status;
-        int? length;
+
         List<AllTournament>? tournaments;
 
         switch (value.exploretournaments) {
           case Exploretournaments.all:
             status = value.allTournaments.status;
-            length = value.allTournaments.data?.length;
             tournaments = value.allTournaments.data?.reversed.toList();
+
             break;
           case Exploretournaments.live:
             status = value.liveTournaments.status;
-            length = value.liveTournaments.data?.length;
             tournaments = value.liveTournaments.data?.reversed.toList();
+
             break;
           case Exploretournaments.upcoming:
             status = value.upcomingTournaments.status;
-            length = value.upcomingTournaments.data?.length;
             tournaments = value.upcomingTournaments.data?.reversed.toList();
+
             break;
           default:
         }
@@ -52,7 +50,7 @@ class ExploreTournaments extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppMargin.large,
               ),
-              itemCount: length,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return ShimerWidget.rectangular(
                   borderRadius: AppRadius.borderRadiusS,
@@ -87,7 +85,7 @@ class ExploreTournaments extends StatelessWidget {
               shrinkWrap: false,
               itemBuilder: (context, index) {
                 final tournament = tournaments?[index];
-                return InkWell(
+                return GestureDetector(
                   onTap: () async {
                     var tournametDetailsProvider =
                         context.read<DetailsTouramentViewModel>();

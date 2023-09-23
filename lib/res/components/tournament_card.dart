@@ -58,14 +58,14 @@ class TournamentCard extends StatelessWidget {
                           Text(
                             tornamentName,
                             style: const TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: AppColors.black,
                               fontWeight: FontWeight.bold,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -80,7 +80,7 @@ class TournamentCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 tornamentDate.toString(),
                                 style: const TextStyle(
-                                  fontFamily: "SFUIDisplay",
+                                  fontFamily: "Lato",
                                   fontSize: 12,
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class TournamentCard extends StatelessWidget {
                                 tornamentPlace,
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  fontFamily: "SFUIDisplay",
+                                  fontFamily: "Lato",
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold,
                                 ),

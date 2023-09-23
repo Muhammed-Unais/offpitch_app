@@ -54,7 +54,7 @@ class UserProfileClubCard extends StatelessWidget {
                   Text(
                     "${playersCount ?? 0} PLAYERS",
                     style: const TextStyle(
-                      fontFamily: "SFUIDisplay",
+                      fontFamily: "Lato",
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: AppColors.grey,
@@ -66,7 +66,7 @@ class UserProfileClubCard extends StatelessWidget {
                   Text(
                     clubStatus?.toUpperCase() ?? "",
                     style: const TextStyle(
-                      fontFamily: "SFUIDisplay",
+                      fontFamily: "Lato",
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,

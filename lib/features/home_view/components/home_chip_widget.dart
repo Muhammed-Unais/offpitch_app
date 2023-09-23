@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/features/home_view/view_model/home_view_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -34,13 +33,6 @@ class _HomeChipWidgetState extends State<HomeChipWidget> {
           return GestureDetector(
             onTap: () {
               context.read<HomeViewModel>().setSelectingChip(chipName);
-              if (chipName == "Upcoming") {
-                var exploreViewModel = context.read<ExploreViewViewModel>();
-                exploreViewModel.getExpAndSrchTournmts(
-                  query: "filter=all",
-                  sortingQuery: "upcomingT",
-                );
-              }
             },
             child: Consumer<HomeViewModel>(
               builder: (context, homeProvider, _) {
@@ -59,7 +51,7 @@ class _HomeChipWidgetState extends State<HomeChipWidget> {
                       color: homeProvider.selcetedChip == chipName
                           ? AppColors.white
                           : AppColors.grey,
-                      fontFamily: "SFUIDisplay",
+                      fontFamily: "Lato",
                       fontSize: 12,
                     ),
                     side: const BorderSide(

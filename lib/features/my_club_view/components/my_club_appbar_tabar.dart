@@ -26,6 +26,7 @@ class MyclubAppbarTabbar extends StatelessWidget {
         onTap: (value) {},
         padding: const EdgeInsets.only(left: 20, right: 20),
         labelStyle: const TextStyle(
+          fontFamily: "Lato",
           fontSize: 12,
           color: AppColors.black,
           fontWeight: FontWeight.bold,

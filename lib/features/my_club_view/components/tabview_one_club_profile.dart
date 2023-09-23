@@ -35,7 +35,7 @@ class TabViewOneClubProfile extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 10,
+            width: 20,
           ),
           Expanded(
             child: Column(
@@ -52,12 +52,13 @@ class TabViewOneClubProfile extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 5,),
                 Text(
                   "Players: $playerCount",
                   style: const TextStyle(
-                    fontFamily: "SFUIDisplay",
+                    fontFamily: "Lato",
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.normal,
                     color: AppColors.grey,
                   ),
                 )

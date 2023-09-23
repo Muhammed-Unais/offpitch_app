@@ -24,6 +24,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
       title: const Text(
         "Settings",
         style: TextStyle(
+          fontFamily: "Lato",
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: AppColors.black,

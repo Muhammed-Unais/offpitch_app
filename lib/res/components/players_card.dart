@@ -42,13 +42,12 @@ class PlayersCard extends StatelessWidget {
             playerName!,
             style: const TextStyle(
               overflow: TextOverflow.ellipsis,
-              fontFamily: "SFUIDisplay",
+              fontFamily: "Lato",
               fontSize: 12,
               color: AppColors.black,
             ),
             textAlign: TextAlign.center,
           ),
-          
         ],
       ),
     );
@@ -96,7 +95,7 @@ class AddPlayerCard extends StatelessWidget {
               "Add player",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: "SFUIDisplay",
+                fontFamily: "Lato",
                 fontSize: 12,
                 color: AppColors.black,
               ),

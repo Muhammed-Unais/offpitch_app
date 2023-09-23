@@ -27,12 +27,15 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
 
   void fetchUserDetails() async {
     var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (exploreAndSearchProvider.allTournaments.data == null ||
           exploreAndSearchProvider.liveTournaments.data == null) {
         exploreAndSearchProvider.getExpAndSrchTournmts(
             query: 'filter=all', sortingQuery: "all");
+      }
+       if (exploreAndSearchProvider.upcomingTournaments.data == null) {
+        exploreAndSearchProvider.getExpAndSrchTournmts(
+            query: 'filter=all', sortingQuery: "upcoming");
       }
     });
   }

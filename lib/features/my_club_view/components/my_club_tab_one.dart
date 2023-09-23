@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/features/my_club_view/components/club_detils_widget.dart';
-import 'package:offpitch_app/features/my_club_view/components/my_club_players.dart';
+import 'package:offpitch_app/features/my_club_view/components/club_details_widget.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/empty_components.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
@@ -48,33 +47,7 @@ class MyClubTabOne extends StatelessWidget {
                       ),
                     );
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                        child: Text(
-                          "CLUB PLAYERS",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ),
-                      const MyClubPlayers(),
-                      const Divider(
-                        color: AppColors.grey,
-                        thickness: 0.4,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        child: ClubDetailsWidget(data: data),
-                      ),
-                    ],
-                  );
+                  return ClubDetailsWidget(data: data);
                 case Status.ERROR:
                   return ErrorComponent(
                     hight: size.height * 0.15,

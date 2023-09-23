@@ -44,6 +44,7 @@ class TabbarWidgetState extends State<TabbarWidget> {
         onTap: widget.onTap,
         controller: widget.tabController,
         labelStyle: const TextStyle(
+          fontFamily: "Lato",
           fontSize: 12,
           color: AppColors.black,
           fontWeight: FontWeight.bold,

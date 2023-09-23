@@ -28,6 +28,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
       title: const Text(
         "Watchlist",
         style: TextStyle(
+          fontFamily: "Lato",
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
@@ -65,7 +66,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                           child: const Text(
                             "View all",
                             style: TextStyle(
-                              fontFamily: "SFUIDisplay",
+                              fontFamily: "Lato",
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: AppColors.black,
@@ -101,7 +102,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                           title: Text(
                             data[index].title ?? "",
                             style: const TextStyle(
-                              fontFamily: "SFUIDisplay",
+                              fontFamily: "Lato",
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: AppColors.black,
@@ -110,7 +111,7 @@ class UserProfileWatchListExpansion extends StatelessWidget {
                           subtitle: Text(
                             data[index].startDate ?? "",
                             style: const TextStyle(
-                              fontFamily: "SFUIDisplay",
+                              fontFamily: "Lato",
                               fontSize: 12,
                               color: AppColors.black,
                             ),

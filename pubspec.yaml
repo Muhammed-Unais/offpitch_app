@@ -102,6 +102,10 @@ flutter:
     - family: SFUIDisplay
       fonts:
         - asset: fonts/FontsFree-Net-SF-UI-Display-Regular-1.ttf
+    - family: Lato
+      fonts:
+        - asset: fonts/Lato-Bold.ttf
+        - asset: fonts/Lato-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

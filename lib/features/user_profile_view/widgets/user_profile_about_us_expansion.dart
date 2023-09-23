@@ -23,6 +23,7 @@ class UserProfileAboutUsExpansion extends StatelessWidget {
       title: const Text(
         "About us",
         style: TextStyle(
+          fontFamily: "Lato",
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
@@ -30,14 +31,14 @@ class UserProfileAboutUsExpansion extends StatelessWidget {
       ),
       children: [
         Row(
-          children:const [
-             Padding(
+          children: const [
+            Padding(
               padding: EdgeInsets.only(right: 10, left: 10, top: 6),
               child: CirclePainterWidget(radius: 3.5, color: AppColors.primary),
             ),
             Text(
               "Why us",
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: AppColors.black,

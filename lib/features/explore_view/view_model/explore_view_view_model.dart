@@ -15,6 +15,8 @@ class ExploreViewViewModel extends ChangeNotifier {
     _exploretournaments = exploreIntial;
   }
 
+  TextEditingController searchTextEditingController = TextEditingController();
+
   final _myrepo = ExploreRepository();
 
   int? searchTabbarCount = 0;
@@ -103,7 +105,7 @@ class ExploreViewViewModel extends ChangeNotifier {
         }
 
         // LIVE=================
-        if (dateStr.trim() == outputDate.trim()) {
+        if (dateStr.trim() == outputDate.trim() && sortingQuery == "all") {
           liveTournament.clear();
           liveTournament.add(element);
         }
@@ -131,13 +133,9 @@ class ExploreViewViewModel extends ChangeNotifier {
     });
   }
 
-  clearAllDataLogout() {
+  void clearAllDataLogout() {
     liveTournaments.data = null;
     upcomingTournaments.data = null;
     allTournaments.data = null;
-  }
-
-  ExploreViewViewModel() {
-    getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
   }
 }

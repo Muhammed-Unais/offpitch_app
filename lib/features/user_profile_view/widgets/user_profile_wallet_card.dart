@@ -35,6 +35,7 @@ class UserProfileWalletCard extends StatelessWidget {
               Text(
                 "WALLET",
                 style: TextStyle(
+                fontFamily: "Lato",
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: AppColors.black,
@@ -49,7 +50,7 @@ class UserProfileWalletCard extends StatelessWidget {
                 "Balance",
                 style: TextStyle(
                   overflow: TextOverflow.clip,
-                  fontFamily: "SFUIDisplay",
+                  fontFamily: "Lato",
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: AppColors.white,

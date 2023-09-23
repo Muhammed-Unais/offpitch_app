@@ -57,14 +57,14 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                     );
                   }
                   return ListView.builder(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(top: 20),
                     shrinkWrap: true,
                     itemCount: value.apiResponseHostedTournaments.data?.length,
                     itemBuilder: (context, index) {
                       final data = value
                           .apiResponseHostedTournaments.data!.reversed
                           .toList()[index];
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () async {
                           context
                               .read<DetailsTouramentViewModel>()

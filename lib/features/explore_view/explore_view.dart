@@ -32,19 +32,26 @@ class _ExploreViewState extends State<ExploreView>
             tabController.index,
           );
     });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (exploreAndSearchProvider.allTournaments.data == null ||
-          exploreAndSearchProvider.liveTournaments.data == null) {
-        exploreAndSearchProvider.getExpAndSrchTournmts(
-            query: 'filter=all', sortingQuery: "all");
-      }
-
-      if (exploreAndSearchProvider.upcomingTournaments.data == null) {
-        exploreAndSearchProvider.getExpAndSrchTournmts(
-            query: 'filter=all', sortingQuery: "upcoming");
+    exploreAndSearchProvider.searchTextEditingController.addListener(() {
+      if (mounted) {
+        _listeningApiCalls();
       }
     });
+
     super.initState();
+  }
+
+  void _listeningApiCalls() {
+    var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
+    final String text =
+        exploreAndSearchProvider.searchTextEditingController.text;
+    if (exploreAndSearchProvider.searchTextEditingController.text.isEmpty) {
+      exploreAndSearchProvider.getExpAndSrchTournmts(
+          query: 'filter=all&search=$text', sortingQuery: "all");
+
+      exploreAndSearchProvider.getExpAndSrchTournmts(
+          query: 'filter=all&search=$text', sortingQuery: "upcoming");
+    }
   }
 
   @override
@@ -59,6 +66,8 @@ class _ExploreViewState extends State<ExploreView>
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus) {
+          var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
+          exploreAndSearchProvider.searchTextEditingController.clear();
           currentFocus.unfocus();
         }
       },
