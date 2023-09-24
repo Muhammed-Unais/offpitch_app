@@ -21,33 +21,7 @@ class ScheduledviewT2 extends StatelessWidget {
       children: [
         SizedBox(
           height: 60,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
-                width: 80,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    AppRadius.borderRadiusS,
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      singleTournamentModel.data?.cover ??
-                          AppProfilesCover.clubCover,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Text(
-                textAlign: TextAlign.center,
-                singleTournamentModel.data?.title ?? "",
-                style: Theme.of(context).textTheme.titleLarge,
-              )
-            ],
-          ),
+          child: tournamentProfileandTitle(),
         ),
         const Padding(
           padding: EdgeInsets.symmetric(
@@ -76,7 +50,12 @@ class ScheduledviewT2 extends StatelessWidget {
                     ),
                     child: Text(
                       roundData?.name ?? "",
-                      style: Theme.of(context).textTheme.labelLarge,
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
                     ),
                   ),
                   Card(
@@ -165,6 +144,39 @@ class ScheduledviewT2 extends StatelessWidget {
             },
           ),
         ),
+      ],
+    );
+  }
+
+  Row tournamentProfileandTitle() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+          width: 80,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              AppRadius.borderRadiusS,
+            ),
+            image: DecorationImage(
+              image: NetworkImage(
+                singleTournamentModel.data?.cover ?? AppProfilesCover.clubCover,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Text(
+          textAlign: TextAlign.center,
+          singleTournamentModel.data?.title ?? "",
+          style: const TextStyle(
+            fontSize: 12,
+            color: AppColors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ],
     );
   }

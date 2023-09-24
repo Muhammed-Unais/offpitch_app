@@ -27,8 +27,9 @@ class CreatTournamentTabThree extends StatelessWidget {
               },
               child: const Text(
                 "Back",
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 12,
+                  fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                   color: AppColors.black,
                 ),
@@ -37,11 +38,11 @@ class CreatTournamentTabThree extends StatelessWidget {
             SaveContinueButton(
               isloading: value.isLoading!,
               width: size.width * 0.4,
-              btnFunction: () {
+              btnFunction: () async {
                 if (value.isCheckTourType1 != null ||
                     value.isCheckTourType2 != null ||
                     value.isCheckTourType3 != null) {
-                  value.submitButtonTournamentCreate(context);
+                  await value.submitButtonTournamentCreate(context);
                 }
               },
               text: "Submit",

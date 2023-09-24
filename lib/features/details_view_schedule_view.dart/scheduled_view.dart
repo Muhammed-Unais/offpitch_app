@@ -36,7 +36,7 @@ class _ScheduledViewState extends State<ScheduledView>
             tabController: tabController,
           ),
           const SizedBox(
-            height: AppMargin.large,
+            height:20,
           ),
           Expanded(
             child: TabBarView(

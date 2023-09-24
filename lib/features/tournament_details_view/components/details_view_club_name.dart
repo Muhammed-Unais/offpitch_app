@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/circle_images.dart';
-import 'package:offpitch_app/res/constats.dart';
+
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class DetailsViewClubName extends StatelessWidget {
-  const DetailsViewClubName({super.key, required this.clubImage, required this.clubName});
+  const DetailsViewClubName(
+      {super.key, required this.clubImage, required this.clubName});
 
   final String clubImage;
   final String clubName;
@@ -15,15 +17,22 @@ class DetailsViewClubName extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleImages(
-            radius: AppRadius.borderRadiusL,
+            radius: 36,
             image: clubImage,
           ),
           const SizedBox(
-            width: AppMargin.small,
+            width: 10,
           ),
-          Text(
-            clubName,
-            style: Theme.of(context).textTheme.titleLarge,
+          Expanded(
+            child: Text(
+              clubName,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.black,
+              ),
+              overflow: TextOverflow.clip,
+            ),
           ),
         ],
       ),

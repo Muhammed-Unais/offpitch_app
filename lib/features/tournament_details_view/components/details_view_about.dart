@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:readmore/readmore.dart';
 
 class DetailsViewAbout extends StatelessWidget {
@@ -10,24 +11,29 @@ class DetailsViewAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: size.width,
-      margin: const EdgeInsets.symmetric(
-        vertical: AppMargin.large,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "About",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: TextStyle(
+              color: AppColors.grey,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(
             height: AppMargin.small,
           ),
           ReadMoreText(
             data.data?.description ?? "",
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: const TextStyle(
+              color: AppColors.black,
+              fontSize: 12,
+              fontFamily: "Lato",
+            ),
             trimMode: TrimMode.Line,
             trimLines: 10,
             textAlign: TextAlign.justify,

@@ -41,6 +41,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
                 "LEAGUE\n(Round robin tournament)",
                 style: TextStyle(
                   fontSize: 12,
+                  fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                   color: AppColors.black,
                 ),
@@ -61,6 +62,7 @@ class CreateTournamentThirdFields extends StatelessWidget {
                 "KNOCK OUT\n(Elimination tournament)",
                 style: TextStyle(
                   fontSize: 12,
+                  fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                   color: AppColors.black,
                 ),

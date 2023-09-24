@@ -67,9 +67,15 @@ class Routes {
           builder: (context) => const UserWatchListView(),
         );
       case RoutesName.paymentSuccespage:
+        var args = settings.arguments as List<dynamic>;
+        String tournamentId = args[0];
+        bool status= args[1];
         return MaterialPageRoute(
           builder: (context) {
-            return const PaymentStatusScreen();
+            return PaymentStatusScreen(
+              tournamentId: tournamentId,
+              isSuccess: status,
+            );
           },
         );
       default:

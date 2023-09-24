@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:intl/intl.dart';
 
 class   TournamentCreationValidation {
@@ -21,10 +19,6 @@ class   TournamentCreationValidation {
     if (value != null) {
       const pattern = r'^(?=.*?[a-z])';
       RegExp regExp = RegExp(pattern);
-
-      log("1");
-      log(value);
-      log(regExp.hasMatch(value).toString());
       if (!regExp.hasMatch(value)) {
         return "Enter valid Location";
       }
@@ -42,10 +36,6 @@ class   TournamentCreationValidation {
     if (value != null) {
       const pattern = r'^(?=.*?[a-z])';
       RegExp regExp = RegExp(pattern);
-
-      log("1");
-      log(value);
-      log(regExp.hasMatch(value).toString());
       if (!regExp.hasMatch(value)) {
         return "Enter valid Title";
       }

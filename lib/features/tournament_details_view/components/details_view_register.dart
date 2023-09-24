@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/components/submit_button.dart';
-import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_regis_bottom_.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_registered_already_registerd.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_registered_closed.dart';
@@ -10,6 +9,7 @@ import 'package:offpitch_app/features/tournament_details_view/components/details
 import 'package:offpitch_app/features/my_club_view/view_model/my_club_over_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/registration_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class DetailsViewRegister extends StatelessWidget {
@@ -53,18 +53,24 @@ class DetailsViewRegister extends StatelessWidget {
                 minuts: (value.remainingTime!.inMinutes % 60).toString(),
                 seconds: (value.remainingTime!.inSeconds % 60).toString(),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: AppMargin.large),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
                 height: size.height * 0.2,
                 width: size.width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Register Your Team",
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.grey,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                     Row(
@@ -76,7 +82,11 @@ class DetailsViewRegister extends StatelessWidget {
                               const Icon(Icons.lock_clock),
                               Text(
                                 "Last date \n ${data.data?.registration?.lastDate}",
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 12,
+                                  fontFamily: "Lato",
+                                ),
                               )
                             ],
                           ),
@@ -85,19 +95,28 @@ class DetailsViewRegister extends StatelessWidget {
                           child: Column(
                             children: [
                               Row(
-                                children: [
-                                  const Icon(Icons.money_rounded),
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: const [
+                                  Icon(Icons.money_rounded),
                                   Text(
                                     "Fee",
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
+                                    style: TextStyle(
+                                      color: AppColors.black,
+                                      fontSize: 12,
+                                      fontFamily: "Lato",
+                                    ),
                                   ),
                                 ],
                               ),
                               Text(
                                 '₹${data.data?.registration?.fee?.amount}'
                                     .toString(),
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 12,
+                                  fontFamily: "Lato",
+                                  fontWeight: FontWeight.bold
+                                ),
                               )
                             ],
                           ),
@@ -112,7 +131,7 @@ class DetailsViewRegister extends StatelessWidget {
                           final value = context.read<RegistorationViewModel>();
                           value.playersIds.clear();
                           value.isPermission = false;
-                          context.read<MyClubViewModel>().getAllPlayers();
+                          await context.read<MyClubViewModel>().getAllPlayers();
                           DetailsViewRegistrationBottomSheet
                               .showModelBottomsheet(
                             model: data,

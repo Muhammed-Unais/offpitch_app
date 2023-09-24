@@ -11,7 +11,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200.0,
+      height: 140.0,
       child: Consumer<MyClubViewModel>(
         builder: (context, myclubView, _) {
           return ListView.builder(
@@ -20,8 +20,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final data = myclubView.getPlayerapiResponse.data?.data;
               return Container(
-                height: 160,
-                width: 140,
+                width: 120,
                 margin: const EdgeInsets.only(right: AppMargin.small),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -48,19 +47,23 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                               Text(
                                 data?[index].name ?? "",
                                 style: const TextStyle(
+                                  fontFamily: "Lato",
+                                  fontSize: 12,
                                   color: AppColors.white,
-                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                overflow: TextOverflow.clip,
                               ),
                               const SizedBox(height: 5.0),
                               Text(
                                 'Age: ${registrViewModel.dobToAge(data?[index].dateOfBirth ?? DateTime.now())}',
                                 style: const TextStyle(
+                                  fontFamily: "Lato",
+                                  fontSize: 12,
                                   color: AppColors.white,
-                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                overflow: TextOverflow.clip,
                               ),
                             ],
                           ),

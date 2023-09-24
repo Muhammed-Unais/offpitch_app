@@ -16,6 +16,7 @@ class RegistorationViewModel with ChangeNotifier {
 
   final razorPayKey = "rzp_test_yrNP9XZJenorHu";
   final razorPaySecret = "";
+
   String? paymentId;
   String? orderId;
   String? signature;
@@ -48,6 +49,8 @@ class RegistorationViewModel with ChangeNotifier {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     Utils.showToastMessage("Error:${response.message}");
+    navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage,
+        arguments: [tournamentIdforSavePay, false]);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -97,34 +100,40 @@ class RegistorationViewModel with ChangeNotifier {
     final value = playersIds;
     final data = RegistrationTour(players: value);
     _myrepo.postRegistration(id, data).then((value) {
+      Navigator.pop(context);
       if (value.data?.amount == null) {
         return;
       }
 
       if (value.data!.amount! > 0) {
         openSession(amount: value.data!.amount!, orderId: value.data!.orderId!);
+      } else {
+        context.read<DetailsTouramentViewModel>().getSingleTournament(id);
+
+        Navigator.pop(context);
+
+        Utils.showCustomFlushbar(context, value.message!, isError: false);
       }
-      context.read<DetailsTouramentViewModel>().getSingleTournament(id);
-
-      Navigator.pop(context);
-
-      Utils.showCustomFlushbar(context, value.message!);
     }).onError((error, stackTrace) {
       Utils.showCustomFlushbar(context, error.toString());
     });
   }
 
-  Future<void> postPaymentSave(
-      {required String? razorpayPaymentId,
-      razorpayOrderId,
-      razorpaySignature}) async {
+  Future<void> postPaymentSave({
+    required String? razorpayPaymentId,
+    razorpayOrderId,
+    razorpaySignature,
+  }) async {
     final data = RegistrationSaveFeeModel(
         razorpayPaymentId: paymentId,
         razorpayOrderId: orderId,
         razorpaySignature: signature);
 
     await _myrepo.postPaymentSave(tournamentIdforSavePay, data).then((value) {
-      navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage);
-    }).onError((error, stackTrace) {});
+      navigatorKey.currentState?.pushNamed(RoutesName.paymentSuccespage,
+          arguments: [tournamentIdforSavePay, true]);
+    }).onError((error, stackTrace) {
+      Utils.showToastMessage(error.toString());
+    });
   }
 }

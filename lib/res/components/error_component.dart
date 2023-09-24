@@ -60,8 +60,7 @@ class EmptyComponentPng extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: AppMargin.small),
+        SizedBox(
           height: hight,
           width: width,
           child: Image.asset(
@@ -71,9 +70,9 @@ class EmptyComponentPng extends StatelessWidget {
         Text(
           errorMessage,
           style: const TextStyle(
-            color: AppColors.primary,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontFamily: "SFUIDisplay",
+            color: AppColors.black,
+            fontSize: 12,
           ),
         ),
       ],

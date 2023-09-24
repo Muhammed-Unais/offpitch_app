@@ -7,11 +7,9 @@ import 'package:offpitch_app/features/create_tournament_view/model/create_tourna
 import 'package:offpitch_app/features/create_tournament_view/repository/create_tournament_repository.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/features/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/features/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../home_view/view_model/home_view_model.dart';
 
 class CreateTournamentViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
@@ -183,7 +181,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            textTheme:const TextTheme(),
+            textTheme: const TextTheme(),
             colorScheme: const ColorScheme.light(
               primary: AppColors.primary,
               onPrimary: AppColors.white,
@@ -229,9 +227,8 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
   final _myRepo = CreateTournamentRepository();
 
-  Future<void> submitButtonTournamentCreate(BuildContext context) async {
-    setLoadingCreation(true);
-    final value = CreateTournament(
+  CreateTournament tournamentCreationUserInPut() {
+    return CreateTournament(
       cover: imageUrl,
       startDate: dateController.text.trim(),
       location: locationController.text.trim(),
@@ -252,32 +249,55 @@ class CreateTournamentViewModel extends ChangeNotifier {
       tournamentType: tournmentType(),
       step: 4,
     );
+  }
 
-    _myRepo.putTournamentapi(value).then((value) {
-      setLoadingCreation(false);
+  Future<void> submitButtonTournamentCreate(BuildContext context) async {
+    setLoadingCreation(true);
+
+    var createTournamentModel = tournamentCreationUserInPut();
+    _myRepo.putTournamentapi(createTournamentModel).then((value) async {
       Map<String, dynamic> values = value;
 
       Utils.showCustomFlushbar(context, values['message'], isError: false);
 
-      context.read<ExploreViewViewModel>().getExpAndSrchTournmts(
-            query: 'filter=all&limit=45',
-            sortingQuery: "all",
-          );
+      context
+          .read<ExploreViewViewModel>()
+          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
 
       context
           .read<UserHostRegTournamentViewModel>()
           .getAllUserHostedTournaments();
 
-      context.read<HomeViewModel>().getAllTournaments();
+      setLoadingCreation(false);
 
-      context.read<BottomBarViewModel>().onTap(1, context);
+      clearAlldata();
     }).onError((error, stackTrace) {
       setLoadingCreation(false);
       Utils.showCustomFlushbar(context, error.toString());
     });
   }
 
-  void clearAllData() {
+  void clearAlldata() {
+    amountController.clear();
+    maxOfPlayersController.clear();
+    minOfPlayersController.clear();
+    lastDateTorurnamentController.clear();
+    noOfRegistrationController.clear();
+    instructionController.clear();
+    aboutController.clear();
+    descriptionController.clear();
+    titleTorurnamentController.clear();
+    locationController.clear();
+    dateController.clear();
+    ischeck = false;
+    isCheckTourType1 = false;
+    isCheckTourType2 = false;
+    isCheckTourType3 = false;
+    _images = null;
+    _border = null;
+  }
+
+  void disposeAllData() {
     amountController.dispose();
     maxOfPlayersController.dispose();
     minOfPlayersController.dispose();
@@ -304,7 +324,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    clearAllData();
+    disposeAllData();
     super.dispose();
   }
 }

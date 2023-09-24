@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/features/tournament_details_view/view_model/registration_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PaymentStatusScreen extends StatelessWidget {
-  const PaymentStatusScreen({super.key, this.isSuccess = true});
+  const PaymentStatusScreen(
+      {super.key, this.isSuccess = true, required this.tournamentId});
   final bool isSuccess;
+  final String tournamentId;
   @override
   Widget build(BuildContext context) {
     String statusText = isSuccess ? 'Payment Successful!' : 'Payment Failed';
     Color statusColor = isSuccess ? Colors.green : Colors.red;
-    final tournamentId =
-        Provider.of<RegistorationViewModel>(context).tournamentIdforSavePay;
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Center(
@@ -21,27 +21,33 @@ class PaymentStatusScreen extends StatelessWidget {
           children: [
             Icon(
               isSuccess ? Icons.check_circle_outline : Icons.cancel_outlined,
-              color: AppColors.primary,
-              size: 100,
+              color: isSuccess ? AppColors.black : Colors.red,
+              size: 80,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             Text(
               statusText,
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: AppColors.black,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
             Text(
               isSuccess ? 'Thank you.' : 'Payment was not successful.',
-              style: TextStyle(fontSize: 16, color: statusColor),
+              style: TextStyle(
+                fontSize: 16,
+                color: statusColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Lato",
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Provider.of<DetailsTouramentViewModel>(context, listen: false)
+                context
+                    .read<DetailsTouramentViewModel>()
                     .getSingleTournament(tournamentId);
                 Navigator.pop(context);
               },
@@ -53,7 +59,8 @@ class PaymentStatusScreen extends StatelessWidget {
               child: const Text(
                 'Back to Your Tournament',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 12,
+                  fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                   color: AppColors.white,
                 ),

@@ -23,75 +23,143 @@ class DetailsViewRegistrationBottomSheet {
         return ChangeNotifierProvider.value(
           value: registorationViewModel,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-                vertical: AppPadding.large, horizontal: AppPadding.large),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Register for Tournament',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: AppMargin.medium),
-                Text(data?.title ?? "No Title",
-                    style: Theme.of(context).textTheme.titleLarge),
+                const Text(
+                  'REGISTER FOR TOURNAMENT',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  data?.title ?? "No Title",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
+                ),
                 const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Last Date:${data?.registration?.lastDate ?? "0/0/0000"}",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      "Last Date: ${data?.registration?.lastDate ?? "0/0/0000"}",
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "Minimum Players:${data?.minNoPlayers}",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      "Minimum Players: ${data?.minNoPlayers}",
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     )
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "₹Fee : ${data?.registration?.fee?.amount ?? "0"}",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "Maximuum Players:${data?.maxNoPlayers}",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      "Maximuum Players: ${data?.maxNoPlayers}",
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     )
                   ],
                 ),
-                const SizedBox(height: AppMargin.medium),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   "Instruction",
-                  style: Theme.of(context).textTheme.labelLarge,
-                ),
-                const SizedBox(height: AppMargin.small),
-                SizedBox(
-                  height: 200,
-                  child: ReadMoreText(
-                    data?.instruction ?? "No Instruction",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    trimMode: TrimMode.Line,
-                    trimLines: 10,
+                  style: TextStyle(
+                    fontFamily: "Lato",
+                    fontSize: 12,
+                    color: AppColors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: AppMargin.large),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: SizedBox(
+                    height: 180,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ReadMoreText(
+                            textAlign: TextAlign.justify,
+                            data?.instruction ?? "No Instruction",
+                            style: const TextStyle(
+                              fontFamily: "SFUIDisplay",
+                              fontSize: 12,
+                              color: AppColors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            trimMode: TrimMode.Line,
+                            trimLines: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 const Divider(color: AppColors.grey),
-                const SizedBox(height: AppMargin.large),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Selected Players:',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(width: 10.0),
                     Consumer<RegistorationViewModel>(
                       builder: (context, regeistrationViewModel, _) {
                         return Text(
                           regeistrationViewModel.playersIds.length.toString(),
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: const TextStyle(
+                            fontFamily: "Lato",
+                            fontSize: 12,
+                            color: AppColors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         );
                       },
                     ),
@@ -117,9 +185,15 @@ class DetailsViewRegistrationBottomSheet {
                         );
                       },
                     ),
-                    Text(
-                        'I have read and agree to the all the terms\n and conditions mentioned above',
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    const Text(
+                      'I have read and agree to the all the terms\n and conditions mentioned above',
+                      style: TextStyle(
+                        fontFamily: "SFUIDisplay",
+                        fontSize: 12,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: AppMargin.small),
@@ -132,13 +206,14 @@ class DetailsViewRegistrationBottomSheet {
                         return ElevatedButton(
                           onPressed: regeistrationViewModel.isPermission
                               ? () async {
-                                  if (regeistrationViewModel
-                                              .playersIds.length >=
-                                          data!.minNoPlayers! &&
-                                      regeistrationViewModel
-                                              .playersIds.length <=
-                                          data.maxNoPlayers!) {
-                                    await context
+                                  var plyLength =
+                                      regeistrationViewModel.playersIds.length;
+                                  var minPlayer = data!.minNoPlayers!;
+                                  var maxPlayer = data.maxNoPlayers!;
+
+                                  if (plyLength >= minPlayer &&
+                                      plyLength <= maxPlayer) {
+                                    context
                                         .read<RegistorationViewModel>()
                                         .postRegisterTournament(
                                             data.id, context);
@@ -148,7 +223,15 @@ class DetailsViewRegistrationBottomSheet {
                                   }
                                 }
                               : null,
-                          child: const Text('Submit'),
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                              fontFamily: "Lato",
+                              fontSize: 12,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         );
                       },
                     ),

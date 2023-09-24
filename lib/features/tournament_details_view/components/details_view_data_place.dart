@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/components/date_and_place_box.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class DetailsViewDateTime extends StatelessWidget {
   const DetailsViewDateTime(
@@ -8,7 +9,9 @@ class DetailsViewDateTime extends StatelessWidget {
       required this.hight,
       required this.width,
       required this.dateIcon,
-      required this.placeIcon, required this.date,required this.place});
+      required this.placeIcon,
+      required this.date,
+      required this.place});
 
   final double hight;
   final double width;
@@ -16,8 +19,6 @@ class DetailsViewDateTime extends StatelessWidget {
   final IconData placeIcon;
   final String date;
   final String place;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,18 @@ class DetailsViewDateTime extends StatelessWidget {
             icon: dateIcon,
           ),
           const SizedBox(
-            width: AppMargin.extraSmall,
+            width: 10,
           ),
-          Text(
-            date,
-            style: Theme.of(context).textTheme.bodyLarge,
+          Expanded(
+            child: Text(
+              date,
+              style: const TextStyle(
+                fontFamily: "Lato",
+                fontSize: 12,
+                color: AppColors.black,
+              ),
+              overflow: TextOverflow.clip,
+            ),
           ),
           const SizedBox(
             width: AppMargin.large,
@@ -44,12 +52,17 @@ class DetailsViewDateTime extends StatelessWidget {
             width: width,
             icon: placeIcon,
           ),
-          const SizedBox(
-            width: AppMargin.extraSmall,
-          ),
-          Text(
-            place,
-            style: Theme.of(context).textTheme.bodyLarge,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              place,
+              style: const TextStyle(
+                fontFamily: "Lato",
+                fontSize: 12,
+                color: AppColors.black,
+              ),
+              overflow: TextOverflow.clip,
+            ),
           )
         ],
       ),

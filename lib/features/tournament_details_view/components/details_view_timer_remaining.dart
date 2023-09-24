@@ -45,31 +45,55 @@ class DetailsViewTimerRemain extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             "Registration closes in",
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 12,
+              fontFamily: "Lato",
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '$days \n Days',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "SFUIDisplay",
+                ),
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               Text(
                 '$hours \n Hours',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "SFUIDisplay",
+                ),
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               Text(
                 "$minuts \n Minutes",
-                style: Theme.of(context).textTheme.labelLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "SFUIDisplay",
+                ),
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
               Text(
                 "$seconds \n Seconds",
-                style: Theme.of(context).textTheme.labelLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "SFUIDisplay",
+                ),
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
             ],

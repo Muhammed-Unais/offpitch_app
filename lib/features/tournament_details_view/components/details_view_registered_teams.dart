@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_registered_temas.dart';
-import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
-import 'package:provider/provider.dart';
 
 class RegisteredTeams extends StatelessWidget {
   const RegisteredTeams({super.key, this.singleTourdata});
@@ -22,18 +18,28 @@ class RegisteredTeams extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Registered teams",
-                style: Theme.of(context).textTheme.titleLarge,
+                style: TextStyle(
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                  fontSize: 12,
+                ),
               ),
               Text(
                 singleTourdata?.data?.teams?.length.toString() ?? 0.toString(),
-                style: Theme.of(context).textTheme.labelLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Lato",
+                ),
               )
             ],
           ),
           const SizedBox(
-            height: AppMargin.medium,
+            height: 20,
           ),
           Expanded(
             child: ListView.builder(
@@ -45,8 +51,7 @@ class RegisteredTeams extends StatelessWidget {
                   elevation: 0,
                   surfaceTintColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side:
-                        const BorderSide(color: AppColors.black, width: 0.5),
+                    side: const BorderSide(color: AppColors.black, width: 0.5),
                     borderRadius:
                         BorderRadius.circular(AppRadius.borderRadiusS),
                   ),
@@ -88,11 +93,19 @@ class RegisteredTeams extends StatelessWidget {
                             children: [
                               Text(
                                 data?[index].name ?? "No title",
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 12,
+                                  fontFamily: "Lato",
+                                ),
                               ),
                               Text(
                                 "Players:${data?[index].players?.length ?? 0}",
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 12,
+                                  fontFamily: "Lato",
+                                ),
                               )
                             ],
                           ),

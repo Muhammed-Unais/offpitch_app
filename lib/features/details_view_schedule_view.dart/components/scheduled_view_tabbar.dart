@@ -13,24 +13,29 @@ class ScheduledViewTabbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       height: 34,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+        color: AppColors.lightgrey,
         borderRadius: BorderRadius.circular(
-          AppRadius.borderRadiusL,
+          AppRadius.borderRadiusS,
         ),
       ),
       child: TabBar(
         controller: tabController,
-        labelStyle: Theme.of(context).textTheme.titleMedium,
-        splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+        labelStyle:const TextStyle(
+          fontSize: 12,
+          fontFamily: "Lato",
+          fontWeight: FontWeight.bold,
+          color: AppColors.black
+        ),
+        splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
         labelColor: AppColors.white,
         indicatorPadding:
             const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.borderRadiusL),
+          borderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
           color: AppColors.primary,
         ),
         tabs: const [

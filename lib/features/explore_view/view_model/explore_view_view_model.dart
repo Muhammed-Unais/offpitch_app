@@ -14,7 +14,7 @@ class ExploreViewViewModel extends ChangeNotifier {
   set setExploretournaments(Exploretournaments exploreIntial) {
     _exploretournaments = exploreIntial;
   }
-
+   
   TextEditingController searchTextEditingController = TextEditingController();
 
   final _myrepo = ExploreRepository();

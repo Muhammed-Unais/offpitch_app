@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class DataandPlaceBox extends StatelessWidget {
   const DataandPlaceBox({super.key, required this.hight, required this.width, required this.icon});
@@ -12,7 +13,7 @@ class DataandPlaceBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: AppColors.lightgrey,
           borderRadius: BorderRadius.circular(AppRadius.borderRadiusS)),
       height: hight,
       width: width,

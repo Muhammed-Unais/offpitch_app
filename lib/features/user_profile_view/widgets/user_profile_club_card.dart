@@ -23,8 +23,7 @@ class UserProfileClubCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final userClubId = context.read<UserViewModel>().userClubId;
     return Card(
-      margin: const EdgeInsets.only(
-          bottom: 10, top: 10),
+      margin: const EdgeInsets.only(bottom: 10, top: 10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: const BorderSide(width: 0.2, color: AppColors.black),
@@ -45,6 +44,7 @@ class UserProfileClubCard extends StatelessWidget {
                 clubName?.toUpperCase() ?? "",
                 style: const TextStyle(
                   fontSize: 12,
+                  fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                   color: AppColors.black,
                 ),
@@ -76,15 +76,13 @@ class UserProfileClubCard extends StatelessWidget {
               ),
               trailing: InkWell(
                 onTap: () {
-                  context.read<BottomBarViewModel>().onTap(3, context);
+                  context.read<BottomBarViewModel>().onTap(2, context);
                 },
                 child: const Text(
                   "View",
                   style: TextStyle(
-                    decoration: TextDecoration.underline,
                     fontFamily: "SFUIDisplay",
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
                     color: AppColors.black,
                   ),
                 ),

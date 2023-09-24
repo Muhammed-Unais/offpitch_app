@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/features/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/features/home_view/components/home_tournament_default_card.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/features/home_view/components/home_carousels.dart';
-import 'package:offpitch_app/features/home_view/view_model/home_view_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../explore_view/model/all_tournaments_model.dart';
@@ -17,41 +17,35 @@ class HomeNewTornamentCards extends StatefulWidget {
 }
 
 class _HomeNewTornamentCardsState extends State<HomeNewTornamentCards> {
-  late HomeViewModel homeProvider;
-  @override
-  void initState() {
-    homeProvider = context.read<HomeViewModel>();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      homeProvider.apiResponse?.data ?? homeProvider.getAllTournaments();
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeViewModel>(
-      builder: (context, homeViewModel, _) {
-        switch (homeViewModel.apiResponse!.status) {
+    return Consumer<ExploreViewViewModel>(
+      builder: (context, exploreProvider, _) {
+        int length = 0;
+        switch (exploreProvider.allTournaments.status) {
           case Status.LOADING:
             return const Padding(
-              padding: EdgeInsets.only(left: 20,right: 10),
+              padding: EdgeInsets.only(left: 20, right: 10),
               child: HomeTournametnCard(
                 reduceWidth: 0,
               ),
             );
 
           case Status.COMPLETED:
+            if (exploreProvider.allTournaments.data!.length > 4) {
+              length = 4;
+            } else {
+              length = exploreProvider.allTournaments.data!.length;
+            }
             return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               shrinkWrap: true,
-              itemCount: homeViewModel.count + 1,
+              itemCount: length + 1,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 AllTournament? data;
                 if (index != 0) {
-                  data = homeViewModel
-                      .apiResponse?.data?.data?.allTournaments?.reversed
+                  data = exploreProvider.allTournaments.data?.reversed
                       .toList()[index - 1];
                 }
                 return index == 0
@@ -76,8 +70,10 @@ class _HomeNewTornamentCardsState extends State<HomeNewTornamentCards> {
 
           case Status.ERROR:
             return const Padding(
-                padding: EdgeInsets.only(left: 20,right: 9),
-              child: HomeTournametnCard(reduceWidth: 0,),
+              padding: EdgeInsets.only(left: 20, right: 9),
+              child: HomeTournametnCard(
+                reduceWidth: 0,
+              ),
             );
 
           default:

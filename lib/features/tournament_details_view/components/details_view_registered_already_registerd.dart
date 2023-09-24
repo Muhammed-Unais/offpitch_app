@@ -24,9 +24,10 @@ class DeilsViewRegisterdAlreadyRegisterd extends StatelessWidget {
             textAlign: TextAlign.center,
             "Already Registered",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 12,
+              fontFamily: "SFUIDisplay",
               color: AppColors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.bold,
             ),
           )
         ],

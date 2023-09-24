@@ -96,8 +96,6 @@ class DetailsTouramentViewModel with ChangeNotifier {
     return conatain;
   }
 
-  // registered Api call==================
-
   final _myReop2 = RegisteredTeamsRepository();
 
   ApiResponse<RegisterdTeamsModel> registeredTeams = ApiResponse.loading();

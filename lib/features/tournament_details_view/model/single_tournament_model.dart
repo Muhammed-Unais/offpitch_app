@@ -7,7 +7,7 @@ String singleTournamentModelToJson(SingleTournamentModel data) => json.encode(da
 class SingleTournamentModel {
     bool? success;
     String? message;
-    Data? data;
+    TournamentDetailsData? data;
 
     SingleTournamentModel({
         this.success,
@@ -18,7 +18,7 @@ class SingleTournamentModel {
     factory SingleTournamentModel.fromJson(Map<String, dynamic> json) => SingleTournamentModel(
         success: json["success"],
         message: json["message"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : TournamentDetailsData.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -28,7 +28,7 @@ class SingleTournamentModel {
     };
 }
 
-class Data {
+class TournamentDetailsData {
     String? id;
     Host? host;
     int? v;
@@ -52,7 +52,7 @@ class Data {
     DateTime? updatedAt;
     Matches? matches;
 
-    Data({
+    TournamentDetailsData({
         this.id,
         this.host,
         this.v,
@@ -77,7 +77,7 @@ class Data {
         this.matches,
     });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory TournamentDetailsData.fromJson(Map<String, dynamic> json) => TournamentDetailsData(
         id: json["_id"],
         host: json["host"] == null ? null : Host.fromJson(json["host"]),
         v: json["__v"],

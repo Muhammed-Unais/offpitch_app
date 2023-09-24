@@ -9,7 +9,7 @@ class DetailsViewRegistedClosed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppPadding.large),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           SvgPicture.asset(
@@ -25,9 +25,10 @@ class DetailsViewRegistedClosed extends StatelessWidget {
             textAlign: TextAlign.center,
             "Registration Closed",
             style: TextStyle(
-              fontSize: 18,
+              fontFamily: "SFUIDisplay",
+              fontSize: 12,
               color: AppColors.grey,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.bold,
             ),
           )
         ],

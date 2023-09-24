@@ -4,6 +4,7 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_about.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_data_place.dart';
 import 'package:offpitch_app/features/tournament_details_view/components/details_view_short_description.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class ScheduledTabbarTwo extends StatelessWidget {
   const ScheduledTabbarTwo({super.key, required this.singleTournamentModel});
@@ -41,7 +42,12 @@ class ScheduledTabbarTwo extends StatelessWidget {
               Text(
                 textAlign: TextAlign.center,
                 singleTournamentModel.data?.title ?? "",
-                style: Theme.of(context).textTheme.titleLarge,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),

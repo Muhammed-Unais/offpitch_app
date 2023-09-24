@@ -14,11 +14,12 @@ class DetailsViewRegisteredScheduleBotton extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Schedule tournament",
+          "SCHEDULE TOURNAMENT",
           style: TextStyle(
-            fontWeight: FontWeight.w600,
+            fontFamily: "Lato",
+            fontWeight: FontWeight.bold,
             color: Colors.red,
-            fontSize: 24,
+            fontSize: 12,
           ),
         ),
         ChangeNotifierProvider(
@@ -52,7 +53,10 @@ class DetailsViewRegisteredScheduleBotton extends StatelessWidget {
                       : const Text(
                           'Schedule',
                           style: TextStyle(
+                            fontFamily: "Lato",
                             color: Colors.red,
+                            fontSize: 12,
+
                           ),
                         ),
                 ),
