@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_about.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_data_place.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_short_description.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/tournament_about.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/tournament_data_place.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/short_description.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class ScheduledTabbarTwo extends StatelessWidget {
@@ -68,7 +68,7 @@ class ScheduledTabbarTwo extends StatelessWidget {
             place: singleTournamentModel.data?.location ?? "",
             placeIcon: Icons.location_on,
           ),
-          DetailsViewAbout(
+          TournamentAboutWidget(
             data: singleTournamentModel,
           )
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/features/my_club_view/model/user_registered_model.dart';
+import 'package:offpitch_app/features/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/main.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/registration_model.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/registration_save_fee_model.dart';
@@ -114,6 +116,10 @@ class RegistorationViewModel with ChangeNotifier {
 
         Utils.showCustomFlushbar(context, value.message!, isError: false);
       }
+
+      context
+          .read<UserHostRegTournamentViewModel>()
+          .getAllUserRegisteredTournaments();
     }).onError((error, stackTrace) {
       Utils.showCustomFlushbar(context, error.toString());
     });

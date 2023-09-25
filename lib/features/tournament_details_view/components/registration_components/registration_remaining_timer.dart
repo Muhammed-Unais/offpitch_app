@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
-class DetailsViewTimerRemain extends StatelessWidget {
-  const DetailsViewTimerRemain(
+class RegistrationRemainingTimer extends StatelessWidget {
+  const RegistrationRemainingTimer(
       {super.key,
       required this.height,
       required this.width,

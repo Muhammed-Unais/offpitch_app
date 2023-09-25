@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_all_content_widget.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/all_body_content_widget.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/features/details_view_schedule_view.dart/scheduled_view.dart';
@@ -39,7 +39,7 @@ class DetailsViewBody extends StatelessWidget {
             } else {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: DetialsViewAllContentWidget(
+                child: AllBodyContentWidget(
                   data: data,
                   size: size,
                   teams: teams,

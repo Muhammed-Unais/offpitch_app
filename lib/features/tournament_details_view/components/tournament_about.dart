@@ -4,8 +4,8 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:readmore/readmore.dart';
 
-class DetailsViewAbout extends StatelessWidget {
-  const DetailsViewAbout({super.key, required this.data});
+class TournamentAboutWidget extends StatelessWidget {
+  const TournamentAboutWidget({super.key, required this.data});
   final SingleTournamentModel data;
 
   @override

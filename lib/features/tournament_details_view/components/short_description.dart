@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:readmore/readmore.dart';
 
-class DetailsViewShortDescription extends StatelessWidget {
-  const DetailsViewShortDescription(
+class ShortDescription extends StatelessWidget {
+  const ShortDescription(
       {super.key, required this.shortDescription});
 
   final String? shortDescription;

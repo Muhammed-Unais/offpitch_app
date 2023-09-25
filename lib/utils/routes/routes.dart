@@ -10,7 +10,7 @@ import 'package:offpitch_app/features/my_club_view/my_club_view.dart';
 import 'package:offpitch_app/features/otp_verify_view/otp_verify_view.dart';
 import 'package:offpitch_app/features/signup_view/signup_view.dart';
 import 'package:offpitch_app/features/splash_screen/splash_view.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_registration_payment_success_view.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/registration_components/payment_status_screen.dart';
 import 'package:offpitch_app/features/tournament_details_view/torunament_details_view.dart';
 import 'package:offpitch_app/features/user_watch_list_view/user_watch_list.dart';
 

@@ -5,8 +5,8 @@ import 'package:offpitch_app/features/my_club_view/view_model/my_club_over_view_
 import 'package:offpitch_app/features/tournament_details_view/view_model/registration_view_model.dart';
 import 'package:provider/provider.dart';
 
-class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
-  const DetailsViewBtmShtPlayersAdd({super.key});
+class RegistrationPlayersWidget extends StatelessWidget {
+  const RegistrationPlayersWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: myclubView.getPlayerapiResponse.data?.data?.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
-              final data = myclubView.getPlayerapiResponse.data?.data;
+              final clubPlayers = myclubView.getPlayerapiResponse.data?.data;
               return Container(
                 width: 120,
                 margin: const EdgeInsets.only(right: AppMargin.small),
@@ -29,7 +29,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                       Colors.black54,
                       BlendMode.darken,
                     ),
-                    image: NetworkImage(data?[index].profile ?? ""),
+                    image: NetworkImage(clubPlayers?[index].profile ?? ""),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -45,7 +45,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                data?[index].name ?? "",
+                                clubPlayers?[index].name ?? "",
                                 style: const TextStyle(
                                   fontFamily: "Lato",
                                   fontSize: 12,
@@ -56,7 +56,7 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                               ),
                               const SizedBox(height: 5.0),
                               Text(
-                                'Age: ${registrViewModel.dobToAge(data?[index].dateOfBirth ?? DateTime.now())}',
+                                'Age: ${registrViewModel.dobToAge(clubPlayers?[index].dateOfBirth ?? DateTime.now())}',
                                 style: const TextStyle(
                                   fontFamily: "Lato",
                                   fontSize: 12,
@@ -77,16 +77,20 @@ class DetailsViewBtmShtPlayersAdd extends StatelessWidget {
                         checkColor: AppColors.primary,
                         value: myclubView.selectedPlayers[index],
                         onChanged: (bool? valu) {
+                          var selectedPlayer = registrViewModel.playersIds;
+
+                          var clubPlayer = clubPlayers?[index];
+
                           registrViewModel.playersAddingcheckbox(
                               valu!, index, context);
+
                           if (valu &&
-                              !registrViewModel.playersIds
-                                  .contains(data?[index].id)) {
-                            registrViewModel.playersIds
-                                .add(data?[index].id ?? "");
+                              !selectedPlayer.contains(clubPlayer?.id)) {
+                            selectedPlayer.add(clubPlayer?.id ?? "");
+
                           } else if (!valu) {
-                            registrViewModel.playersIds.removeWhere(
-                              (element) => element == data?[index].id,
+                            selectedPlayer.removeWhere(
+                              (element) => element == clubPlayer?.id,
                             );
                           }
                         },

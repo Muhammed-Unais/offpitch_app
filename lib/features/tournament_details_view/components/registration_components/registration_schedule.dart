@@ -3,8 +3,8 @@ import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/features/details_view_schedule_view.dart/view_model/schedule_tournament_view_model.dart';
 import 'package:provider/provider.dart';
 
-class DetailsViewRegisteredScheduleBotton extends StatelessWidget {
-  const DetailsViewRegisteredScheduleBotton({super.key, this.id});
+class RegistrationScheduleBotton extends StatelessWidget {
+  const RegistrationScheduleBotton({super.key, this.id});
 
   final String? id;
   @override

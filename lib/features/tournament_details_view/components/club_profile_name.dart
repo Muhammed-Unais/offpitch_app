@@ -3,8 +3,8 @@ import 'package:offpitch_app/res/components/circle_images.dart';
 
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
-class DetailsViewClubName extends StatelessWidget {
-  const DetailsViewClubName(
+class ClubProfileNameWidget extends StatelessWidget {
+  const ClubProfileNameWidget(
       {super.key, required this.clubImage, required this.clubName});
 
   final String clubImage;

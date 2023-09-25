@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_club_name.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/club_profile_name.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import '../model/single_tournament_model.dart';
-import 'details_view_about.dart';
-import 'details_view_data_place.dart';
-import 'details_view_register.dart';
-import 'details_view_registered_teams.dart';
-import 'details_view_short_description.dart';
-import 'details_view_tournament_image.dart';
+import 'tournament_about.dart';
+import 'tournament_data_place.dart';
+import 'registered_teams.dart';
+import 'short_description.dart';
+import 'tournament_profile.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/registration_components/registration_status.dart';
 
-class DetialsViewAllContentWidget extends StatelessWidget {
-  const DetialsViewAllContentWidget({
+class AllBodyContentWidget extends StatelessWidget {
+  const AllBodyContentWidget({
     super.key,
     required this.data,
     required this.size,
@@ -30,7 +30,7 @@ class DetialsViewAllContentWidget extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: [
-        DetailsViewClubName(
+        ClubProfileNameWidget(
           clubImage: data?.host?.profile ?? AppProfilesCover.clubCover,
           clubName: data?.host?.name ?? "",
         ),
@@ -48,7 +48,7 @@ class DetialsViewAllContentWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        DetailsViewTournamentImage(
+        TournamentProfile(
           image: data?.cover ?? AppProfilesCover.clubCover,
           hight: size.height * 0.2,
           width: size.width,
@@ -56,11 +56,11 @@ class DetialsViewAllContentWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        DetailsViewShortDescription(
+        ShortDescription(
           shortDescription: data?.shortDescription,
         ),
         const SizedBox(height: 20),
-        DetailsViewDateTime(
+        TournamentDatePlace(
           place: data?.location ?? "",
           date: data?.startDate ?? "",
           hight: 42,
@@ -74,7 +74,7 @@ class DetialsViewAllContentWidget extends StatelessWidget {
           color: AppColors.grey,
         ),
         const SizedBox(height: 20),
-        DetailsViewRegister(
+        RegistrationStatusWidget(
           data: singleTournamentModel!,
         ),
         teams!.isEmpty
@@ -87,7 +87,8 @@ class DetialsViewAllContentWidget extends StatelessWidget {
             : RegisteredTeams(
                 singleTourdata: singleTournamentModel,
               ),
-        DetailsViewAbout(
+        const SizedBox(height: 20),
+        TournamentAboutWidget(
           data: singleTournamentModel!,
         ),
         const SizedBox(height: 20),

@@ -12,11 +12,11 @@ class PlayersModel {
     });
 
     bool? success;
-    List<Datum>? data;
+    List<ClubPlayers>? data;
 
     factory PlayersModel.fromJson(Map<String, dynamic> json) => PlayersModel(
         success: json["success"],
-        data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        data: json["data"] == null ? [] : List<ClubPlayers>.from(json["data"]!.map((x) => ClubPlayers.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -25,8 +25,8 @@ class PlayersModel {
     };
 }
 
-class Datum {
-    Datum({
+class ClubPlayers {
+    ClubPlayers({
         this.name,
         this.dateOfBirth,
         this.profile,
@@ -42,7 +42,7 @@ class Datum {
     String? status;
     String? id;
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    factory ClubPlayers.fromJson(Map<String, dynamic> json) => ClubPlayers(
         name: json["name"],
         dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
         profile: json["profile"],

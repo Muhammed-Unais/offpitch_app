@@ -14,7 +14,7 @@ class ExploreViewViewModel extends ChangeNotifier {
   set setExploretournaments(Exploretournaments exploreIntial) {
     _exploretournaments = exploreIntial;
   }
-   
+
   TextEditingController searchTextEditingController = TextEditingController();
 
   final _myrepo = ExploreRepository();
@@ -106,7 +106,6 @@ class ExploreViewViewModel extends ChangeNotifier {
 
         // LIVE=================
         if (dateStr.trim() == outputDate.trim() && sortingQuery == "all") {
-          liveTournament.clear();
           liveTournament.add(element);
         }
 

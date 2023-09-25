@@ -11,14 +11,12 @@ class TouranmentDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(
-          60.00,
-        ),
+        preferredSize: Size.fromHeight(60.00),
         child: DetaislViewAppBar(),
       ),
       body: ChangeNotifierProvider(
         create: (context) => RegistorationViewModel(),
-        child:  const DetailsViewBody(),
+        child: const DetailsViewBody(),
       ),
     );
   }

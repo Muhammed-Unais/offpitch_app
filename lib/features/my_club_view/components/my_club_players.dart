@@ -38,7 +38,7 @@ class MyClubPlayers extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: data.length + 1,
                     itemBuilder: (context, index) {
-                      Datum? player;
+                      ClubPlayers? player;
                       if (index != 0) {
                         player = data[index - 1];
                       }
@@ -62,11 +62,13 @@ class MyClubPlayers extends StatelessWidget {
                     },
                   );
                 case Status.ERROR:
-                  return Center(
-                    child: ErrorComponent(
-                      hight: 80,
-                      width: 80,
-                      errorMessage: value.getPlayerapiResponse.message!,
+                  return Expanded(
+                    child: Center(
+                      child: ErrorComponent(
+                        hight: 60,
+                        width: 60,
+                        errorMessage: value.getPlayerapiResponse.message!,
+                      ),
                     ),
                   );
                 default:

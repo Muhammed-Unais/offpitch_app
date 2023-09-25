@@ -21,6 +21,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    context.read<HomeViewModel>().homeTournamentsChip = HomeTournamentsEnum.all;
     fetchUserDetails();
     super.initState();
   }
@@ -33,7 +34,7 @@ class _HomeBodyState extends State<HomeBody> with TickerProviderStateMixin {
         exploreAndSearchProvider.getExpAndSrchTournmts(
             query: 'filter=all', sortingQuery: "all");
       }
-       if (exploreAndSearchProvider.upcomingTournaments.data == null) {
+      if (exploreAndSearchProvider.upcomingTournaments.data == null) {
         exploreAndSearchProvider.getExpAndSrchTournmts(
             query: 'filter=all', sortingQuery: "upcoming");
       }

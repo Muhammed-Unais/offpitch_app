@@ -37,7 +37,7 @@ class PaymentStatusScreen extends StatelessWidget {
             Text(
               isSuccess ? 'Thank you.' : 'Payment was not successful.',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 12,
                 color: statusColor,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Lato",

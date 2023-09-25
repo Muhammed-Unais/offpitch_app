@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
-class DetailsViewRegistedClosed extends StatelessWidget {
-  const DetailsViewRegistedClosed({super.key});
+class RegistrationClosed extends StatelessWidget {
+  const RegistrationClosed({super.key});
 
   @override
   Widget build(BuildContext context) {

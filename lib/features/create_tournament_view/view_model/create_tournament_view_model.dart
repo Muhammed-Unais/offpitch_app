@@ -265,6 +265,10 @@ class CreateTournamentViewModel extends ChangeNotifier {
           .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
 
       context
+          .read<ExploreViewViewModel>()
+          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "upcoming");    
+
+      context
           .read<UserHostRegTournamentViewModel>()
           .getAllUserHostedTournaments();
 

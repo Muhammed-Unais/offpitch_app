@@ -3,8 +3,8 @@ import 'package:offpitch_app/res/components/date_and_place_box.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
-class DetailsViewDateTime extends StatelessWidget {
-  const DetailsViewDateTime(
+class TournamentDatePlace extends StatelessWidget {
+  const TournamentDatePlace(
       {super.key,
       required this.hight,
       required this.width,

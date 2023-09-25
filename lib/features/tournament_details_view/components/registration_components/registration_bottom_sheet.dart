@@ -3,12 +3,12 @@ import 'package:offpitch_app/features/tournament_details_view/model/single_tourn
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:offpitch_app/features/tournament_details_view/components/details_view_btmsht_players_add.dart';
+import 'package:offpitch_app/features/tournament_details_view/components/registration_components/registration_plyers_widget.dart';
 import 'package:offpitch_app/features/tournament_details_view/view_model/registration_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
-class DetailsViewRegistrationBottomSheet {
+class RegistrationBottomSheet {
   static Future showModelBottomsheet(context,
       {required SingleTournamentModel model,
       required RegistorationViewModel registorationViewModel}) async {
@@ -166,7 +166,7 @@ class DetailsViewRegistrationBottomSheet {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                const DetailsViewBtmShtPlayersAdd(),
+                const RegistrationPlayersWidget(),
                 const SizedBox(height: AppMargin.small),
                 Row(
                   children: [
