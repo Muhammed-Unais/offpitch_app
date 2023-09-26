@@ -6,8 +6,8 @@ import 'package:offpitch_app/features/tournament_details_view/components/tournam
 import 'package:offpitch_app/features/tournament_details_view/components/short_description.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
-class ScheduledTabbarTwo extends StatelessWidget {
-  const ScheduledTabbarTwo({super.key, required this.singleTournamentModel});
+class ScheduledAboutTabView extends StatelessWidget {
+  const ScheduledAboutTabView({super.key, required this.singleTournamentModel});
 
   final SingleTournamentModel singleTournamentModel;
 
@@ -54,13 +54,13 @@ class ScheduledTabbarTwo extends StatelessWidget {
           const SizedBox(
             height: AppMargin.large,
           ),
-          DetailsViewShortDescription(
+          ShortDescription(
               shortDescription:
                   singleTournamentModel.data?.shortDescription ?? ""),
           const SizedBox(
             height: AppMargin.large,
           ),
-          DetailsViewDateTime(
+          TournamentDatePlace(
             date: singleTournamentModel.data?.startDate ?? "",
             dateIcon: Icons.date_range,
             hight: 44,

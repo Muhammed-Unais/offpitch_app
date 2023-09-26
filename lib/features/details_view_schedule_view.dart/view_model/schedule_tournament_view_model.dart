@@ -12,12 +12,12 @@ class ScheduleTournametViewModel with ChangeNotifier {
 
   bool isLoading = false;
 
-  setIsloading(bool isLoad) {
+  void setIsloading(bool isLoad) {
     isLoading = isLoad;
     notifyListeners();
   }
 
-  getGetScheduleTournamet(id, context) async {
+  Future<void> getGetScheduleTournamet(id, context) async {
     setIsloading(true);
     _myRepo.getGetTournamentSchedule(id).then((value) {
       setIsloading(false);

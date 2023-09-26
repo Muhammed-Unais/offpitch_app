@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
-import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/features/details_view_schedule_view.dart/components/schedule_tabbar_two.dart';
-import 'package:offpitch_app/features/details_view_schedule_view.dart/components/scheduled_view_t2.dart';
+import 'package:offpitch_app/features/details_view_schedule_view.dart/components/scheduled_about_tab_view.dart';
+import 'package:offpitch_app/features/details_view_schedule_view.dart/components/knock_results/knockout_tournament_t2.dart';
 import 'package:offpitch_app/features/details_view_schedule_view.dart/components/scheduled_view_tabbar.dart';
-import 'package:offpitch_app/features/details_view_schedule_view.dart/components/scheduled_view_tabbar1.dart';
+import 'components/league_results/league_tournament_t1.dart';
 
 class ScheduledView extends StatefulWidget {
   const ScheduledView({super.key, required this.singleTournamentModel});
@@ -43,13 +42,13 @@ class _ScheduledViewState extends State<ScheduledView>
               controller: tabController,
               children: [
                 widget.singleTournamentModel.data?.tournamentType == "t2"
-                    ? ScheduledviewT2(
+                    ? KnockOutTournamentT2(
                         singleTournamentModel: widget.singleTournamentModel,
                       )
-                    : ScheduledViewTabbarT1(
+                    : LeagueTournamentT1(
                         singleTournamentModel: widget.singleTournamentModel,
                       ),
-                ScheduledTabbarTwo(
+                ScheduledAboutTabView(
                   singleTournamentModel: widget.singleTournamentModel,
                 ),
               ],

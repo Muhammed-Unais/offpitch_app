@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/features/details_view_schedule_view.dart/components/league_results/league_match_tab_view.dart';
+import 'package:offpitch_app/features/details_view_schedule_view.dart/components/league_results/league_teams_tab_view_two.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/features/details_view_schedule_view.dart/components/scheduleview_t1_teams_tab.dart';
-import 'package:offpitch_app/features/details_view_schedule_view.dart/components/schedule_view_t1_match_tab.dart';
 
-class ScheduledViewTabbarT1 extends StatefulWidget {
-  const ScheduledViewTabbarT1({super.key, required this.singleTournamentModel});
+class LeagueTournamentT1 extends StatefulWidget {
+  const LeagueTournamentT1({super.key, required this.singleTournamentModel});
 
   final SingleTournamentModel singleTournamentModel;
 
   @override
-  State<ScheduledViewTabbarT1> createState() => _ScheduledViewTabbarT1State();
+  State<LeagueTournamentT1> createState() => _LeagueTournamentT1State();
 }
 
-class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
+class _LeagueTournamentT1State extends State<LeagueTournamentT1>
     with TickerProviderStateMixin {
   late TabController tabController;
 
@@ -26,16 +26,17 @@ class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 margin: const EdgeInsets.only(right: AppMargin.small),
-                width: 80,
+                width: size.width * 0.2,
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
@@ -52,13 +53,18 @@ class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
               Text(
                 textAlign: TextAlign.center,
                 widget.singleTournamentModel.data?.title ?? "No title",
-                style: Theme.of(context).textTheme.titleLarge,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+                overflow: TextOverflow.clip,
               )
             ],
           ),
         ),
-       const Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppMargin.large,vertical: AppMargin.small),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Divider(
             thickness: 0.5,
             color: AppColors.grey,
@@ -69,7 +75,12 @@ class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
           child: Align(
             alignment: Alignment.centerLeft,
             child: TabBar(
-              labelStyle: Theme.of(context).textTheme.labelLarge,
+              labelStyle: const TextStyle(
+                color: AppColors.black,
+                fontFamily: "Lato",
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
               unselectedLabelColor: AppColors.black,
               labelColor: AppColors.primary,
               splashFactory: NoSplash.splashFactory,
@@ -79,10 +90,10 @@ class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
               controller: tabController,
               tabs: const [
                 Tab(
-                  text: "Match",
+                  text: "MATCH",
                 ),
                 Tab(
-                  text: "Teams",
+                  text: "TEAMS",
                 ),
               ],
             ),
@@ -92,11 +103,11 @@ class _ScheduledViewTabbarT1State extends State<ScheduledViewTabbarT1>
           child: TabBarView(
             controller: tabController,
             children: [
-              ScheduleViewT1MatchTab(
+              LeagueMatchTabView(
                 singleTournamentModel: widget.singleTournamentModel,
               ),
               // Table Scroll Table
-              ScheduleViewT1TeamsTab(
+              LeagueTeamsTabViewTwo(
                 singleTournamentModel: widget.singleTournamentModel,
               )
             ],

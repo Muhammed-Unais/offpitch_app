@@ -24,82 +24,105 @@ class MatchesResultCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Card(
-      shape: RoundedRectangleBorder(
+    return Container(
+      width: size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.black,width: 0.1)
+        border: Border.all(
+          color: const Color.fromRGBO(228, 229, 229, 1),
+          width: 1,
+        ),
       ),
-      elevation: 1,
-      surfaceTintColor: AppColors.white,
       child: Column(
         children: [
-          Text("Match $matchNo",
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            "Match $matchNo",
+            style: const TextStyle(
+              color: AppColors.black,
+              fontFamily: "Lato",
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
-                width: size.width * 0.32,
-                child: CircleAvatar(
-                  backgroundColor: AppColors.grey,
-                  backgroundImage: NetworkImage(
-                    team1Cover == null || team1Cover!.isEmpty
-                        ? 'https://www.gstatic.com/onebox/sports/logos/crest_48dp.png'
-                        : team1Cover!,
-                  ),
-                  radius: 24,
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: size.width * 0.22,
-                child: Text(
-                  '${team1Goal == -1 || team1Goal == null ? "" : team1Goal} - ${team2Goal == -1 || team2Goal == null ? "" : team2Goal}',
-                  style: Theme.of(context).textTheme.titleLarge,
+                width:size.width /3,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: AppColors.grey,
+                      backgroundImage: NetworkImage(
+                        team1Cover == null || team1Cover!.isEmpty
+                            ? AppProfilesCover.clubCover
+                            : team1Cover!,
+                      ),
+                      radius: 24,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      team1Name ?? "Team A",
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
-                width: size.width * 0.32,
+                width:size.width /5,
+                child: Text(
+                  '${team1Goal == -1 || team1Goal == null ? "" : team1Goal} - ${team2Goal == -1 || team2Goal == null ? "" : team2Goal}',
+                  style: const TextStyle(
+                    color: AppColors.black,
+                    fontFamily: "SFUIDisplay",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                width:size.width /3,
                 child: Column(
                   children: [
                     CircleAvatar(
                       backgroundColor: AppColors.grey,
                       backgroundImage: NetworkImage(
                         team2Cover == null || team2Cover!.isEmpty
-                            ? "https://www.gstatic.com/onebox/sports/logos/crest_48dp.png"
+                            ? AppProfilesCover.clubCover
                             : team2Cover!,
                       ),
                       radius: 24,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      team2Name ?? "Team B",
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(
-            height: AppMargin.extraSmall,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: size.width * 0.32,
-                child: Text(
-                  team1Name ?? "Team A",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: size.width * 0.32,
-                child: Text(
-                  team2Name ?? "Team B",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );

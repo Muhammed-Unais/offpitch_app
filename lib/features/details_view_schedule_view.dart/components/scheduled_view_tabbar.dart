@@ -23,12 +23,11 @@ class ScheduledViewTabbar extends StatelessWidget {
       ),
       child: TabBar(
         controller: tabController,
-        labelStyle:const TextStyle(
-          fontSize: 12,
-          fontFamily: "Lato",
-          fontWeight: FontWeight.bold,
-          color: AppColors.black
-        ),
+        labelStyle: const TextStyle(
+            fontSize: 12,
+            fontFamily: "Lato",
+            fontWeight: FontWeight.bold,
+            color: AppColors.black),
         splashBorderRadius: BorderRadius.circular(AppRadius.borderRadiusS),
         labelColor: AppColors.white,
         indicatorPadding:
