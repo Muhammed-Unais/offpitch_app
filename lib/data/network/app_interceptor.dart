@@ -34,9 +34,9 @@ class AppInterceptor {
           if (err.response?.statusCode == 401 ||
               err.response?.statusCode == 403) {
             // ignore: deprecated_member_use
-            dio.interceptors.requestLock.lock();
+            // dio.interceptors.requestLock.lock();
             // ignore: deprecated_member_use
-            dio.interceptors.responseLock.lock();
+            // dio.interceptors.responseLock.lock();
 
             if (accessToken != "") {
               Response<dynamic> response = await HttpHelpor.refreshToken();
@@ -45,9 +45,9 @@ class AppInterceptor {
                 preferences.remove('accessToken');
                 await preferences.setString('accessToken', accessToken);
                 // ignore: deprecated_member_use
-                dio.interceptors.requestLock.unlock();
+                // dio.interceptors.requestLock.unlock();
                 // ignore: deprecated_member_use
-                dio.interceptors.responseLock.unlock();
+                // dio.interceptors.responseLock.unlock();
                 RequestOptions options = err.requestOptions;
                 try {
                   var resp = await dio.request(
@@ -66,9 +66,9 @@ class AppInterceptor {
                 // else case==============
               } else {
                 // ignore: deprecated_member_use
-                dio.interceptors.requestLock.unlock();
+                // dio.interceptors.requestLock.unlock();
                 // ignore: deprecated_member_use
-                dio.interceptors.responseLock.unlock();
+                // dio.interceptors.responseLock.unlock();
                 handler.reject(err);
               }
             } else {

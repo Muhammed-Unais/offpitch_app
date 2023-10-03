@@ -3,7 +3,6 @@ import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/features/my_club_view/model/user_host_tournament_model.dart';
 import 'package:offpitch_app/features/my_club_view/model/user_registered_model.dart';
 import 'package:offpitch_app/features/my_club_view/repository/user_host_tournament_repository.dart';
-
 import '../repository/user_registerd_tournaments_repository.dart';
 
 class UserHostRegTournamentViewModel extends ChangeNotifier {

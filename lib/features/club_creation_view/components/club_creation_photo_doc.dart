@@ -25,7 +25,7 @@ class ClubCreationPhotoDoc extends StatelessWidget {
       ),
       child: PhotoDocfield(
         docName: clubCreateProvider.docname,
-        image: clubCreateProvider.imageUrl,
+        image: clubCreateProvider.profileImageCover,
         isCreate: clubCreateProvider.isCreate,
         docfunction:imagefunction,
         imagefunction:docfunction,

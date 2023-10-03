@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
 
 class PlayersCard extends StatelessWidget {
   const PlayersCard(

@@ -44,21 +44,24 @@ class MyClubPlayers extends StatelessWidget {
                       }
                       return index == 0
                           ? Padding(
-                            padding: const EdgeInsets.only(right: 10,),
-                            child: AddPlayerCard(
+                              padding: const EdgeInsets.only(
+                                right: 10,
+                              ),
+                              child: AddPlayerCard(
                                 buttonAction: () {
-                                  AddPlayerBottomSheet.showBottomAddPlayer(context);
+                                  AddPlayerBottomSheet.showBottomAddPlayer(
+                                      context);
                                 },
                               ),
-                          )
+                            )
                           : Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: PlayersCard(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: PlayersCard(
                                 dob: player?.dateOfBirth,
                                 image: player?.profile,
                                 playerName: player?.name,
                               ),
-                          );
+                            );
                     },
                   );
                 case Status.ERROR:
@@ -77,9 +80,7 @@ class MyClubPlayers extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(
-            height: 20,
-          ),
+        const SizedBox(height: 20),
       ],
     );
   }

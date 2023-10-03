@@ -20,13 +20,14 @@ class _MyClubViewState extends State<MyClubView> {
 
   @override
   void initState() {
-    userClubId = context.read<UserViewModel>().userClubId;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       userClubId ?? context.read<UserViewModel>().getUserClubId();
       getClubAndPlayers();
       getUserHostedTournaments();
       getUserRegisteredTournaments();
     });
+
+    userClubId = context.read<UserViewModel>().userClubId;
 
     super.initState();
   }

@@ -91,6 +91,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                           playersCount: data?.club?.players,
                         ),
                         UserProfileWalletCard(walletAmount: data?.wallet),
+                        const SizedBox(height: 20,),
                         const Divider(
                           height: 0.2,
                           color: AppColors.grey,

@@ -258,19 +258,19 @@ class CreateTournamentViewModel extends ChangeNotifier {
     _myRepo.putTournamentapi(createTournamentModel).then((value) async {
       Map<String, dynamic> values = value;
 
-      Utils.showCustomFlushbar(context, values['message'], isError: false);
+      context
+          .read<ExploreViewViewModel>()
+          .getExpAndSrchTournmts(query: '', sortingQuery: "all");
 
       context
           .read<ExploreViewViewModel>()
-          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "all");
-
-      context
-          .read<ExploreViewViewModel>()
-          .getExpAndSrchTournmts(query: 'filter=all', sortingQuery: "upcoming");    
+          .getExpAndSrchTournmts(query: '', sortingQuery: "upcoming");
 
       context
           .read<UserHostRegTournamentViewModel>()
           .getAllUserHostedTournaments();
+
+      Utils.showCustomFlushbar(context, values['message'], isError: false);
 
       setLoadingCreation(false);
 

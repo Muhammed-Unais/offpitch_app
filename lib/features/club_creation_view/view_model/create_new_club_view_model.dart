@@ -9,14 +9,16 @@ import 'package:offpitch_app/features/my_club_view/view_model/my_club_over_view_
 import 'package:offpitch_app/features/splash_screen/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloudinary/cloudinary.dart';
-
 import '../model/create_new_club_model.dart';
 
 class CreateNewClubViewModel extends ChangeNotifier {
   ImagePicker imagePicker = ImagePicker();
 
   String? _imageUrl;
-  String? get imageUrl => _imageUrl;
+
+  File? _profileImageCover;
+
+  File? get profileImageCover => _profileImageCover;
 
   bool _isClubCreated = false;
   bool get isClubCreate => _isClubCreated;
@@ -132,10 +134,10 @@ class CreateNewClubViewModel extends ChangeNotifier {
       source: ImageSource.gallery,
     );
     if (img != null) {
-      File images = File(img.path);
+      _profileImageCover = File(img.path);
       CloudinaryResponse response = await cloudinary.upload(
-        file: images.path,
-        fileBytes: images.readAsBytesSync(),
+        file: _profileImageCover?.path,
+        fileBytes: _profileImageCover?.readAsBytesSync(),
         resourceType: CloudinaryResourceType.image,
         progressCallback: (count, total) {},
       );

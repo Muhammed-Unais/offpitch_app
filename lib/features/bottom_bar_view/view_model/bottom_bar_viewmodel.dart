@@ -22,7 +22,7 @@ class BottomBarViewModel extends ChangeNotifier {
       context.read<MyClubViewModel>().setCurrenIndex(0);
     }
 
-    if (index == 4) {
+    if (index == 3) {
       final value = Provider.of<UserProfileViewModel>(context, listen: false);
       value.userProfileResponse.data ?? value.getUserProfile();
       value.userProfileWatchlist.data ?? value.getUserProfileWatchlist();

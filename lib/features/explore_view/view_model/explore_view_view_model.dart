@@ -71,6 +71,7 @@ class ExploreViewViewModel extends ChangeNotifier {
     }
 
     _myrepo.exploreAndSearchTournaments(query: query).then((value) {
+
       DateFormat inputFormat = DateFormat('dd MMM yyyy');
       DateFormat outputFormat = DateFormat('d M yyyy');
       final now = DateTime.now();

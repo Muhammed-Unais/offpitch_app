@@ -50,7 +50,7 @@ class AddPlayerBottomSheet {
                           docBorder: myClubprovider.pdfborder,
                           docName: myClubprovider.docName,
                           border: myClubprovider.border,
-                          image: myClubprovider.imageUrl,
+                          image: myClubprovider.profileImageCover,
                           docfunction: () {
                             myClubprovider.getGovtRegfiles();
                           },
@@ -90,13 +90,15 @@ class AddPlayerBottomSheet {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (formKey.currentState!.validate() &&
-                                  myClubprovider.imageUrl != null &&
+                                  myClubprovider.profileImageCover != null &&
                                   myClubprovider.docName != null) {
                                 await myClubprovider.postPlayers(context);
-                              } else if (myClubprovider.imageUrl == null) {
+                              } else if (myClubprovider.profileImageCover ==
+                                  null) {
                                 myClubprovider.setBorderError(
                                     Border.all(color: Colors.red));
-                              } else if (myClubprovider.docName == null) {
+                              }
+                              if (myClubprovider.pdfborder == null) {
                                 myClubprovider.setDocBorderError(
                                     Border.all(color: Colors.red));
                               }
@@ -108,7 +110,7 @@ class AddPlayerBottomSheet {
                                   )
                                 : const Text(
                                     "Save & Continue",
-                                    style:  TextStyle(
+                                    style: TextStyle(
                                       fontFamily: "SFUIDisplay",
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,

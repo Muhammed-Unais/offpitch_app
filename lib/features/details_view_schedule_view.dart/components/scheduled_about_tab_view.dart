@@ -14,14 +14,13 @@ class ScheduledAboutTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppMargin.large),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(),
                 width: 80,
                 height: 50,
                 decoration: BoxDecoration(
@@ -37,7 +36,7 @@ class ScheduledAboutTabView extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppMargin.small,
+                width: 10,
               ),
               Text(
                 textAlign: TextAlign.center,
@@ -51,15 +50,11 @@ class ScheduledAboutTabView extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(
-            height: AppMargin.large,
-          ),
+          const SizedBox(height: 20),
           ShortDescription(
               shortDescription:
                   singleTournamentModel.data?.shortDescription ?? ""),
-          const SizedBox(
-            height: AppMargin.large,
-          ),
+          const SizedBox(height: 20),
           TournamentDatePlace(
             date: singleTournamentModel.data?.startDate ?? "",
             dateIcon: Icons.date_range,
@@ -68,6 +63,7 @@ class ScheduledAboutTabView extends StatelessWidget {
             place: singleTournamentModel.data?.location ?? "",
             placeIcon: Icons.location_on,
           ),
+          const SizedBox(height: 20),
           TournamentAboutWidget(
             data: singleTournamentModel,
           )

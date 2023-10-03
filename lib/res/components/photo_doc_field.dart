@@ -1,8 +1,10 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/constats.dart';
+
 
 class PhotoDocfield extends StatelessWidget {
   const PhotoDocfield(
@@ -10,7 +12,7 @@ class PhotoDocfield extends StatelessWidget {
       required this.textOfPdf,
       required this.imagefunction,
       required this.docfunction,
-      this.image,
+      required this.image,
       this.docName,
       this.border,
       this.isCreate = true,
@@ -19,7 +21,7 @@ class PhotoDocfield extends StatelessWidget {
   final String textOfPdf;
   final void Function()? imagefunction;
   final void Function()? docfunction;
-  final String? image;
+  final File? image;
   final String? docName;
   final BoxBorder? border;
   final BoxBorder? docBorder;
@@ -36,18 +38,18 @@ class PhotoDocfield extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints.expand(height: double.infinity),
               margin: const EdgeInsets.only(
-                right: AppMargin.medium,
+                right: 10,
               ),
               decoration: BoxDecoration(
                 border: border,
                 image: image != null
                     ? DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(image!)
+                        image: FileImage(image!)
                       )
                     : null,
                 color: Colors.black.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(
                 IconlyBold.camera,
@@ -68,7 +70,7 @@ class PhotoDocfield extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: docBorder,
                       color: Colors.black.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(

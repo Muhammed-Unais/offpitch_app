@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/features/my_club_view/model/user_registered_model.dart';
 import 'package:offpitch_app/features/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
 import 'package:offpitch_app/main.dart';
 import 'package:offpitch_app/features/tournament_details_view/model/registration_model.dart';
@@ -125,11 +124,10 @@ class RegistorationViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> postPaymentSave({
-    required String? razorpayPaymentId,
-    razorpayOrderId,
-    razorpaySignature,
-  }) async {
+  Future<void> postPaymentSave(
+      {required String? razorpayPaymentId,
+      razorpayOrderId,
+      razorpaySignature}) async {
     final data = RegistrationSaveFeeModel(
         razorpayPaymentId: paymentId,
         razorpayOrderId: orderId,

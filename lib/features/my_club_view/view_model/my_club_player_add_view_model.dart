@@ -14,8 +14,6 @@ import 'my_club_over_view_model.dart';
 class MyClubPlayerAddViewModel with ChangeNotifier {
   String? _imageUrl;
 
-  String? get imageUrl => _imageUrl;
-
   BoxBorder? border;
 
   String? docUrl;
@@ -25,6 +23,10 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
   BoxBorder? pdfborder;
 
   ImagePicker imagePicker = ImagePicker();
+
+  File? _profileImageCover;
+
+  File? get profileImageCover => _profileImageCover;
 
   String? get docName => _docName;
 
@@ -102,14 +104,13 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
       source: ImageSource.gallery,
     );
 
-    File? porfileImage;
     if (img != null) {
-      porfileImage = File(img.path);
+      _profileImageCover = File(img.path);
       setBorderError(null);
 
       CloudinaryResponse response = await cloudinary.upload(
-        file: porfileImage.path,
-        fileBytes: porfileImage.readAsBytesSync(),
+        file: _profileImageCover?.path,
+        fileBytes: _profileImageCover?.readAsBytesSync(),
         resourceType: CloudinaryResourceType.image,
         progressCallback: (count, total) {},
       );
@@ -119,10 +120,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
       }
     } else {
       setBorderError(
-        Border.all(
-          color: Colors.red,
-          width: 1,
-        ),
+        Border.all(color: Colors.red, width: 1),
       );
     }
   }
@@ -148,10 +146,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
       }
     } else {
       setDocBorderError(
-        Border.all(
-          color: Colors.red,
-          width: 1,
-        ),
+        Border.all(color: Colors.red, width: 1),
       );
     }
   }
@@ -160,7 +155,7 @@ class MyClubPlayerAddViewModel with ChangeNotifier {
   Future<void> postPlayers(BuildContext context) async {
     if (_imageUrl != null && _docName != null) {
       final modelData = AddPlayersModel(
-        profile: imageUrl,
+        profile: _imageUrl,
         doc: docUrl,
         dateOfBirth: controllerDob.text,
         name: controllerName.text,
