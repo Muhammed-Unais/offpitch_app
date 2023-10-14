@@ -3,7 +3,7 @@ import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/src/tournament_details_view/components/all_body_content_widget.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
-import 'package:offpitch_app/src/details_view_schedule_view.dart/scheduled_view.dart';
+import 'package:offpitch_app/src/details_view_schedule_view.dart/view/scheduled_view.dart';
 import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
 

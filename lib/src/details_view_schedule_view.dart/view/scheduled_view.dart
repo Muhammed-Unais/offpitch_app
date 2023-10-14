@@ -3,7 +3,7 @@ import 'package:offpitch_app/src/tournament_details_view/model/single_tournament
 import 'package:offpitch_app/src/details_view_schedule_view.dart/components/scheduled_about_tab_view.dart';
 import 'package:offpitch_app/src/details_view_schedule_view.dart/components/knock_results/knockout_tournament_t2.dart';
 import 'package:offpitch_app/src/details_view_schedule_view.dart/components/scheduled_view_tabbar.dart';
-import 'components/league_results/league_tournament_t1.dart';
+import '../components/league_results/league_tournament_t1.dart';
 
 class ScheduledView extends StatefulWidget {
   const ScheduledView({super.key, required this.singleTournamentModel});

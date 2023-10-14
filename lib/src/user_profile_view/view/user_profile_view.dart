@@ -10,7 +10,7 @@ import 'package:offpitch_app/src/user_profile_view/widgets/user_profile_wallet_c
 import 'package:offpitch_app/src/user_profile_view/widgets/user_profile_watchlist_expansion.dart';
 import 'package:offpitch_app/src/user_profile_view/view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
-import '../splash_screen/view_model/user_view_model.dart';
+import '../../splash_screen/view_model/user_view_model.dart';
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
