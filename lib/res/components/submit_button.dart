@@ -21,10 +21,14 @@ class SubmitButton extends StatelessWidget {
         onPressed: actionFunction,
         style: ElevatedButton.styleFrom(),
         child: isLoading
-            ? const CircularProgressIndicator(
-                strokeWidth: 4,
-                color: AppColors.white,
-              )
+            ? const SizedBox(
+              height: 12,
+              width: 12,
+              child:  CircularProgressIndicator(
+                  strokeWidth: 4,
+                  color: AppColors.white,
+                ),
+            )
             : Text(
                 buttonChildtext,
                 style: const TextStyle(

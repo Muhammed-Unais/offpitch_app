@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/features/splash_screen/view_model/user_view_model.dart';
+import 'package:offpitch_app/src/splash_screen/view_model/user_view_model.dart';
 // import 'package:provider/provider.dart';
 
 class SplashServices {
