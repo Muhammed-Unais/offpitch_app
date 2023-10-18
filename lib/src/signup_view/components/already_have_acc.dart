@@ -10,14 +10,14 @@ class AlreadyHaveAcc extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
       },
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             "Already have an account? ",
             style: TextStyle(
             fontFamily: "SFUIDisplay",
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.black,
           ),
@@ -26,7 +26,7 @@ class AlreadyHaveAcc extends StatelessWidget {
             "Login",
             style: TextStyle(
             fontFamily: "SFUIDisplay",
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),

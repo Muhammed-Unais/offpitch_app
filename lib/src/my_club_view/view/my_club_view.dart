@@ -20,14 +20,12 @@ class _MyClubViewState extends State<MyClubView> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      userClubId ?? context.read<UserViewModel>().getUserClubId();
-      getClubAndPlayers();
-      getUserHostedTournaments();
-      getUserRegisteredTournaments();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      userClubId= await context.read<UserViewModel>().getUserClubId();
+      await getClubAndPlayers();
+      await getUserHostedTournaments();
+      await getUserRegisteredTournaments();
     });
-
-    userClubId = context.read<UserViewModel>().userClubId;
 
     super.initState();
   }
@@ -60,8 +58,8 @@ class _MyClubViewState extends State<MyClubView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyClubViewModel>(
-      builder: (context, myClubViewModel, _) {
+    return Consumer2<MyClubViewModel,UserViewModel>(
+      builder: (context, myClubViewModel,userViewModel,_) {
         return DefaultTabController(
           initialIndex: myClubViewModel.currentIndex,
           length: 3,
@@ -72,9 +70,9 @@ class _MyClubViewState extends State<MyClubView> {
             ),
             body: TabBarView(
               children: [
-                MyClubTabOne(userClubId: userClubId),
-                MyClubTabTwo(userClubId: userClubId),
-                MyClubTabThree(userClubId: userClubId),
+                MyClubTabOne(userClubId: userViewModel.userClubId),
+                MyClubTabTwo(userClubId: userViewModel.userClubId),
+                MyClubTabThree(userClubId: userViewModel.userClubId),
               ],
             ),
           ),

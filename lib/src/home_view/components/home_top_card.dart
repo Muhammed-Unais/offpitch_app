@@ -9,14 +9,9 @@ import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_d
 import 'package:provider/provider.dart';
 import '../../explore_view/model/all_tournaments_model.dart';
 
-class HomeNewTornamentCards extends StatefulWidget {
+class HomeNewTornamentCards extends StatelessWidget {
   const HomeNewTornamentCards({super.key});
 
-  @override
-  State<HomeNewTornamentCards> createState() => _HomeNewTornamentCardsState();
-}
-
-class _HomeNewTornamentCardsState extends State<HomeNewTornamentCards> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExploreViewViewModel>(
@@ -37,6 +32,7 @@ class _HomeNewTornamentCardsState extends State<HomeNewTornamentCards> {
             } else {
               length = exploreProvider.allTournaments.data!.length;
             }
+            
             return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               shrinkWrap: true,

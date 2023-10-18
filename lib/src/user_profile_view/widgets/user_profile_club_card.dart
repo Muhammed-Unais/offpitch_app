@@ -90,7 +90,7 @@ class UserProfileClubCard extends StatelessWidget {
             )
           : ListTile(
               onTap: () {
-                context.read<BottomBarViewModel>().onTap(3, context);
+                context.read<BottomBarViewModel>().onTap(2, context);
               },
               title: const Text(
                 "You didn't create a club,Create Now",

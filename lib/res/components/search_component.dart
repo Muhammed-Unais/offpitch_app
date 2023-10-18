@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
+import 'package:offpitch_app/src/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
 import 'package:provider/provider.dart';
 
-class SearchWidget extends StatefulWidget {
+class SearchWidget extends StatelessWidget {
   const SearchWidget({
     super.key,
     this.isHome = false,
@@ -13,16 +14,6 @@ class SearchWidget extends StatefulWidget {
 
   final bool isHome;
   final String searchQuery;
-
-  @override
-  State<SearchWidget> createState() => _SearchWidgetState();
-}
-
-class _SearchWidgetState extends State<SearchWidget> {
-  void navigateToExploreScreen(String query) {
-    Navigator.pushNamed(context, "explore", arguments: query);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,19 +28,18 @@ class _SearchWidgetState extends State<SearchWidget> {
         builder: (context, values, _) {
           return Center(
             child: TextField(
-              controller:
-                  widget.isHome ? null : values.searchTextEditingController,
+              controller: values.searchTextEditingController,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: "SFUIDisplay",
                 fontSize: 12,
               ),
-              onSubmitted: widget.isHome
-                  ? (value) {
-                      navigateToExploreScreen(value);
+              onTap: isHome
+                  ? () {
+                      context.read<BottomBarViewModel>().onTap(1, context);
                     }
                   : null,
-              onChanged: widget.isHome
+              onChanged: isHome
                   ? null
                   : (value) {
                       var exploreViewModel =

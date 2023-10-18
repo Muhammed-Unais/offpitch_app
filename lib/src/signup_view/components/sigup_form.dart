@@ -104,7 +104,7 @@ class _SignupFormState extends State<SignupForm> {
             },
           ),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           SubmitButton(
             isLoading: authViewModel.signUpLoading,

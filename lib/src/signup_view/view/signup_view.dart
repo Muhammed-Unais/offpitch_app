@@ -29,8 +29,8 @@ class _SignupViewState extends State<SignupView> {
           child: Column(
             children: <Widget>[
               SizedBox(height: size.height * 0.03),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Spacer(),
                   Expanded(
                     flex: 8,
@@ -54,8 +54,8 @@ class _SignupViewState extends State<SignupView> {
                       SizedBox(
                         height: size.height * 0.03,
                       ),
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           Spacer(),
                           Expanded(
                             flex: 8,

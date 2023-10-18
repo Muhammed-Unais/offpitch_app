@@ -11,7 +11,7 @@ class ExploreRepository {
     try {
       dynamic response = await _apiService.getGetApiResponse(
           AppUrl.allTournaments, "?$query");
-      return response = allTournamentsModelFromJson(response);
+      return allTournamentsModelFromJson(response);
     } catch (e) {
       rethrow;
     }

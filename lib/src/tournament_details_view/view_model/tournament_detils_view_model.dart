@@ -116,7 +116,7 @@ class DetailsTouramentViewModel with ChangeNotifier {
     });
   }
 
-  clearAlldataLogout() {
+  void clearAlldataLogout() {
     registeredTeams.data = null;
     detailsTournament.data = null;
   }

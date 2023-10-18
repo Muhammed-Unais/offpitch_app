@@ -23,7 +23,7 @@ class ForgotPassword extends StatelessWidget {
             "Forgot Password? ",
             style: TextStyle(
               fontFamily: "SFUIDisplay",
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: AppColors.black,
             ),
@@ -48,7 +48,7 @@ class ForgotPassword extends StatelessWidget {
                     "reset now",
                     style: TextStyle(
                       fontFamily: "SFUIDisplay",
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,
                     ),

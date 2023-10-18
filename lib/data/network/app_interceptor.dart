@@ -2,75 +2,34 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:offpitch_app/data/network/http_helpor.dart';
 import 'package:offpitch_app/utils/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInterceptor {
   var dio = Dio();
-  static String baseUrl = "https://offpitch-api.onrender.com/api";
+  final String _baseUrl = "https://offpitch-api.onrender.com/api";
 
   AppInterceptor() {
     dio.options =
-        BaseOptions(contentType: 'application/json', baseUrl: baseUrl);
+        BaseOptions(contentType: 'application/json', baseUrl: _baseUrl);
 
     dio.interceptors.add(
       InterceptorsWrapper(
-        // on request method===================
-        onRequest: (RequestOptions requestOptions,
-            RequestInterceptorHandler handler) async {
-          log("onlog");
+        onRequest: (requestOptions, handler) async {
           final accessToken =
               await Utils.sharedPrefrenceGetValue(key: 'accessToken');
           requestOptions.headers
               .putIfAbsent('Authorization', () => 'Bearer $accessToken');
           handler.next(requestOptions);
         },
-
-        // OnError method =====================
-        onError: (DioError err, ErrorInterceptorHandler handler) async {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          final accessToken = preferences.getString('accessToken');
-
-          //
+        onError: (err, handler) async {
+          log(err.response?.statusCode.toString() ??"statuscode");
           if (err.response?.statusCode == 401 ||
               err.response?.statusCode == 403) {
-            // ignore: deprecated_member_use
-            // dio.interceptors.requestLock.lock();
-            // ignore: deprecated_member_use
-            // dio.interceptors.responseLock.lock();
+            final newAccessToken = await HttpHelpor().refreshToken();
 
-            if (accessToken != "") {
-              Response<dynamic> response = await HttpHelpor.refreshToken();
-              if (response.statusCode == 200) {
-                final accessToken = response.data['data']['accessToken'];
-                preferences.remove('accessToken');
-                await preferences.setString('accessToken', accessToken);
-                // ignore: deprecated_member_use
-                // dio.interceptors.requestLock.unlock();
-                // ignore: deprecated_member_use
-                // dio.interceptors.responseLock.unlock();
-                RequestOptions options = err.requestOptions;
-                try {
-                  var resp = await dio.request(
-                    err.requestOptions.path,
-                    data: options.data,
-                    cancelToken: options.cancelToken,
-                    onReceiveProgress: options.onReceiveProgress,
-                    onSendProgress: options.onSendProgress,
-                    queryParameters: options.queryParameters,
-                  );
-                  handler.resolve(resp);
-                } on DioError catch (error) {
-                  handler.reject(error);
-                }
-
-                // else case==============
-              } else {
-                // ignore: deprecated_member_use
-                // dio.interceptors.requestLock.unlock();
-                // ignore: deprecated_member_use
-                // dio.interceptors.responseLock.unlock();
-                handler.reject(err);
-              }
+            if (newAccessToken != null) {
+              err.requestOptions.headers["Authorization"] =
+                  'Bearer $newAccessToken';
+              return handler.resolve(await dio.fetch(err.requestOptions));
             } else {
               handler.reject(err);
             }

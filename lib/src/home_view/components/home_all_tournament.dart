@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/src/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/src/home_view/view_model/home_view_model.dart';
@@ -63,6 +64,22 @@ class HomeAllTournaments extends StatelessWidget {
             );
 
           case Status.COMPLETED:
+            if (tournaments!.isEmpty) {
+              return SizedBox(
+                height: size.height * 0.35,
+                child: const Center(
+                  child: Text(
+                    "No tournaments",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontSize: 12,
+                      fontFamily: "SFUIDisplay",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            }
             return ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               primary: false,

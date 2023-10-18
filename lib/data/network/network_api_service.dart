@@ -5,7 +5,6 @@ import 'package:offpitch_app/data/network/app_interceptor.dart';
 import 'package:offpitch_app/utils/utils.dart';
 
 class NetworkApiServices extends BaseApiService {
-//  Get api Method without accessToken====================
 
   @override
   Future getGetApiResponse(String url, queries) async {
@@ -16,12 +15,11 @@ class NetworkApiServices extends BaseApiService {
       final response = await dio.get(url + queries);
       responseJson = returnResponse(response);
       return responseJson;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return returnResponse(e.response);
     }
   }
 
-//  post api Method without accessToken====================
   @override
   Future getPostApiResponse(String url, dynamic data) async {
     final dio = Dio();
@@ -43,7 +41,7 @@ class NetworkApiServices extends BaseApiService {
       responseJson = returnResponse(response);
 
       return responseJson;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return returnResponse(e.response);
     }
   }
@@ -65,7 +63,7 @@ class NetworkApiServices extends BaseApiService {
       successResponseData = returnResponse(response);
 
       return successResponseData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return returnResponse(e.response);
     }
   }
@@ -91,7 +89,7 @@ class NetworkApiServices extends BaseApiService {
 
       successResponseData = returnResponse(response);
       return successResponseData;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return returnResponse(e.response);
     }
   }
@@ -112,7 +110,7 @@ class NetworkApiServices extends BaseApiService {
           await dio.post(url, data: data).timeout(const Duration(seconds: 10));
 
       return returnResponse(response);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return returnResponse(e.response);
     }
   }

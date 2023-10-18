@@ -67,29 +67,30 @@ class _LoginFormState extends State<LoginForm> {
             valueListenable: _obsecurePassword,
             builder: (context, obsecureValue, child) {
               return AuthFormField(
-                  isoutFocusnode: true,
-                  textInputType: TextInputType.visiblePassword,
-                  currentFocusNode: _passwordFoucsNode,
-                  controller: _passwordTextEditController,
-                  nextFocusNode: _passwordFoucsNode,
-                  hintText: "Password",
-                  labalText: "Password",
-                  obsecureText: obsecureValue,
-                  obsecureValue: "*",
-                  prefix: const Icon(Icons.lock_open_outlined),
-                  suffix: InkWell(
-                    onTap: () {
-                      _obsecurePassword.value = !_obsecurePassword.value;
-                    },
-                    child: obsecureValue
-                        ? const Icon(
-                            Icons.visibility_off,
-                          )
-                        : const Icon(
-                            Icons.visibility,
-                          ),
-                  ),
-                  validator: LoginValidation.passwordValidator);
+                isoutFocusnode: true,
+                textInputType: TextInputType.visiblePassword,
+                currentFocusNode: _passwordFoucsNode,
+                controller: _passwordTextEditController,
+                nextFocusNode: _passwordFoucsNode,
+                hintText: "Password",
+                labalText: "Password",
+                obsecureText: obsecureValue,
+                obsecureValue: "*",
+                prefix: const Icon(Icons.lock_open_outlined),
+                suffix: InkWell(
+                  onTap: () {
+                    _obsecurePassword.value = !_obsecurePassword.value;
+                  },
+                  child: obsecureValue
+                      ? const Icon(
+                          Icons.visibility_off,
+                        )
+                      : const Icon(
+                          Icons.visibility,
+                        ),
+                ),
+                validator: LoginValidation.passwordValidator,
+              );
             },
           ),
           const SizedBox(
@@ -104,7 +105,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
 
           const SizedBox(
-            height:AppMargin.extraLarge,
+            height: 30,
           ),
           SubmitButton(
             isLoading: authViewModel.isloading,
@@ -119,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
             buttonChildtext: "Submit",
           ),
           const SizedBox(
-            height: 26,
+            height: 20,
           ),
           const DoyouhaveAcc(),
         ],

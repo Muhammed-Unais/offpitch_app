@@ -121,5 +121,14 @@ class Utils {
   static Future<String?> sharedPrefrenceGetValue({required String key}) async {
     final sp = await SharedPreferences.getInstance();
     return sp.getString(key);
+
+  }
+  static Future<bool> sharedClearAll() async {
+    final sp = await SharedPreferences.getInstance();
+    return sp.clear();
+  }
+  static Future<bool> shareRemove({required String key}) async {
+    final sp = await SharedPreferences.getInstance();
+    return sp.remove(key);
   }
 }

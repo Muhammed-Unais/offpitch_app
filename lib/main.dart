@@ -5,7 +5,6 @@ import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/src/login_view/view_model/auth_view_model.dart';
 import 'package:offpitch_app/src/bottom_bar_view/view_model/bottom_bar_viewmodel.dart';
 import 'package:offpitch_app/src/home_view/view_model/home_view_model.dart';
-import 'package:offpitch_app/src/user_profile_view/view_model/logout_view_model.dart';
 import 'package:offpitch_app/src/club_creation_view/view_model/create_new_club_view_model.dart';
 import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/src/my_club_view/view_model/myclub_user_hostreg_tour_view_model.dart';
@@ -55,9 +54,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HomeViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LogoutViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => UserProfileViewModel(),

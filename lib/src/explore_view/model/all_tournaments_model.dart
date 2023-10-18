@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final allTournamentsModel = allTournamentsModelFromJson(jsonString);
 
 import 'dart:convert';
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/src/splash_screen/repository/user_model.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/src/user_profile_view/view_model/logout_view_model.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier {
   String? _userClubId;
@@ -34,14 +33,15 @@ class UserViewModel with ChangeNotifier {
     await getUserClubId();
   }
 
-  Future<void> getUserClubId() async {
-    
+  Future<String?> getUserClubId() async {
     _userClubId = await Utils.sharedPrefrenceGetValue(key: 'userClubId');
 
     _userClubStatus =
         await Utils.sharedPrefrenceGetValue(key: 'userClubStatus');
 
     notifyListeners();
+
+    return _userClubId;
   }
 
   Future<String?> getUser() async {
@@ -53,12 +53,17 @@ class UserViewModel with ChangeNotifier {
   Future<bool> logoutRemoveAllData(BuildContext context) async {
     _userClubStatus = null;
     _userClubId = null;
-    context.read<LogoutViewModel>().clearAllDatasLogout(context);
-    final sp = await SharedPreferences.getInstance();
-    await sp.remove('authToken');
-    await sp.remove("userClubId");
-    await sp.remove("accessToken");
-    await sp.remove("userClubStatus");
+    LogoutViewModel().clearAllDatasLogout(context);
+
+    await Utils.sharedClearAll().then((value) {
+      if (value == true) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.login,
+          (route) => false,
+        );
+      }
+    }).onError((error, stackTrace) async {});
     return true;
   }
 }

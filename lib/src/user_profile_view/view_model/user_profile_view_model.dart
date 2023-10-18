@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/src/user_profile_view/model/user_profile_model.dart';
 import 'package:offpitch_app/src/user_profile_view/repository/user_profile_repository.dart';
 import 'package:offpitch_app/src/user_watch_list_view/model/user_watchlist_model.dart';
+import 'package:offpitch_app/utils/utils.dart';
 
 class UserProfileViewModel with ChangeNotifier {
   final _myRepo = UserProfileRepository();
@@ -27,8 +27,9 @@ class UserProfileViewModel with ChangeNotifier {
   Future getUserProfile() async {
     setUserProfile(ApiResponse.loading());
     _myRepo.getUserProfile().then(
-      (value) {
-        log(value.data!.id.toString());
+      (value) async {
+        await Utils.sharedPrefrence(
+            key: "userClubId", value: value.data?.id ?? "");
 
         setUserProfile(ApiResponse.completed(value));
       },
@@ -45,11 +46,9 @@ class UserProfileViewModel with ChangeNotifier {
     _myRepo.getUserWatchList().then(
       (value) {
         setUserProfileWatchlist(ApiResponse.completed(value));
-        log(value.toString());
       },
     ).onError(
       (error, stackTrace) {
-        log(error.toString());
         setUserProfileWatchlist(ApiResponse.error(error.toString()));
       },
     );
@@ -60,7 +59,7 @@ class UserProfileViewModel with ChangeNotifier {
     getUserProfileWatchlist();
   }
 
-  clearAlldataLogout() {
+  void clearAlldataLogout() {
     userProfileResponse.data = null;
     userProfileWatchlist.data = null;
   }

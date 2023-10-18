@@ -11,14 +11,14 @@ class DoyouhaveAcc extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, RoutesName.signup);
       },
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             "Dont have an account? ",
             style: TextStyle(
             fontFamily: "SFUIDisplay",
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.black,
           ),
@@ -27,7 +27,7 @@ class DoyouhaveAcc extends StatelessWidget {
             "Sign up",
             style:TextStyle(
             fontFamily: "SFUIDisplay",
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),

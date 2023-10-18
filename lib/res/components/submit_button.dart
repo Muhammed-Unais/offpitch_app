@@ -18,7 +18,7 @@ class SubmitButton extends StatelessWidget {
       width: double.infinity,
       height: 60,
       child: ElevatedButton(
-        onPressed: actionFunction,
+        onPressed:isLoading ?null:  actionFunction,
         style: ElevatedButton.styleFrom(),
         child: isLoading
             ? const SizedBox(

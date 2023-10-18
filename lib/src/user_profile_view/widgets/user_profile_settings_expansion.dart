@@ -65,7 +65,12 @@ class UserProfileSettingsExpansion extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Utils.showDialogue(context, child: const LogoutAlertDialog());
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const LogoutAlertDialog();
+                  },
+                );
               },
               child: const Text(
                 "Logout",

@@ -36,51 +36,55 @@ class AuthFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F1F1),
-        borderRadius: BorderRadius.circular(8),
+        color: AppColors.lightgrey,
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: TextFormField( 
-          style: const TextStyle(
-            fontFamily: "SFUIDisplay",
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: AppColors.black,
-          ),
-          onChanged: (value) {},
-          obscureText: obsecureText,
-          focusNode: currentFocusNode,
-          keyboardType: textInputType,
-          controller: controller,
-          decoration: InputDecoration(
-            helperStyle: const TextStyle(
-            fontFamily: "SFUIDisplay",
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: AppColors.black,
-          ),
-            labelStyle: const TextStyle(
-            fontFamily: "SFUIDisplay",
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: AppColors.black,
-          ),
-            border: InputBorder.none,
-            hintText: hintText,
-            labelText: labalText,
-            suffixIcon: suffix,
-          ),
-          onFieldSubmitted: (value) => Utils.fieldFocusChange(
-            isOutfocusNode: isoutFocusnode,
-            context: context,
-            current: currentFocusNode,
-            nextFocus: nextFocusNode,
-          ),
-          validator: validator,
-          key: formkey,
+      child: TextFormField(
+        style: const TextStyle(
+          fontFamily: "SFUIDisplay",
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
         ),
+        onChanged: (value) {},
+        obscureText: obsecureText,
+        focusNode: currentFocusNode,
+        keyboardType: textInputType,
+        controller: controller,
+        decoration: InputDecoration(
+          errorStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
+          helperStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
+          labelStyle: const TextStyle(
+            fontFamily: "SFUIDisplay",
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
+          ),
+          border: InputBorder.none,
+          hintText: hintText,
+          labelText: labalText,
+          suffixIcon: suffix,
+        ),
+        onFieldSubmitted: (value) => Utils.fieldFocusChange(
+          isOutfocusNode: isoutFocusnode,
+          context: context,
+          current: currentFocusNode,
+          nextFocus: nextFocusNode,
+        ),
+        validator: validator,
+        key: formkey,
       ),
     );
   }

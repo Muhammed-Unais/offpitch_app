@@ -76,7 +76,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                         radius: 24,
                       ),
                       const SizedBox(
-                        width: AppMargin.small,
+                        width: 10,
                       ),
                       Text(
                         (widget.team1Name ?? "Team A").toUpperCase(),
@@ -91,7 +91,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(
-                        width: AppMargin.small,
+                        width: 10,
                       ),
                       CircleAvatar(
                         backgroundColor: AppColors.white,
@@ -143,8 +143,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                     if (formkey.currentState!.validate()) {
                       // add result api calling=============
                       final addResults =
-                          Provider.of<ScheduleTournametViewModel>(context,
-                              listen: false);
+                          context.read<ScheduleTournametViewModel>();
                       await addResults.addResult(
                         widget.tournamentId,
                         matchNo: widget.matchNo,
@@ -165,6 +164,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                   child: const Text(
                     'Update',
                     style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: "Lato",
                       color: Colors.green,
                     ),
                   ),

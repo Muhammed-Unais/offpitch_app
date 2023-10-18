@@ -7,7 +7,7 @@ import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_d
 import 'package:offpitch_app/src/user_profile_view/view_model/user_profile_view_model.dart';
 import 'package:provider/provider.dart';
 
-class LogoutViewModel extends ChangeNotifier {
+class LogoutViewModel {
   void clearAllDatasLogout(BuildContext context) {
     context.read<ExploreViewViewModel>().clearAllDataLogout();
     context.read<DetailsTouramentViewModel>().clearAlldataLogout();

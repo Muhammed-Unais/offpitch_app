@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
+import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/src/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/src/explore_view/repository/explore_repository.dart';
 
@@ -71,7 +72,6 @@ class ExploreViewViewModel extends ChangeNotifier {
     }
 
     _myrepo.exploreAndSearchTournaments(query: query).then((value) {
-
       DateFormat inputFormat = DateFormat('dd MMM yyyy');
       DateFormat outputFormat = DateFormat('d M yyyy');
       final now = DateTime.now();
@@ -134,6 +134,7 @@ class ExploreViewViewModel extends ChangeNotifier {
   }
 
   void clearAllDataLogout() {
+    allTournaments.status = Status.LOADING;
     liveTournaments.data = null;
     upcomingTournaments.data = null;
     allTournaments.data = null;
