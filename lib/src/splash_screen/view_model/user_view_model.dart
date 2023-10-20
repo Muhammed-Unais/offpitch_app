@@ -63,7 +63,9 @@ class UserViewModel with ChangeNotifier {
           (route) => false,
         );
       }
-    }).onError((error, stackTrace) async {});
+    }).onError((error, stackTrace) async {
+      Utils.showToastMessage("Logout failed");
+    });
     return true;
   }
 }

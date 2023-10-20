@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/components/circle_images.dart';
-
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class ClubProfileNameWidget extends StatelessWidget {
   const ClubProfileNameWidget(
-      {super.key, required this.clubImage, required this.clubName});
+      {super.key, required this.clubName, required this.clubCover, required this.fontsize});
 
-  final String clubImage;
   final String clubName;
+  final Widget clubCover;
+  final double fontsize;
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +15,15 @@ class ClubProfileNameWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleImages(
-            radius: 36,
-            image: clubImage,
-          ),
+          clubCover,
           const SizedBox(
             width: 10,
           ),
           Expanded(
             child: Text(
               clubName,
-              style: const TextStyle(
-                fontSize: 16,
+              style:  TextStyle(
+                fontSize: fontsize,
                 fontWeight: FontWeight.bold,
                 color: AppColors.black,
               ),

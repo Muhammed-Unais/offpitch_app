@@ -71,6 +71,8 @@ class TournamentCard extends StatelessWidget {
                                   (context, error, stackTrace) {
                                 return Image.asset(
                                   AppProfilesCover.tournamentCover,
+                                  height: 60,
+                                  width: 60,
                                 );
                               },
                               image: NetworkImage(

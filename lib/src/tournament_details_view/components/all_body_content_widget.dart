@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/components/circle_images.dart';
 import 'package:offpitch_app/src/tournament_details_view/components/club_profile_name.dart';
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -32,7 +33,36 @@ class AllBodyContentWidget extends StatelessWidget {
       shrinkWrap: true,
       children: [
         ClubProfileNameWidget(
-          clubImage: data?.host?.profile ?? AppProfilesCover.clubCover,
+          fontsize: 16,
+          clubCover: ClipOval(
+            child: FadeInImage(
+              height: 70,
+              width: 70,
+              fit: BoxFit.cover,
+              placeholderFit: BoxFit.cover,
+              placeholder: const AssetImage(
+                AppProfilesCover.clubCover,
+              ),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  AppProfilesCover.clubCover,
+                  height: 70,
+                  width: 70,
+                  fit: BoxFit.cover,
+                );
+              },
+              placeholderErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  height: 70,
+                  width: 70,
+                  AppProfilesCover.clubCover,
+                );
+              },
+              image: NetworkImage(
+                data?.host?.profile ?? "",
+              ),
+            ),
+          ),
           clubName: data?.host?.name ?? "",
         ),
         const SizedBox(height: 20),
@@ -53,7 +83,7 @@ class AllBodyContentWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 final uri = Uri(
                   scheme: "mailto",
                   path: data?.host?.email,
