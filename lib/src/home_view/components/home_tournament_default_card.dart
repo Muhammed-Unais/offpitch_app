@@ -16,7 +16,7 @@ class HomeTournametnCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width - reduceWidth,
-      margin: const EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16,bottom: 1),
       decoration: BoxDecoration(
         border: Border.all(
           width: 0.5,

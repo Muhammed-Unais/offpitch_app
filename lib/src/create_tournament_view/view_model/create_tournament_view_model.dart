@@ -167,10 +167,7 @@ class CreateTournamentViewModel extends ChangeNotifier {
       }
     } else {
       setBorderError(
-        Border.all(
-          color: Colors.red,
-          width: 1,
-        ),
+        Border.all(color: Colors.red, width: 1),
       );
     }
   }
@@ -258,13 +255,9 @@ class CreateTournamentViewModel extends ChangeNotifier {
     _myRepo.putTournamentapi(createTournamentModel).then((value) async {
       Map<String, dynamic> values = value;
 
-      context
-          .read<ExploreViewViewModel>()
-          .getExpAndSrchTournmts(query: '', sortingQuery: "all");
+      context.read<ExploreViewViewModel>().getAllandLiveTournaments();
 
-      context
-          .read<ExploreViewViewModel>()
-          .getExpAndSrchTournmts(query: '', sortingQuery: "upcoming");
+      context.read<ExploreViewViewModel>().getUpComingTournaments();
 
       context
           .read<UserHostRegTournamentViewModel>()

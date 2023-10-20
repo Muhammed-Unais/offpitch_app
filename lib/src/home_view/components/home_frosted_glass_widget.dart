@@ -33,6 +33,11 @@ class FrostedGlassBox extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                  )
+                ],
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -76,6 +81,7 @@ class FrostedGlassBox extends StatelessWidget {
     );
   }
 }
+
 class FrostedGlassChildWidget extends StatelessWidget {
   const FrostedGlassChildWidget({
     super.key,

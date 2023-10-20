@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/src/my_club_view/view_model/my_club_over_view_model.dart';
 import 'package:provider/provider.dart';
-
 import '../../user_profile_view/view_model/user_profile_view_model.dart';
 
 class BottomBarViewModel extends ChangeNotifier {
@@ -10,10 +8,6 @@ class BottomBarViewModel extends ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   onTap(int index, BuildContext context, {PageController? controller}) {
-    if (index == 0 || index == 1) {
-      var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
-      exploreAndSearchProvider.searchTextEditingController.clear();
-    }
 
     _currentIndex = index;
     notifyListeners();

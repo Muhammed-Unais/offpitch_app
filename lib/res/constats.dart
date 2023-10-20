@@ -30,7 +30,8 @@ class AppSpace {
 
 class AppProfilesCover {
   static const String userProfile =
-      "https://w7.pngwing.com/pngs/419/473/png-transparent-computer-icons-user-profile-login-user-heroes-sphere-black-thumbnail.png";
-  static const String clubCover =
-      "https://www.gstatic.com/onebox/sports/logos/crest_48dp.png";
+      "assets/images/profile-cover.png";
+  static const String clubCover = "assets/images/club-cover.jpg";
+  static const String tournamentCover = "assets/images/tournament-cover.jpg";
+  static const String playerCover = "assets/images/player-cover.jpg";
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
@@ -108,11 +107,9 @@ class DetailsTouramentViewModel with ChangeNotifier {
   Future<void> getRegisterdClubdetails(String? tId, cId) async {
     setRegisterdTeams(ApiResponse.loading());
     await _myReop2.getAllRegisteredClubs(tId, cId).then((value) {
-      log(value.data!.players![0].name!);
       setRegisterdTeams(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
       setRegisterdTeams(ApiResponse.error(error.toString()));
-      log(error.toString());
     });
   }
 

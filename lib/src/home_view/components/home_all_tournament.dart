@@ -33,7 +33,7 @@ class HomeAllTournaments extends StatelessWidget {
         if (homeTournaments == HomeTournamentsEnum.all) {
           toruanmentLength = exploreViewModel.allTournaments.data?.length;
           fetchinStatus = exploreViewModel.allTournaments.status;
-          tournaments = exploreViewModel.allTournaments.data?.reversed.toList();
+          tournaments = exploreViewModel.allTournaments.data;
         }
         if (homeTournaments == HomeTournamentsEnum.live) {
           toruanmentLength = exploreViewModel.liveTournaments.data?.length;
@@ -96,7 +96,7 @@ class HomeAllTournaments extends StatelessWidget {
                   },
                   child: TournamentCard(
                     shortDescription: tournament?.shortDescription,
-                    touranmentCoverImage: tournament?.cover ?? "",
+                    coverUrl: tournament?.cover,
                     tornamentName: tournament?.title ?? "",
                     tornamentPlace: tournament?.location ?? "",
                     tornamentDate: tournament?.startDate ?? "",

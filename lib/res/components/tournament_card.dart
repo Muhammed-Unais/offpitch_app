@@ -5,7 +5,7 @@ import 'package:offpitch_app/res/constats.dart';
 class TournamentCard extends StatelessWidget {
   const TournamentCard(
       {super.key,
-      required this.touranmentCoverImage,
+      required this.coverUrl,
       required this.tornamentName,
       required this.tornamentPlace,
       required this.tornamentDate,
@@ -13,7 +13,7 @@ class TournamentCard extends StatelessWidget {
       this.isDiscription = true,
       this.status});
 
-  final String touranmentCoverImage;
+  final String? coverUrl;
   final String tornamentName;
   final String tornamentPlace;
   final String tornamentDate;
@@ -43,11 +43,41 @@ class TournamentCard extends StatelessWidget {
                 margin: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: AppColors.white,
-                      backgroundImage: NetworkImage(touranmentCoverImage),
-                      maxRadius: 36,
-                    ),
+                    coverUrl == null
+                        ? const CircleAvatar(
+                            backgroundColor: AppColors.white,
+                            backgroundImage:
+                                AssetImage(AppProfilesCover.tournamentCover),
+                            maxRadius: 36,
+                          )
+                        : ClipOval(
+                            child: FadeInImage(
+                              height: 60,
+                              width: 60,
+                              fit: BoxFit.cover,
+                              placeholderFit: BoxFit.cover,
+                              placeholder: const AssetImage(
+                                AppProfilesCover.tournamentCover,
+                              ),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  AppProfilesCover.tournamentCover,
+                                  height: 60,
+                                  width: 60,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                              placeholderErrorBuilder:
+                                  (context, error, stackTrace) {
+                                return Image.asset(
+                                  AppProfilesCover.tournamentCover,
+                                );
+                              },
+                              image: NetworkImage(
+                                coverUrl!,
+                              ),
+                            ),
+                          ),
                     const SizedBox(
                       width: 10,
                     ),

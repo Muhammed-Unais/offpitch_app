@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/utils/utils.dart';
 import 'package:offpitch_app/src/user_profile_view/widgets/user_profile_logout_alert_dia.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -45,7 +44,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
                     "https://play.google.com/store/apps/details?id=in.dartz.offpitch");
               },
               child: const Text(
-                "ShareApp",
+                "Share app",
                 style: TextStyle(
                   fontFamily: "SFUIDisplay",
                   fontSize: 12,
@@ -56,7 +55,7 @@ class UserProfileSettingsExpansion extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 25),
         Row(
           children: [
             const Padding(

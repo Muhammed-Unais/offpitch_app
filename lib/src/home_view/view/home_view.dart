@@ -22,18 +22,15 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
-  void fetchUserDetails() async {
+  Future<void> fetchUserDetails() async {
     var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (exploreAndSearchProvider.allTournaments.data == null ||
           exploreAndSearchProvider.liveTournaments.data == null) {
-       
-        exploreAndSearchProvider.getExpAndSrchTournmts(
-            query: 'filter=all', sortingQuery: "all");
+        exploreAndSearchProvider.getAllandLiveTournaments();
       }
       if (exploreAndSearchProvider.upcomingTournaments.data == null) {
-        exploreAndSearchProvider.getExpAndSrchTournmts(
-            query: 'filter=all', sortingQuery: "upcoming");
+        exploreAndSearchProvider.getUpComingTournaments();
       }
     });
   }

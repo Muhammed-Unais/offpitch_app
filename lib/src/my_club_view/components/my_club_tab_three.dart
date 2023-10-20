@@ -45,7 +45,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                 case Status.COMPLETED:
                   if (value.apiResponseRegisTournaments.data == null ||
                       value.apiResponseRegisTournaments.data!.isEmpty) {
-                    return  EmptyComponts(
+                    return EmptyComponts(
                       image: "assets/images/no-data.svg",
                       showMessage: "No Tournaments",
                       height: size.height * 0.15,
@@ -68,7 +68,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                           provider.getSingleTournament(data.id);
                           await Navigator.pushNamed(
                             context,
-                            "tournamentdetails",
+                            RoutesName.tournamentDetails,
                           );
                         },
                         child: UsersTournametCard(
@@ -84,7 +84,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
                   );
                 case Status.ERROR:
                   return ErrorComponent(
-                    width: size.height*0.15,
+                    width: size.height * 0.15,
                     hight: size.height * 0.15,
                     errorMessage: value.apiResponseRegisTournaments.message!,
                   );
@@ -97,7 +97,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
             onTap: () {
               Navigator.pushNamed(context, RoutesName.clubCreation);
             },
-            child:  EmptyComponts(
+            child: EmptyComponts(
               image: "assets/images/no-club.svg",
               showMessage: "You Don't have a club",
               height: size.height * 0.15,

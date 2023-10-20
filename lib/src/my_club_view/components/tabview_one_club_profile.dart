@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
-import 'package:offpitch_app/res/components/circle_images.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/src/club_creation_view/view_model/create_new_club_view_model.dart';
 import 'package:provider/provider.dart';
@@ -27,11 +27,32 @@ class TabViewOneClubProfile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 70,
-            child: CircleImages(
-              image: image,
-              radius: 42,
+          ClipOval(
+            child: FadeInImage(
+              height: 70,
+              width: 70,
+              fit: BoxFit.cover,
+              placeholderFit: BoxFit.cover,
+              placeholder: const AssetImage(
+                AppProfilesCover.clubCover,
+              ),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  AppProfilesCover.clubCover,
+                  height: 70,
+                  width: 70,
+                  fit: BoxFit.cover,
+                );
+              },
+              placeholderErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  AppProfilesCover.clubCover,
+                  height: 70,
+                  width: 70,
+                  fit: BoxFit.cover,
+                );
+              },
+              image: NetworkImage(image),
             ),
           ),
           const SizedBox(
@@ -52,7 +73,9 @@ class TabViewOneClubProfile extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   "Players: $playerCount",
                   style: const TextStyle(

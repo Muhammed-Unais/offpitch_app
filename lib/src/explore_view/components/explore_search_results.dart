@@ -7,41 +7,42 @@ import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/shimer_effects.dart';
 import 'package:offpitch_app/res/components/tournament_card.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/src/explore_view/view_model/explore_search_view_model.dart';
 import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_detils_view_model.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
-class ExploreTournaments extends StatelessWidget {
-  const ExploreTournaments({super.key});
+class ExploreSearchResults extends StatefulWidget {
+  const ExploreSearchResults({super.key});
+
+  @override
+  State<ExploreSearchResults> createState() => _ExploreSearchResultsState();
+}
+
+class _ExploreSearchResultsState extends State<ExploreSearchResults> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var exploreProvider = context.read<ExploreSearchViewModel>();
+      exploreProvider.getSearchResultsTournaments();
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Consumer<ExploreViewViewModel>(
+    return Consumer<ExploreSearchViewModel>(
       builder: (context, value, child) {
         Status? status;
 
-        List<AllTournament>? tournaments;
+        List<AllTournament>? allTournaments;
 
-        switch (value.exploretournaments) {
-          case Exploretournaments.all:
-            status = value.allTournaments.status;
-            tournaments = value.allTournaments.data?.reversed.toList();
+        status = value.searchResultsTournament.status;
 
-            break;
-          case Exploretournaments.live:
-            status = value.liveTournaments.status;
-            tournaments = value.liveTournaments.data?.reversed.toList();
-
-            break;
-          case Exploretournaments.upcoming:
-            status = value.upcomingTournaments.status;
-            tournaments = value.upcomingTournaments.data?.reversed.toList();
-
-            break;
-          default:
-        }
+        allTournaments = value.searchResultsTournament.data;
 
         switch (status) {
           case Status.LOADING:
@@ -50,7 +51,7 @@ class ExploreTournaments extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppMargin.large,
               ),
-              itemCount: 4,
+              itemCount: 5,
               itemBuilder: (context, index) {
                 return ShimerWidget.rectangular(
                   borderRadius: AppRadius.borderRadiusS,
@@ -64,14 +65,14 @@ class ExploreTournaments extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ErrorComponent(
-                  errorMessage: value.allTournaments.message ?? "",
+                  errorMessage: value.searchResultsTournament.message ?? "",
                   hight: size.height * 0.15,
                   width: size.height * 0.15,
                 )
               ],
             );
           case Status.COMPLETED:
-            if (tournaments == null || tournaments.isEmpty) {
+            if (allTournaments == null || allTournaments.isEmpty) {
               return EmptyComponts(
                 showMessage: "No Tournaments",
                 image: "assets/images/no-data.svg",
@@ -81,21 +82,24 @@ class ExploreTournaments extends StatelessWidget {
               );
             }
             return ListView.builder(
-              itemCount: tournaments.length,
-              shrinkWrap: false,
+              physics: const BouncingScrollPhysics(),
+              itemCount: allTournaments.length,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
-                final tournament = tournaments?[index];
+                final tournament = allTournaments?[index];
                 return GestureDetector(
                   onTap: () async {
                     var tournametDetailsProvider =
                         context.read<DetailsTouramentViewModel>();
                     tournametDetailsProvider
                         .getSingleTournament(tournament?.id);
-                    await Navigator.pushNamed(context, "tournamentdetails");
+                    await Navigator.pushNamed(
+                      context,
+                      RoutesName.tournamentDetails,
+                    );
                   },
                   child: TournamentCard(
-                    touranmentCoverImage:
-                        tournament?.cover ?? AppProfilesCover.clubCover,
+                    coverUrl: tournament?.cover,
                     tornamentName: tournament?.title ?? "No title",
                     tornamentPlace: tournament?.location ?? "",
                     tornamentDate: tournament?.startDate ?? "",

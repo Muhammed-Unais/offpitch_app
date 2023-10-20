@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 
 class PlayersCard extends StatelessWidget {
@@ -21,15 +22,35 @@ class PlayersCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    image!,
-                  ),
+            child: ClipOval(
+              child: 
+              FadeInImage(
+                height: 70,
+                width: 70,
+                fit: BoxFit.cover,
+                placeholderFit: BoxFit.cover,
+                placeholder: const AssetImage(
+                  AppProfilesCover.playerCover,
+                ),
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+
+                    AppProfilesCover.playerCover,
+                    height: 70,
+                    width: 70,
+                    fit: BoxFit.cover,
+                  );
+                },
+                placeholderErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    AppProfilesCover.playerCover,
+                    height: 70,
+                    width: 70,
+                    fit: BoxFit.cover,
+                  );
+                },
+                image: NetworkImage(
+                  image!,
                 ),
               ),
             ),
@@ -72,10 +93,10 @@ class AddPlayerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: buttonAction,
-      child: SizedBox(
+      child: const SizedBox(
         width: 80,
         child: Column(
-          children: const [
+          children: [
             Expanded(
               child: CircleAvatar(
                 backgroundColor: AppColors.primary,

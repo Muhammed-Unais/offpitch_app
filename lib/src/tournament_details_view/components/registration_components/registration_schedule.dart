@@ -46,10 +46,14 @@ class RegistrationScheduleBotton extends StatelessWidget {
                     side: const BorderSide(color: Colors.red, width: 0.5),
                   ),
                   child: value.isLoading
-                      ? const CircularProgressIndicator(
-                          color: Colors.red,
-                          strokeWidth: 2,
-                        )
+                      ? const SizedBox(
+                        height: 14,
+                        width: 14,
+                        child: CircularProgressIndicator(
+                            color: Colors.red,
+                            strokeWidth: 2,
+                          ),
+                      )
                       : const Text(
                           'Schedule',
                           style: TextStyle(

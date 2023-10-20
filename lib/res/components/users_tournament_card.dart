@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
 
@@ -28,7 +30,9 @@ class UsersTournametCard extends StatelessWidget {
       child: Container(
         height: 120,
         margin: const EdgeInsets.only(
-            left:20, right: 20,),
+          left: 20,
+          right: 20,
+        ),
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(
@@ -42,22 +46,20 @@ class UsersTournametCard extends StatelessWidget {
           children: [
             Flexible(
               flex: 3,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                      AppRadius.borderRadiusS,
-                    ),
-                    topLeft: Radius.circular(
-                      AppRadius.borderRadiusS,
-                    ),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      image ??
-                          "https://res.cloudinary.com/dvihywo6p/image/upload/v1682693289/naw24ko7p7j1enbjkc8d.jpg",
-                    ),
+              child: CachedNetworkImage(
+                imageUrl: image!,
+                imageBuilder: (context, imageProvider) {
+                  return TournamentCover(
+                    image: imageProvider,
+                  );
+                },
+                placeholder: (context, url) => const SpinKitThreeBounce(
+                  color: AppColors.primary,
+                  size: 50,
+                ),
+                errorWidget: (context, url, error) => const TournamentCover(
+                  image: AssetImage(
+                    AppProfilesCover.tournamentCover,
                   ),
                 ),
               ),
@@ -80,49 +82,47 @@ class UsersTournametCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                      
                         const Icon(
                           Icons.calendar_month_outlined,
                           size: 16,
                         ),
                         Text(
                           tournamentDate ?? "",
-                          style:  const TextStyle(
+                          style: const TextStyle(
                             fontFamily: "Lato",
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: AppColors.black,
                           ),
-                        ),  const SizedBox(
+                        ),
+                        const SizedBox(
                           width: AppMargin.extraSmall,
                         ),
-    
-                          const Icon(
+                        const Icon(
                           Icons.location_on_outlined,
                           size: 16,
                         ),
                         Text(
-                           tournamentPlace ?? "",
-                          style:  const TextStyle(
+                          tournamentPlace ?? "",
+                          style: const TextStyle(
                             fontFamily: "Lato",
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: AppColors.black,
                           ),
                         ),
-                      
                       ],
                     ),
                     Text(
                       isUserHost
                           ? "$tournamentRegTeams Registered"
                           : "Payment Status $paymentStatus",
-                      style:  const TextStyle(
-                            fontFamily: "Lato",
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.black,
-                          ),
+                      style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
                     )
                   ],
                 ),
@@ -130,6 +130,32 @@ class UsersTournametCard extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TournamentCover extends StatelessWidget {
+  const TournamentCover({
+    super.key,
+    required this.image,
+  });
+
+  final ImageProvider<Object> image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(
+            AppRadius.borderRadiusS,
+          ),
+          topLeft: Radius.circular(
+            AppRadius.borderRadiusS,
+          ),
+        ),
+        image: DecorationImage(fit: BoxFit.cover, image: image),
       ),
     );
   }

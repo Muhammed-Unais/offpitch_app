@@ -21,7 +21,8 @@ class RegistrationStatusWidget extends StatefulWidget {
   final SingleTournamentModel data;
 
   @override
-  State<RegistrationStatusWidget> createState() => _RegistrationStatusWidgetState();
+  State<RegistrationStatusWidget> createState() =>
+      _RegistrationStatusWidgetState();
 }
 
 class _RegistrationStatusWidgetState extends State<RegistrationStatusWidget> {
@@ -47,12 +48,10 @@ class _RegistrationStatusWidgetState extends State<RegistrationStatusWidget> {
           return RegistrationScheduleBotton(
             id: widget.data.data?.id,
           );
-        }
-        if (value.remainingTime!.isNegative ||
+        } else if (value.remainingTime!.isNegative ||
             tournamenStatus!.contains('closed')) {
           return const RegistrationClosed();
-        }
-        if (value.registeredOrNotChecking(widget.data, context)) {
+        } else if (value.registeredOrNotChecking(widget.data, context)) {
           return const AlreadyRegisterd();
         }
         value.calculateRemainingTime(
@@ -148,14 +147,12 @@ class _RegistrationStatusWidgetState extends State<RegistrationStatusWidget> {
                         value.isPermission = false;
                         var myClubProvider = context.read<MyClubViewModel>();
 
-                        var players =
-                            myClubProvider.getPlayerapiResponse.data;
+                        var players = myClubProvider.getPlayerapiResponse.data;
 
-                        if (myClubProvider.getPlayerapiResponse.data !=
-                            null) {
+                        if (myClubProvider.getPlayerapiResponse.data != null) {
                           myClubProvider.setValueChecBoxIndex(players!);
                         }
-                        
+
                         RegistrationBottomSheet.showModelBottomsheet(
                           model: widget.data,
                           context,

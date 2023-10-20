@@ -5,6 +5,7 @@ import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/components/users_tournament_card.dart';
 import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:offpitch_app/src/user_profile_view/view_model/user_profile_view_model.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class UserWatchListBody extends StatelessWidget {
@@ -43,7 +44,10 @@ class UserWatchListBody extends StatelessWidget {
                         final provider =
                             context.read<DetailsTouramentViewModel>();
                         provider.getSingleTournament(data.id);
-                        await Navigator.pushNamed(context, "tournamentdetails");
+                        await Navigator.pushNamed(
+                          context,
+                          RoutesName.tournamentDetails,
+                        );
                       },
                       child: UsersTournametCard(
                         isUserHost: false,

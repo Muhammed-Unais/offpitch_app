@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/status.dart';
+import 'package:offpitch_app/src/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
 import 'package:offpitch_app/src/home_view/components/home_tournament_default_card.dart';
 import 'package:offpitch_app/res/constats.dart';
@@ -7,7 +8,7 @@ import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/src/home_view/components/home_carousels.dart';
 import 'package:offpitch_app/src/tournament_details_view/view_model/tournament_detils_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../explore_view/model/all_tournaments_model.dart';
+
 
 class HomeNewTornamentCards extends StatelessWidget {
   const HomeNewTornamentCards({super.key});
@@ -20,7 +21,7 @@ class HomeNewTornamentCards extends StatelessWidget {
         switch (exploreProvider.allTournaments.status) {
           case Status.LOADING:
             return const Padding(
-              padding: EdgeInsets.only(left: 20, right: 10),
+              padding: EdgeInsets.only(left: 20, right: 8),
               child: HomeTournametnCard(
                 reduceWidth: 0,
               ),
@@ -41,8 +42,7 @@ class HomeNewTornamentCards extends StatelessWidget {
               itemBuilder: (context, index) {
                 AllTournament? data;
                 if (index != 0) {
-                  data = exploreProvider.allTournaments.data?.reversed
-                      .toList()[index - 1];
+                  data = exploreProvider.allTournaments.data?[index - 1];
                 }
                 return index == 0
                     ? const HomeTournametnCard()
@@ -54,11 +54,14 @@ class HomeNewTornamentCards extends StatelessWidget {
                           await Navigator.pushNamed(
                               context, RoutesName.tournamentDetails);
                         },
-                        child: HomeCarousels(
-                          location: data?.location ?? "",
-                          dateAndTime: data?.startDate ?? "",
-                          tournamentName: data?.title ?? "",
-                          image: data?.cover ?? AppProfilesCover.clubCover,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width-80,
+                          child: HomeCarousels(
+                            location: data?.location ?? "",
+                            dateAndTime: data?.startDate ?? "",
+                            tournamentName: data?.title ?? "",
+                            image: data?.cover ?? AppProfilesCover.clubCover,
+                          ),
                         ),
                       );
               },
@@ -66,7 +69,7 @@ class HomeNewTornamentCards extends StatelessWidget {
 
           case Status.ERROR:
             return const Padding(
-              padding: EdgeInsets.only(left: 20, right: 9),
+              padding: EdgeInsets.only(left: 20, right: 8),
               child: HomeTournametnCard(
                 reduceWidth: 0,
               ),

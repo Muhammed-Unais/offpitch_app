@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/src/explore_view/view_model/explore_search_view_model.dart';
 import 'package:offpitch_app/utils/routes/routes.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/src/login_view/view_model/auth_view_model.dart';
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => UserHostRegTournamentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExploreSearchViewModel(),
         ),
       ],
       child: MaterialApp(

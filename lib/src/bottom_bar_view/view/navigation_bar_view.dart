@@ -18,7 +18,7 @@ class BottomBarView extends StatefulWidget {
 class _BottomBarViewState extends State<BottomBarView> {
   List<Widget> screens = [
     const HomeView(),
-    const ExploreView(searchQuery: ""),
+    const ExploreView(),
     const MyClubView(),
     const UserProfileView(),
   ];
@@ -34,11 +34,9 @@ class _BottomBarViewState extends State<BottomBarView> {
   Widget build(BuildContext context) {
     final bottomBarVieModel = Provider.of<BottomBarViewModel>(context);
     return Scaffold(
-     
       body: screens[bottomBarVieModel.currentIndex],
       backgroundColor: AppColors.white,
       bottomNavigationBar: BottomNavigationBar(
-      
         onTap: (value) =>
             bottomBarVieModel.onTap(value, context, controller: pageController),
         currentIndex: bottomBarVieModel.currentIndex,
@@ -48,7 +46,7 @@ class _BottomBarViewState extends State<BottomBarView> {
         showUnselectedLabels: false,
         backgroundColor: AppColors.black,
         elevation: 10,
-        selectedItemColor: AppColors.white ,
+        selectedItemColor: AppColors.white,
         unselectedItemColor: AppColors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

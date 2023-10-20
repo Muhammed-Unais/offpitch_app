@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/components/search_component.dart';
-import 'package:offpitch_app/src/explore_view/components/tab2_upcoming_matches.dart';
-import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/res/components/search_container.dart';
+import 'package:offpitch_app/src/explore_view/components/explore_all_tournament.dart';
+import 'package:offpitch_app/src/explore_view/components/explore_live_all_tournament.dart';
+import 'package:offpitch_app/src/explore_view/components/explore_upcoming_tournaments.dart';
 import 'package:offpitch_app/res/components/tabbar_component.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/src/explore_view/view_model/explore_view_view_model.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class ExploreView extends StatefulWidget {
-  const ExploreView({super.key, required this.searchQuery});
-
-  final String searchQuery;
+  const ExploreView({super.key});
 
   @override
   State<ExploreView> createState() => _ExploreViewState();
@@ -21,37 +22,9 @@ class _ExploreViewState extends State<ExploreView>
 
   @override
   void initState() {
-    var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
-
     tabController = TabController(length: 3, vsync: this);
-
-    exploreAndSearchProvider.setExploretournaments = Exploretournaments.all;
-
-    tabController.addListener(() {
-      context.read<ExploreViewViewModel>().setSearchTabbarIndex(
-            tabController.index,
-          );
-    });
-    exploreAndSearchProvider.searchTextEditingController.addListener(() {
-      if (mounted) {
-        _listeningApiCalls();
-      }
-    });
-
+    fetchUserDetails();
     super.initState();
-  }
-
-  void _listeningApiCalls() {
-    var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
-    final String text =
-        exploreAndSearchProvider.searchTextEditingController.text;
-    if (exploreAndSearchProvider.searchTextEditingController.text.isEmpty) {
-      exploreAndSearchProvider.getExpAndSrchTournmts(
-          query: 'filter=all&search=$text', sortingQuery: "all");
-
-      exploreAndSearchProvider.getExpAndSrchTournmts(
-          query: 'filter=all&search=$text', sortingQuery: "upcoming");
-    }
   }
 
   @override
@@ -60,63 +33,71 @@ class _ExploreViewState extends State<ExploreView>
     super.dispose();
   }
 
+  Future<void> fetchUserDetails() async {
+    var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (exploreAndSearchProvider.allTournaments.data == null ||
+          exploreAndSearchProvider.liveTournaments.data == null) {
+        exploreAndSearchProvider.getAllandLiveTournaments();
+      }
+      if (exploreAndSearchProvider.upcomingTournaments.data == null) {
+        exploreAndSearchProvider.getUpComingTournaments();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          var exploreAndSearchProvider = context.read<ExploreViewViewModel>();
-          exploreAndSearchProvider.searchTextEditingController.clear();
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text(
-            "TOURNAMENTS",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.white,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Text(
+          "TOURNAMENTS",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: SearchWidget(searchQuery: widget.searchQuery),
-              )
-            ];
-          },
-          body: Column(
-            children: [
-              TabbarWidget(
-                onTap: (value) {},
-                hight: 50,
-                margin: const EdgeInsets.only(
-                  top: 20,
-                  bottom: 10,
-                  left: 20,
-                  right: 20,
-                ),
-                tabController: tabController,
-                tabOne: "All",
-                tabTwo: "Live",
-                tabThree: "Upcoming",
-                selectedTabColor: AppColors.black,
+        backgroundColor: Colors.white,
+      ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverToBoxAdapter(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.searchScreen);
+                },
+                child: const SearchContainer(),
               ),
-              Expanded(
-                child: TabBarView(
-                  controller: tabController,
-                  children: const [
-                    ExploreTournaments(),
-                    ExploreTournaments(),
-                    ExploreTournaments(),
-                  ],
-                ),
+            )
+          ];
+        },
+        body: Column(
+          children: [
+            TabbarWidget(
+              onTap: (value) {},
+              hight: 50,
+              margin: const EdgeInsets.only(
+                top: 20,
+                bottom: 10,
+                left: 20,
+                right: 20,
               ),
-            ],
-          ),
+              tabController: tabController,
+              tabOne: "All",
+              tabTwo: "Live",
+              tabThree: "Upcoming",
+              selectedTabColor: AppColors.black,
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [
+                  ExploreAllTournaments(),
+                  ExploreLiveTournaments(),
+                  ExploreUpcomingTournaments(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

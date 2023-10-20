@@ -70,7 +70,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
                               .read<DetailsTouramentViewModel>()
                               .getSingleTournament(data.id);
                           await Navigator.pushNamed(
-                              context, "tournamentdetails");
+                              context, RoutesName.tournamentDetails);
                         },
                         child: UsersTournametCard(
                           image: data.cover,

@@ -3,6 +3,7 @@ import 'package:offpitch_app/src/tournament_details_view/components/club_profile
 import 'package:offpitch_app/res/components/error_component.dart';
 import 'package:offpitch_app/res/constats.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/single_tournament_model.dart';
 import 'tournament_about.dart';
 import 'tournament_data_place.dart';
@@ -40,12 +41,57 @@ class AllBodyContentWidget extends StatelessWidget {
           child: Text(
             data?.title ?? "",
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: AppColors.grey,
             ),
             overflow: TextOverflow.clip,
           ),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () async{
+                final uri = Uri(
+                  scheme: "mailto",
+                  path: data?.host?.email,
+                  queryParameters: {'subject': "Subject"},
+                );
+                await launchUrl(uri);
+              },
+              child: Text(
+                "Email:- ${data?.host?.email ?? ""}",
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "Lato",
+                ),
+                overflow: TextOverflow.clip,
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                final uri = Uri(
+                  scheme: "tel",
+                  path: data?.host?.phone.toString(),
+                );
+                if (await canLaunchUrl(uri)) {
+                  launchUrl(uri);
+                }
+              },
+              child: Text(
+                "Phone:- ${data?.host?.phone?.toString() ?? ""}",
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontFamily: "Lato",
+                ),
+                overflow: TextOverflow.clip,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 20),
         TournamentProfile(
@@ -92,32 +138,6 @@ class AllBodyContentWidget extends StatelessWidget {
           data: singleTournamentModel!,
         ),
         const SizedBox(height: 20),
-        Column(
-          children: [
-            Text(
-              data?.host?.email ?? "",
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Lato",
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              data?.host?.phone?.toString() ?? "",
-              style: const TextStyle(
-                color: AppColors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                fontFamily: "Lato",
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        )
       ],
     );
   }

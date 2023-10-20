@@ -33,11 +33,33 @@ class UserProfileClubCard extends StatelessWidget {
       elevation: 4,
       child: userClubId != null && userClubId.isNotEmpty
           ? ListTile(
-              leading: CircleAvatar(
-                backgroundColor: AppColors.white,
-                radius: 24,
-                backgroundImage: NetworkImage(
-                  clubCover ?? AppProfilesCover.clubCover,
+              leading: ClipOval(
+                child: FadeInImage(
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.cover,
+                  placeholder: const AssetImage(
+                    AppProfilesCover.clubCover,
+                  ),
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AppProfilesCover.clubCover,
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  placeholderErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AppProfilesCover.clubCover,
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  image: NetworkImage(
+                    clubCover!,
+                  ),
                 ),
               ),
               title: Text(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/components/search_component.dart';
+import 'package:offpitch_app/res/components/search_container.dart';
 import 'package:offpitch_app/src/home_view/components/home_all_tournament.dart';
 import 'package:offpitch_app/src/home_view/components/home_chip_widget.dart';
 import 'package:offpitch_app/src/home_view/components/home_top_card.dart';
 import 'package:offpitch_app/src/home_view/view_model/home_view_model.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
+import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:provider/provider.dart';
 
 class HomeBody extends StatelessWidget {
@@ -17,9 +18,11 @@ class HomeBody extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const SearchWidget(
-            searchQuery: "",
-            isHome: true,
+          GestureDetector(
+            child: const SearchContainer(),
+            onTap: () {
+              Navigator.pushNamed(context, RoutesName.searchScreen);
+            },
           ),
           const SizedBox(height: 20),
           const Padding(
@@ -38,7 +41,7 @@ class HomeBody extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: size.height * 0.2,
+            height: size.height * 0.19,
             child: const HomeNewTornamentCards(),
           ),
           const SizedBox(height: 20),

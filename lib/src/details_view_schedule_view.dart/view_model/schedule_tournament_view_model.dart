@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/src/details_view_schedule_view.dart/model/add_result_model.dart';
 import 'package:offpitch_app/src/details_view_schedule_view.dart/repository/add_result_repository.dart';
@@ -21,9 +20,10 @@ class ScheduleTournametViewModel with ChangeNotifier {
     setIsloading(true);
     _myRepo.getGetTournamentSchedule(id).then((value) {
       setIsloading(false);
-      log(value.toString());
       Provider.of<DetailsTouramentViewModel>(context, listen: false)
-          .getSingleTournament(id,);
+          .getSingleTournament(
+        id,
+      );
       Utils.showCustomFlushbar(context, value['message'], isError: false);
     }).onError((error, stackTrace) {
       Utils.showCustomFlushbar(
@@ -31,7 +31,6 @@ class ScheduleTournametViewModel with ChangeNotifier {
         error.toString(),
       );
       setIsloading(false);
-      log(error.toString());
     });
   }
 
@@ -73,15 +72,16 @@ class ScheduleTournametViewModel with ChangeNotifier {
     await _myRepo1.getPostAddResult(id, data).then(
       (value) {
         Provider.of<DetailsTouramentViewModel>(context!, listen: false)
-            .getSingleTournament(id,);
+            .getSingleTournament(
+          id,
+        );
         Navigator.pop(context);
         Map<String, dynamic> values = value;
-        Utils.showCustomFlushbar(context, values["message"],isError: false);
+        Utils.showCustomFlushbar(context, values["message"], isError: false);
       },
     ).onError(
       (error, stackTrace) {
         Utils.showCustomFlushbar(context!, error.toString());
-        log(error.toString());
       },
     );
   }

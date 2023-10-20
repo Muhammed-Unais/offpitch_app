@@ -5,18 +5,7 @@ import 'package:offpitch_app/data/response/status.dart';
 import 'package:offpitch_app/src/explore_view/model/all_tournaments_model.dart';
 import 'package:offpitch_app/src/explore_view/repository/explore_repository.dart';
 
-enum Exploretournaments { all, live, upcoming }
-
 class ExploreViewViewModel extends ChangeNotifier {
-  Exploretournaments _exploretournaments = Exploretournaments.all;
-
-  Exploretournaments get exploretournaments => _exploretournaments;
-
-  set setExploretournaments(Exploretournaments exploreIntial) {
-    _exploretournaments = exploreIntial;
-  }
-
-  TextEditingController searchTextEditingController = TextEditingController();
 
   final _myrepo = ExploreRepository();
 
@@ -28,20 +17,11 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   ApiResponse<List<AllTournament>> upcomingTournaments = ApiResponse.loading();
 
-  void setSearchTabbarIndex(int value) {
-    if (value == 0) {
-      _exploretournaments = Exploretournaments.all;
-    }
-    if (value == 1) {
-      _exploretournaments = Exploretournaments.live;
-    }
-    if (value == 2) {
-      _exploretournaments = Exploretournaments.upcoming;
-    }
-    searchTabbarCount = value;
-    notifyListeners();
-  }
+  int _allTournamentCount = 0;
 
+  int get allTournamentCount => _allTournamentCount;
+
+ 
   void setliveTournaments(ApiResponse<List<AllTournament>> response) {
     liveTournaments = response;
 
@@ -56,22 +36,16 @@ class ExploreViewViewModel extends ChangeNotifier {
 
   void setUpcomingTournaments(ApiResponse<List<AllTournament>> response) {
     upcomingTournaments = response;
-
     notifyListeners();
   }
 
-  Future<void> getExpAndSrchTournmts(
-      {required String query, required String sortingQuery, required}) async {
-    if (sortingQuery == "upcoming") {
-      setUpcomingTournaments(ApiResponse.loading());
-    }
+  Future<void> getAllandLiveTournaments({String query = ""}) async {
+    
+    String queries = "filter=all&$query&limit=10";
+    setliveTournaments(ApiResponse.loading());
+    setallTournaments(ApiResponse.loading());
 
-    if (sortingQuery == "all") {
-      setliveTournaments(ApiResponse.loading());
-      setallTournaments(ApiResponse.loading());
-    }
-
-    _myrepo.exploreAndSearchTournaments(query: query).then((value) {
+    _myrepo.exploreAndSearchTournaments(query: queries).then((value) {
       DateFormat inputFormat = DateFormat('dd MMM yyyy');
       DateFormat outputFormat = DateFormat('d M yyyy');
       final now = DateTime.now();
@@ -81,54 +55,100 @@ class ExploreViewViewModel extends ChangeNotifier {
 
       late List<AllTournament> allTournament;
 
-      late List<AllTournament> upComingTournament;
+      allTournament = [];
+      liveTournament = [];
+      allTournament.clear();
+      liveTournament.clear();
 
-      if (sortingQuery == "all") {
-        allTournament = [];
-        liveTournament = [];
-        allTournament.clear();
-        liveTournament.clear();
+      for (AllTournament tournaments in value.data!.allTournaments!) {
+        String input = tournaments.startDate!;
+        DateTime startDate = inputFormat.parse(input);
+        String outputDate = outputFormat.format(startDate);
+
+        // LIVE=================
+        if (dateStr.trim() == outputDate.trim()) {
+          liveTournament.add(tournaments);
+        }
+
+        allTournament.add(tournaments);
       }
+      _allTournamentCount = value.data!.total!;
+      setallTournaments(ApiResponse.completed(allTournament));
+      setliveTournaments(ApiResponse.completed(liveTournament));
+    }).onError((error, stackTrace) {
+      setliveTournaments(ApiResponse.error(error.toString()));
+      setallTournaments(ApiResponse.error(error.toString()));
+    });
+  }
 
-      if (sortingQuery == "upcoming") {
-        upComingTournament = [];
-        upComingTournament.clear();
-      }
+  Future<List<AllTournament>> paginationAllandLiveTournaments(
+      {String query = ""}) async {
+    List<AllTournament> allTournamentValus = [];
+    String queries = "filter=all&$query&limit=10";
 
-      for (AllTournament element in value.data!.allTournaments!) {
-        String input = element.startDate!;
+    await _myrepo.exploreAndSearchTournaments(query: queries).then((value) {
+      DateFormat inputFormat = DateFormat('dd MMM yyyy');
+      DateFormat outputFormat = DateFormat('d M yyyy');
+      final now = DateTime.now();
+      String dateStr = "${now.day} ${now.month} ${now.year}";
+
+      List<AllTournament> liveTournament = [];
+
+      List<AllTournament> allTournament = [];
+
+      List<AllTournament> upComingTournament = [];
+
+      allTournament.clear();
+      liveTournament.clear();
+
+      for (AllTournament tournaments in value.data!.allTournaments!) {
+        String input = tournaments.startDate!;
         DateTime startDate = inputFormat.parse(input);
         String outputDate = outputFormat.format(startDate);
         DateTime forUpcomingDate = DateFormat('dd MMM yyyy').parse(input);
 
-        if (forUpcomingDate.isAfter(now) && sortingQuery == "upcoming") {
-          upComingTournament.add(element);
-        }
-
         // LIVE=================
-        if (dateStr.trim() == outputDate.trim() && sortingQuery == "all") {
-          liveTournament.add(element);
+        if (dateStr.trim() == outputDate.trim()) {
+          liveTournament.add(tournaments);
         }
 
-        // AllTOURNMENTS========
-        if (sortingQuery == "all") {
-          allTournament.add(element);
+        if (forUpcomingDate.isAfter(now)) {
+          upComingTournament.add(tournaments);
+        }
+
+        allTournament.add(tournaments);
+      }
+      setliveTournaments(ApiResponse.completed(liveTournament));
+      setUpcomingTournaments(ApiResponse.completed(upComingTournament));
+      allTournamentValus = allTournament;
+    });
+
+    return allTournamentValus;
+  }
+
+  Future<void> getUpComingTournaments({String query = ''}) async {
+    String queries = "filter=all";
+    setUpcomingTournaments(ApiResponse.loading());
+
+    _myrepo.exploreAndSearchTournaments(query: queries).then((value) {
+      final now = DateTime.now();
+
+      late List<AllTournament> upComingTournament;
+
+      upComingTournament = [];
+      upComingTournament.clear();
+
+      for (AllTournament tournaments in value.data!.allTournaments!) {
+        String input = tournaments.startDate!;
+
+        DateTime forUpcomingDate = DateFormat('dd MMM yyyy').parse(input);
+
+        if (forUpcomingDate.isAfter(now)) {
+          upComingTournament.add(tournaments);
         }
       }
-
-      if (sortingQuery == "upcoming") {
-        setUpcomingTournaments(ApiResponse.completed(upComingTournament));
-      }
-
-      // setAll tournament
-      if (sortingQuery == "all") {
-        setallTournaments(ApiResponse.completed(allTournament));
-        setliveTournaments(ApiResponse.completed(liveTournament));
-      }
+      setUpcomingTournaments(ApiResponse.completed(upComingTournament));
     }).onError((error, stackTrace) {
-      // set all tournaments for home================
-      setliveTournaments(ApiResponse.error(error.toString()));
-      setallTournaments(ApiResponse.error(error.toString()));
       setUpcomingTournaments(ApiResponse.error(error.toString()));
     });
   }

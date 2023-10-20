@@ -21,7 +21,7 @@ class _MyClubViewState extends State<MyClubView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      userClubId= await context.read<UserViewModel>().getUserClubId();
+      userClubId = await context.read<UserViewModel>().getUserClubId();
       await getClubAndPlayers();
       await getUserHostedTournaments();
       await getUserRegisteredTournaments();
@@ -32,7 +32,7 @@ class _MyClubViewState extends State<MyClubView> {
 
   Future<void> getUserRegisteredTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
-    if (userClubId != null && userClubId!.isNotEmpty) {
+    if (mounted && userClubId != null && userClubId!.isNotEmpty) {
       userHostRegProvider.apiResponseRegisTournaments.data ??
           await userHostRegProvider.getAllUserRegisteredTournaments();
     }
@@ -40,7 +40,7 @@ class _MyClubViewState extends State<MyClubView> {
 
   Future<void> getUserHostedTournaments() async {
     var userHostRegProvider = context.read<UserHostRegTournamentViewModel>();
-    if (userClubId != null && userClubId!.isNotEmpty) {
+    if (mounted && userClubId != null && userClubId!.isNotEmpty) {
       userHostRegProvider.apiResponseHostedTournaments.data ??
           await userHostRegProvider.getAllUserHostedTournaments();
     }
@@ -48,7 +48,7 @@ class _MyClubViewState extends State<MyClubView> {
 
   Future<void> getClubAndPlayers() async {
     var myClubViewModel = context.read<MyClubViewModel>();
-    if (userClubId != null && userClubId!.isNotEmpty) {
+    if (mounted && userClubId != null && userClubId!.isNotEmpty) {
       myClubViewModel.getClubApiResponse.data ??
           myClubViewModel.getMyClub(context);
       myClubViewModel.getPlayerapiResponse.data ??
@@ -58,8 +58,8 @@ class _MyClubViewState extends State<MyClubView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<MyClubViewModel,UserViewModel>(
-      builder: (context, myClubViewModel,userViewModel,_) {
+    return Consumer2<MyClubViewModel, UserViewModel>(
+      builder: (context, myClubViewModel, userViewModel, _) {
         return DefaultTabController(
           initialIndex: myClubViewModel.currentIndex,
           length: 3,

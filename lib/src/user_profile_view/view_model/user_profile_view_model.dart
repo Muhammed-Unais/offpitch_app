@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/data/response/api_response.dart';
 import 'package:offpitch_app/src/user_profile_view/model/user_profile_model.dart';
 import 'package:offpitch_app/src/user_profile_view/repository/user_profile_repository.dart';
 import 'package:offpitch_app/src/user_watch_list_view/model/user_watchlist_model.dart';
-import 'package:offpitch_app/utils/utils.dart';
+
 
 class UserProfileViewModel with ChangeNotifier {
   final _myRepo = UserProfileRepository();
@@ -28,8 +29,7 @@ class UserProfileViewModel with ChangeNotifier {
     setUserProfile(ApiResponse.loading());
     _myRepo.getUserProfile().then(
       (value) async {
-        await Utils.sharedPrefrence(
-            key: "userClubId", value: value.data?.id ?? "");
+       
 
         setUserProfile(ApiResponse.completed(value));
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/src/create_tournament_view/view/create_tournament_view.dart';
+import 'package:offpitch_app/src/explore_view/view/explore_search_view.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
 import 'package:offpitch_app/src/explore_view/view/explore_view.dart';
 import 'package:offpitch_app/src/home_view/view/home_view.dart';
@@ -46,9 +47,8 @@ class Routes {
           builder: (context) => const BottomBarView(),
         );
       case RoutesName.explore:
-        var query = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) => ExploreView(searchQuery: query),
+          builder: (context) => const ExploreView(),
         );
       case RoutesName.tournamentDetails:
         return MaterialPageRoute(
@@ -65,6 +65,10 @@ class Routes {
       case RoutesName.userWatchlist:
         return MaterialPageRoute(
           builder: (context) => const UserWatchListView(),
+        );
+      case RoutesName.searchScreen:
+        return MaterialPageRoute(
+          builder: (context) => const ExploreSearchView(),
         );
       case RoutesName.paymentSuccespage:
         var args = settings.arguments as List<dynamic>;

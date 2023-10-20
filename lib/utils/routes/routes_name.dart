@@ -4,7 +4,6 @@ class RoutesName {
 
   static const String tournamentHost = "host_tournament";
 
-
   // account routes name
   static const String signup = "signup_screen";
   static const String login = "login_screen";
@@ -14,7 +13,7 @@ class RoutesName {
 
   // otp view routes name
   static const String otp = "otp_view";
-  
+
   // navigation view route name
   static const String navigation = "navigation_view";
 
@@ -24,14 +23,15 @@ class RoutesName {
   // tournament details view routes name
   static const String tournamentDetails = "tournamentdetails";
 
-  // 
-  static const String myClub  = "myclubdeatils";
+  //
+  static const String myClub = "myclubdeatils";
 
-  // 
-  static const String clubCreation  = "clubcreation";
+  //
+  static const String clubCreation = "clubcreation";
 
-  static const String userWatchlist  = "userWatchlist";
+  static const String userWatchlist = "userWatchlist";
 
-  static const String paymentSuccespage  = "payment sucess page";
+  static const String paymentSuccespage = "paymentsucesspage";
 
+  static const String searchScreen = "/search-screen";
 }

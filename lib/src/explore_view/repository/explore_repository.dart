@@ -9,8 +9,9 @@ class ExploreRepository {
   Future<AllTournamentsModel> exploreAndSearchTournaments(
       {required String query}) async {
     try {
-      dynamic response = await _apiService.getGetApiResponse(
-          AppUrl.allTournaments, "?$query");
+      dynamic response =
+          await _apiService.getGetApiResponse(AppUrl.allTournaments, "?$query");
+      
       return allTournamentsModelFromJson(response);
     } catch (e) {
       rethrow;
