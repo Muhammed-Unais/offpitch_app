@@ -65,7 +65,7 @@ class MyClubTabOne extends StatelessWidget {
           )
         : Consumer2<CreateNewClubViewModel, MyClubViewModel>(
             builder: (context, createClubProvider, myClubviewModelProvider, _) {
-              return InkWell(
+              return GestureDetector(
                 onTap: () {
                   createClubProvider.isClubCreate
                       ? myClubviewModelProvider.getMyClub(context)

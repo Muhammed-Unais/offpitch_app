@@ -25,8 +25,8 @@ class CreatTournamentTabTwo extends StatelessWidget {
         SingleChildScrollView(
           child: Form(
             key: formKey1,
-            child: Column(
-              children: const [
+            child: const Column(
+              children: [
                 CreateTournamentSecondFields(
                   instructionValidator:
                       TournamentCreationValidation.instructionValidator,

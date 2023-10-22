@@ -46,7 +46,6 @@ class UserViewModel with ChangeNotifier {
 
   Future<String?> getUser() async {
     var authToken = await Utils.sharedPrefrenceGetValue(key: "authToken");
-    notifyListeners();
     return authToken;
   }
 
@@ -62,7 +61,7 @@ class UserViewModel with ChangeNotifier {
           RoutesName.login,
           (route) => false,
         );
-      }
+      } 
     }).onError((error, stackTrace) async {
       Utils.showToastMessage("Logout failed");
     });

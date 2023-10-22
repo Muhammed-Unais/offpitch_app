@@ -93,7 +93,7 @@ class _MyClubTabTwoState extends State<MyClubTabTwo>
               }
             },
           )
-        : InkWell(
+        : GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, RoutesName.clubCreation);
             },

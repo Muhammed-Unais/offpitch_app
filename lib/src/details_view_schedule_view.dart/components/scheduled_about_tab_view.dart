@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/res/components/circle_images.dart';
 import 'package:offpitch_app/src/tournament_details_view/components/club_profile_name.dart';
 import 'package:offpitch_app/src/tournament_details_view/model/single_tournament_model.dart';
 import 'package:offpitch_app/res/constats.dart';

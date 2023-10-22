@@ -108,9 +108,9 @@ class _RegistrationStatusWidgetState extends State<RegistrationStatusWidget> {
                       SizedBox(
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
+                              children: [
                                 Icon(Icons.money_rounded),
                                 Text(
                                   "Fee",

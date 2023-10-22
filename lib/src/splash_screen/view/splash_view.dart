@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:offpitch_app/src/splash_screen/view_model/user_view_model.dart';
-import 'package:offpitch_app/res/common/services.dart/splash_services.dart';
+import 'package:offpitch_app/src/splash_screen/view_model/splash_services.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {

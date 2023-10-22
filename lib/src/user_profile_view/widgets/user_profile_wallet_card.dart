@@ -25,9 +25,9 @@ class UserProfileWalletCard extends StatelessWidget {
         ),
         child: ListTile(
           contentPadding: const EdgeInsets.all(8),
-          title: Row(
+          title: const Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Icon(Icons.account_balance_wallet_outlined),
               SizedBox(
                 width: AppMargin.small,

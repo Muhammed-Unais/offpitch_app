@@ -93,7 +93,7 @@ class _MyClubTabThreeState extends State<MyClubTabThree>
               }
             },
           )
-        : InkWell(
+        : GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, RoutesName.clubCreation);
             },

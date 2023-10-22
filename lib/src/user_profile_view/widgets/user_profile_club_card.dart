@@ -21,7 +21,8 @@ class UserProfileClubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userClubId = context.read<UserViewModel>().userClubId;
+    final String? userClubId = context.watch<UserViewModel>().userClubId;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 10, top: 10),
       shape: RoundedRectangleBorder(
