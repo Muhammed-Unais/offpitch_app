@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:offpitch_app/src/create_tournament_view/view/create_tournament_view.dart';
-import 'package:offpitch_app/src/explore_view/view/explore_search_view.dart';
+import 'package:offpitch_app/src/bottom_bar/navigation_bar_view.dart';
+import 'package:offpitch_app/src/create_tournament/view/create_tournament_view.dart';
+import 'package:offpitch_app/src/explore/view/explore_search_view.dart';
 import 'package:offpitch_app/utils/routes/routes_name.dart';
-import 'package:offpitch_app/src/explore_view/view/explore_view.dart';
-import 'package:offpitch_app/src/home_view/view/home_view.dart';
-import 'package:offpitch_app/src/login_view/view/login_view.dart';
-import 'package:offpitch_app/src/bottom_bar_view/view/navigation_bar_view.dart';
-import 'package:offpitch_app/src/club_creation_view/view/club_creation_view.dart';
-import 'package:offpitch_app/src/my_club_view/view/my_club_view.dart';
-import 'package:offpitch_app/src/otp_verify_view/view/otp_verify_view.dart';
-import 'package:offpitch_app/src/signup_view/view/signup_view.dart';
-import 'package:offpitch_app/src/splash_screen/view/splash_view.dart';
-import 'package:offpitch_app/src/tournament_details_view/components/registration_components/payment_status_screen.dart';
-import 'package:offpitch_app/src/tournament_details_view/view/torunament_details_view.dart';
-import 'package:offpitch_app/src/user_watch_list_view/view/user_watch_list.dart';
+import 'package:offpitch_app/src/explore/view/explore_view.dart';
+import 'package:offpitch_app/src/home/view/home_view.dart';
+import 'package:offpitch_app/src/login/view/login_view.dart';
+import 'package:offpitch_app/src/club_creation/view/club_creation_view.dart';
+import 'package:offpitch_app/src/my_club_details/view/my_club_view.dart';
+import 'package:offpitch_app/src/otp_verify/view/otp_verify_view.dart';
+import 'package:offpitch_app/src/signup/view/signup_view.dart';
+import 'package:offpitch_app/src/splash/view/splash_view.dart';
+import 'package:offpitch_app/src/tournament_details/components/registration_components/payment_status_screen.dart';
+import 'package:offpitch_app/src/tournament_details/view/torunament_details_view.dart';
+import 'package:offpitch_app/src/user_watch_list/view/user_watch_list.dart';
 
 class Routes {
   static Route<dynamic> genericRoute(RouteSettings settings) {

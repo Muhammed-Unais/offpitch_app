@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:offpitch_app/res/styles/app_theme.dart';
 import 'package:offpitch_app/res/constats.dart';
-import 'package:offpitch_app/src/explore_view/view_model/explore_search_view_model.dart';
+import 'package:offpitch_app/src/explore/view_model/explore_search_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SearchWidget extends StatelessWidget {
